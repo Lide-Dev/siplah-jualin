@@ -61,6 +61,7 @@ if ($language->id == $this->site_lang->id):?>
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/vendor/bootstrap/css/bootstrap.min.css"/>
     <!-- Style CSS -->
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/style-1.6.css"/>
+    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/update_jualin/slider-home-page.css"/>
     <!-- Plugins CSS -->
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/plugins-1.6.css"/>
 <?php if (!empty($this->general_settings->site_color)): ?>
