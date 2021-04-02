@@ -141,6 +141,8 @@ foreach ($languages as $language) {
         /*bidding*/
         $route[$key . $routes->quote_requests]['GET'] = 'bidding_controller/quote_requests';
         $route[$key . $routes->sent_quote_requests]['GET'] = 'bidding_controller/sent_quote_requests';
+        /*Multi Login*/
+        $route[$key . 'login/buyer']['GET'] = 'buyer_controller/index';
         /*any*/
         if ($general_settings->site_lang != $language->id) {
             $route[$key . '(:any)/(:any)']['GET'] = 'home_controller/subcategory/$1/$2';

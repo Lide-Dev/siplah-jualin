@@ -163,6 +163,7 @@ $this->session->unset_userdata('mds_send_email_data'); ?>
 <!-- Plugins JS-->
 <script src="<?php echo base_url(); ?>assets/js/plugins-1.6.js"></script>
 <script src="<?php echo base_url(); ?>assets/js/update_jualin/slider-home-page.js"></script>
+<script src="<?php echo base_url(); ?>assets/js/update_jualin/form-login-as.js"></script>
 <script>
     $('<input>').attr({type: 'hidden', name: 'sys_lang_id', value: '<?php echo $this->selected_lang->id; ?>'}).appendTo('form');
     $('#form-product-filters input[name=sys_lang_id]').remove();
