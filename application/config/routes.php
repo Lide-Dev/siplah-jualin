@@ -294,3 +294,6 @@ $route[$routes->admin . '/route-settings'] = 'settings_controller/route_settings
 
 $route['(:any)/(:any)']['GET'] = 'home_controller/subcategory/$1/$2';
 $route['(:any)']['GET'] = 'home_controller/any/$1';
+
+//Supervisor
+$route[$routes->admin] = 'admin_supervisor_controller/index';

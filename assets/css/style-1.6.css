@@ -2458,6 +2458,7 @@ img {
     width: auto;
     position: relative;
     font-weight: 700;
+    color: #2f279a;
 }
 
 .discount-original-price {
@@ -6111,7 +6112,7 @@ img {
     justify-content: center;
     padding-top: 30px;
     width: 100%;
-    min-height: 720px;
+    min-height: 20px;
 }
 
 .auth-box {
