@@ -30,6 +30,7 @@
                             <p class="p-social-media m-0 m-t-5"><?php echo trans("dont_have_account"); ?>&nbsp;<a href="<?php echo generate_url("register"); ?>" class="link"><?php echo trans("register"); ?></a></p>
                         </form>
                         <!-- form end -->
+						<!-- form end -->
 					</div>
 				</div>
 			</div>

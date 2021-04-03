@@ -279,31 +279,8 @@
                     <div class="auth-box">
                         <button type="button" class="close" data-dismiss="modal"><i class="icon-close"></i></button>
                         <h4 class="title"><?php echo trans("login"); ?></h4>
-                        <!-- form start -->
-                        <form id="form_login" novalidate="novalidate">
-                            <div class="social-login-cnt">
-                                <?php $this->load->view("partials/_social_login", ["or_text" => trans("login_with_email")]); ?>
-                            </div>
-                            <!-- include message block -->
-                            <div id="result-login" class="font-size-13"></div>
-                            <div class="form-group">
-                                <input type="email" name="email" class="form-control auth-form-input" placeholder="<?php echo trans("email_address"); ?>" required>
-                            </div>
-                            <div class="form-group">
-                                <input type="password" name="password" class="form-control auth-form-input" placeholder="<?php echo trans("password"); ?>" minlength="4" required>
-                            </div>
-                            <div class="form-group text-right">
-                                <a href="<?php echo generate_url("forgot_password"); ?>" class="link-forgot-password"><?php echo trans("forgot_password"); ?></a>
-                            </div>
-                            <div class="form-group">
-                                <button type="submit" class="btn btn-md btn-custom btn-block"><?php echo trans("login"); ?></button>
-                            </div>
-
-                            <p class="p-social-media m-0 m-t-5"><?php echo trans("dont_have_account"); ?>&nbsp;<a href="<?php echo generate_url("register"); ?>" class="link"><?php echo trans("register"); ?></a></p>
-                        </form>
-                        <!-- form end -->
                         <!-- Login As -->
-                        <section class="py-5 bg-login-as py-5">
+                        <section class="py-2 bg-login-as py-2">
                             <div class="container">
                                 <div class="row mb-2">
                                     <div class="col-md-12">
@@ -326,7 +303,7 @@
                                 </div>
                                 <div class="row mb-2">
                                     <div class="col-md-12">
-                                        <a href="#" class="text-dark">
+                                        <a href="<?=base_url('login/seller')?>" class="text-dark">
                                             <div class="card shadow">
                                                 <div class="card-body">
                                                     <div class="row">
@@ -345,7 +322,7 @@
                                 </div>
                                 <div class="row mb-2">
                                     <div class="col-md-12">
-                                        <a href="#" class="text-dark">
+                                        <a href="<?=base_url('login/supervisor')?>" class="text-dark">
                                             <div class="card shadow">
                                                 <div class="card-body">
                                                     <div class="row">
@@ -364,7 +341,7 @@
                                 </div>
                                 <div class="row mb-2">
                                     <div class="col-md-12">
-                                        <a href="#" class="text-dark">
+                                        <a href="<?=base_url('login/partners')?>" class="text-dark">
                                             <div class="card shadow">
                                                 <div class="card-body">
                                                     <div class="row">

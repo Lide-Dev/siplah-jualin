@@ -683,7 +683,7 @@ img {
     font-size: 14px;
     padding: 0;
     position: relative;
-    color: #666;
+    color: #ffffff;
 }
 
 .top-bar .navbar-nav .nav-item .nav-link i {
@@ -6235,7 +6235,7 @@ img {
 }
 
 .login-modal {
-    max-width: 430px;
+    max-width: 330px;
     margin: 0 auto;
 }
 
