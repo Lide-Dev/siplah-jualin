@@ -129,10 +129,9 @@
                         </li>
                     <?php else : ?>
                         <li class="nav-item">
-                            <a href="javascript:void(0)" class="nav-link"><?php echo trans("guide"); ?></a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="javascript:void(0)" class="nav-link">FAQ</a>
+                            <a href="javascript:void(0)" data-toggle="modal" data-target="#loginModal" class="nav-link"><?php echo trans("login"); ?></a>
+                            <span class="auth-sep">/</span>
+                            <a href="<?php echo generate_url("register"); ?>" class="nav-link"><?php echo trans("register"); ?></a>
                         </li>
                     <?php endif; ?>
                 </ul>

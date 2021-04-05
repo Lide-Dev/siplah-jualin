@@ -1,5 +1,5 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
 class Home_controller extends Home_Core_Controller
 {
@@ -23,10 +23,10 @@ class Home_controller extends Home_Core_Controller
         $data['keywords'] = $this->settings->keywords;
 
         //products
+
         $data["latest_products"] = get_latest_products($this->general_settings->index_latest_products_count);
         $data["promoted_products"] = get_promoted_products(0, $this->promoted_products_limit);
         $data["promoted_products_count"] = get_promoted_products_count();
-
         $data["slider_items"] = $this->slider_model->get_slider_items();
         $data['featured_categories'] = $this->category_model->get_featured_categories();
         $data['featured_categories'] = $this->category_model->get_featured_categories();
@@ -88,7 +88,6 @@ class Home_controller extends Home_Core_Controller
                     redirect($this->agent->referrer());
                 }
             }
-
         }
     }
 

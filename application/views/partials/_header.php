@@ -168,7 +168,7 @@ if ($language->id == $this->site_lang->id):?>
                                         <?php endif; ?>
                                     <?php else: ?>
                                         <?php if (is_multi_vendor_active()): ?>
-                                            <li class="nav-item m-r-0"><a href="javascript:void(0)" class="btn btn-md btn-custom btn-sell-now m-r-0" data-toggle="modal" data-target="#loginModal"><?php echo trans("sell_now"); ?></a></li>
+                                            <li class="nav-item m-r-0"><a href="javascript:void(0)" class="btn btn-md btn-custom btn-sell-now m-r-0" data-toggle="modal" data-target="#loginModal"><?php echo trans("login"); ?></a></li>
                                         <?php endif; ?>
                                     <?php endif; ?>
                                 </ul>
