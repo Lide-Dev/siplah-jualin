@@ -53,6 +53,17 @@
                     <?php $this->load->view("partials/_ad_spaces", ["ad_space" => "index_2", "class" => ""]); ?>
                 </div>
             </div>
+            <!-- BLOG -->
+            <?php if ($this->general_settings->index_blog_slider == 1 && !empty($blog_slider_posts)): ?>
+                <div class="col-12 section section-blog m-0">
+                    <h3 class="title"><?php echo trans("guide"); ?></h3>
+                    <div class="row-custom">
+                        <!-- main slider -->
+                        <?php $this->load->view("blog/_blog_slider", ['blog_slider_posts' => $blog_slider_posts]); ?>
+                    </div>
+                </div>
+            <?php endif; ?>
+            <!-- END OF BLOG -->
         </div>
     </div>
 </div>
