@@ -341,7 +341,7 @@
                                 </div>
                                 <div class="row mb-2">
                                     <div class="col-md-12">
-                                        <a href="<?=base_url('login/partners')?>" class="text-dark">
+                                        <a href="<?=base_url('admin/partners')?>" class="text-dark">
                                             <div class="card shadow">
                                                 <div class="card-body">
                                                     <div class="row">

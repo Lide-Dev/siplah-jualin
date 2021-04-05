@@ -56,8 +56,7 @@
             <!-- BLOG -->
             <?php if ($this->general_settings->index_blog_slider == 1 && !empty($blog_slider_posts)): ?>
                 <div class="col-12 section section-blog m-0">
-                    <h3 class="title"><?php echo trans("latest_blog_posts"); ?></h3>
-                    <p class="title-exp"><?php echo trans("latest_blog_posts_exp"); ?></p>
+                    <h3 class="title"><?php echo trans("guide"); ?></h3>
                     <div class="row-custom">
                         <!-- main slider -->
                         <?php $this->load->view("blog/_blog_slider", ['blog_slider_posts' => $blog_slider_posts]); ?>

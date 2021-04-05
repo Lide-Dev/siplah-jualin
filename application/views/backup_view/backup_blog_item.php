@@ -14,4 +14,13 @@
             <?php echo html_escape(character_limiter($item->title, 56, '...')); ?>
         </a>
     </h3>
+    <div class="blog-post-meta">
+        <a href="<?php echo generate_url("blog") . "/" . $item->category_slug; ?>">
+            <i class="icon-folder"></i><?php echo html_escape($item->category_name); ?>
+        </a>
+        <span><i class="icon-clock"></i><?php echo time_ago($item->created_at); ?></span>
+    </div>
+    <div class="blog-post-description">
+        <?php echo html_escape(character_limiter($item->summary, 100, '...')); ?>
+    </div>
 </div>

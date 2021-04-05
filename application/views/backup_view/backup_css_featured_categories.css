@@ -1,0 +1,79 @@
+.section-categories {
+    margin-bottom: 30px;
+}
+
+.featured-categories .card-columns {
+    -webkit-column-gap: 20px;
+    -moz-column-gap: 20px;
+    column-gap: 20px;
+}
+
+.featured-categories .card-columns .card {
+    position: relative;
+    background-color: #fafafa;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    overflow: hidden;
+    border-radius: 0 !important;
+    height: 200px;
+    border: 0 !important;
+    margin-bottom: 20px;
+}
+
+.featured-categories .card-columns .card a {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+}
+
+.featured-categories .card-columns .card:nth-child(6n-5) {
+    height: 380px;
+}
+
+.featured-categories .card-columns .card:nth-child(6n-4) {
+    height: 190px;
+}
+
+.featured-categories .card-columns .card:nth-child(6n-3) {
+    height: 285px;
+}
+
+.featured-categories .card-columns .card:nth-child(6n-2) {
+    height: 285px;
+}
+
+.featured-categories .card-columns .card:nth-child(6n-1) {
+    height: 200px;
+}
+
+.featured-categories .card-columns .card:nth-child(6n) {
+    height: 370px;
+}
+
+.featured-categories .card .caption {
+    width: 100%;
+    padding: 7px 10px;
+    position: absolute;
+    bottom: 0;
+    background-color: rgba(17, 17, 17, .5);
+}
+
+.featured-categories .card .caption span {
+    cursor: pointer;
+    color: #fff !important;
+    font-size: 15px;
+}
+
+.link-see-more {
+    line-height: 24px;
+}
+
+.link-see-more i {
+    display: inline-block;
+    position: relative;
+    bottom: -1px;
+}

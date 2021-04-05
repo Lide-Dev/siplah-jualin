@@ -291,9 +291,14 @@ $route[$routes->admin . '/font-settings'] = 'settings_controller/font_settings';
 $route[$routes->admin . '/update-font/(:num)'] = 'settings_controller/update_font/$1';
 $route[$routes->admin . '/route-settings'] = 'settings_controller/route_settings';
 
+//Supervisor
+$route[$routes->admin . '/supervisor'] = 'admin_supervisor_controller/index';
+
+//Partners
+$route[$routes->admin . '/partners'] = 'admin_partners_controller/index';
 
 $route['(:any)/(:any)']['GET'] = 'home_controller/subcategory/$1/$2';
 $route['(:any)']['GET'] = 'home_controller/any/$1';
 
-//Supervisor
-$route[$routes->admin] = 'admin_supervisor_controller/index';
+
+

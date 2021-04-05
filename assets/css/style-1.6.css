@@ -2250,13 +2250,7 @@ img {
     margin-bottom: 30px;
 }
 
-.featured-categories .card-columns {
-    -webkit-column-gap: 20px;
-    -moz-column-gap: 20px;
-    column-gap: 20px;
-}
-
-.featured-categories .card-columns .card {
+.featured-categories .card {
     position: relative;
     background-color: #fafafa;
     background-position: center center;
@@ -2266,40 +2260,21 @@ img {
     border-radius: 0 !important;
     height: 200px;
     border: 0 !important;
-    margin-bottom: 20px;
+    margin: 20px;
+    float: left;
 }
 
-.featured-categories .card-columns .card a {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    margin: auto;
+.featured-categories {
+    position: relative;
+    padding: 0;
+    margin: 0;
+    display: block;
+    overflow: hidden;
 }
 
-.featured-categories .card-columns .card:nth-child(6n-5) {
-    height: 380px;
-}
-
-.featured-categories .card-columns .card:nth-child(6n-4) {
-    height: 190px;
-}
-
-.featured-categories .card-columns .card:nth-child(6n-3) {
-    height: 285px;
-}
-
-.featured-categories .card-columns .card:nth-child(6n-2) {
-    height: 285px;
-}
-
-.featured-categories .card-columns .card:nth-child(6n-1) {
-    height: 200px;
-}
-
-.featured-categories .card-columns .card:nth-child(6n) {
-    height: 370px;
+.featured-categories .card {
+    height: 150px;
+    width: 150px;
 }
 
 .featured-categories .card .caption {
