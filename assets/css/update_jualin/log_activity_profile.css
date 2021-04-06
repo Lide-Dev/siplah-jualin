@@ -1,44 +1,65 @@
-@import url(http://fonts.googleapis.com/css?family=Open+Sans);
-
-/* apply a natural box layout model to all elements, but allowing components to change */
-
-.activity-feed {
-    padding: 15px;
+.isteColor {
+    color: #333333;
 }
 
-.activity-feed .feed-item-log {
+.isteColor:hover {
+    color: #353A40;
+}
+
+
+/*haber akışı list*/
+
+ul.timeline {
+    list-style-type: none;
     position: relative;
-    padding-bottom: 20px;
-    padding-left: 30px;
-    border-left: 2px solid #e4e8eb;
 }
 
-.activity-feed .feed-item-log:last-child {
-    border-color: transparent;
-}
-
-.activity-feed .feed-item-log:after {
-    content: "";
-    display: block;
+ul.timeline:before {
+    content: ' ';
+    background: #d4d9df;
+    display: inline-block;
     position: absolute;
-    top: 0;
-    left: -6px;
-    width: 10px;
-    height: 10px;
-    border-radius: 6px;
-    background: #fff;
-    border: 1px solid #f37167;
+    left: 29px;
+    width: 2px;
+    height: 100%;
+    z-index: 400;
 }
 
-.activity-feed .feed-item-log .date {
-    position: relative;
-    top: -5px;
-    color: #8c96a3;
-    text-transform: uppercase;
-    font-size: 13px;
+ul.timeline>li {
+    margin: 20px 0;
+    padding-left: 20px;
 }
 
-.activity-feed .feed-item-log .text {
-    position: relative;
-    top: -3px;
+ul.timeline>li:before {
+    content: ' ';
+    background: white;
+    display: inline-block;
+    position: absolute;
+    border-radius: 50%;
+    border: 3px solid #333333;
+    left: 20px;
+    width: 20px;
+    height: 20px;
+    z-index: 400;
+}
+
+
+/*vertical carousel*/
+
+.vert .carousel-item-next.carousel-item-left,
+.vert .carousel-item-prev.carousel-item-right {
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+}
+
+.vert .carousel-item-next,
+.vert .active.carousel-item-right {
+    -webkit-transform: translate3d(0, 100%, 0);
+    transform: translate3d(0, 100% 0);
+}
+
+.vert .carousel-item-prev,
+.vert .active.carousel-item-left {
+    -webkit-transform: translate3d(0, -100%, 0);
+    transform: translate3d(0, -100%, 0);
 }

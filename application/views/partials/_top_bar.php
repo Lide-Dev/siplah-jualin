@@ -121,7 +121,7 @@
                                 </li>
                                 <li>
                                     <a href="<?php echo generate_url("log_activity"); ?>">
-                                        <i class="icon-privacy"></i>
+                                        <i class="icon-settings"></i>
                                         <?php echo trans("log_activity"); ?>
                                     </a>
                                 </li>
