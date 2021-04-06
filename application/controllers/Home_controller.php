@@ -28,7 +28,7 @@ class Home_controller extends Home_Core_Controller
         $data["promoted_products"] = get_promoted_products(0, $this->promoted_products_limit);
         $data["promoted_products_count"] = get_promoted_products_count();
         $data["slider_items"] = $this->slider_model->get_slider_items();
-        $data['featured_categories'] = $this->category_model->get_featured_categories();
+        // $data['featured_categories'] = $this->category_model->get_featured_categories();
         $data['featured_categories'] = $this->category_model->get_featured_categories();
 
         //blog slider posts
@@ -122,6 +122,7 @@ class Home_controller extends Home_Core_Controller
      */
     private function page($page)
     {
+        // dd();
         if (empty($page)) {
             redirect(lang_base_url());
         }

@@ -65,7 +65,8 @@
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/vendor/bootstrap/css/bootstrap.min.css" />
     <!-- Style CSS -->
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/style-1.6.css" />
-    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/update_jualin/slider-home-page.css" />
+    <!-- <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/update_jualin/slick.css" /> -->
+    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.3.11/slick/slick.css" />
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/update_jualin/form-login-as.css" />
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/update_jualin/chart_profile.css" />
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/update_jualin/log_activity_profile.css" />
@@ -187,7 +188,7 @@
                                             <?php endif; ?>
                                         <?php else : ?>
                                             <?php if (is_multi_vendor_active()) : ?>
-                                                <li class="nav-item m-r-0"><a href="javascript:void(0)" class="btn btn-md btn-custom btn-sell-now m-r-0" data-toggle="modal" data-target="#loginModal"><?php echo trans("sell_now"); ?></a></li>
+                                                <li class="nav-item m-r-0"><a href="javascript:void(0)" class="btn btn-md btn-custom btn-sell-now m-r-0" data-toggle="modal" data-target="#loginModal"><?php echo trans("login"); ?></a></li>
                                             <?php endif; ?>
                                         <?php endif; ?>
                                     </ul>
@@ -285,7 +286,7 @@
                             <div class="container">
                                 <div class="row mb-2">
                                     <div class="col-md-12">
-                                        <a href="<?=base_url('login/buyer')?>" class="text-dark">
+                                        <a href="<?= base_url('login/buyer') ?>" class="text-dark">
                                             <div class="card shadow">
                                                 <div class="card-body">
                                                     <div class="row">
@@ -304,7 +305,7 @@
                                 </div>
                                 <div class="row mb-2">
                                     <div class="col-md-12">
-                                        <a href="<?=base_url('login/seller')?>" class="text-dark">
+                                        <a href="<?= base_url('login/seller') ?>" class="text-dark">
                                             <div class="card shadow">
                                                 <div class="card-body">
                                                     <div class="row">
@@ -323,7 +324,7 @@
                                 </div>
                                 <div class="row mb-2">
                                     <div class="col-md-12">
-                                        <a href="<?=base_url('admin/supervisor')?>" class="text-dark">
+                                        <a href="<?= base_url('admin/supervisor') ?>" class="text-dark">
                                             <div class="card shadow">
                                                 <div class="card-body">
                                                     <div class="row">
@@ -342,7 +343,7 @@
                                 </div>
                                 <div class="row mb-2">
                                     <div class="col-md-12">
-                                        <a href="<?=base_url('admin/partners')?>" class="text-dark">
+                                        <a href="<?= base_url('admin/partners') ?>" class="text-dark">
                                             <div class="card shadow">
                                                 <div class="card-body">
                                                     <div class="row">
@@ -359,35 +360,35 @@
                                         </a>
                                     </div>
                                 </div>
-                            </section>
-                            <!-- End Of Login As -->
+                        </section>
+                        <!-- End Of Login As -->
 
-                            </div>
-                    </div>
-                </div>
-            </div>
-        <?php endif; ?>
-
-        <div class="modal fade" id="locationModal" role="dialog">
-            <div class="modal-dialog modal-dialog-centered login-modal" role="document">
-                <div class="modal-content">
-                    <div class="auth-box">
-                        <button type="button" class="close" data-dismiss="modal"><i class="icon-close"></i></button>
-                        <h4 class="title"><?php echo trans("select_location"); ?></h4>
-                        <!-- form start -->
-                        <?php echo form_open('set-default-location-post'); ?>
-                        <p class="location-modal-description"><?php echo trans("location_exp"); ?></p>
-                        <div class="selectdiv select-location">
-                            <select name="location_id" id="dropdown_location" class="form-control"></select>
-                        </div>
-                        <div class="form-group">
-                            <button type="submit" class="btn btn-md btn-custom btn-block"><?php echo trans("update_location"); ?></button>
-                        </div>
-                        <?php echo form_close(); ?>
-                        <!-- form end -->
                     </div>
                 </div>
             </div>
         </div>
+    <?php endif; ?>
 
-        <div id="menu-overlay"></div>
+    <div class="modal fade" id="locationModal" role="dialog">
+        <div class="modal-dialog modal-dialog-centered login-modal" role="document">
+            <div class="modal-content">
+                <div class="auth-box">
+                    <button type="button" class="close" data-dismiss="modal"><i class="icon-close"></i></button>
+                    <h4 class="title"><?php echo trans("select_location"); ?></h4>
+                    <!-- form start -->
+                    <?php echo form_open('set-default-location-post'); ?>
+                    <p class="location-modal-description"><?php echo trans("location_exp"); ?></p>
+                    <div class="selectdiv select-location">
+                        <select name="location_id" id="dropdown_location" class="form-control"></select>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-md btn-custom btn-block"><?php echo trans("update_location"); ?></button>
+                    </div>
+                    <?php echo form_close(); ?>
+                    <!-- form end -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="menu-overlay"></div>
