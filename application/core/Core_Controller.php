@@ -139,6 +139,7 @@ class Home_Core_Controller extends Core_Controller
         }
 
         $this->menu_links = $this->page_model->get_menu_links($this->selected_lang->id);
+        // $this->guide_category_links = $this->blog_model->get
 
         $this->categories = $this->category_model->get_categories();
         $this->parent_categories = get_parent_categories($this->categories);
