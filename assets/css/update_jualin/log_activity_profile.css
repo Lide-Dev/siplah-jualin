@@ -1,37 +1,44 @@
-.backevent {
-    background-color: #3A3C45;
-    border-radius: 12px;
-}
+@import url(http://fonts.googleapis.com/css?family=Open+Sans);
 
-.morningdetail {
-    background-color: #3A3C45;
-    border-radius: 12px;
-    position: absolute;
-    margin-left: -48px;
-    margin-top: 45px;
-}
+/* apply a natural box layout model to all elements, but allowing components to change */
 
 .activity-feed {
-    padding: 30px;
-    margin-top: 120px;
+    padding: 15px;
 }
 
-.activity-feed .feed-item {
+.activity-feed .feed-item-log {
     position: relative;
-    padding-bottom: 220px;
+    padding-bottom: 20px;
     padding-left: 30px;
-    border-left: 2px solid #E2B104;
+    border-left: 2px solid #e4e8eb;
 }
 
-.activity-feed .feed-item:after {
+.activity-feed .feed-item-log:last-child {
+    border-color: transparent;
+}
+
+.activity-feed .feed-item-log:after {
     content: "";
     display: block;
     position: absolute;
     top: 0;
-    left: -10px;
-    width: 20px;
-    height: 20px;
-    border-radius: 13px;
+    left: -6px;
+    width: 10px;
+    height: 10px;
+    border-radius: 6px;
     background: #fff;
-    border: 1px solid #E2B104;
+    border: 1px solid #f37167;
+}
+
+.activity-feed .feed-item-log .date {
+    position: relative;
+    top: -5px;
+    color: #8c96a3;
+    text-transform: uppercase;
+    font-size: 13px;
+}
+
+.activity-feed .feed-item-log .text {
+    position: relative;
+    top: -3px;
 }

@@ -29,7 +29,7 @@
 						<!-- include message block -->
 						<?php $this->load->view('partials/_messages'); ?>
 						<div class="table-responsive">
-							<table class="table table-striped">
+							<table id="example" class="table table-striped">
 								<thead>
 								<tr>
 									<th scope="col"><?php echo trans("order"); ?></th>

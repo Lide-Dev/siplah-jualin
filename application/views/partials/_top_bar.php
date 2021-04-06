@@ -120,6 +120,12 @@
                                     </a>
                                 </li>
                                 <li>
+                                    <a href="<?php echo generate_url("log_activity"); ?>">
+                                        <i class="icon-settings"></i>
+                                        <?php echo trans("log_activity"); ?>
+                                    </a>
+                                </li>
+                                <li>
                                     <a href="<?php echo lang_base_url(); ?>logout" class="logout">
                                         <i class="icon-logout"></i>
                                         <?php echo trans("logout"); ?>
