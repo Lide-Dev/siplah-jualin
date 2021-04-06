@@ -1,0 +1,37 @@
+.backevent {
+    background-color: #3A3C45;
+    border-radius: 12px;
+}
+
+.morningdetail {
+    background-color: #3A3C45;
+    border-radius: 12px;
+    position: absolute;
+    margin-left: -48px;
+    margin-top: 45px;
+}
+
+.activity-feed {
+    padding: 30px;
+    margin-top: 120px;
+}
+
+.activity-feed .feed-item {
+    position: relative;
+    padding-bottom: 220px;
+    padding-left: 30px;
+    border-left: 2px solid #E2B104;
+}
+
+.activity-feed .feed-item:after {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 0;
+    left: -10px;
+    width: 20px;
+    height: 20px;
+    border-radius: 13px;
+    background: #fff;
+    border: 1px solid #E2B104;
+}

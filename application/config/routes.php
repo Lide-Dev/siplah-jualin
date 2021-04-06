@@ -80,6 +80,7 @@ foreach ($languages as $language) {
         $route[$key . $routes->followers . '/(:any)']['GET'] = 'profile_controller/followers/$1';
         $route[$key . $routes->following . '/(:any)']['GET'] = 'profile_controller/following/$1';
         $route[$key . $routes->reviews . '/(:any)']['GET'] = 'profile_controller/reviews/$1';
+        $route[$key . $routes->log_activity]['GET'] = 'profile_controller/log_activity';
         /*settings*/
         $route[$key . $routes->settings]['GET'] = 'profile_controller/update_profile';
         $route[$key . $routes->settings . '/' . $routes->update_profile]['GET'] = 'profile_controller/update_profile';
@@ -297,8 +298,12 @@ $route[$routes->admin . '/supervisor'] = 'admin_supervisor_controller/index';
 //Partners
 $route[$routes->admin . '/partners'] = 'admin_partners_controller/index';
 
+
+
 $route['(:any)/(:any)']['GET'] = 'home_controller/subcategory/$1/$2';
 $route['(:any)']['GET'] = 'home_controller/any/$1';
+
+
 
 
 
