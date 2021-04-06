@@ -218,6 +218,29 @@ class Profile_controller extends Home_Core_Controller
     }
 
     /**
+     * Log Activity
+     */
+    public function log_activity($slug)
+    {
+        dd();
+        $slug = clean_slug($slug);
+        $data["user"] = $this->auth_model->get_user_by_slug($slug);
+        if (empty($data["user"])) {
+            redirect(lang_base_url());
+        }
+        $data['title'] = trans("log_activity");
+        $data['description'] = trans("log_activity") . " - " . $this->app_name;
+        $data['keywords'] = trans("log_activity") . "," . $this->app_name;
+        $data["active_tab"] = "log_activity";
+        $data["user_rating"] = calculate_user_rating($data["user"]->id);
+        $data["following_users"] = $this->profile_model->get_following_users($data["user"]->id);
+        
+        $this->load->view('partials/_header', $data);
+        $this->load->view('profile/log_activity');
+        $this->load->view('partials/_footer');
+    }
+
+    /**
      * Reviews
      */
     public function reviews($slug)
