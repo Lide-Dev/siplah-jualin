@@ -7203,7 +7203,7 @@ img {
     position: relative;
     margin-top: 100px;
     color: rgb(255, 255, 255);
-    background-color: #222222;
+    background-color: #999999;
     box-shadow: 0 -1px 0 rgba(0, 0, 0, 0.05);
 }
 
@@ -7350,7 +7350,7 @@ img {
 #footer .newsletter .newsletter-inner button {
     border-radius: 0 3px 3px 0;
     background-color: #2f279a;
-    color: #363636;
+    color: #ffffff;
     white-space: nowrap;
 }
 
