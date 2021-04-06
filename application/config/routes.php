@@ -104,9 +104,9 @@ foreach ($languages as $language) {
         /*promoted product*/
         $route[$key . $routes->promote_product . '/' . $routes->pricing . '/(:num)']['GET'] = 'promote_controller/pricing/$1';
         /*blog*/
-        $route[$key . $routes->blog . '/(:any)']['GET'] = 'home_controller/blog_category/$1';
-        $route[$key . $routes->blog . '/' . $routes->tag . '/(:any)']['GET'] = 'home_controller/tag/$1';
-        $route[$key . $routes->blog . '/(:any)/(:any)']['GET'] = 'home_controller/post/$1/$2';
+        $route[$key . $routes->guide . '/(:any)']['GET'] = 'home_controller/blog_category/$1';
+        $route[$key . $routes->guide . '/' . $routes->tag . '/(:any)']['GET'] = 'home_controller/tag/$1';
+        $route[$key . $routes->guide . '/(:any)/(:any)']['GET'] = 'home_controller/post/$1/$2';
         /*messages*/
         $route[$key . $routes->messages]['GET'] = 'message_controller/messages';
         $route[$key . $routes->messages . '/' . $routes->conversation . '/(:num)']['GET'] = 'message_controller/conversation/$1';
@@ -153,6 +153,11 @@ foreach ($languages as $language) {
         }
     }
 }
+
+// echo "<pre>";
+// var_dump($route);
+// echo "</pre>";
+// exit();
 
 //static routes
 include_once "routes_static.php";
