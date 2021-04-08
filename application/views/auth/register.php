@@ -30,19 +30,19 @@
 							<div class="bounce2"></div>
 							<div class="bounce3"></div>
 						</div>
-						<h3 class="title-auth">1. <?php echo trans("profile_bussines"); ?></h3>
-						<div class="form-row">
-							<div class="form-group col-md-12">
-								<label for="form_nosurat">Jenis Usaha</label>
+						<h4 class="title-auth">1. <?php echo trans("profile_bussines"); ?></h4>
+						<div class="row">
+							<div class="form-group">
+								<label class="control-label font-600 col-sm-6 mt-3" for="">Jenis Usaha</label>
 								<ul class="nav nav-pills">
-										<li class="nav-item col-md-6">
-											<label class="nav-link border border-dark text-center font-weight-bold" for="form_tipesurat1" id="label_tipesurat1" data-toggle="tab" aria-selected=""> Badan Usaha</label>
-											<input type="radio" name="tipesurat" id="form_tipesurat1" value="suratmasuk" style="display:none" checked>
-										</li>
-										<li class="nav-item col-md-6">
-											<label class="nav-link border border-dark text-center font-weight-bold" for="form_tipesurat2" id="label_tipesurat2" data-toggle="tab" aria-selected=""> Individu / Perorangan</label>
-											<input type="radio" name="tipesurat" id="form_tipesurat2" value="suratkeluar" style="display:none">
-										</li>
+									<li class="nav-item col-sm-6">
+										<label class="nav-link border border-muted text-center font-weight-bold" for="" id="" data-toggle="tab" aria-selected=""> Badan Usaha</label>
+										<input type="radio" name="" id="" value="" style="display:none" checked>
+									</li>
+									<li class="nav-item col-sm-6">
+										<label class="nav-link border border-muted text-center font-weight-bold" for="" id="" data-toggle="tab" aria-selected=""> Individu / Perorangan</label>
+										<input type="radio" name="" id="" value="" style="display:none">
+									</li>
 								</ul>
 							</div>
 						</div>
@@ -54,12 +54,13 @@
 						</div>
 						<div class="row">
 							<div class="col-12 m-b-30">
-								<label class="control-label font-600"><?php echo trans("document_upload_title"); ?></label>
+								<label class="control-label font-600"><?php echo trans("upload_npwp"); ?></label>
 								<?php $this->load->view("auth/_document_upload"); ?>
 							</div>
 						</div>
+						
 						<div class="form-group">
-							<input type="text" name="complete_address" class="form-control auth-form-input" placeholder="<?php echo trans("complete_address"); ?>" value="<?php echo old("complete_address"); ?>" required>
+							<textarea type="text" name="complete_address" class="form-control auth-form-input" placeholder="<?php echo trans("complete_address"); ?>" value="<?php echo old("complete_address"); ?>" required></textarea>
 						</div>
 						<div class="form-group">
 							<input type="text" name="province" class="form-control auth-form-input" placeholder="<?php echo trans("province"); ?>" value="<?php echo old("province"); ?>" required>
@@ -81,11 +82,11 @@
 						</div>
 						<div class="row">
 							<div class="col-12 m-b-30">
-								<label class="control-label font-600"><?php echo trans("document_upload_title"); ?></label>
+								<label class="control-label font-600"><?php echo trans("upload_selected_document"); ?></label>
 								<?php $this->load->view("auth/_document_upload"); ?>
 							</div>
 						</div>
-						<h3 class="title-auth">2. <?php echo trans("bank_title"); ?></h3>
+						<h4 class="title-auth">2. <?php echo trans("bank_title"); ?></h4>
 						<div class="form-group">
 							<input type="text" name="bank_name" class="form-control auth-form-input" placeholder="<?php echo trans("bank_name"); ?>" value="<?php echo old("bank_name"); ?>" required>
 						</div>
@@ -95,7 +96,7 @@
 						<div class="form-group">
 							<input type="text" name="bank_account_holder" class="form-control auth-form-input" placeholder="<?php echo trans("bank_account_holder"); ?>" value="<?php echo old("bank_account_holder"); ?>" required>
 						</div>
-						<h3 class="title-auth">3. <?php echo trans("responsible_title"); ?></h3>
+						<h4 class="title-auth">3. <?php echo trans("responsible_title"); ?></h4>
 						<div class="form-group">
 							<input type="text" name="username" class="form-control auth-form-input" placeholder="<?php echo trans("full_name"); ?>" value="<?php echo old("full_name"); ?>" maxlength="<?php echo $this->username_maxlength; ?>" required>
 						</div>
@@ -108,7 +109,7 @@
 						<div class="form-group">
 							<input type="number" name="nik" class="form-control auth-form-input" placeholder="<?php echo trans("nik"); ?>" value="<?php echo old("nik"); ?>" required>
 						</div>
-						<h3 class="title-auth">4. <?php echo trans("password_title"); ?></h3>
+						<h4 class="title-auth">4. <?php echo trans("password_title"); ?></h4>
 						<div class="form-group">
 							<input type="password" name="password" class="form-control auth-form-input" placeholder="<?php echo trans("password"); ?>" value="<?php echo old("password"); ?>" required>
 						</div>

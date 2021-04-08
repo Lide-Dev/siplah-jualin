@@ -1,4 +1,4 @@
-<?php defined('BASEPATH') or exit('No direct script access allowed'); ?>
+<?php defined('BASEPATH') OR exit('No direct script access allowed'); ?>
 
 <!-- File Manager -->
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/vendor/file-manager/file-manager.css">
@@ -26,32 +26,6 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-sm-12">
-                                    <div class="form-box">
-                                        <div class="form-box-head">
-                                            <h4 class="title"><?php echo trans('category_add_product'); ?></h4>
-                                        </div>
-                                        <div class="form-box-body">
-                                            <div class="row">
-                                                <div class="col-sm-4 mb-3">
-                                                    <div class="selectdiv">
-                                                        <select id="categories" name="category_id_0" class="form-control" onchange="get_subcategories(this.value, 0);" required>
-                                                            <option value=""><?php echo trans('select_category'); ?></option>
-                                                            <?php if (!empty($this->parent_categories)) :
-                                                                foreach ($this->parent_categories as $item) : ?>
-                                                                    <option value="<?php echo html_escape($item->id); ?>"><?php echo category_name($item); ?></option>
-                                                            <?php endforeach;
-                                                            endif; ?>
-                                                        </select>
-                                                    </div>
-                                                    <div id="subcategories_container"></div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
                                 <div class="col-12 m-b-30">
                                     <label class="control-label font-600"><?php echo trans("images"); ?></label>
                                     <?php $this->load->view("product/_image_upload_box"); ?>
@@ -62,11 +36,11 @@
                                 <div class="col-12">
                                     <?php echo form_open('add-product-post', ['id' => 'form_validate', 'onkeypress' => "return event.keyCode != 13;"]); ?>
 
-                                    <?php if ($this->general_settings->physical_products_system == 1 && $this->general_settings->digital_products_system == 0) : ?>
+                                    <?php if ($this->general_settings->physical_products_system == 1 && $this->general_settings->digital_products_system == 0): ?>
                                         <input type="hidden" name="product_type" value="physical">
-                                    <?php elseif ($this->general_settings->physical_products_system == 0 && $this->general_settings->digital_products_system == 1) : ?>
+                                    <?php elseif ($this->general_settings->physical_products_system == 0 && $this->general_settings->digital_products_system == 1): ?>
                                         <input type="hidden" name="product_type" value="digital">
-                                    <?php else : ?>
+                                    <?php else: ?>
                                         <div class="form-box">
                                             <div class="form-box-head">
                                                 <h4 class="title"><?php echo trans('product_type'); ?></h4>
@@ -74,7 +48,7 @@
                                             <div class="form-box-body">
                                                 <div class="form-group">
                                                     <div class="row">
-                                                        <?php if ($this->general_settings->physical_products_system == 1) : ?>
+                                                        <?php if ($this->general_settings->physical_products_system == 1): ?>
                                                             <div class="col-12 col-sm-6 col-option">
                                                                 <div class="custom-control custom-radio">
                                                                     <input type="radio" name="product_type" value="physical" id="product_type_1" class="custom-control-input" checked required>
@@ -83,7 +57,7 @@
                                                                 </div>
                                                             </div>
                                                         <?php endif; ?>
-                                                        <?php if ($this->general_settings->digital_products_system == 1) : ?>
+                                                        <?php if ($this->general_settings->digital_products_system == 1): ?>
                                                             <div class="col-12 col-sm-6 col-option">
                                                                 <div class="custom-control custom-radio">
                                                                     <input type="radio" name="product_type" value="digital" id="product_type_2" class="custom-control-input" <?php echo ($this->general_settings->physical_products_system != 1) ? 'checked' : ''; ?> required>
@@ -98,7 +72,7 @@
                                         </div>
                                     <?php endif; ?>
 
-                                    <?php if ($active_product_system_array['active_system_count'] > 1) : ?>
+                                    <?php if ($active_product_system_array['active_system_count'] > 1): ?>
                                         <div class="form-box">
                                             <div class="form-box-head">
                                                 <h4 class="title"><?php echo trans('listing_type'); ?></h4>
@@ -106,7 +80,7 @@
                                             <div class="form-box-body">
                                                 <div class="form-group">
                                                     <div class="row">
-                                                        <?php if ($this->general_settings->marketplace_system == 1) : ?>
+                                                        <?php if ($this->general_settings->marketplace_system == 1): ?>
                                                             <div class="col-12 col-sm-6 col-option listing_sell_on_site">
                                                                 <div class="custom-control custom-radio">
                                                                     <input type="radio" name="listing_type" value="sell_on_site" id="listing_type_1" class="custom-control-input" checked required>
@@ -115,7 +89,7 @@
                                                                 </div>
                                                             </div>
                                                         <?php endif; ?>
-                                                        <?php if ($this->general_settings->classified_ads_system == 1) : ?>
+                                                        <?php if ($this->general_settings->classified_ads_system == 1): ?>
                                                             <div class="col-12 col-sm-6 col-option listing_ordinary_listing">
                                                                 <div class="custom-control custom-radio">
                                                                     <input type="radio" name="listing_type" value="ordinary_listing" id="listing_type_2" class="custom-control-input" <?php echo ($this->general_settings->marketplace_system != 1) ? 'checked' : ''; ?> required>
@@ -124,7 +98,7 @@
                                                                 </div>
                                                             </div>
                                                         <?php endif; ?>
-                                                        <?php if ($this->general_settings->bidding_system == 1) : ?>
+                                                        <?php if ($this->general_settings->bidding_system == 1): ?>
                                                             <div class="col-12 col-sm-6 col-option listing_bidding">
                                                                 <div class="custom-control custom-radio">
                                                                     <input type="radio" name="listing_type" value="bidding" id="listing_type_3" class="custom-control-input" required>
@@ -137,7 +111,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    <?php else : ?>
+                                    <?php else: ?>
                                         <input type="hidden" name="listing_type" value="<?php echo $active_product_system_array['active_system_value']; ?>">
                                     <?php endif; ?>
 
@@ -147,59 +121,28 @@
                                         </div>
                                         <div class="form-box-body">
                                             <div class="form-group">
-                                                <label class="control-label"><?php echo trans("product_registitle"); ?></label>
-                                                <input type="text" name="title" class="form-control form-input" placeholder="<?php echo trans("product_title"); ?>" required>
+                                                <label class="control-label"><?php echo trans("title"); ?></label>
+                                                <input type="text" name="title" class="form-control form-input" placeholder="<?php echo trans("title"); ?>" required>
                                             </div>
-                                            <div class="row">
-                                                <div class="form-group">
-                                                    <ul class="nav nav-pills">
-                                                        <li class="nav-item col-md-6">
-                                                            <label class="nav-link border border-muted text-center font-weight-bold" for="" id="" data-toggle="tab" aria-selected=""> Barang Tidak Kena PPN</label>
-                                                            <input type="radio" name="" id="" value="" style="display:none" checked>
-                                                        </li>
-                                                        <li class="nav-item col-md-6">
-                                                            <label class="nav-link border border-muted text-center font-weight-bold" for="" id="" data-toggle="tab" aria-selected=""> Barang Kena PPN</label>
-                                                            <input type="radio" name="" id="" value="" style="display:none">
-                                                        </li>
-                                                    </ul>
-                                                </div>
+                                            <div class="form-group">
+                                                <label class="control-label"><?php echo trans("sku"); ?>&nbsp;(<?php echo trans("product_code"); ?>)</label>
+                                                <input type="text" name="sku" class="form-control form-input" placeholder="<?php echo trans("sku"); ?>&nbsp;(<?php echo trans("optional"); ?>)">
                                             </div>
-                                            <div class="row">
-                                                <div class="form-group col-6">
-                                                    <label class="control-label"><?php echo trans("minimum_order"); ?></label>
-                                                    <input type="number" name="" class="form-control form-input" placeholder="<?php echo trans("minimum_order"); ?>">
+                                            <div class="form-group">
+                                                <label class="control-label"><?php echo trans("category"); ?></label>
+                                                <div class="selectdiv">
+                                                    <select id="categories" name="category_id_0" class="form-control" onchange="get_subcategories(this.value, 0);" required>
+                                                        <option value=""><?php echo trans('select_category'); ?></option>
+                                                        <?php if (!empty($this->parent_categories)):
+                                                            foreach ($this->parent_categories as $item): ?>
+                                                                <option value="<?php echo html_escape($item->id); ?>"><?php echo category_name($item); ?></option>
+                                                            <?php endforeach;
+                                                        endif; ?>
+                                                    </select>
                                                 </div>
-                                                <div class="form-group col-6">
-                                                    <label class="control-label"><?php echo trans("stock_product"); ?></label>
-                                                    <input type="number" name="" class="form-control form-input" placeholder="<?php echo trans("stock_product"); ?>">
-                                                </div>
+                                                <div id="subcategories_container"></div>
                                             </div>
-                                            <div class="row">
-                                                <div class="form-group col-6">
-                                                    <label class="control-label"><?php echo trans("category_made_in"); ?></label>
-                                                    <input type="text" name="" class="form-control form-input" placeholder="<?php echo trans("category_made_in"); ?>">
-                                                </div>
-                                                <div class="form-group col-6">
-                                                    <label class="control-label"><?php echo trans("code_kbki"); ?></label>
-                                                    <input type="number" name="" class="form-control form-input" placeholder="<?php echo trans("code_kbki"); ?>">
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="form-group col-6">
-                                                    <label class="control-label"><?php echo trans("delivery_time"); ?></label>
-                                                    <input type="text" name="" class="form-control form-input" placeholder="<?php echo trans("delivery_time"); ?>">
-                                                </div>
-                                                <div class="form-group col-6">
-                                                    <label class="control-label"><?php echo trans("shipping_way"); ?></label>
-                                                    <input type="text" name="" class="form-control form-input" placeholder="<?php echo trans("shipping_way"); ?>">
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="form-group col-6">
-                                                    <label class="control-label"><?php echo trans("sku"); ?>&nbsp;(<?php echo trans("product_code"); ?>)</label>
-                                                    <input type="text" name="sku" class="form-control form-input" placeholder="<?php echo trans("sku"); ?>">
-                                                </div>
-                                            </div>
+
                                             <div class="form-group">
                                                 <label class="control-label"><?php echo trans("description"); ?></label>
                                                 <div class="row">
@@ -237,7 +180,7 @@
         var subcategories = get_subcategories_array(category_id);
         var date = new Date();
         //reset subcategories
-        $('.subcategory-select').each(function() {
+        $('.subcategory-select').each(function () {
             if (parseInt($(this).attr('data-select-id')) > parseInt(data_select_id)) {
                 $(this).remove();
             }
@@ -256,7 +199,7 @@
             $('#subcategories_container').append(select_tag);
         }
         //remove empty selectdivs
-        $(".selectdiv").each(function() {
+        $(".selectdiv").each(function () {
             if ($(this).children('select').length == 0) {
                 $(this).remove();
             }
@@ -294,12 +237,12 @@
         window.opener.CKEDITOR.tools.callFunction(1, fileUrl);
     }
 
-    CKEDITOR.on('dialogDefinition', function(ev) {
+    CKEDITOR.on('dialogDefinition', function (ev) {
         var editor = ev.editor;
         var dialogDefinition = ev.data.definition;
 
         // This function will be called when the user will pick a file in file manager
-        var cleanUpFuncRef = CKEDITOR.tools.addFunction(function(a) {
+        var cleanUpFuncRef = CKEDITOR.tools.addFunction(function (a) {
             $('#ckFileManagerModal').modal('hide');
             CKEDITOR.tools.callFunction(1, a, "");
         });
@@ -307,7 +250,7 @@
         for (var i = 0; i < tabCount; i++) {
             var browseButton = dialogDefinition.contents[i].get('browse');
             if (browseButton !== null) {
-                browseButton.onClick = function(dialog, i) {
+                browseButton.onClick = function (dialog, i) {
                     editor._.filebrowserSe = this;
                     var iframe = $('#ckFileManagerModal').find('iframe').attr({
                         src: editor.config.filebrowserBrowseUrl + '&CKEditor=body&CKEditorFuncNum=' + cleanUpFuncRef + '&langCode=en'
@@ -318,18 +261,18 @@
         }
     });
 
-    CKEDITOR.on('instanceReady', function(evt) {
-        $(document).on('click', '.btn_ck_add_image', function() {
+    CKEDITOR.on('instanceReady', function (evt) {
+        $(document).on('click', '.btn_ck_add_image', function () {
             if (evt.editor.name != undefined) {
                 evt.editor.execCommand('image');
             }
         });
-        $(document).on('click', '.btn_ck_add_video', function() {
+        $(document).on('click', '.btn_ck_add_video', function () {
             if (evt.editor.name != undefined) {
                 evt.editor.execCommand('videoembed');
             }
         });
-        $(document).on('click', '.btn_ck_add_iframe', function() {
+        $(document).on('click', '.btn_ck_add_iframe', function () {
             if (evt.editor.name != undefined) {
                 evt.editor.execCommand('iframe');
             }
