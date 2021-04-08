@@ -56,12 +56,11 @@
 						<div class="form-group">
 							<input type="number" name="npwp" class="form-control auth-form-input" placeholder="<?php echo trans("npwp"); ?>" value="<?php echo old("npwp"); ?>" required>
 						</div>
-						<div class="form-group">
-							<input type="number" name="nib" class="form-control auth-form-input" placeholder="<?php echo trans("nib"); ?>" value="<?php echo old("nib"); ?>" required>
-						</div>
-						<div class="form-group">
-							<input type="file" class="custom-file-input" id="validatedCustomFile" required>
-							<label class="custom-file-label" for="validatedCustomFile">Pilih file...</label>
+						<div class="row">
+							<div class="col-12 m-b-30">
+								<label class="control-label font-600"><?php echo trans("document_upload_title"); ?></label>
+								<?php $this->load->view("auth/_document_upload"); ?>
+							</div>
 						</div>
 						<div class="form-group">
 							<input type="text" name="complete_address" class="form-control auth-form-input" placeholder="<?php echo trans("complete_address"); ?>" value="<?php echo old("complete_address"); ?>" required>
@@ -80,6 +79,15 @@
 						</div>
 						<div class="form-group">
 							<input type="number" name="postal_code" class="form-control auth-form-input" placeholder="<?php echo trans("postal_code"); ?>" value="<?php echo old("postal_code"); ?>" required>
+						</div>
+						<div class="form-group">
+							<input type="number" name="nib" class="form-control auth-form-input" placeholder="<?php echo trans("nib"); ?>" value="<?php echo old("nib"); ?>" required>
+						</div>
+						<div class="row">
+							<div class="col-12 m-b-30">
+								<label class="control-label font-600"><?php echo trans("document_upload_title"); ?></label>
+								<?php $this->load->view("auth/_document_upload"); ?>
+							</div>
 						</div>
 						<h3 class="title-auth">2. <?php echo trans("bank_title"); ?></h3>
 						<div class="form-group">
@@ -111,8 +119,7 @@
 						<div class="form-group">
 							<input type="password" name="confirm_password" class="form-control auth-form-input" placeholder="<?php echo trans("password_confirm"); ?>" required>
 						</div>
-						<h3 class="title-auth">5. <?php echo trans("upload_doc_title"); ?></h3>
-						<div class="form-group m-t-5 m-b-20">
+						<div class="form-group m-t-30 m-b-20">
 							<div class="custom-control custom-checkbox custom-control-validate-input">
 								<input type="checkbox" class="custom-control-input" name="terms" id="checkbox_terms" required>
 								<?php $page_terms_condition = get_page_by_default_name("terms_conditions", $this->selected_lang->id); ?>
