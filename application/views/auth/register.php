@@ -31,25 +31,21 @@
 							<div class="bounce3"></div>
 						</div>
 						<h3 class="title-auth">1. <?php echo trans("profile_bussines"); ?></h3>
-						<fieldset class="form-group">
-							<div class="row">
-								<legend class="col-form-label col-sm-2 pt-0">Jenis Usaha</legend>
-								<div class="col-sm-10">
-									<div class="form-check">
-										<input class="form-check-input" type="radio" name="gridRadios" id="gridRadios1" value="option1" checked>
-										<label class="form-check-label" for="gridRadios1">
-											Badan Usaha
-										</label>
-									</div>
-									<div class="form-check">
-										<input class="form-check-input" type="radio" name="gridRadios" id="gridRadios2" value="option2">
-										<label class="form-check-label" for="gridRadios2">
-											Individu / Perorangan
-										</label>
-									</div>
-								</div>
+						<div class="form-row">
+							<div class="form-group col-md-12">
+								<label for="form_nosurat">Jenis Usaha</label>
+								<ul class="nav nav-pills">
+										<li class="nav-item col-md-6">
+											<label class="nav-link border border-dark text-center font-weight-bold" for="form_tipesurat1" id="label_tipesurat1" data-toggle="tab" aria-selected=""> Badan Usaha</label>
+											<input type="radio" name="tipesurat" id="form_tipesurat1" value="suratmasuk" style="display:none" checked>
+										</li>
+										<li class="nav-item col-md-6">
+											<label class="nav-link border border-dark text-center font-weight-bold" for="form_tipesurat2" id="label_tipesurat2" data-toggle="tab" aria-selected=""> Individu / Perorangan</label>
+											<input type="radio" name="tipesurat" id="form_tipesurat2" value="suratkeluar" style="display:none">
+										</li>
+								</ul>
 							</div>
-						</fieldset>
+						</div>
 						<div class="form-group">
 							<input type="text" name="bussines_name" class="form-control auth-form-input" placeholder="<?php echo trans("bussines_name"); ?>" value="<?php echo old("bussines_name"); ?>" maxlength="<?php echo $this->username_maxlength; ?>" required>
 						</div>
