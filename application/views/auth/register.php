@@ -1,4 +1,4 @@
-<?php defined('BASEPATH') OR exit('No direct script access allowed'); ?>
+<?php defined('BASEPATH') or exit('No direct script access allowed'); ?>
 <!-- Wrapper -->
 <div id="wrapper">
 	<div class="container">
@@ -6,12 +6,14 @@
 			<div class="auth-box">
 				<div class="row">
 					<div class="col-12">
-						<h1 class="title"><?php echo trans("register"); ?></h1>
+						<h1 class="title"><?php echo trans("seller_registrasion"); ?></h1>
 						<!-- form start -->
 						<?php
 						if ($recaptcha_status) {
-							echo form_open('register-post', ['id' => 'form_validate', 'class' => 'validate_terms',
-								'onsubmit' => "var serializedData = $(this).serializeArray();var recaptcha = ''; $.each(serializedData, function (i, field) { if (field.name == 'g-recaptcha-response') {recaptcha = field.value;}});if (recaptcha.length < 5) { $('.g-recaptcha>div').addClass('is-invalid');return false;} else { $('.g-recaptcha>div').removeClass('is-invalid');}"]);
+							echo form_open('register-post', [
+								'id' => 'form_validate', 'class' => 'validate_terms',
+								'onsubmit' => "var serializedData = $(this).serializeArray();var recaptcha = ''; $.each(serializedData, function (i, field) { if (field.name == 'g-recaptcha-response') {recaptcha = field.value;}});if (recaptcha.length < 5) { $('.g-recaptcha>div').addClass('is-invalid');return false;} else { $('.g-recaptcha>div').removeClass('is-invalid');}"
+							]);
 						} else {
 							echo form_open('register-post', ['id' => 'form_validate', 'class' => 'validate_terms']);
 						}
@@ -28,24 +30,88 @@
 							<div class="bounce2"></div>
 							<div class="bounce3"></div>
 						</div>
+						<h3 class="title-auth">1. <?php echo trans("profile_bussines"); ?></h3>
+						<fieldset class="form-group">
+							<div class="row">
+								<legend class="col-form-label col-sm-2 pt-0">Jenis Usaha</legend>
+								<div class="col-sm-10">
+									<div class="form-check">
+										<input class="form-check-input" type="radio" name="gridRadios" id="gridRadios1" value="option1" checked>
+										<label class="form-check-label" for="gridRadios1">
+											Badan Usaha
+										</label>
+									</div>
+									<div class="form-check">
+										<input class="form-check-input" type="radio" name="gridRadios" id="gridRadios2" value="option2">
+										<label class="form-check-label" for="gridRadios2">
+											Individu / Perorangan
+										</label>
+									</div>
+								</div>
+							</div>
+						</fieldset>
 						<div class="form-group">
-							<input type="text" name="username" class="form-control auth-form-input" placeholder="<?php echo trans("username"); ?>" value="<?php echo old("username"); ?>" maxlength="<?php echo $this->username_maxlength; ?>" required>
+							<input type="text" name="bussines_name" class="form-control auth-form-input" placeholder="<?php echo trans("bussines_name"); ?>" value="<?php echo old("bussines_name"); ?>" maxlength="<?php echo $this->username_maxlength; ?>" required>
 						</div>
-                        <div class="form-group">
-							<input type="text" name="first_name" class="form-control auth-form-input" placeholder="<?php echo trans("first_name"); ?>" value="<?php echo old("first_name"); ?>" maxlength="255" required>
+						<div class="form-group">
+							<input type="number" name="npwp" class="form-control auth-form-input" placeholder="<?php echo trans("npwp"); ?>" value="<?php echo old("npwp"); ?>" required>
 						</div>
-                        <div class="form-group">
-							<input type="text" name="last_name" class="form-control auth-form-input" placeholder="<?php echo trans("last_name"); ?>" value="<?php echo old("last_name"); ?>" maxlength="255" required>
+						<div class="form-group">
+							<input type="number" name="nib" class="form-control auth-form-input" placeholder="<?php echo trans("nib"); ?>" value="<?php echo old("nib"); ?>" required>
+						</div>
+						<div class="form-group">
+							<input type="file" class="custom-file-input" id="validatedCustomFile" required>
+							<label class="custom-file-label" for="validatedCustomFile">Pilih file...</label>
+						</div>
+						<div class="form-group">
+							<input type="text" name="complete_address" class="form-control auth-form-input" placeholder="<?php echo trans("complete_address"); ?>" value="<?php echo old("complete_address"); ?>" required>
+						</div>
+						<div class="form-group">
+							<input type="text" name="province" class="form-control auth-form-input" placeholder="<?php echo trans("province"); ?>" value="<?php echo old("province"); ?>" required>
+						</div>
+						<div class="form-group">
+							<input type="text" name="districs" class="form-control auth-form-input" placeholder="<?php echo trans("districs"); ?>" value="<?php echo old("districs"); ?>" required>
+						</div>
+						<div class="form-group">
+							<input type="text" name="sub_distric" class="form-control auth-form-input" placeholder="<?php echo trans("sub_distric"); ?>" value="<?php echo old("sub_distric"); ?>" required>
+						</div>
+						<div class="form-group">
+							<input type="text" name="village" class="form-control auth-form-input" placeholder="<?php echo trans("village"); ?>" value="<?php echo old("village"); ?>" required>
+						</div>
+						<div class="form-group">
+							<input type="number" name="postal_code" class="form-control auth-form-input" placeholder="<?php echo trans("postal_code"); ?>" value="<?php echo old("postal_code"); ?>" required>
+						</div>
+						<h3 class="title-auth">2. <?php echo trans("bank_title"); ?></h3>
+						<div class="form-group">
+							<input type="text" name="bank_name" class="form-control auth-form-input" placeholder="<?php echo trans("bank_name"); ?>" value="<?php echo old("bank_name"); ?>" required>
+						</div>
+						<div class="form-group">
+							<input type="number" name="account_number" class="form-control auth-form-input" placeholder="<?php echo trans("account_number"); ?>" value="<?php echo old("account_number"); ?>" required>
+						</div>
+						<div class="form-group">
+							<input type="text" name="bank_account_holder" class="form-control auth-form-input" placeholder="<?php echo trans("bank_account_holder"); ?>" value="<?php echo old("bank_account_holder"); ?>" required>
+						</div>
+						<h3 class="title-auth">3. <?php echo trans("responsible_title"); ?></h3>
+						<div class="form-group">
+							<input type="text" name="username" class="form-control auth-form-input" placeholder="<?php echo trans("full_name"); ?>" value="<?php echo old("full_name"); ?>" maxlength="<?php echo $this->username_maxlength; ?>" required>
 						</div>
 						<div class="form-group">
 							<input type="email" name="email" class="form-control auth-form-input" placeholder="<?php echo trans("email_address"); ?>" value="<?php echo old("email"); ?>" required>
 						</div>
+						<div class="form-group">
+							<input type="number" name="phone_number" class="form-control auth-form-input" placeholder="<?php echo trans("phone_number"); ?>" value="<?php echo old("phone_number"); ?>" required>
+						</div>
+						<div class="form-group">
+							<input type="number" name="nik" class="form-control auth-form-input" placeholder="<?php echo trans("nik"); ?>" value="<?php echo old("nik"); ?>" required>
+						</div>
+						<h3 class="title-auth">4. <?php echo trans("password_title"); ?></h3>
 						<div class="form-group">
 							<input type="password" name="password" class="form-control auth-form-input" placeholder="<?php echo trans("password"); ?>" value="<?php echo old("password"); ?>" required>
 						</div>
 						<div class="form-group">
 							<input type="password" name="confirm_password" class="form-control auth-form-input" placeholder="<?php echo trans("password_confirm"); ?>" required>
 						</div>
+						<h3 class="title-auth">5. <?php echo trans("upload_doc_title"); ?></h3>
 						<div class="form-group m-t-5 m-b-20">
 							<div class="custom-control custom-checkbox custom-control-validate-input">
 								<input type="checkbox" class="custom-control-input" name="terms" id="checkbox_terms" required>
@@ -53,7 +119,7 @@
 								<label for="checkbox_terms" class="custom-control-label"><?php echo trans("terms_conditions_exp"); ?>&nbsp;<a href="<?php echo lang_base_url() . $page_terms_condition->slug; ?>" class="link-terms" target="_blank"><strong><?php echo html_escape($page_terms_condition->title); ?></strong></a></label>
 							</div>
 						</div>
-						<?php if ($recaptcha_status): ?>
+						<?php if ($recaptcha_status) : ?>
 							<div class="recaptcha-cnt">
 								<?php generate_recaptcha(); ?>
 							</div>
