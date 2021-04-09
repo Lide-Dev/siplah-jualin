@@ -6211,12 +6211,11 @@ img {
 }
 
 .login-modal {
-    max-width: 330px;
+    max-width: 430px;
     margin: 0 auto;
 }
 
 .login-modal .auth-box {
-    width: auto;
     padding: 25px 30px;
     border: 0 !important;
     margin-top: 0 !important;

@@ -282,68 +282,65 @@
                         <button type="button" class="close" data-dismiss="modal"><i class="icon-close"></i></button>
                         <h4 class="title"><?php echo trans("login_as"); ?></h4>
                         <!-- Login As -->
-                        <section class="py-2 bg-login-as py-2">
-                            <div class="container">
-                                <div class="row mb-2">
-                                    <div class="col-md-12">
-                                        <a href="<?= base_url('login/buyer') ?>" class="text-dark">
-                                            <div class="card shadow">
-                                                <div class="card-body">
-                                                    <div class="row">
-                                                        <div class="col-xs-1 col-sm-2 col-md-1 mr-3">
-                                                            <i class="fa fa-tachometer fa-4x "></i></br>
-                                                        </div>
-                                                        <div class="col-xs-8 col-sm-7 col-md-8">
-                                                            <h5>Pembeli</h5>
-                                                            <p>Masuk Sebagai Pembeli</p>
-                                                        </div>
+                        <section class="container">
+                            <div class="row mb-2">
+                                <div class="col-sm-12">
+                                    <a href="<?= base_url('login/buyer') ?>" class="text-dark">
+                                        <div class="card shadow">
+                                            <div class="card-body">
+                                                <div class="row">
+                                                    <div class="col-xs-1 col-sm-2 col-md-1 mr-3">
+                                                        <i class="fa fa-tachometer fa-4x "></i></br>
+                                                    </div>
+                                                    <div class="col-xs-8 col-sm-7 col-md-8">
+                                                        <h5>Pembeli</h5>
+                                                        <p>Masuk Sebagai Pembeli</p>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </a>
-                                    </div>
+                                        </div>
+                                    </a>
                                 </div>
-                                <div class="row mb-2">
-                                    <div class="col-md-12">
-                                        <a href="<?= base_url('login/seller') ?>" class="text-dark">
-                                            <div class="card shadow">
-                                                <div class="card-body">
-                                                    <div class="row">
-                                                        <div class="col-xs-1 col-sm-2 col-md-1 mr-3">
-                                                            <i class="fa fa-tachometer fa-4x "></i></br>
-                                                        </div>
-                                                        <div class="col-xs-8 col-sm-7 col-md-8">
-                                                            <h5>Penjual</h5>
-                                                            <p>Masuk Sebagai Penjual</p>
-                                                        </div>
+                            </div>
+                            <div class="row mb-2">
+                                <div class="col-sm-12">
+                                    <a href="<?= base_url('login/seller') ?>" class="text-dark">
+                                        <div class="card shadow">
+                                            <div class="card-body">
+                                                <div class="row">
+                                                    <div class="col-xs-1 col-sm-2 col-md-1 mr-3">
+                                                        <i class="fa fa-tachometer fa-4x "></i></br>
+                                                    </div>
+                                                    <div class="col-xs-8 col-sm-7 col-md-8">
+                                                        <h5>Penjual</h5>
+                                                        <p>Masuk Sebagai Penjual</p>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </a>
-                                    </div>
+                                        </div>
+                                    </a>
                                 </div>
-                                <div class="row mb-2">
-                                    <div class="col-md-12">
-                                        <a href="<?= base_url('admin/supervisor') ?>" class="text-dark">
-                                            <div class="card shadow">
-                                                <div class="card-body">
-                                                    <div class="row">
-                                                        <div class="col-xs-1 col-sm-2 col-md-1 mr-3">
-                                                            <i class="fa fa-tachometer fa-4x "></i></br>
-                                                        </div>
-                                                        <div class="col-xs-8 col-sm-7 col-md-8">
-                                                            <h5>Pengawas</h5>
-                                                            <p>Masuk Sebagai Pengawas</p>
-                                                        </div>
+                            </div>
+                            <div class="row mb-2">
+                                <div class="col-sm-12">
+                                    <a href="<?= base_url('admin/supervisor') ?>" class="text-dark">
+                                        <div class="card shadow">
+                                            <div class="card-body">
+                                                <div class="row">
+                                                    <div class="col-xs-1 col-sm-2 col-md-1 mr-3">
+                                                        <i class="fa fa-tachometer fa-4x "></i></br>
+                                                    </div>
+                                                    <div class="col-xs-8 col-sm-7 col-md-8">
+                                                        <h5>Pengawas</h5>
+                                                        <p>Masuk Sebagai Pengawas</p>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </a>
-                                    </div>
+                                        </div>
+                                    </a>
                                 </div>
                         </section>
                         <!-- End Of Login As -->
-
                     </div>
                 </div>
             </div>

@@ -53,6 +53,21 @@
 							<input type="number" name="npwp" class="form-control auth-form-input" placeholder="<?php echo trans("npwp"); ?>" value="<?php echo old("npwp"); ?>" required>
 						</div>
 						<div class="row">
+							<div class="form-group">
+								<label class="control-label font-600 col-sm-6" for="">Status Wajib Pajak</label>
+								<ul class="nav nav-pills">
+									<li class="nav-item col-sm-6">
+										<label class="nav-link border border-muted text-center font-weight-bold" for="" id="" data-toggle="tab" aria-selected=""> PKP</label>
+										<input type="radio" name="" id="" value="" style="display:none" checked>
+									</li>
+									<li class="nav-item col-sm-6">
+										<label class="nav-link border border-muted text-center font-weight-bold" for="" id="" data-toggle="tab" aria-selected=""> Non PKP</label>
+										<input type="radio" name="" id="" value="" style="display:none">
+									</li>
+								</ul>
+							</div>
+						</div>
+						<div class="row">
 							<div class="col-12 m-b-30">
 								<label class="control-label font-600"><?php echo trans("upload_npwp"); ?></label>
 								<?php $this->load->view("auth/_document_upload"); ?>
