@@ -270,19 +270,38 @@ class Auth_controller extends Home_Core_Controller
     /**
      * Register
      */
-    public function register()
+    public function register_seller()
     {
         //check if logged in
         if ($this->auth_check) {
             redirect(lang_base_url());
         }
 
-        $data['title'] = trans("register");
-        $data['description'] = trans("register") . " - " . $this->app_name;
-        $data['keywords'] = trans("register") . "," . $this->app_name;
+        $data['title'] = trans("register_seller");
+        $data['description'] = trans("register_seller") . " - " . $this->app_name;
+        $data['keywords'] = trans("register_seller") . "," . $this->app_name;
 
         $this->load->view('partials/_header', $data);
-        $this->load->view('auth/register');
+        $this->load->view('auth/register_seller');
+        $this->load->view('partials/_footer');
+    }
+
+    /**
+     * Register Buyer
+     */
+    public function register_buyer()
+    {
+        //check if logged in
+        if ($this->auth_check) {
+            redirect(lang_base_url());
+        }
+
+        $data['title'] = trans("register_buyer");
+        $data['description'] = trans("register_buyer") . " - " . $this->app_name;
+        $data['keywords'] = trans("register_buyer") . "," . $this->app_name;
+
+        $this->load->view('partials/_header', $data);
+        $this->load->view('auth/register_buyer');
         $this->load->view('partials/_footer');
     }
 

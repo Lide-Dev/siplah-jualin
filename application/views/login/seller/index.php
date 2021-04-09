@@ -6,7 +6,7 @@
 			<div class="auth-box">
 				<div class="row">
 					<div class="col-12">
-						<h1 class="title"><?php echo trans("login_as_buyer"); ?></h1>
+						<h1 class="title"><?php echo trans("login_as_seller"); ?></h1>
 						<!-- form start -->
                         <form id="form_login" novalidate="novalidate">
                             <div class="social-login-cnt">
@@ -27,7 +27,7 @@
                                 <button type="submit" class="btn btn-md btn-custom btn-block"><?php echo trans("login"); ?></button>
                             </div>
 
-                            <p class="p-social-media m-0 m-t-5"><?php echo trans("dont_have_account"); ?>&nbsp;<a href="<?php echo generate_url("register_buyer"); ?>" class="link"><?php echo trans("register_buyer"); ?></a></p>
+                            <p class="p-social-media m-0 m-t-5"><?php echo trans("dont_have_account"); ?>&nbsp;<a href="<?php echo generate_url("register_seller"); ?>" class="link"><?php echo trans("register_seller"); ?></a></p>
                         </form>
                         <!-- form end -->
 					</div>

@@ -70,7 +70,8 @@ foreach ($languages as $language) {
         }
 
         //auth
-        $route[$key . $routes->register]['GET'] = 'auth_controller/register';
+        $route[$key . $routes->register_buyer]['GET'] = 'auth_controller/register_buyer';
+        $route[$key . $routes->register_seller]['GET'] = 'auth_controller/register_seller';
         $route[$key . $routes->forgot_password]['GET'] = 'auth_controller/forgot_password';
         $route[$key . $routes->reset_password]['GET'] = 'auth_controller/reset_password';
         //profile
@@ -171,6 +172,7 @@ include_once "routes_static.php";
 $route[$routes->admin] = 'admin_controller/index';
 //login
 $route[$routes->admin . '/login'] = 'common_controller/admin_login';
+$route[$routes->admin . '/login_supervisor'] = 'common_controller/admin_login';
 /*navigation routes*/
 $route[$routes->admin . '/navigation'] = 'admin_controller/navigation';
 /*slider routes*/

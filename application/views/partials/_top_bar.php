@@ -141,7 +141,7 @@
                             <a href="javascript:void(0)" class="nav-link">FAQ</a>
                         </li>
                         <li class="nav-item">
-                        <a href="<?php echo generate_url("register"); ?>" class="nav-link"><?php echo trans("register_as_seller"); ?></a>
+                        <a href="<?php echo generate_url("register_seller"); ?>" class="nav-link"><?php echo trans("register_as_seller"); ?></a>
                         </li>
                     <?php endif; ?>
                 </ul>

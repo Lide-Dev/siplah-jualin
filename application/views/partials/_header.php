@@ -293,7 +293,7 @@
                                                     <img class="img-fluid" src="<?php echo base_url(); ?>assets/img/register-icons/customer_icon.svg">
                                                     </div>
                                                     <div class="col-5 col-md-6">
-                                                        <h5>Pembeli</h5>
+                                                        <h5 class="control-label font-600">Pembeli</h5>
                                                         <p>Masuk Sebagai Pembeli</p>
                                                     </div>
                                                 </div>
@@ -312,7 +312,7 @@
                                                     <img class="img-fluid" src="<?php echo base_url(); ?>assets/img/register-icons/seller_icon.svg">
                                                     </div>
                                                     <div class="col-5 col-md-6">
-                                                        <h5>Penjual</h5>
+                                                        <h5 class="control-label font-600">Penjual</h5>
                                                         <p>Masuk Sebagai Penjual</p>
                                                     </div>
                                                 </div>
@@ -323,7 +323,7 @@
                             </div>
                             <div class="row mb-2">
                                 <div class="col-sm-12">
-                                    <a href="<?= base_url('admin/login') ?>" class="text-dark">
+                                    <a href="<?= base_url('admin/login_supervisor') ?>" class="text-dark">
                                         <div class="card shadow">
                                             <div class="card-body">
                                                 <div class="row">
@@ -331,7 +331,7 @@
                                                     <img class="img-fluid" src="<?php echo base_url(); ?>assets/img/register-icons/supervisor_icon.svg">
                                                     </div>
                                                     <div class="col-5 col-md-6">
-                                                        <h5>Pengawas</h5>
+                                                        <h5 class="control-label font-600">Pengawas</h5>
                                                         <p>Masuk Sebagai Pengawas</p>
                                                     </div>
                                                 </div>

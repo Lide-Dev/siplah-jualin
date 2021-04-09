@@ -6,7 +6,7 @@
 			<div class="auth-box">
 				<div class="row">
 					<div class="col-12">
-						<h1 class="title"><?php echo trans("seller_registrasion"); ?></h1>
+						<h1 class="title"><?php echo trans("register_seller"); ?></h1>
 						<!-- form start -->
 						<?php
 						if ($recaptcha_status) {
