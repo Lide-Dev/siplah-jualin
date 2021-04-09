@@ -1589,4 +1589,17 @@ class Admin_controller extends Admin_Core_Controller
         $action = $this->input->post('action', true);
         $this->location_model->activate_inactivate_countries($action);
     }
+
+    /**
+     * Log Activity
+     */
+    public function log_activity()
+    {
+        $data['title'] = trans("log_activity");
+        $this->load->view('admin/includes/_header', $data);
+        $this->load->view('admin/log_activity/log_activity', $data);
+        $this->load->view('admin/includes/_footer');
+    }
 }
+
+

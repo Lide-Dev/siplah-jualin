@@ -14,10 +14,7 @@
                 <?php $this->load->view('admin/includes/_messages'); ?>
                 <div class="form-group">
                     <label><?php echo trans('menu_limit'); ?>&nbsp;(<?php echo trans("number_of_links_in_menu"); ?>)</label>
-                    <input type="number" class="form-control" name="menu_limit"
-                           placeholder="<?php echo trans('menu_limit'); ?>"
-                           value="<?php echo $this->general_settings->menu_limit; ?>" min="1"
-                           max="100" style="max-width: 400px;" required>
+                    <input type="number" class="form-control" name="menu_limit" placeholder="<?php echo trans('menu_limit'); ?>" value="<?php echo $this->general_settings->menu_limit; ?>" min="1" max="100" style="max-width: 400px;" required>
                 </div>
                 <div class="form-group">
                     <label><?php echo trans('navigation_template'); ?></label>
@@ -41,14 +38,15 @@
                 <button type="submit" class="btn btn-primary pull-right"><?php echo trans('save_changes'); ?></button>
             </div>
             <!-- /.box-footer -->
-            <?php echo form_close(); ?><!-- form end -->
+            <?php echo form_close(); ?>
+            <!-- form end -->
         </div>
         <!-- /.box -->
     </div>
 </div>
 
 <script>
-    $(".nav-template-item").click(function () {
+    $(".nav-template-item").click(function() {
         $(".nav-template-item").removeClass("active");
         $(this).addClass("active");
         var id = $(this).attr("data-nav-id");

@@ -259,6 +259,8 @@ $route[$routes->admin . '/update-state/(:num)'] = 'admin_controller/update_state
 $route[$routes->admin . '/cities'] = 'admin_controller/cities';
 $route[$routes->admin . '/add-city'] = 'admin_controller/add_city';
 $route[$routes->admin . '/update-city/(:num)'] = 'admin_controller/update_city/$1';
+/*Log Activity*/
+$route[$routes->admin . '/log_activity'] = 'admin_controller/log_activity';
 /*users routes*/
 $route[$routes->admin . '/members'] = 'admin_controller/members';
 $route[$routes->admin . '/vendors'] = 'admin_controller/vendors';

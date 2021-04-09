@@ -335,6 +335,11 @@
                         <li><a href="<?php echo admin_url(); ?>cities"> <?php echo trans("cities"); ?></a></li>
                     </ul>
                 </li>
+                <li>
+                    <a href="<?php echo admin_url(); ?>log_activity">
+                        <i class="fa fa-list"></i> <span><?php echo trans("log_activity"); ?></span>
+                    </a>
+                </li>
 
                 <li class="header text-uppercase"><?php echo trans("settings"); ?></li>
                 <li>
