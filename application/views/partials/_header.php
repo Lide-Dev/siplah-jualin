@@ -289,10 +289,10 @@
                                         <div class="card shadow">
                                             <div class="card-body">
                                                 <div class="row">
-                                                    <div class="col-xs-1 col-sm-2 col-md-1 mr-3">
-                                                        <i class="fa fa-tachometer fa-4x "></i></br>
+                                                    <div class="col-6 col-md-4 mr-3">
+                                                    <img class="img-fluid" src="<?php echo base_url(); ?>assets/img/register-icons/customer_icon.svg">
                                                     </div>
-                                                    <div class="col-xs-8 col-sm-7 col-md-8">
+                                                    <div class="col-5 col-md-6">
                                                         <h5>Pembeli</h5>
                                                         <p>Masuk Sebagai Pembeli</p>
                                                     </div>
@@ -308,10 +308,10 @@
                                         <div class="card shadow">
                                             <div class="card-body">
                                                 <div class="row">
-                                                    <div class="col-xs-1 col-sm-2 col-md-1 mr-3">
-                                                        <i class="fa fa-tachometer fa-4x "></i></br>
+                                                    <div class="col-6 col-md-4 mr-3">
+                                                    <img class="img-fluid" src="<?php echo base_url(); ?>assets/img/register-icons/seller_icon.svg">
                                                     </div>
-                                                    <div class="col-xs-8 col-sm-7 col-md-8">
+                                                    <div class="col-5 col-md-6">
                                                         <h5>Penjual</h5>
                                                         <p>Masuk Sebagai Penjual</p>
                                                     </div>
@@ -323,14 +323,14 @@
                             </div>
                             <div class="row mb-2">
                                 <div class="col-sm-12">
-                                    <a href="<?= base_url('admin/supervisor') ?>" class="text-dark">
+                                    <a href="<?= base_url('admin/login') ?>" class="text-dark">
                                         <div class="card shadow">
                                             <div class="card-body">
                                                 <div class="row">
-                                                    <div class="col-xs-1 col-sm-2 col-md-1 mr-3">
-                                                        <i class="fa fa-tachometer fa-4x "></i></br>
+                                                    <div class="col-6 col-md-4 mr-3">
+                                                    <img class="img-fluid" src="<?php echo base_url(); ?>assets/img/register-icons/supervisor_icon.svg">
                                                     </div>
-                                                    <div class="col-xs-8 col-sm-7 col-md-8">
+                                                    <div class="col-5 col-md-6">
                                                         <h5>Pengawas</h5>
                                                         <p>Masuk Sebagai Pengawas</p>
                                                     </div>
