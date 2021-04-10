@@ -54,6 +54,12 @@
                                                             <label><?php echo trans("total"); ?>:</label>
                                                             <strong class="lbl-price"><?php echo price_formatted($cart_item->total_price, $cart_item->currency); ?></strong>
                                                         </div>
+                                                        <!-- LABEL PPN -->
+                                                        <div class="list-item">
+                                                            <label><?php echo trans("ppn"); ?>:</label>
+                                                            <strong class="lbl-price"><?php echo price_formatted($cart_item->total_price, $cart_item->currency); ?></strong>
+                                                        </div>
+                                                        <!-- END OF LABEL PPN -->
                                                         <?php if (!empty($product->vat_rate)): ?>
                                                             <div class="list-item">
                                                                 <label><?php echo trans("vat"); ?>&nbsp;(<?php echo $product->vat_rate; ?>%):</label>
@@ -66,9 +72,9 @@
                                                                 <strong><?php echo price_formatted($cart_item->shipping_cost, $cart_item->currency); ?></strong>
                                                             </div>
                                                         <?php endif; ?>
-                                                        <a href="javascript:void(0)" class="btn btn-md btn-outline-danger btn-cart-remove" onclick="remove_from_cart('<?php echo $cart_item->cart_item_id; ?>');"><i class="icon-close"></i> <?php echo trans("remove"); ?></a>
+                                                        <a href="javascript:void(0)" class="btn btn-md btn-outline-danger btn-cart-remove mr-5" onclick="remove_from_cart('<?php echo $cart_item->cart_item_id; ?>');"><i class="icon-close"></i> <?php echo trans("remove"); ?></a>
                                                         <!-- BUTTON NEGO AND CHAT -->
-                                                        <a href="<?php echo generate_url("nego"); ?>" class="btn btn-md btn-outline-success btn-cart-remove text-center ml-5"> <?php echo trans("nego"); ?></a>
+                                                        <a href="<?php echo generate_url("nego"); ?>" class="btn btn-md btn-outline-success btn-cart-remove text-center"> <?php echo trans("nego"); ?></a>
                                                         <a href="<?php echo generate_url("chat_seller"); ?>" class="btn btn-md btn-outline-primary btn-cart-remove text-center"> <?php echo trans("chat_seller"); ?></a>
                                                         <!-- END OF BUTTON NEGO AND CHAT -->
                                                     </div>
