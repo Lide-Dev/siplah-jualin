@@ -1,4 +1,4 @@
-<?php defined('BASEPATH') OR exit('No direct script access allowed'); ?>
+<?php defined('BASEPATH') or exit('No direct script access allowed'); ?>
 <!-- Wrapper -->
 <div id="wrapper">
 	<div class="container">
@@ -29,65 +29,83 @@
 						<!-- include message block -->
 						<?php $this->load->view('partials/_messages'); ?>
 
+						<!-- SEARCH -->
+						<div class="top-search-bar">
+							<?php echo form_open(generate_url('search'), ['id' => 'form_validate_search', 'class' => 'form_search_main', 'method' => 'get']); ?>
+							<?php if ($this->general_settings->multi_vendor_system == 1) : ?>
+								<div class="right">
+									<input type="text" name="search" maxlength="300" pattern=".*\S+.*" id="input_search" class="form-control input-search" value="<?php echo (!empty($filter_search)) ? $filter_search : ''; ?>" placeholder="<?php echo trans("search_exp"); ?>" required autocomplete="off">
+									<button class="btn btn-default btn-search"><i class="icon-search"></i></button>
+									<div id="response_search_results" class="search-results-ajax"></div>
+								</div>
+							<?php else : ?>
+								<input type="text" name="search" maxlength="300" pattern=".*\S+.*" id="input_search" class="form-control input-search" value="<?php echo (!empty($filter_search)) ? $filter_search : ''; ?>" placeholder="<?php echo trans("search_products"); ?>" required autocomplete="off">
+								<button class="btn btn-default btn-search"><i class="icon-search"></i></button>
+								<div id="response_search_results" class="search-results-ajax"></div>
+							<?php endif; ?>
+							<?php echo form_close(); ?>
+						</div>
+						<!-- END OF SEARCH -->
+
 						<div class="table-responsive">
-							<table class="table table-orders table-striped">
+							<table id="dtBasicExample" class="table table-orders table-striped">
 								<thead>
-								<tr>
-									<th scope="col"><?php echo trans("sale"); ?></th>
-									<th scope="col"><?php echo trans("total"); ?></th>
-									<th scope="col"><?php echo trans("payment"); ?></th>
-									<th scope="col"><?php echo trans("status"); ?></th>
-									<th scope="col"><?php echo trans("date"); ?></th>
-									<th scope="col"><?php echo trans("options"); ?></th>
-								</tr>
+									<tr>
+										<th scope="col"><?php echo trans("sale"); ?></th>
+										<th scope="col"><?php echo trans("total"); ?></th>
+										<th scope="col"><?php echo trans("payment"); ?></th>
+										<th scope="col"><?php echo trans("status"); ?></th>
+										<th scope="col"><?php echo trans("date"); ?></th>
+										<th scope="col"><?php echo trans("options"); ?></th>
+									</tr>
 								</thead>
 								<tbody>
-								<?php if (!empty($orders)): ?>
-									<?php foreach ($orders as $order):
-										$sale = get_order($order->id);
-										$total = $this->order_model->get_seller_total_price($order->id);
-										if (!empty($sale)):?>
-											<tr>
-												<td>#<?php echo $sale->order_number; ?></td>
-												<td><?php echo price_formatted($total, $sale->price_currency); ?></td>
-												<td>
-													<?php if ($sale->payment_status == 'payment_received'):
-														echo trans("payment_received");
-													else:
-														echo trans("awaiting_payment");
-													endif; ?>
-												</td>
-												<td>
-													<strong class="font-600">
-														<?php if ($sale->payment_status == 'awaiting_payment'):
-															if ($sale->payment_method == 'Cash On Delivery') {
-																echo trans("order_processing");
-															} else {
-																echo trans("awaiting_payment");
-															}
-														else:
-															if ($active_tab == "active_sales"):
-																echo trans("order_processing");
-															else:
-																echo trans("completed");
-															endif;
+									<?php if (!empty($orders)) : ?>
+										<?php foreach ($orders as $order) :
+											$sale = get_order($order->id);
+											$total = $this->order_model->get_seller_total_price($order->id);
+											if (!empty($sale)) : ?>
+												<tr>
+													<td>#<?php echo $sale->order_number; ?></td>
+													<td><?php echo price_formatted($total, $sale->price_currency); ?></td>
+													<td>
+														<?php if ($sale->payment_status == 'payment_received') :
+															echo trans("payment_received");
+														else :
+															echo trans("awaiting_payment");
 														endif; ?>
-													</strong>
-												</td>
-												<td><?php echo date("Y-m-d / h:i", strtotime($sale->created_at)); ?></td>
-												<td>
-													<a href="<?php echo generate_url("sale"); ?>/<?php echo $sale->order_number; ?>" class="btn btn-sm btn-table-info"><?php echo trans("details"); ?></a>
-												</td>
-											</tr>
+													</td>
+													<td>
+														<strong class="font-600">
+															<?php if ($sale->payment_status == 'awaiting_payment') :
+																if ($sale->payment_method == 'Cash On Delivery') {
+																	echo trans("order_processing");
+																} else {
+																	echo trans("awaiting_payment");
+																}
+															else :
+																if ($active_tab == "active_sales") :
+																	echo trans("order_processing");
+																else :
+																	echo trans("completed");
+																endif;
+															endif; ?>
+														</strong>
+													</td>
+													<td><?php echo date("Y-m-d / h:i", strtotime($sale->created_at)); ?></td>
+													<td>
+														<a href="<?php echo generate_url("sale"); ?>/<?php echo $sale->order_number; ?>" class="btn btn-sm btn-table-info"><?php echo trans("details"); ?></a>
+													</td>
+												</tr>
 										<?php endif;
-									endforeach; ?>
-								<?php endif; ?>
+										endforeach; ?>
+									<?php endif; ?>
 								</tbody>
 							</table>
 						</div>
 
 
-						<?php if (empty($orders)): ?>
+						<?php if (empty($orders)) : ?>
 							<p class="text-center">
 								<?php echo trans("no_records_found"); ?>
 							</p>
@@ -104,4 +122,3 @@
 	</div>
 </div>
 <!-- Wrapper End-->
-

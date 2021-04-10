@@ -66,7 +66,11 @@
                                                                 <strong><?php echo price_formatted($cart_item->shipping_cost, $cart_item->currency); ?></strong>
                                                             </div>
                                                         <?php endif; ?>
-                                                        <a href="javascript:void(0)" class="btn btn-md btn-outline-gray btn-cart-remove" onclick="remove_from_cart('<?php echo $cart_item->cart_item_id; ?>');"><i class="icon-close"></i> <?php echo trans("remove"); ?></a>
+                                                        <a href="javascript:void(0)" class="btn btn-md btn-outline-danger btn-cart-remove" onclick="remove_from_cart('<?php echo $cart_item->cart_item_id; ?>');"><i class="icon-close"></i> <?php echo trans("remove"); ?></a>
+                                                        <!-- BUTTON NEGO AND CHAT -->
+                                                        <a href="<?php echo generate_url("nego"); ?>" class="btn btn-md btn-outline-success btn-cart-remove text-center ml-5"> <?php echo trans("nego"); ?></a>
+                                                        <a href="<?php echo generate_url("chat_seller"); ?>" class="btn btn-md btn-outline-primary btn-cart-remove text-center"> <?php echo trans("chat_seller"); ?></a>
+                                                        <!-- END OF BUTTON NEGO AND CHAT -->
                                                     </div>
                                                     <div class="cart-item-quantity">
                                                         <?php if ($cart_item->purchase_type == 'bidding'): ?>
