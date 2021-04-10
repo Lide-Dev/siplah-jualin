@@ -1,19 +1,19 @@
-<?php defined('BASEPATH') OR exit('No direct script access allowed'); ?>
+<?php defined('BASEPATH') or exit('No direct script access allowed'); ?>
 <!-- Wrapper -->
 <div id="wrapper">
     <div class="container">
         <div class="row">
             <div class="col-12">
-                <?php if ($cart_items != null): ?>
+                <?php if ($cart_items != null) : ?>
                     <div class="shopping-cart">
                         <div class="row">
                             <div class="col-sm-12 col-lg-8">
                                 <div class="left">
                                     <h1 class="cart-section-title"><?php echo trans("my_cart"); ?> (<?php echo get_cart_product_count(); ?>)</h1>
-                                    <?php if (!empty($cart_items)):
-                                        foreach ($cart_items as $cart_item):
+                                    <?php if (!empty($cart_items)) :
+                                        foreach ($cart_items as $cart_item) :
                                             $product = get_available_product($cart_item->product_id);
-                                            if (!empty($product)): ?>
+                                            if (!empty($product)) : ?>
                                                 <div class="item">
                                                     <div class="cart-item-image">
                                                         <div class="img-cart-product">
@@ -23,7 +23,7 @@
                                                         </div>
                                                     </div>
                                                     <div class="cart-item-details">
-                                                        <?php if ($product->product_type == 'digital'): ?>
+                                                        <?php if ($product->product_type == 'digital') : ?>
                                                             <div class="list-item">
                                                                 <label class="label-instant-download label-instant-download-sm"><i class="icon-download-solid"></i><?php echo trans("instant_download"); ?></label>
                                                             </div>
@@ -32,7 +32,7 @@
                                                             <a href="<?php echo generate_product_url($product); ?>">
                                                                 <?php echo html_escape($cart_item->product_title); ?>
                                                             </a>
-                                                            <?php if (empty($cart_item->is_stock_available)): ?>
+                                                            <?php if (empty($cart_item->is_stock_available)) : ?>
                                                                 <div class="lbl-enough-quantity"><?php echo trans("out_of_stock"); ?></div>
                                                             <?php endif; ?>
                                                         </div>
@@ -43,7 +43,7 @@
                                                             <label><?php echo trans("unit_price"); ?>:</label>
                                                             <strong class="lbl-price">
                                                                 <?php echo price_formatted($cart_item->unit_price, $cart_item->currency);
-                                                                if (!empty($cart_item->discount_rate)): ?>
+                                                                if (!empty($cart_item->discount_rate)) : ?>
                                                                     <span class="discount-rate-cart">
                                                                         (<?php echo discount_rate_format($cart_item->discount_rate); ?>)
                                                                     </span>
@@ -60,29 +60,26 @@
                                                             <strong class="lbl-price"><?php echo price_formatted($cart_item->total_price, $cart_item->currency); ?></strong>
                                                         </div>
                                                         <!-- END OF LABEL PPN -->
-                                                        <?php if (!empty($product->vat_rate)): ?>
+                                                        <?php if (!empty($product->vat_rate)) : ?>
                                                             <div class="list-item">
                                                                 <label><?php echo trans("vat"); ?>&nbsp;(<?php echo $product->vat_rate; ?>%):</label>
                                                                 <strong class="lbl-price"><?php echo price_formatted($cart_item->product_vat, $cart_item->currency); ?></strong>
                                                             </div>
                                                         <?php endif; ?>
-                                                        <?php if ($product->product_type != 'digital' && $this->form_settings->shipping == 1): ?>
+                                                        <?php if ($product->product_type != 'digital' && $this->form_settings->shipping == 1) : ?>
                                                             <div class="list-item">
                                                                 <label><?php echo trans("shipping"); ?>:</label>
                                                                 <strong><?php echo price_formatted($cart_item->shipping_cost, $cart_item->currency); ?></strong>
                                                             </div>
                                                         <?php endif; ?>
-                                                        <a href="javascript:void(0)" class="btn btn-md btn-outline-danger btn-cart-remove mr-5" onclick="remove_from_cart('<?php echo $cart_item->cart_item_id; ?>');"><i class="icon-close"></i> <?php echo trans("remove"); ?></a>
-                                                        <!-- BUTTON NEGO AND CHAT -->
-                                                        <a href="<?php echo generate_url("nego"); ?>" class="btn btn-md btn-outline-success btn-cart-remove text-center"> <?php echo trans("nego"); ?></a>
-                                                        <a href="<?php echo generate_url("chat_seller"); ?>" class="btn btn-md btn-outline-primary btn-cart-remove text-center"> <?php echo trans("chat_seller"); ?></a>
-                                                        <!-- END OF BUTTON NEGO AND CHAT -->
+                                                        <a href="javascript:void(0)" class="btn btn-md btn-outline-gray btn-cart-remove mr-3" onclick="remove_from_cart('<?php echo $cart_item->cart_item_id; ?>');"><i class="icon-close"></i> <?php echo trans("remove"); ?></a>
+
                                                     </div>
                                                     <div class="cart-item-quantity">
-                                                        <?php if ($cart_item->purchase_type == 'bidding'): ?>
+                                                        <?php if ($cart_item->purchase_type == 'bidding') : ?>
                                                             <span><?php echo trans("quantity") . ": " . $cart_item->quantity; ?></span>
-                                                        <?php else: ?>
-                                                            <?php if ($product->stock > 1): ?>
+                                                        <?php else : ?>
+                                                            <?php if ($product->stock > 1) : ?>
                                                                 <div class="number-spinner">
                                                                     <div class="input-group">
                                                                         <span class="input-group-btn">
@@ -96,9 +93,12 @@
                                                                 </div>
                                                             <?php endif; ?>
                                                         <?php endif; ?>
+                                                        <!-- BUTTON NEGOTIATION -->
+                                                        <a href="<?php echo generate_url("cart/negotiation"); ?>" class="btn btn-md btn-success text-center text-white mt-3 col-12"> <?php echo trans("negotiation"); ?></a>
+                                                        <!-- END OF BUTTON NEGOTIATION-->
                                                     </div>
                                                 </div>
-                                            <?php endif;
+                                    <?php endif;
                                         endforeach;
                                     endif; ?>
                                 </div>
@@ -109,12 +109,12 @@
                                     <p>
                                         <strong><?php echo trans("subtotal"); ?><span class="float-right"><?php echo price_formatted($cart_total->subtotal, $cart_total->currency); ?></span></strong>
                                     </p>
-                                    <?php if (!empty($cart_total->vat)): ?>
+                                    <?php if (!empty($cart_total->vat)) : ?>
                                         <p>
                                             <?php echo trans("vat"); ?><span class="float-right"><?php echo price_formatted($cart_total->vat, $cart_total->currency); ?></span>
                                         </p>
                                     <?php endif; ?>
-                                    <?php if ($cart_has_physical_product == true && $this->form_settings->shipping == 1): ?>
+                                    <?php if ($cart_has_physical_product == true && $this->form_settings->shipping == 1) : ?>
                                         <p>
                                             <?php echo trans("shipping"); ?><span class="float-right"><?php echo price_formatted($cart_total->shipping_cost, $cart_total->currency); ?></span>
                                         </p>
@@ -124,17 +124,17 @@
                                         <strong><?php echo trans("total"); ?><span class="float-right"><?php echo price_formatted($cart_total->total, $cart_total->currency); ?></span></strong>
                                     </p>
                                     <p class="m-t-30">
-                                        <?php if (empty($cart_item->is_stock_available)): ?>
+                                        <?php if (empty($cart_item->is_stock_available)) : ?>
                                             <a href="javascript:void(0)" class="btn btn-block"><?php echo trans("continue_to_checkout"); ?></a>
-                                        <?php else:
-                                            if (empty($this->auth_check) && $this->general_settings->guest_checkout != 1): ?>
+                                            <?php else :
+                                            if (empty($this->auth_check) && $this->general_settings->guest_checkout != 1) : ?>
                                                 <a href="#" class="btn btn-block" data-toggle="modal" data-target="#loginModal"><?php echo trans("continue_to_checkout"); ?></a>
-                                            <?php else:
-                                                if ($cart_has_physical_product == true && $this->form_settings->shipping == 1): ?>
+                                                <?php else :
+                                                if ($cart_has_physical_product == true && $this->form_settings->shipping == 1) : ?>
                                                     <a href="<?php echo generate_url("cart", "shipping"); ?>" class="btn btn-block"><?php echo trans("continue_to_checkout"); ?></a>
-                                                <?php else: ?>
+                                                <?php else : ?>
                                                     <a href="<?php echo generate_url("cart", "payment_method"); ?>" class="btn btn-block"><?php echo trans("continue_to_checkout"); ?></a>
-                                                <?php endif;
+                                        <?php endif;
                                             endif;
                                         endif; ?>
                                     </p>
@@ -148,7 +148,7 @@
                             </div>
                         </div>
                     </div>
-                <?php else: ?>
+                <?php else : ?>
                     <div class="shopping-cart-empty">
                         <p><strong class="font-600"><?php echo trans("your_cart_is_empty"); ?></strong></p>
                         <a href="<?php echo lang_base_url(); ?>" class="btn btn-lg btn-custom"><i class="icon-arrow-left"></i>&nbsp;<?php echo trans("shop_now"); ?></a>

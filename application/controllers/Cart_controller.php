@@ -35,6 +35,19 @@ class Cart_controller extends Home_Core_Controller
     }
 
     /**
+     * Negotiation
+     */
+    public function negotiation(){
+        $data['title'] = trans("negotiation");
+        $data['description'] = trans("negotiation") . " - " . $this->app_name;
+        $data['keywords'] = trans("negotiation") . "," . $this->app_name;
+
+        $this->load->view('partials/_header', $data);
+        $this->load->view('cart/negotiation');
+        $this->load->view('partials/_footer');
+    }
+
+    /**
      * Add to Cart
      */
     public function add_to_cart()
