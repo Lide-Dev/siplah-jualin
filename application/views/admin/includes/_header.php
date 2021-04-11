@@ -167,6 +167,20 @@
                         <li><a href="<?php echo admin_url(); ?>deleted-products"> <?php echo trans("deleted_products"); ?></a></li>
                     </ul>
                 </li>
+                <!-- MENU REVIEW PRODUCT -->
+                <li>
+                    <a href="<?php echo admin_url(); ?>product_submitted">
+                        <i class="fa fa-list"></i> <span><?php echo trans("product_submitted"); ?></span>
+                    </a>
+                </li>
+                <!-- END OF MENU REVIEW PRODUCT -->
+                <!-- MENU REVIEW SELLER -->
+                <li>
+                    <a href="<?php echo admin_url(); ?>seller_register">
+                        <i class="fa fa-id-card"></i> <span><?php echo trans("seller_register"); ?></span>
+                    </a>
+                </li>
+                <!-- END OF MENU REVIEW SELLER -->
                 <li class="treeview">
                     <a href="#">
                         <i class="fa fa-dollar" aria-hidden="true"></i>
@@ -336,12 +350,13 @@
                         <li><a href="<?php echo admin_url(); ?>cities"> <?php echo trans("cities"); ?></a></li>
                     </ul>
                 </li>
+                <!-- MENU LOG ACTIVITY -->
                 <li>
                     <a href="<?php echo admin_url(); ?>log_activity">
-                        <i class="fa fa-list"></i> <span><?php echo trans("log_activity"); ?></span>
+                        <i class="fa fa-history"></i> <span><?php echo trans("log_activity"); ?></span>
                     </a>
                 </li>
-
+                <!-- END OF MENU LOG ACTIVITY -->
                 <li class="header text-uppercase"><?php echo trans("settings"); ?></li>
                 <li>
                     <a href="<?php echo admin_url(); ?>preferences">

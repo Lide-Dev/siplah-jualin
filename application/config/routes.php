@@ -207,6 +207,10 @@ $route[$routes->admin . '/product-details/(:num)'] = 'product_admin_controller/p
 $route[$routes->admin . '/featured-products'] = 'product_admin_controller/featured_products';
 $route[$routes->admin . '/featured-products-transactions'] = 'product_admin_controller/featured_products_transactions';
 $route[$routes->admin . '/featured-products-pricing'] = 'product_admin_controller/featured_products_pricing';
+/*Product Submitted*/
+$route[$routes->admin . '/product_submitted'] = 'admin_controller/product_submitted';
+/*Seller Register*/
+$route[$routes->admin . '/seller_register'] = 'admin_controller/seller_register';
 /*bidding system*/
 $route[$routes->admin . '/quote-requests'] = 'admin_controller/quote_requests';
 /*page routes*/

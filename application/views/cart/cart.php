@@ -94,7 +94,15 @@
                                                             <?php endif; ?>
                                                         <?php endif; ?>
                                                         <!-- BUTTON NEGOTIATION -->
-                                                        <a href="<?php echo generate_url("cart/negotiation"); ?>" class="btn btn-md btn-success text-center text-white mt-3 col-12"> <?php echo trans("negotiation"); ?></a>
+                                                        <?php if (empty($cart_item->is_stock_available)) : ?>
+                                                            <a href="javascript:void(0)" class="btn btn-md btn-success text-center text-white mt-3 col-12"><?php echo trans("negotiation"); ?></a>
+                                                            <?php else :
+                                                            if (empty($this->auth_check) && $this->general_settings->guest_checkout != 1) : ?>
+                                                                <a href="#" class="btn btn-md btn-success text-center text-white mt-3 col-12" data-toggle="modal" data-target="#loginModal"><?php echo trans("negotiation"); ?></a>
+                                                                <?php else : ?>
+                                                                    <a href="<?php echo generate_url("cart/negotiation"); ?>" class="btn btn-md btn-success text-center text-white mt-3 col-12"><?php echo trans("negotiation"); ?></a>
+                                                        <?php endif;
+                                                        endif; ?>
                                                         <!-- END OF BUTTON NEGOTIATION-->
                                                     </div>
                                                 </div>
