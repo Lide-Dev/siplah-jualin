@@ -25,12 +25,38 @@ class Cart_controller extends Home_Core_Controller
         $data['description'] = trans("shopping_cart") . " - " . $this->app_name;
         $data['keywords'] = trans("shopping_cart") . "," . $this->app_name;
 
+        /* MENU TABS */
+        $data["active_tab"] = "active_cart";
+        /* END OF MENU TABS */
+
         $data['cart_items'] = $this->cart_model->get_sess_cart_items();
         $data['cart_total'] = $this->cart_model->get_sess_cart_total();
         $data['cart_has_physical_product'] = $this->cart_model->check_cart_has_physical_product();
 
         $this->load->view('partials/_header', $data);
         $this->load->view('cart/cart', $data);
+        $this->load->view('partials/_footer');
+    }
+
+    /**
+     * MAKE AN OFFER
+     */
+    public function make_an_offer()
+    {
+        $data['title'] = trans("make_an_offer");
+        $data['description'] = trans("make_an_offer") . " - " . $this->app_name;
+        $data['keywords'] = trans("make_an_offer") . "," . $this->app_name;
+
+        /* MENU TABS */
+        $data["active_tab"] = "active_make_an_offer";
+        /* END OF MENU TABS */
+
+        $data['cart_items'] = $this->cart_model->get_sess_cart_items();
+        $data['cart_total'] = $this->cart_model->get_sess_cart_total();
+        $data['cart_has_physical_product'] = $this->cart_model->check_cart_has_physical_product();
+
+        $this->load->view('partials/_header', $data);
+        $this->load->view('cart/make_an_offer', $data);
         $this->load->view('partials/_footer');
     }
 

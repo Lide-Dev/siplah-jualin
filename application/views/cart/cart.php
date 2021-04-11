@@ -3,6 +3,25 @@
 <div id="wrapper">
     <div class="container">
         <div class="row">
+        <!-- BREADCRUMB -->
+            <div class="col-12">
+                <nav class="nav-breadcrumb" aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="<?php echo lang_base_url(); ?>"><?php echo trans("home"); ?></a></li>
+                        <li class="breadcrumb-item active" aria-current="page"><?php echo $title; ?></li>
+                    </ol>
+                </nav>
+                <h1 class="page-title"><?php echo $title; ?></h1>
+            </div>
+        <!-- END OF BREADCRUMB -->
+        <!-- CART TABS -->
+        <div class="col-sm-12 col-md-3">
+				<div class="row-custom">
+					<!-- load profile nav -->
+					<?php $this->load->view("cart/_cart_tabs"); ?>
+				</div>
+			</div>
+        <!-- END OF CHART TABS -->
             <div class="col-12">
                 <?php if ($cart_items != null) : ?>
                     <div class="shopping-cart">
