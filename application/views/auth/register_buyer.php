@@ -32,25 +32,25 @@
                         </div>
                         <h4 class="title-auth">1. <?php echo trans("profile_user_buyer"); ?></h4>
                         <div class="form-group">
-                            <input type="text" name="" class="form-control auth-form-input" placeholder="<?php echo trans("full_name"); ?>" value="<?php echo old("full_name"); ?>" maxlength="<?php echo $this->username_maxlength; ?>" required>
+                            <input type="text" name="full_name" class="form-control auth-form-input" placeholder="<?php echo trans("full_name"); ?>" value="<?php echo old("full_name"); ?>" maxlength="<?php echo $this->username_maxlength; ?>" required>
                         </div>
                         <div class="form-group">
-                            <input type="text" name="" class="form-control auth-form-input" placeholder="<?php echo trans("user_position"); ?>" value="<?php echo old("user_position"); ?>" required>
+                            <input type="text" name="user_position" class="form-control auth-form-input" placeholder="<?php echo trans("user_position"); ?>" value="<?php echo old("user_position"); ?>" required>
                         </div>
                         <div class="form-group">
-                            <input type="number" name="" class="form-control auth-form-input" placeholder="<?php echo trans("phone_number"); ?>" value="<?php echo old("phone_number"); ?>" maxlength="<?php echo $this->username_maxlength; ?>" required>
+                            <input type="number" name="phone_number" class="form-control auth-form-input" placeholder="<?php echo trans("phone_number"); ?>" value="<?php echo old("phone_number"); ?>" maxlength="<?php echo $this->username_maxlength; ?>" required>
                         </div>
                         <div class="form-group">
-                            <input type="email" name="" class="form-control auth-form-input" placeholder="<?php echo trans("email_address"); ?>" value="<?php echo old("email_address"); ?>" maxlength="<?php echo $this->username_maxlength; ?>" required>
+                            <input type="email" name="email_address" class="form-control auth-form-input" placeholder="<?php echo trans("email_address"); ?>" value="<?php echo old("email_address"); ?>" maxlength="<?php echo $this->username_maxlength; ?>" required>
                         </div>
                         <div class="form-group">
-                            <input type="number" name="" class="form-control auth-form-input" placeholder="<?php echo trans("nitk"); ?>" value="<?php echo old("nitk"); ?>" maxlength="<?php echo $this->username_maxlength; ?>" required>
+                            <input type="number" name="nitk" class="form-control auth-form-input" placeholder="<?php echo trans("nitk"); ?>" value="<?php echo old("nitk"); ?>" maxlength="<?php echo $this->username_maxlength; ?>" required>
                         </div>
                         <div class="form-group">
-                            <input type="number" name="" class="form-control auth-form-input" placeholder="<?php echo trans("nuptk"); ?>" value="<?php echo old("nuptk"); ?>" maxlength="<?php echo $this->username_maxlength; ?>" required>
+                            <input type="number" name="nuptk" class="form-control auth-form-input" placeholder="<?php echo trans("nuptk"); ?>" value="<?php echo old("nuptk"); ?>" maxlength="<?php echo $this->username_maxlength; ?>" required>
                         </div>
                         <div class="form-group">
-                            <input type="number" name="" class="form-control auth-form-input" placeholder="<?php echo trans("npwp"); ?>" value="<?php echo old("npwp"); ?>" required>
+                            <input type="number" name="npwp" class="form-control auth-form-input" placeholder="<?php echo trans("npwp"); ?>" value="<?php echo old("npwp"); ?>" required>
                         </div>
                         <div class="row">
                             <div class="col-12 m-b-30">
@@ -87,19 +87,19 @@
                         </div>
                         <h4 class="title-auth">2. <?php echo trans("profile_school"); ?></h4>
                         <div class="form-group">
-                            <input type="text" name="" class="form-control auth-form-input" placeholder="<?php echo trans("official_name"); ?>" value="<?php echo old("official_name"); ?>" required>
+                            <input type="text" name="official_name" class="form-control auth-form-input" placeholder="<?php echo trans("official_name"); ?>" value="<?php echo old("official_name"); ?>" required>
                         </div>
                         <div class="form-group">
-                            <input type="email" name="" class="form-control auth-form-input" placeholder="<?php echo trans("email_address"); ?>" value="<?php echo old("email_address"); ?>" maxlength="<?php echo $this->username_maxlength; ?>" required>
+                            <input type="email" name="email_address_official" class="form-control auth-form-input" placeholder="<?php echo trans("email_address"); ?>" value="<?php echo old("email_address"); ?>" maxlength="<?php echo $this->username_maxlength; ?>" required>
                         </div>
                         <div class="form-group">
-                            <input type="number" name="" class="form-control auth-form-input" placeholder="<?php echo trans("phone_number"); ?>" value="<?php echo old("phone_number"); ?>" maxlength="<?php echo $this->username_maxlength; ?>" required>
+                            <input type="number" name="phone_number_official" class="form-control auth-form-input" placeholder="<?php echo trans("phone_number"); ?>" value="<?php echo old("phone_number"); ?>" maxlength="<?php echo $this->username_maxlength; ?>" required>
                         </div>
                         <div class="form-group">
-                            <input type="number" name="" class="form-control auth-form-input" placeholder="<?php echo trans("npsn"); ?>" value="<?php echo old("npsn"); ?>" required>
+                            <input type="number" name="npsn" class="form-control auth-form-input" placeholder="<?php echo trans("npsn"); ?>" value="<?php echo old("npsn"); ?>" required>
                         </div>
                         <div class="form-group">
-                            <input type="text" name="" class="form-control auth-form-input" placeholder="<?php echo trans("npwp"); ?>" value="<?php echo old("npwp"); ?>" required>
+                            <input type="text" name="npwp_official" class="form-control auth-form-input" placeholder="<?php echo trans("npwp"); ?>" value="<?php echo old("npwp"); ?>" required>
                         </div>
                         <div class="row">
                             <div class="col-12 m-b-30">
@@ -108,22 +108,22 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <textarea type="text" name="complete_address" class="form-control auth-form-input" placeholder="<?php echo trans("complete_address"); ?>" value="<?php echo old("complete_address"); ?>" required></textarea>
+                            <textarea type="text" name="complete_address_official" class="form-control auth-form-input" placeholder="<?php echo trans("complete_address"); ?>" value="<?php echo old("complete_address"); ?>" required></textarea>
                         </div>
                         <div class="form-group">
-                            <input type="text" name="province" class="form-control auth-form-input" placeholder="<?php echo trans("province"); ?>" value="<?php echo old("province"); ?>" required>
+                            <input type="text" name="province_official" class="form-control auth-form-input" placeholder="<?php echo trans("province"); ?>" value="<?php echo old("province"); ?>" required>
                         </div>
                         <div class="form-group">
-                            <input type="text" name="districs" class="form-control auth-form-input" placeholder="<?php echo trans("districs"); ?>" value="<?php echo old("districs"); ?>" required>
+                            <input type="text" name="districs_official" class="form-control auth-form-input" placeholder="<?php echo trans("districs"); ?>" value="<?php echo old("districs"); ?>" required>
                         </div>
                         <div class="form-group">
-                            <input type="text" name="sub_distric" class="form-control auth-form-input" placeholder="<?php echo trans("sub_distric"); ?>" value="<?php echo old("sub_distric"); ?>" required>
+                            <input type="text" name="sub_distric_official" class="form-control auth-form-input" placeholder="<?php echo trans("sub_distric"); ?>" value="<?php echo old("sub_distric"); ?>" required>
                         </div>
                         <div class="form-group">
-                            <input type="text" name="village" class="form-control auth-form-input" placeholder="<?php echo trans("village"); ?>" value="<?php echo old("village"); ?>" required>
+                            <input type="text" name="village_official" class="form-control auth-form-input" placeholder="<?php echo trans("village"); ?>" value="<?php echo old("village"); ?>" required>
                         </div>
                         <div class="form-group">
-                            <input type="number" name="postal_code" class="form-control auth-form-input" placeholder="<?php echo trans("postal_code"); ?>" value="<?php echo old("postal_code"); ?>" required>
+                            <input type="number" name="postal_code_official" class="form-control auth-form-input" placeholder="<?php echo trans("postal_code"); ?>" value="<?php echo old("postal_code"); ?>" required>
                         </div>
                         <h4 class="title-auth">3. <?php echo trans("password_title"); ?></h4>
                         <div class="form-group">

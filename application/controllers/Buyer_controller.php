@@ -9,7 +9,7 @@ class Buyer_controller extends Home_Core_Controller {
         $data['keywords'] = trans("login_as_buyer") . "," . $this->app_name;
 
         $this->load->view('partials/_header',$data);
-        $this->load->view('login/buyer/index');
+        $this->load->view('login/buyer/buyer');
         $this->load->view('partials/_footer');
     }
 }

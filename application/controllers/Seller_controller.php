@@ -9,7 +9,7 @@ class Seller_controller extends Home_Core_Controller {
         $data['keywords'] = trans("login_as_seller") . "," . $this->app_name;
 
         $this->load->view('partials/_header',$data);
-        $this->load->view('login/seller/index');
+        $this->load->view('login/seller/seller');
         $this->load->view('partials/_footer');
     }
 }
