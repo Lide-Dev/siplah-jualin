@@ -8,7 +8,7 @@
 			</a>
 		</li>
 		<li class="nav-item <?php echo ($active_tab == 'need_confirmation') ? 'active' : ''; ?>">
-			<a class="nav-link" href="<?php echo generate_url("sales"); ?>">
+			<a class="nav-link" href="<?php echo generate_url("sales","need_confirmation"); ?>">
 				<span><?php echo trans("need_confirmation"); ?></span>
 			</a>
 		</li>

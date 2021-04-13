@@ -113,6 +113,94 @@ class Order_controller extends Home_Core_Controller
     }
 
     /**
+     * Need Confirmation
+     */
+    public function need_confirmation()
+    {
+        if (!is_user_vendor()) {
+            redirect(lang_base_url());
+        }
+
+        $data['title'] = trans("sales");
+        $data['description'] = trans("sales") . " - " . $this->app_name;
+        $data['keywords'] = trans("sales") . "," . $this->app_name;
+        $data["active_tab"] = "need_confirmation";
+        $pagination = $this->paginate(generate_url("sales", "need_confirmation"), $this->order_model->get_need_confirmation_count($this->user_id), $this->order_per_page);
+        $data['orders'] = $this->order_model->get_paginated_need_confirmation($this->user_id, $pagination['per_page'], $pagination['offset']);
+        
+
+        $this->load->view('partials/_header', $data);
+        $this->load->view('sale/sales', $data);
+        $this->load->view('partials/_footer');
+    }
+
+    /**
+     * On Delivery
+     */
+    public function on_delivery()
+    {
+        if (!is_user_vendor()) {
+            redirect(lang_base_url());
+        }
+
+        $data['title'] = trans("sales");
+        $data['description'] = trans("sales") . " - " . $this->app_name;
+        $data['keywords'] = trans("sales") . "," . $this->app_name;
+        $data["active_tab"] = "on_delivery";
+        $pagination = $this->paginate(generate_url("sales", "on_delivery"), $this->order_model->get_on_delivery_count($this->user_id), $this->order_per_page);
+        $data['orders'] = $this->order_model->get_paginated_on_delivery($this->user_id, $pagination['per_page'], $pagination['offset']);
+        
+
+        $this->load->view('partials/_header', $data);
+        $this->load->view('sale/sales', $data);
+        $this->load->view('partials/_footer');
+    }
+
+    /**
+     * Not Yet Paid
+     */
+    public function not_yet_paid()
+    {
+        if (!is_user_vendor()) {
+            redirect(lang_base_url());
+        }
+
+        $data['title'] = trans("sales");
+        $data['description'] = trans("sales") . " - " . $this->app_name;
+        $data['keywords'] = trans("sales") . "," . $this->app_name;
+        $data["active_tab"] = "not_yet_paid";
+        $pagination = $this->paginate(generate_url("sales", "not_yet_paid"), $this->order_model->get_not_yet_paid_count($this->user_id), $this->order_per_page);
+        $data['orders'] = $this->order_model->get_paginated_not_yet_paid($this->user_id, $pagination['per_page'], $pagination['offset']);
+        
+
+        $this->load->view('partials/_header', $data);
+        $this->load->view('sale/sales', $data);
+        $this->load->view('partials/_footer');
+    }
+
+    /**
+     * Complaint
+     */
+    public function complaint()
+    {
+        if (!is_user_vendor()) {
+            redirect(lang_base_url());
+        }
+
+        $data['title'] = trans("sales");
+        $data['description'] = trans("sales") . " - " . $this->app_name;
+        $data['keywords'] = trans("sales") . "," . $this->app_name;
+        $data["active_tab"] = "complaint";
+        $pagination = $this->paginate(generate_url("sales", "complaint"), $this->order_model->get_complaint_count($this->user_id), $this->order_per_page);
+        $data['orders'] = $this->order_model->get_paginated_complaint($this->user_id, $pagination['per_page'], $pagination['offset']);
+        
+
+        $this->load->view('partials/_header', $data);
+        $this->load->view('sale/sales', $data);
+        $this->load->view('partials/_footer');
+    }
+
+    /**
      * Completed Sales
      */
     public function completed_sales()

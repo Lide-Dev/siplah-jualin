@@ -136,6 +136,7 @@ foreach ($languages as $language) {
         /*sales*/
         $route[$key . $routes->sales]['GET'] = 'order_controller/sales';
         $route[$key . $routes->sales . '/' . $routes->completed_sales]['GET'] = 'order_controller/completed_sales';
+        // $route[$key . $routes->sales . '/' . $routes->need_confirmation]['GET'] = 'order_controller/need_confirmation';
         $route[$key . $routes->sale . '/(:num)']['GET'] = 'order_controller/sale/$1';
         /*earnings*/
         $route[$key . $routes->earnings]['GET'] = 'earnings_controller/earnings';
