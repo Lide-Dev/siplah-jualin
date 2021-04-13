@@ -43,20 +43,42 @@ class Cart_controller extends Home_Core_Controller
      */
     public function make_an_offer()
     {
-        $data['title'] = trans("make_an_offer");
-        $data['description'] = trans("make_an_offer") . " - " . $this->app_name;
-        $data['keywords'] = trans("make_an_offer") . "," . $this->app_name;
+        $data['title'] = trans("cart");
+        $data['description'] = trans("cart") . " - " . $this->app_name;
+        $data['keywords'] = trans("cart") . "," . $this->app_name;
 
         /* MENU TABS */
-        $data["active_tab"] = "active_make_an_offer";
+        $data["active_tab"] = "make_an_offer";
         /* END OF MENU TABS */
 
-        $data['cart_items'] = $this->cart_model->get_sess_cart_items();
-        $data['cart_total'] = $this->cart_model->get_sess_cart_total();
-        $data['cart_has_physical_product'] = $this->cart_model->check_cart_has_physical_product();
+        $data['make_an_offer_items'] = $this->cart_model->get_sess_make_an_offer_items();
+        $data['make_an_offer_total'] = $this->cart_model->get_sess_make_an_offer_total();
+        $data['make_an_offer_has_physical_product'] = $this->cart_model->check_make_an_offer_has_physical_product();
 
         $this->load->view('partials/_header', $data);
-        $this->load->view('cart/make_an_offer', $data);
+        $this->load->view('cart/cart', $data);
+        $this->load->view('partials/_footer');
+    }
+
+    /**
+     * WAITING SELLER RESPONSE
+     */
+    public function waiting_seller_response()
+    {
+        $data['title'] = trans("cart");
+        $data['description'] = trans("cart") . " - " . $this->app_name;
+        $data['keywords'] = trans("cart") . "," . $this->app_name;
+
+        /* MENU TABS */
+        $data["active_tab"] = "waiting_seller_response";
+        /* END OF MENU TABS */
+
+        $data['waiting_seller_response_items'] = $this->cart_model->get_sess_waiting_seller_response_items();
+        $data['waiting_seller_response_total'] = $this->cart_model->get_sess_waiting_seller_response_total();
+        $data['waiting_seller_response_has_physical_product'] = $this->cart_model->check_waiting_seller_response_has_physical_product();
+
+        $this->load->view('partials/_header', $data);
+        $this->load->view('cart/cart', $data);
         $this->load->view('partials/_footer');
     }
 
