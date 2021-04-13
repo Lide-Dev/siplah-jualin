@@ -48,7 +48,7 @@ class Cart_controller extends Home_Core_Controller
         $data['keywords'] = trans("cart") . "," . $this->app_name;
 
         /* MENU TABS */
-        $data["active_tab"] = "make_an_offer";
+        $data["active_tab"] = "active_make_an_offer";
         /* END OF MENU TABS */
 
         $data['make_an_offer_items'] = $this->cart_model->get_sess_make_an_offer_items();
@@ -70,7 +70,7 @@ class Cart_controller extends Home_Core_Controller
         $data['keywords'] = trans("cart") . "," . $this->app_name;
 
         /* MENU TABS */
-        $data["active_tab"] = "waiting_seller_response";
+        $data["active_tab"] = "active_waiting_seller_response";
         /* END OF MENU TABS */
 
         $data['waiting_seller_response_items'] = $this->cart_model->get_sess_waiting_seller_response_items();
