@@ -1600,28 +1600,6 @@ class Admin_controller extends Admin_Core_Controller
         $this->load->view('admin/log_activity/log_activity', $data);
         $this->load->view('admin/includes/_footer');
     }
-
-    /**
-     * Product Submitted
-     */
-    public function product_submitted()
-    {
-        $data['title'] = trans("product_submitted");
-        $this->load->view('admin/includes/_header', $data);
-        $this->load->view('admin/product_submitted/product_submitted', $data);
-        $this->load->view('admin/includes/_footer');
-    }
-
-    /**
-     * Seller Register
-     */
-    public function seller_register()
-    {
-        $data['title'] = trans("seller_register");
-        $this->load->view('admin/includes/_header', $data);
-        $this->load->view('admin/seller_register/seller_register', $data);
-        $this->load->view('admin/includes/_footer');
-    }
 }
 
 
