@@ -130,7 +130,7 @@
                                                         </button>
                                                         <div class="dropdown-menu">
                                                             <a class="dropdown-item" data-value="product" href="javascript:void(0)"><?php echo trans("product"); ?></a>
-                                                            <a class="dropdown-item" data-value="member" href="javascript:void(0)"><?php echo trans("member"); ?></a>
+                                                            <a class="dropdown-item" data-value="member" href="javascript:void(0)"><?php echo trans("store"); ?></a>
                                                         </div>
                                                     </div>
                                                     <?php if (isset($search_type)) : ?>
