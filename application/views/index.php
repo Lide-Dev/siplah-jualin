@@ -5,7 +5,6 @@
         $this->load->view("partials/_main_slider");
     endif; ?>
 </div>
-
 <!-- Wrapper -->
 <div id="wrapper" class="index-wrapper">
     <div class="container">
@@ -41,11 +40,8 @@
                             </div>
                         <?php endforeach; ?>
                     </div>
-
                     <div class="row-custom text-center">
-
                         <a href="<?php echo generate_url("products"); ?>" class="link-see-more"> <button class="btn btn-custom btn-sell-now text-white"><span><?php echo trans("see_more"); ?>&nbsp;</span><i class="icon-arrow-right"></i></button></a>
-
                     </div>
                 </div>
             <?php endif; ?>

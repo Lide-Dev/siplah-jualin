@@ -167,9 +167,17 @@
 
                                     <div class="form-group m-t-15">
                                         <a href="<?php echo generate_url("cart"); ?>" class="link-underlined link-return-cart"><&nbsp;<?php echo trans("return_to_cart"); ?></a>
-                                        <button type="submit" name="submit" value="update" class="btn btn-lg btn-custom float-right"><?php echo trans("submit_order") ?></button>
+                                        <button type="submit" name="submit" value="update" class="btn btn-lg btn-custom float-right"><?php echo trans("continue_to_payment_method") ?></button>
                                     </div>
                                     <?php echo form_close(); ?>
+                                </div>
+
+                                <div class="tab-checkout tab-checkout-closed-bordered">
+                                    <h2 class="title">2.&nbsp;&nbsp;<?php echo trans("payment_method"); ?></h2>
+                                </div>
+
+                                <div class="tab-checkout tab-checkout-closed-bordered border-top-0">
+                                    <h2 class="title">3.&nbsp;&nbsp;<?php echo trans("payment"); ?></h2>
                                 </div>
                             </div>
                         </div>
