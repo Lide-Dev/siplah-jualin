@@ -9,6 +9,17 @@
                     <img src="<?php echo base_url() . IMG_BG_PRODUCT_SMALL; ?>" data-src="<?php echo get_product_item_image($product, true); ?>" alt="<?php echo html_escape($product->title); ?>" class="lazyload img-fluid img-product img-second">
                 <?php endif; ?>
             </a>
+
+            <!-- LABEL PRODUCT-->
+            <div class="wp-block-info-over left">
+                <h2>
+                    <span class="pull-left">
+                        <a href="#">Produk Dalam Negeri</a>
+                    </span>
+                </h2>
+            </div>
+            <!-- END OF LABEL PRODUCT -->
+
             <div class="product-item-options">
                 <a href="javascript:void(0)" class="item-option btn-add-remove-wishlist" data-toggle="tooltip" data-placement="left" data-product-id="<?php echo $product->id; ?>" data-reload="0" title="<?php echo trans("wishlist"); ?>">
                     <?php if (is_product_in_wishlist($product) == 1) : ?>
