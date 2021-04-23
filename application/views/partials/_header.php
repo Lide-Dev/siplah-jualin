@@ -348,7 +348,7 @@
                                             <div class="card-body">
                                                 <div class="row">
                                                     <div class="col-6 col-md-4 mr-3">
-                                                        <img class="img-fluid" src="<?php echo base_url(); ?>assets/img/register-icons/supervisor_icon.svg">
+                                                        <img class="img-fluid" src="<?php echo base_url(); ?>assets/img/register-icons/partners_icon.svg">
                                                     </div>
                                                     <div class="col-5 col-md-6">
                                                         <h5 class="control-label font-600">Mitra</h5>
