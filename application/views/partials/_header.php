@@ -291,7 +291,7 @@
                                             <div class="card-body">
                                                 <div class="row">
                                                     <div class="col-6 col-md-4 mr-3">
-                                                    <img class="img-fluid" src="<?php echo base_url(); ?>assets/img/register-icons/customer_icon.svg">
+                                                        <img class="img-fluid" src="<?php echo base_url(); ?>assets/img/register-icons/customer_icon.svg">
                                                     </div>
                                                     <div class="col-5 col-md-6">
                                                         <h5 class="control-label font-600">Pembeli</h5>
@@ -310,7 +310,7 @@
                                             <div class="card-body">
                                                 <div class="row">
                                                     <div class="col-6 col-md-4 mr-3">
-                                                    <img class="img-fluid" src="<?php echo base_url(); ?>assets/img/register-icons/seller_icon.svg">
+                                                        <img class="img-fluid" src="<?php echo base_url(); ?>assets/img/register-icons/seller_icon.svg">
                                                     </div>
                                                     <div class="col-5 col-md-6">
                                                         <h5 class="control-label font-600">Penjual</h5>
@@ -329,7 +329,7 @@
                                             <div class="card-body">
                                                 <div class="row">
                                                     <div class="col-6 col-md-4 mr-3">
-                                                    <img class="img-fluid" src="<?php echo base_url(); ?>assets/img/register-icons/supervisor_icon.svg">
+                                                        <img class="img-fluid" src="<?php echo base_url(); ?>assets/img/register-icons/supervisor_icon.svg">
                                                     </div>
                                                     <div class="col-5 col-md-6">
                                                         <h5 class="control-label font-600">Pengawas</h5>
@@ -340,6 +340,26 @@
                                         </div>
                                     </a>
                                 </div>
+                            </div>
+                            <div class="row mb-2">
+                                <div class="col-sm-12">
+                                    <a href="<?= base_url('login/partners') ?>" class="text-dark">
+                                        <div class="card shadow">
+                                            <div class="card-body">
+                                                <div class="row">
+                                                    <div class="col-6 col-md-4 mr-3">
+                                                        <img class="img-fluid" src="<?php echo base_url(); ?>assets/img/register-icons/supervisor_icon.svg">
+                                                    </div>
+                                                    <div class="col-5 col-md-6">
+                                                        <h5 class="control-label font-600">Mitra</h5>
+                                                        <p>Masuk Sebagai Mitra</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
                         </section>
                         <!-- End Of Login As -->
                     </div>

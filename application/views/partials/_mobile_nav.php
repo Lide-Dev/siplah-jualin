@@ -8,7 +8,7 @@
                     if ($this->auth_check): ?>
                         <a href="<?php echo generate_url("sell_now"); ?>" class="btn btn-md btn-custom btn-block"><?php echo trans("sell_now"); ?></a>
                     <?php else: ?>
-                        <a href="javascript:void(0)" class="btn btn-md btn-custom btn-block close-menu-click" data-toggle="modal" data-target="#loginModal"><?php echo trans("sell_now"); ?></a>
+                        <a href="javascript:void(0)" class="btn btn-md btn-custom btn-block close-menu-click" data-toggle="modal" data-target="#loginModal"><?php echo trans("login"); ?></a>
                     <?php endif;
                 endif; ?>
             </div>
@@ -138,7 +138,6 @@
                         </li>
                     <?php else: ?>
                         <li class="nav-item nav-item-category-0"><a href="javascript:void(0)" data-toggle="modal" data-target="#loginModal" class="nav-link close-menu-click"><?php echo trans("login"); ?></a></li>
-                        <li class="nav-item nav-item-category-0"><a href="<?php echo generate_url("register"); ?>" class="nav-link"><?php echo trans("register"); ?></a></li>
                     <?php endif; ?>
                     <?php if (item_count($this->countries) > 1): ?>
                         <li class="nav-item nav-item-messages">
