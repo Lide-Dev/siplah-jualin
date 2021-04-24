@@ -25,6 +25,7 @@
                                     <?php $this->load->view('product/_messages'); ?>
                                 </div>
                             </div>
+                            <!-- CATEGORY PRODUCT -->
                             <div class="row">
                                 <div class="col-sm-12">
                                     <div class="form-box">
@@ -51,13 +52,16 @@
                                     </div>
                                 </div>
                             </div>
+                            <!-- END OF CATEGORY PRODUCT -->
+                            <!-- UPLOAD PHOTO -->
                             <div class="row">
                                 <div class="col-12 m-b-30">
                                     <label class="control-label font-600"><?php echo trans("images"); ?></label>
                                     <?php $this->load->view("product/_image_upload_box"); ?>
                                 </div>
                             </div>
-
+                            <!-- END OFF UPLOAD PHOTO -->
+                            <!-- PRODUCT TYPE -->
                             <div class="row">
                                 <div class="col-12">
                                     <?php echo form_open('add-product-post', ['id' => 'form_validate', 'onkeypress' => "return event.keyCode != 13;"]); ?>
@@ -140,16 +144,22 @@
                                     <?php else : ?>
                                         <input type="hidden" name="listing_type" value="<?php echo $active_product_system_array['active_system_value']; ?>">
                                     <?php endif; ?>
-
+                                    <!-- END OF PRODUCT TYPE -->
+                                    <!-- DETAILS PRODUCT -->
                                     <div class="form-box">
                                         <div class="form-box-head">
                                             <h4 class="title"><?php echo trans('details'); ?></h4>
                                         </div>
                                         <div class="form-box-body">
-                                            <div class="form-group">
-                                                <label class="control-label"><?php echo trans("product_registitle"); ?></label>
-                                                <input type="text" name="title" class="form-control form-input" placeholder="<?php echo trans("product_title"); ?>" required>
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <div class="form-group">
+                                                        <label class="control-label"><?php echo trans("product_registitle"); ?></label>
+                                                        <input type="text" name="title" class="form-control form-input" placeholder="<?php echo trans("product_title"); ?>" required>
+                                                    </div>
+                                                </div>
                                             </div>
+                                            <!-- PPN -->
                                             <div class="row">
                                                 <div class="form-group">
                                                     <ul class="nav nav-pills">
@@ -164,6 +174,8 @@
                                                     </ul>
                                                 </div>
                                             </div>
+                                            <!-- END OF PPN -->
+                                            <!-- MINIMUM ORDER & STOK -->
                                             <div class="row">
                                                 <div class="form-group col-6">
                                                     <label class="control-label"><?php echo trans("minimum_order"); ?></label>
@@ -174,6 +186,8 @@
                                                     <input type="number" name="" class="form-control form-input" placeholder="<?php echo trans("stock_product"); ?>">
                                                 </div>
                                             </div>
+                                            <!-- END OF MINIMUM ORDER & STOK -->
+                                            <!-- CATEGORY MADE & CODE KBKI -->
                                             <div class="row">
                                                 <div class="form-group col-6">
                                                     <label class="control-label"><?php echo trans("category_made_in"); ?></label>
@@ -184,6 +198,8 @@
                                                     <input type="number" name="" class="form-control form-input" placeholder="<?php echo trans("code_kbki"); ?>">
                                                 </div>
                                             </div>
+                                            <!-- END OF CATEGORY MADE & CODE KBKI -->
+                                            <!-- DELIVERY TIME & SHIPPING WAY -->
                                             <div class="row">
                                                 <div class="form-group col-6">
                                                     <label class="control-label"><?php echo trans("delivery_time"); ?></label>
@@ -194,6 +210,7 @@
                                                     <input type="text" name="" class="form-control form-input" placeholder="<?php echo trans("shipping_way"); ?>">
                                                 </div>
                                             </div>
+                                            <!-- END OF DELIVERY TIME & SHIPPING WAY -->
                                             <div class="row">
                                                 <div class="form-group col-6">
                                                     <label class="control-label"><?php echo trans("sku"); ?>&nbsp;(<?php echo trans("product_code"); ?>)</label>
@@ -214,7 +231,7 @@
 
                                         </div>
                                     </div>
-
+                                    <!-- END OF DETAILS PRODUCT -->
                                     <div class="form-group">
                                         <button type="submit" class="btn btn-lg btn-custom float-right"><?php echo trans("save_and_continue"); ?></button>
                                     </div>

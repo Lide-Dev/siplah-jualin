@@ -30,50 +30,58 @@
 							<div class="bounce2"></div>
 							<div class="bounce3"></div>
 						</div>
+						<!-- PPROFILE BUSSINES -->
 						<h4 class="title-auth">1. <?php echo trans("profile_bussines"); ?></h4>
 						<div class="row">
-							<div class="form-group">
-								<label class="control-label font-600 col-sm-6 mt-3" for="">Jenis Usaha</label>
-								<ul class="nav nav-pills">
-									<li class="nav-item col-sm-6">
-										<label class="nav-link border border-muted text-center font-weight-bold" for="" id="" data-toggle="tab" aria-selected=""> Badan Usaha</label>
-										<input type="radio" name="" id="" value="" style="display:none" checked>
-									</li>
-									<li class="nav-item col-sm-6">
-										<label class="nav-link border border-muted text-center font-weight-bold" for="" id="" data-toggle="tab" aria-selected=""> Individu / Perorangan</label>
-										<input type="radio" name="" id="" value="" style="display:none">
-									</li>
-								</ul>
+							<div class="col-12">
+								<div class="form-group">
+										<label class="control-label font-600 col-sm-6 mt-3" for="">Jenis Usaha</label>
+										<ul class="nav nav-pills">
+											<li class="nav-item col-sm-6">
+												<label class="nav-link border border-muted text-center font-weight-bold" for="" id="" data-toggle="tab" aria-selected=""> Badan Usaha</label>
+												<input type="radio" name="" id="" value="" style="display:none" checked>
+											</li>
+											<li class="nav-item col-sm-6">
+												<label class="nav-link border border-muted text-center font-weight-bold" for="" id="" data-toggle="tab" aria-selected=""> Individu / Perorangan</label>
+												<input type="radio" name="" id="" value="" style="display:none">
+											</li>
+										</ul>
+								</div>
+
+								<div class="form-group">
+									<input type="text" name="bussines_name" class="form-control auth-form-input" placeholder="<?php echo trans("bussines_name"); ?>" value="<?php echo old("bussines_name"); ?>" maxlength="<?php echo $this->username_maxlength; ?>" required>
+								</div>
+								<div class="form-group">
+									<input type="number" name="npwp" class="form-control auth-form-input" placeholder="<?php echo trans("npwp"); ?>" value="<?php echo old("npwp"); ?>" required>
+								</div>
+								<!-- END OF PROFILE BUSSINES -->
+								<!-- TAXPAYER STATUS -->
+
+								<div class="form-group">
+									<label class="control-label font-600 col-sm-6" for="">Status Wajib Pajak</label>
+									<ul class="nav nav-pills">
+										<li class="nav-item col-sm-6">
+											<label class="nav-link border border-muted text-center font-weight-bold" for="" id="" data-toggle="tab" aria-selected=""> PKP</label>
+											<input type="radio" name="" id="" value="" style="display:none" checked>
+										</li>
+										<li class="nav-item col-sm-6">
+											<label class="nav-link border border-muted text-center font-weight-bold" for="" id="" data-toggle="tab" aria-selected=""> Non PKP</label>
+											<input type="radio" name="" id="" value="" style="display:none">
+										</li>
+									</ul>
+								</div>
+
+								<!-- END OF TAXPAYER STATUS -->
+								<!-- UPLOAD DOC NPWP -->
+
+								<div class="m-b-30">
+									<label class="control-label font-600"><?php echo trans("upload_npwp"); ?></label>
+									<?php $this->load->view("auth/_document_upload"); ?>
+								</div>
 							</div>
 						</div>
-						<div class="form-group">
-							<input type="text" name="bussines_name" class="form-control auth-form-input" placeholder="<?php echo trans("bussines_name"); ?>" value="<?php echo old("bussines_name"); ?>" maxlength="<?php echo $this->username_maxlength; ?>" required>
-						</div>
-						<div class="form-group">
-							<input type="number" name="npwp" class="form-control auth-form-input" placeholder="<?php echo trans("npwp"); ?>" value="<?php echo old("npwp"); ?>" required>
-						</div>
-						<div class="row">
-							<div class="form-group">
-								<label class="control-label font-600 col-sm-6" for="">Status Wajib Pajak</label>
-								<ul class="nav nav-pills">
-									<li class="nav-item col-sm-6">
-										<label class="nav-link border border-muted text-center font-weight-bold" for="" id="" data-toggle="tab" aria-selected=""> PKP</label>
-										<input type="radio" name="" id="" value="" style="display:none" checked>
-									</li>
-									<li class="nav-item col-sm-6">
-										<label class="nav-link border border-muted text-center font-weight-bold" for="" id="" data-toggle="tab" aria-selected=""> Non PKP</label>
-										<input type="radio" name="" id="" value="" style="display:none">
-									</li>
-								</ul>
-							</div>
-						</div>
-						<div class="row">
-							<div class="col-12 m-b-30">
-								<label class="control-label font-600"><?php echo trans("upload_npwp"); ?></label>
-								<?php $this->load->view("auth/_document_upload"); ?>
-							</div>
-						</div>
-						
+						<!-- END OF UPLOAD DOC NPWP -->
+						<!-- COMPLETE ADDRESS -->
 						<div class="form-group">
 							<textarea type="text" name="complete_address" class="form-control auth-form-input" placeholder="<?php echo trans("complete_address"); ?>" value="<?php echo old("complete_address"); ?>" required></textarea>
 						</div>
@@ -92,15 +100,19 @@
 						<div class="form-group">
 							<input type="number" name="postal_code" class="form-control auth-form-input" placeholder="<?php echo trans("postal_code"); ?>" value="<?php echo old("postal_code"); ?>" required>
 						</div>
+						<!-- END OF COMPLETE ADDRESS -->
+						<!-- NIB -->
 						<div class="form-group">
 							<input type="number" name="nib" class="form-control auth-form-input" placeholder="<?php echo trans("nib"); ?>" value="<?php echo old("nib"); ?>" required>
 						</div>
-						<div class="row">
-							<div class="col-12 m-b-30">
+						<div class="">
+							<div class="m-b-30">
 								<label class="control-label font-600"><?php echo trans("upload_selected_document"); ?></label>
 								<?php $this->load->view("auth/_document_upload"); ?>
 							</div>
 						</div>
+						<!-- END OF NIB -->
+						<!-- BANK ACCOUNT -->
 						<h4 class="title-auth">2. <?php echo trans("bank_title"); ?></h4>
 						<div class="form-group">
 							<input type="text" name="bank_name" class="form-control auth-form-input" placeholder="<?php echo trans("bank_name"); ?>" value="<?php echo old("bank_name"); ?>" required>
@@ -111,6 +123,8 @@
 						<div class="form-group">
 							<input type="text" name="bank_account_holder" class="form-control auth-form-input" placeholder="<?php echo trans("bank_account_holder"); ?>" value="<?php echo old("bank_account_holder"); ?>" required>
 						</div>
+						<!-- END OF BANK ACCOUNT -->
+						<!-- RESPONSIBLE PERSON -->
 						<h4 class="title-auth">3. <?php echo trans("responsible_title"); ?></h4>
 						<div class="form-group">
 							<input type="text" name="username" class="form-control auth-form-input" placeholder="<?php echo trans("full_name"); ?>" value="<?php echo old("full_name"); ?>" maxlength="<?php echo $this->username_maxlength; ?>" required>
@@ -131,6 +145,7 @@
 						<div class="form-group">
 							<input type="password" name="confirm_password" class="form-control auth-form-input" placeholder="<?php echo trans("password_confirm"); ?>" required>
 						</div>
+						<!-- END OF RESPONSIBLE PERSON -->
 						<div class="form-group m-t-30 m-b-20">
 							<div class="custom-control custom-checkbox custom-control-validate-input">
 								<input type="checkbox" class="custom-control-input" name="terms" id="checkbox_terms" required>
