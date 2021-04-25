@@ -209,13 +209,18 @@ if (!function_exists('is_sale_active')) {
 
 //get translated message
 if (!function_exists('trans')) {
-    function trans($string)
+    function trans($string, $default = "")
     {
         $ci = &get_instance();
-        if (!empty($ci->language_translations[$string])) {
-            return $ci->language_translations[$string];
-        }
-        return "";
+        $ci->general_settings->site_lang;
+        
+        $lang_collection = include(BASEPATH . "../application/language/id.php");
+
+        // if (!empty($ci->language_translations[$string])) {
+        //     return $ci->language_translations[$string];
+        // }
+
+        return $lang_collection[$string] ?? $default;
     }
 }
 
