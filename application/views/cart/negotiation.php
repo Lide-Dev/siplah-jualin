@@ -88,7 +88,7 @@
                                                 </div>
                                     <?php endif;
                                         endforeach;
-                                    endif; ?>                                    
+                                    endif; ?>
                                 </div>
                             </div>
                             <div class="col-sm-12 col-lg-4">
@@ -194,6 +194,7 @@
                                 </div>
                             </div>
                         </div>
+
                     </div>
                 <?php else : ?>
                 <?php endif; ?>
