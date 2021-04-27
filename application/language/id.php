@@ -1124,6 +1124,13 @@ return [
     "you_may_also_like" => "Anda mungkin juga suka", 
     "you_will_earn" => "Anda Akan Menghasilkan", 
     "zip_code" => "Zip Code",
-    "source_funds" => "Sumber Dana", 
+    "source_funds" => "Sumber Dana",
+    "dimension_product" => "Dimensi Produk",
+    "long" => "Panjang",
+    "width" => "Lebar",
+    "height" => "Tinggi",
+    "weight" => "Berat",
+    "guarantee" => "Garansi",
+    "brand" => "Merek / Penerbit",  
 
 ];
