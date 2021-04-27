@@ -1123,6 +1123,7 @@ return [
     "you_have_new_quote_request" => "Anda memiliki permintaan penawaran baru.", 
     "you_may_also_like" => "Anda mungkin juga suka", 
     "you_will_earn" => "Anda Akan Menghasilkan", 
-    "zip_code" => "Zip Code", 
+    "zip_code" => "Zip Code",
+    "source_funds" => "Sumber Dana", 
 
 ];

@@ -42,6 +42,31 @@
             </div>
         <?php endif; ?>
 
+        <!-- SOURCE FUNDS -->
+        <h4 class="title-all-categories">
+                <a><?php echo trans("source_funds"); ?></a>
+            </h4>
+        <div class="filter-item">
+                <div class="filter-list-container">
+                    <ul class="filter-list filter-custom-scrollbar">
+                        
+                            <li>
+                                <div class="left">
+                                    <div class="custom-control custom-checkbox">
+                                        <input type="radio" class="custom-control-input" id="">
+                                        <label for="" class="custom-control-label"></label>
+                                    </div>
+                                </div>
+                                <div class="rigt">
+                                    <label for="" class="checkbox-list-item-label">Bantuan Alat Pendidikan</label>
+                                </div>
+                            </li>
+                        
+                    </ul>
+                </div>
+            </div>
+        <!-- END OF SOURCE FUNDS -->
+
         <?php
         if ($show_location_filter == true):
             if ($this->form_settings->product_location == 1):

@@ -1,4 +1,4 @@
-<?php defined('BASEPATH') OR exit('No direct script access allowed'); ?>
+<?php defined('BASEPATH') or exit('No direct script access allowed'); ?>
 
 <!-- Wrapper -->
 <div id="wrapper">
@@ -8,34 +8,35 @@
                 <nav class="nav-breadcrumb" aria-label="breadcrumb">
                     <ol class="breadcrumb breadcrumb-products">
                         <li class="breadcrumb-item"><a href="<?php echo lang_base_url(); ?>"><?php echo trans("home"); ?></a></li>
-                        <?php if (!empty($category)):
+                        <?php if (!empty($category)) :
                             $breadcrumb = get_parent_categories_array($category->id);
-                            if (!empty($breadcrumb)):
-                                foreach ($breadcrumb as $item_breadcrumb):
+                            if (!empty($breadcrumb)) :
+                                foreach ($breadcrumb as $item_breadcrumb) :
                                     $item_category = get_category_by_id($item_breadcrumb->id);
-                                    if (!empty($item_category)):?>
+                                    if (!empty($item_category)) : ?>
                                         <li class="breadcrumb-item"><a href="<?php echo generate_category_url($item_category); ?>"><?php echo category_name($item_category); ?></a></li>
-                                    <?php endif;
+                            <?php endif;
                                 endforeach;
                             endif;
-                        else: ?>
+                        else : ?>
                             <li class="breadcrumb-item active" aria-current="page"><?php echo trans("products"); ?></li>
                         <?php endif; ?>
                     </ol>
                 </nav>
             </div>
         </div>
+        <!-- FILTER PRODUCT -->
         <!-- form start -->
         <?php echo form_open(current_url(), ['id' => 'form-product-filters', 'method' => 'get']);
         $search = trim($this->input->get('search', TRUE));
-        if (!empty($search)):?>
+        if (!empty($search)) : ?>
             <input type="hidden" name="search" value="<?php echo html_escape($search); ?>">
         <?php endif; ?>
         <div class="row">
             <div class="col-12 product-list-header">
-                <?php if (!empty($category)): ?>
+                <?php if (!empty($category)) : ?>
                     <h1 class="page-title product-list-title"><?php echo category_name($category); ?></h1>
-                <?php else: ?>
+                <?php else : ?>
                     <h1 class="page-title product-list-title"><?php echo trans("products"); ?></h1>
                 <?php endif; ?>
                 <div class="product-sort-by">
@@ -68,9 +69,9 @@
             <div class="col-12 col-md-9">
                 <div class="filter-reset-tag-container">
                     <?php $filters = get_filters_query_string_array();
-                    if (!empty($filters)):
-                        foreach ($filters as $key => $value):
-                            if (!empty($value) && $key != 'sort' && $key != 'condition' && $key != 'country' && $key != 'state' && $key != 'city' && $key != 'p_min' && $key != 'p_max' && $key != 'page'):?>
+                    if (!empty($filters)) :
+                        foreach ($filters as $key => $value) :
+                            if (!empty($value) && $key != 'sort' && $key != 'condition' && $key != 'country' && $key != 'state' && $key != 'city' && $key != 'p_min' && $key != 'p_max' && $key != 'page') : ?>
                                 <div class="filter-reset-tag">
                                     <div class="left">
                                         <a href="<?php echo remove_filter_from_query_string($key); ?>"><i class="icon-close"></i></a>
@@ -85,9 +86,9 @@
                     endif;
 
                     $filter_condition = get_filter_query_string_key_value('condition');
-                    if (!empty($filter_condition)):
+                    if (!empty($filter_condition)) :
                         $product_condition = get_product_condition_by_key($filter_condition, $this->selected_lang->id);
-                        if (!empty($product_condition)):?>
+                        if (!empty($product_condition)) : ?>
                             <div class="filter-reset-tag">
                                 <div class="left">
                                     <a href="<?php echo remove_filter_from_query_string('condition'); ?>"><i class="icon-close"></i></a>
@@ -102,7 +103,7 @@
 
                     $filter_p_max = @(float)get_filter_query_string_key_value('p_max');
                     $filter_p_min = @(float)get_filter_query_string_key_value('p_min');
-                    if (!empty($filter_p_max) || !empty($filter_p_min)): ?>
+                    if (!empty($filter_p_max) || !empty($filter_p_min)) : ?>
                         <div class="filter-reset-tag">
                             <div class="left">
                                 <a href="<?php echo remove_filter_from_query_string('price'); ?>"><i class="icon-close"></i></a>
@@ -110,13 +111,13 @@
                             <div class="right">
                                 <span class="reset-tag-title"><?php echo trans('price') . '(' . get_currency($this->payment_settings->default_product_currency) . ')'; ?></span>
                                 <span>
-                                <?php if ($filter_p_min != 0):
-                                    echo trans('min') . ': ' . $filter_p_min;
-                                endif; ?>&nbsp;&nbsp;
-                                <?php if ($filter_p_max != 0):
-                                    echo trans('max') . ': ' . $filter_p_max;
-                                endif; ?>
-                            </span>
+                                    <?php if ($filter_p_min != 0) :
+                                        echo trans('min') . ': ' . $filter_p_min;
+                                    endif; ?>&nbsp;&nbsp;
+                                    <?php if ($filter_p_max != 0) :
+                                        echo trans('max') . ': ' . $filter_p_max;
+                                    endif; ?>
+                                </span>
                             </div>
                         </div>
                     <?php endif;
@@ -125,7 +126,7 @@
                     $state_id = $this->input->get('state', true);
                     $city_id = $this->input->get('city', true);
                     $filter_location = get_location_input($country_id, $state_id, $city_id);
-                    if (!empty($filter_location)): ?>
+                    if (!empty($filter_location)) : ?>
                         <div class="filter-reset-tag">
                             <div class="left">
                                 <a href="<?php echo remove_filter_from_query_string('location'); ?>"><i class="icon-close"></i></a>
@@ -137,15 +138,16 @@
                         </div>
                     <?php endif; ?>
                 </div>
+                <!-- END OF FILTER PRODUCT -->
                 <div class="product-list-content">
                     <div class="row row-product">
                         <!--print products-->
-                        <?php foreach ($products as $product): ?>
+                        <?php foreach ($products as $product) : ?>
                             <div class="col-6 col-sm-6 col-md-6 col-lg-4 col-product">
                                 <?php $this->load->view('product/_product_item', ['product' => $product, 'promoted_badge' => true]); ?>
                             </div>
                         <?php endforeach; ?>
-                        <?php if (empty($products)): ?>
+                        <?php if (empty($products)) : ?>
                             <div class="col-12">
                                 <p class="no-records-found"><?php echo trans("no_products_found"); ?></p>
                             </div>
