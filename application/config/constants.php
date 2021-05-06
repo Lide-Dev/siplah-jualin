@@ -84,6 +84,13 @@ defined('EXIT_DATABASE')       OR define('EXIT_DATABASE', 8); // database error
 defined('EXIT__AUTO_MIN')      OR define('EXIT__AUTO_MIN', 9); // lowest automatically-assigned error code
 defined('EXIT__AUTO_MAX')      OR define('EXIT__AUTO_MAX', 125); // highest automatically-assigned error code
 
+
+// Custom
+defined("ROLE_INSPECTOR") OR define("ROLE_INSPECTOR","inspector");
+defined("ROLE_ADMIN") OR define("ROLE_ADMIN","admin");
+defined("ROLE_SUPPLIER") OR define("ROLE_SUPPLIER","supplier");
+defined("ROLE_SATDIK") OR define("ROLE_SATDIK","satdik");
+
 defined('IMG_BASE64_1x1')      		OR define('IMG_BASE64_1x1', 'data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==');
 defined('IMG_BG_PRODUCT_SMALL')      	OR define('IMG_BG_PRODUCT_SMALL', 'assets/img/img_bg_product_small.jpg');
 defined('IMG_BG_BLOG_SMALL')      	OR define('IMG_BG_BLOG_SMALL', 'assets/img/img_bg_blog_small.jpg');
