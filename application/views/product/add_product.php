@@ -152,29 +152,19 @@
                                         </div>
                                         <div class="form-box-body">
                                             <div class="row">
-                                                <div class="col-12">
+                                                <div class="col-6">
                                                     <div class="form-group">
-                                                        <label class="control-label"><?php echo trans("product_registitle"); ?></label>
+                                                        <label class="control-label"><?php echo trans("product_title"); ?></label>
                                                         <input type="text" name="title" class="form-control form-input" placeholder="<?php echo trans("product_title"); ?>" required>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <!-- PPN -->
-                                            <div class="row">
-                                                <div class="form-group">
-                                                    <ul class="nav nav-pills">
-                                                        <li class="nav-item col-md-6">
-                                                            <label class="nav-link border border-muted text-center font-weight-bold" for="" id="" data-toggle="tab" aria-selected=""> Barang Tidak Kena PPN</label>
-                                                            <input type="radio" name="" id="" value="" style="display:none" checked>
-                                                        </li>
-                                                        <li class="nav-item col-md-6">
-                                                            <label class="nav-link border border-muted text-center font-weight-bold" for="" id="" data-toggle="tab" aria-selected=""> Barang Kena PPN</label>
-                                                            <input type="radio" name="" id="" value="" style="display:none">
-                                                        </li>
-                                                    </ul>
+                                                <div class="col-6">
+                                                    <div class="form-group">
+                                                        <label class="control-label"><?php echo trans("brand"); ?></label>
+                                                        <input type="text" name="title" class="form-control form-input" placeholder="<?php echo trans("brand"); ?>" required>
+                                                    </div>
                                                 </div>
                                             </div>
-                                            <!-- END OF PPN -->
                                             <!-- MINIMUM ORDER & STOK -->
                                             <div class="row">
                                                 <div class="form-group col-6">
@@ -199,24 +189,22 @@
                                                 </div>
                                             </div>
                                             <!-- END OF CATEGORY MADE & CODE KBKI -->
-                                            <!-- DELIVERY TIME & SHIPPING WAY -->
+                                            <!-- SKU -->
                                             <div class="row">
                                                 <div class="form-group col-6">
-                                                    <label class="control-label"><?php echo trans("delivery_time"); ?></label>
-                                                    <input type="text" name="" class="form-control form-input" placeholder="<?php echo trans("delivery_time"); ?>">
-                                                </div>
-                                                <div class="form-group col-6">
-                                                    <label class="control-label"><?php echo trans("shipping_way"); ?></label>
-                                                    <input type="text" name="" class="form-control form-input" placeholder="<?php echo trans("shipping_way"); ?>">
+                                                    <label class="control-label"><?php echo trans("guarantee"); ?></label>
+                                                    <input type="text" name="sku" class="form-control form-input" placeholder="<?php echo trans("guarantee"); ?>">
                                                 </div>
                                             </div>
-                                            <!-- END OF DELIVERY TIME & SHIPPING WAY -->
+                                            <!-- END OF SKU -->
+                                            <!-- SKU -->
                                             <div class="row">
                                                 <div class="form-group col-6">
                                                     <label class="control-label"><?php echo trans("sku"); ?>&nbsp;(<?php echo trans("product_code"); ?>)</label>
                                                     <input type="text" name="sku" class="form-control form-input" placeholder="<?php echo trans("sku"); ?>">
                                                 </div>
                                             </div>
+                                            <!-- END OF SKU -->
                                             <div class="form-group">
                                                 <label class="control-label"><?php echo trans("description"); ?></label>
                                                 <div class="row">
@@ -229,6 +217,46 @@
                                                 <textarea name="description" id="ckEditor" class="text-editor"></textarea>
                                             </div>
 
+                                        </div>
+
+                                        <div class="form-box-body">
+                                            <!-- DELIVERY TIME & SHIPPING WAY -->
+                                            <div class="row">
+                                                <div class="form-group col-6">
+                                                    <label class="control-label"><?php echo trans("delivery_time"); ?></label>
+                                                    <input type="text" name="" class="form-control form-input" placeholder="<?php echo trans("delivery_time"); ?>">
+                                                </div>
+                                                <div class="form-group col-6">
+                                                    <label class="control-label"><?php echo trans("shipping_way"); ?></label>
+                                                    <input type="text" name="" class="form-control form-input" placeholder="<?php echo trans("shipping_way"); ?>">
+                                                </div>
+                                            </div>
+                                            <!-- END OF DELIVERY TIME & SHIPPING WAY -->
+                                            <!-- DIMENSION PRODUCT -->
+                                            <div class="row">
+                                                <div class="form-box-head">
+                                                    <h4 class="title"><?php echo trans('dimension_product'); ?></h4>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="form-group col-3">
+                                                    <label class=""><?php echo trans("long"); ?></label>
+                                                    <input type="number" name="" class="form-control form-input" placeholder="<?php echo trans(""); ?>">
+                                                </div>
+                                                <div class="form-group col-3">
+                                                    <label class=""><?php echo trans("width"); ?></label>
+                                                    <input type="number" name="" class="form-control form-input" placeholder="<?php echo trans(""); ?>">
+                                                </div>
+                                                <div class="form-group col-3">
+                                                    <label class=""><?php echo trans("height"); ?></label>
+                                                    <input type="number" name="" class="form-control form-input" placeholder="<?php echo trans(""); ?>">
+                                                </div>
+                                                <div class="form-group col-3">
+                                                    <label class=""><?php echo trans("weight"); ?></label>
+                                                    <input type="number" name="" class="form-control form-input" placeholder="<?php echo trans(""); ?>">
+                                                </div>
+                                            </div>
+                                            <!-- END OF DIMENSION PRODUCT -->
                                         </div>
                                     </div>
                                     <!-- END OF DETAILS PRODUCT -->

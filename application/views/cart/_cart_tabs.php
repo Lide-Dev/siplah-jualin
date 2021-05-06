@@ -12,10 +12,5 @@
 				<span><?php echo trans("make_an_offer"); ?></span>
 			</a>
 		</li>
-		<li class="nav-item <?php echo ($active_tab == 'waiting_seller_response') ? 'active' : ''; ?>">
-			<a class="nav-link" href="<?php echo generate_url("cart/make_an_offer"); ?>">
-				<span><?php echo trans("waiting_seller_response"); ?></span>
-			</a>
-		</li>
 	</ul>
 </div>

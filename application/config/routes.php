@@ -128,6 +128,7 @@ foreach ($languages as $language) {
         $route[$key . $routes->cart . '/' . $routes->token_midtrans]['GET'] = 'cart_controller/token_midtrans';
         $route[$key . $routes->cart . '/' . $routes->token_midtrans]['POST'] = 'cart_controller/token_midtrans';
         $route[$key . $routes->cart . '/' . $routes->negotiation]['GET'] = 'cart_controller/negotiation';
+        $route[$key . $routes->cart . '/' . $routes->make_an_offer]['GET'] = 'cart_controller/make_an_offer';
         /*orders*/
         $route[$key . $routes->orders]['GET'] = 'order_controller/orders';
         $route[$key . $routes->orders . '/' . $routes->completed_orders]['GET'] = 'order_controller/completed_orders';

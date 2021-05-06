@@ -51,12 +51,8 @@ class Cart_controller extends Home_Core_Controller
         $data["active_tab"] = "active_make_an_offer";
         /* END OF MENU TABS */
 
-        $data['make_an_offer_items'] = $this->cart_model->get_sess_make_an_offer_items();
-        $data['make_an_offer_total'] = $this->cart_model->get_sess_make_an_offer_total();
-        $data['make_an_offer_has_physical_product'] = $this->cart_model->check_make_an_offer_has_physical_product();
-
         $this->load->view('partials/_header', $data);
-        $this->load->view('cart/cart', $data);
+        $this->load->view('cart/make_an_offer', $data);
         $this->load->view('partials/_footer');
     }
 
