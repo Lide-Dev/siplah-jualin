@@ -1,5 +1,5 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 //include image resize library
 include APPPATH . "third_party/image-resize/ImageResize.php";
 include APPPATH . "third_party/image-resize/ImageResizeException.php";
@@ -13,6 +13,34 @@ class Upload_model extends CI_Model
     {
         parent::__construct();
         $this->img_quality = 85;
+    }
+
+    /**
+     * Handle uploading file for supplier document
+     *
+     * @param array $file
+     * @param int|string $user_id
+     * @return void
+     */
+    public function upload_document_supplier($file, $user_id)
+    {
+        $result = [];
+        foreach ($file as $key => $value) {
+            if ($key=="siup" && empty($value["name"])){
+                continue;
+            }
+            $config["upload_path"] = "./uploads/supplier_document/";
+            $config["allowed_types"] = "jpg|jpeg|png|pdf";
+            // $config['upload_path'] = './uploads/temp/';
+            $config["file_name"] = "supplier_{$user_id}_{$key}_" . generate_unique_id();
+            $this->load->library('upload', $config);
+            if ($this->upload->do_upload("{$key}_document")) {
+                $result[$key] = $config["file_name"];
+            } else {
+                dd($value, "error $key : {$this->upload->display_errors()}", $config); // throw new Exception("Upload file is not properly right!");
+            }
+        }
+        return $result;
     }
 
     //upload temp image

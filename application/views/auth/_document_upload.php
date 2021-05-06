@@ -9,13 +9,13 @@
         <p class="dm-upload-icon">
             <i class="icon-upload"></i>
         </p>
-        <p class="dm-upload-text"><?php echo trans("drag_drop_images_here"); ?>&nbsp;<span style="text-decoration: underline"><?php echo trans('browse_files'); ?></span></p>
+        <p class="dm-upload-text"><?php echo trans("drag_drop_images_here")."test";  ?>&nbsp;<span style="text-decoration: underline"><?php echo trans('browse_files'); ?></span></p>
 
         <a class='btn btn-md dm-btn-select-files'>
             <input type="file" name="file" size="40" multiple="multiple">
         </a>
 
-        <ul class="dm-uploaded-files" id="files-image">
+        <!-- <ul class="dm-uploaded-files" id="files-image">
             <?php if (!empty($modesy_images)):
                 foreach ($modesy_images as $modesy_image):?>
                     <li class="media" id="uploaderFile<?php echo $modesy_image->file_id; ?>">
@@ -31,7 +31,7 @@
                     </li>
                 <?php endforeach;
             endif; ?>
-        </ul>
+        </ul> -->
 
         <div class="error-message-img-upload"></div>
 
@@ -56,11 +56,11 @@
 <script>
     $(function () {
         $('#drag-and-drop-zone').dmUploader({
-            url: '<?php echo base_url(); ?>upload-image-session-post',
+            url: '<?php echo base_url(); ?>upload_npwp',
             maxFileSize: <?php echo $this->general_settings->max_file_size_image; ?>,
             queue: true,
-            allowedTypes: 'image/*',
-            extFilter: ["jpg", "jpeg", "png", "gif"],
+            multiple: false,
+            extFilter: ["jpg", "jpeg", "png", "pdf"],
             extraData: function (id) {
                 return {
                     "file_id": id,

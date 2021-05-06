@@ -1,5 +1,5 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
 class Location_model extends CI_Model
 {
@@ -175,29 +175,81 @@ class Location_model extends CI_Model
         return $query->num_rows();
     }
 
-    //get state
-    public function get_state($id)
+    //get province
+    /**
+     * Get province with by id or not.
+     *
+     * @param mixed $id
+     * @return array|object
+     * If id null, it will return array, else it will return object.
+     */
+    public function get_province($id = null)
     {
-        $id = clean_number($id);
-        $this->db->where('id', $id);
-        $query = $this->db->get('location_states');
-        return $query->row();
+        if (empty($id)) {
+            return $query = $this->db->get('provinces')->result();
+        } else {
+            $id = clean_number($id);
+            $this->db->where('id', $id);
+            $query = $this->db->get('provinces');
+            return $query->result()->first_row();
+        }
+    }
+
+    public function get_city($province_id = null, $id = null)
+    {
+        $by_province = !empty($province_id);
+        if ($by_province) {
+            $province_id = clean_number($province_id);
+            $this->db->where('province_id', $province_id);
+        } else {
+            return false;
+        }
+        $with_id = !empty($id);
+        if ($with_id) {
+            $id = clean_number($id);
+            $this->db->where('id', $id);
+            return $this->db->get("cities")->result()->first_row();
+        } else {
+            return $this->db->get("cities")->result();
+        }
+    }
+
+    public function valid_province($value)
+    {
+        $value = clean_number($value);
+        $this->db->where("id", $value);
+        $count = $this->db->get("provinces")->num_rows();
+        $this->form_validation->set_message('valid_province', 'Provinsi pada input {field} tidak ditemukan.');
+
+        return $count > 0;
+    }
+
+    public function valid_city($value, $name_province = "province")
+    {
+        $province_id = clean_number($this->input->post($name_province));
+        $value = clean_number($value);
+        $this->db->where("province_id", $province_id)->where("id", $value);
+        $count = $this->db->get("cities")->num_rows();
+        $this->form_validation->set_message('valid_city', 'Kota/kabupaten pada input {field} tidak ditemukan.');
+
+        return $count > 0;
     }
 
     //get states by country
-    public function get_states_by_country($country_id)
-    {
-        $this->db->where('country_id', clean_number($country_id));
-        $this->db->order_by('name');
-        $query = $this->db->get('location_states');
-        return $query->result();
-    }
+    // public function get_provinces_by_country($country_id)
+    // {
+    //     $this->db->where('country_id', clean_number($country_id));
+    //     $this->db->order_by('name');
+    //     $query = $this->db->get('location_states');
+    //     return $query->result();
+    // }
+
 
     //delete state
-    public function delete_state($id)
+    public function delete_province($id)
     {
         $id = clean_number($id);
-        $state = $this->get_state($id);
+        $state = $this->get_province($id);
         if (!empty($state)) {
             $this->db->where('id', $id);
             return $this->db->delete('location_states');
@@ -287,15 +339,6 @@ class Location_model extends CI_Model
         }
         $query = $this->db->get('location_cities');
         return $query->num_rows();
-    }
-
-    //get city
-    public function get_city($id)
-    {
-        $id = clean_number($id);
-        $this->db->where('id', $id);
-        $query = $this->db->get('location_cities');
-        return $query->row();
     }
 
     //get cities by country
@@ -405,5 +448,4 @@ class Location_model extends CI_Model
         }
         return 0;
     }
-
 }

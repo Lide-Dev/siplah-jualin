@@ -1,4 +1,5 @@
 <?php
+
 defined('BASEPATH') or exit('No direct script access allowed');
 
 class Home_controller extends Home_Core_Controller
@@ -38,7 +39,6 @@ class Home_controller extends Home_Core_Controller
             $data["blog_slider_posts"] = $this->blog_model->get_latest_posts(8);
             set_cache_data($key, $data["blog_slider_posts"]);
         }
-
         $this->load->view('partials/_header', $data);
         $this->load->view('index', $data);
         $this->load->view('partials/_footer');
@@ -96,6 +96,7 @@ class Home_controller extends Home_Core_Controller
      */
     public function any($slug)
     {
+
         get_method();
         $slug = clean_slug($slug);
         //index page
@@ -122,7 +123,7 @@ class Home_controller extends Home_Core_Controller
      */
     private function page($page)
     {
-        // dd();
+
         if (empty($page)) {
             redirect(lang_base_url());
         }

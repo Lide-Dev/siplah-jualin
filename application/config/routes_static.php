@@ -1,5 +1,5 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
 //fixed
 $route['cron/update-sitemap'] = 'cron_controller/update_sitemap';
@@ -13,7 +13,10 @@ $route['logout'] = 'common_controller/logout';
 //auth
 $route['forgot-password-post']['POST'] = 'auth_controller/forgot_password_post';
 $route['reset-password-post']['POST'] = 'auth_controller/reset_password_post';
-$route['register-post']['POST'] = 'auth_controller/register_post';
+$route['register-post/(:any)']['POST'] = 'auth_controller/register_post/$1';
+$route["login-post/(:any)"]['POST'] = "auth_controller/login_post/$1";
+$route["login-post/(:any)"]['GET'] = "auth_controller/login_post/$1";
+
 //bidding
 $route['request-quote']['POST'] = 'bidding_controller/request_quote';
 $route['submit-quote-post']['POST'] = 'bidding_controller/submit_quote';
@@ -113,3 +116,6 @@ $route['add-to-subscribers-post']['POST'] = 'home_controller/add_to_subscribers'
 $route['set-default-location-post']['POST'] = 'home_controller/set_default_location';
 
 $route['add-review-post']['POST'] = 'product_controller/add_review_post';
+
+//register_support
+$route["get-city-option"]["GET"] = "register_support_controller/get_city_option";

@@ -7,17 +7,22 @@
 				<div class="row">
 					<div class="col-12">
 						<h1 class="title"><?php echo trans("register_seller"); ?></h1>
+
+						<?= $_SESSION["status_message"] ?? "" ?>
 						<!-- form start -->
 						<?php
-						if ($recaptcha_status) {
-							echo form_open('register-post', [
-								'id' => 'form_validate', 'class' => 'validate_terms',
-								'onsubmit' => "var serializedData = $(this).serializeArray();var recaptcha = ''; $.each(serializedData, function (i, field) { if (field.name == 'g-recaptcha-response') {recaptcha = field.value;}});if (recaptcha.length < 5) { $('.g-recaptcha>div').addClass('is-invalid');return false;} else { $('.g-recaptcha>div').removeClass('is-invalid');}"
-							]);
-						} else {
-							echo form_open('register-post', ['id' => 'form_validate', 'class' => 'validate_terms']);
-						}
+						// if ($recaptcha_status) {
+
+						echo form_open_multipart('register-post/supplier', [
+							'id' => 'form_validate', 'class' => 'validate_terms',
+							// 'onsubmit' => "var serializedData = $(this).serializeArray();var recaptcha = ''; $.each(serializedData, function (i, field) { if (field.name == 'g-recaptcha-response') {recaptcha = field.value;}});if (recaptcha.length < 5) { $('.g-recaptcha>div').addClass('is-invalid');return false;} else { $('.g-recaptcha>div').removeClass('is-invalid');}"
+						]);
+						// } else {
+						// echo form_open('register-post', ['id' => 'form_validate', 'class' => 'validate_terms']);
+						// }
 						?>
+						<?= validation_errors() ?? "" ?>
+
 						<div class="social-login-cnt">
 							<?php $this->load->view("partials/_social_login", ['or_text' => trans("register_with_email")]); ?>
 						</div>
@@ -30,120 +35,170 @@
 							<div class="bounce2"></div>
 							<div class="bounce3"></div>
 						</div>
-						<!-- PPROFILE BUSSINES -->
-						<h4 class="title-auth">1. <?php echo trans("profile_bussines"); ?></h4>
+						<!-- PPROFILE business -->
+						<h4 class="title-auth">1. <?php echo trans("profile_business"); ?></h4>
 						<div class="row">
 							<div class="col-12">
 								<div class="form-group">
-										<label class="control-label font-600 col-sm-6 mt-3" for="">Jenis Usaha</label>
-										<ul class="nav nav-pills">
-											<li class="nav-item col-sm-6">
-												<label class="nav-link border border-muted text-center font-weight-bold" for="" id="" data-toggle="tab" aria-selected=""> Badan Usaha</label>
-												<input type="radio" name="" id="" value="" style="display:none" checked>
-											</li>
-											<li class="nav-item col-sm-6">
-												<label class="nav-link border border-muted text-center font-weight-bold" for="" id="" data-toggle="tab" aria-selected=""> Individu / Perorangan</label>
-												<input type="radio" name="" id="" value="" style="display:none">
-											</li>
-										</ul>
-								</div>
-
-								<div class="form-group">
-									<input type="text" name="bussines_name" class="form-control auth-form-input" placeholder="<?php echo trans("bussines_name"); ?>" value="<?php echo old("bussines_name"); ?>" maxlength="<?php echo $this->username_maxlength; ?>" required>
-								</div>
-								<div class="form-group">
-									<input type="number" name="npwp" class="form-control auth-form-input" placeholder="<?php echo trans("npwp"); ?>" value="<?php echo old("npwp"); ?>" required>
-								</div>
-								<!-- END OF PROFILE BUSSINES -->
-								<!-- TAXPAYER STATUS -->
-
-								<div class="form-group">
-									<label class="control-label font-600 col-sm-6" for="">Status Wajib Pajak</label>
+									<label class="control-label font-600 col-sm-6 mt-3" for="form_business_type"><?= trans("business_type") ?></label>
 									<ul class="nav nav-pills">
-										<li class="nav-item col-sm-6">
-											<label class="nav-link border border-muted text-center font-weight-bold" for="" id="" data-toggle="tab" aria-selected=""> PKP</label>
-											<input type="radio" name="" id="" value="" style="display:none" checked>
+										<li class="nav-item col-sm-4">
+											<label class="nav-link border border-muted text-center font-weight-bold" for="form_individual_business_type" id="label_individual_business_type" data-toggle="tab" aria-selected="">Individu</label>
+											<input type="radio" name="business_type" id="form_individual_business_type" value="individual" style="display:none">
 										</li>
-										<li class="nav-item col-sm-6">
-											<label class="nav-link border border-muted text-center font-weight-bold" for="" id="" data-toggle="tab" aria-selected=""> Non PKP</label>
-											<input type="radio" name="" id="" value="" style="display:none">
+										<li class="nav-item col-sm-4">
+											<label class="nav-link border border-muted text-center font-weight-bold active" for="form_nonpkp_business_type" id="label_nonpkp_business_type" data-toggle="tab" aria-selected=""> Non PKP</label>
+											<input type="radio" name="business_type" id="form_nonpkp_business_type" value="non_pkp" style="display:none" checked>
+										</li>
+										<li class="nav-item col-sm-4">
+											<label class="nav-link border border-muted text-center font-weight-bold" for="form_pkp_business_type" id="label_pkp_business_type" data-toggle="tab" aria-selected="">PKP</label>
+											<input type="radio" name="business_type" id="form_pkp_business_type" value="pkp" style="display:none">
 										</li>
 									</ul>
+									<?php echo form_error('business_type'); ?>
 								</div>
 
-								<!-- END OF TAXPAYER STATUS -->
+								<div class="form-group">
+									<label class="control-label font-600 col-sm-6 mt-3" for="form_umkm_type">Tipe Usaha</label>
+									<ul class="nav nav-pills">
+										<li class="nav-item col-sm-6">
+											<label class="nav-link border border-muted text-center font-weight-bold" for="form_umkm_business_type" id="label_umkm_business_type" data-toggle="tab" aria-selected="">UMKM</label>
+											<input type="radio" name="umkm" id="form_umkm_business_type" value="umkm" style="display:none">
+										</li>
+										<li class="nav-item col-sm-6">
+											<label class="nav-link border border-muted text-center font-weight-bold active" for="form_nonumkm_business_type" id="label_nonumkm_business_type" data-toggle="tab" aria-selected=""> Non UMKM</label>
+											<input type="radio" name="umkm" id="form_nonumkm_business_type" value="non_umkm" style="display:none" checked>
+										</li>
+									</ul>
+									<?php echo form_error('umkm'); ?>
+								</div>
+
+								<div class="form-group">
+									<input type="text" name="business_name" class="form-control auth-form-input" placeholder="<?php echo trans("business_name"); ?>" value="<?php echo set_value("business_name"); ?>" maxlength="<?php echo $this->username_maxlength; ?>" required>
+									<?php echo form_error('business_name'); ?>
+								</div>
+								<div class="form-group">
+									<input type="text" name="npwp" class="form-control auth-form-input" placeholder="<?php echo trans("npwp"); ?>" value="<?php echo set_value("npwp"); ?>" required>
+									<?php echo form_error('npwp'); ?>
+								</div>
+								<!-- END OF PROFILE business -->
+
 								<!-- UPLOAD DOC NPWP -->
 
-								<div class="m-b-30">
+								<div class="m-b-30 form_group pb-3">
 									<label class="control-label font-600"><?php echo trans("upload_npwp"); ?></label>
-									<?php $this->load->view("auth/_document_upload"); ?>
+									<input type="file" class="form-control auth-form-input" name="npwp_document" id="form_npwp_document">
+									<?php echo form_error('npwp_document'); ?>
 								</div>
 							</div>
 						</div>
 						<!-- END OF UPLOAD DOC NPWP -->
 						<!-- COMPLETE ADDRESS -->
 						<div class="form-group">
-							<textarea type="text" name="complete_address" class="form-control auth-form-input" placeholder="<?php echo trans("complete_address"); ?>" value="<?php echo old("complete_address"); ?>" required></textarea>
+							<textarea type="text" name="complete_address" class="form-control auth-form-input" placeholder="<?php echo trans("complete_address"); ?>" required><?php echo set_value("complete_address"); ?></textarea>
+							<?php echo form_error('complete_address'); ?>
 						</div>
 						<div class="form-group">
-							<input type="text" name="province" class="form-control auth-form-input" placeholder="<?php echo trans("province"); ?>" value="<?php echo old("province"); ?>" required>
+							<select id="form_province" name="province" class="form-control auth-form-input" onchange="select_province()">
+								<option value="0"> Pilih salah satu provinsi</option>
+								<?php foreach ($provinces as $province) : ?>
+									<option value="<?= $province->id ?>" <?= set_value("province") == $province->id ? "selected" : "" ?>> <?= $province->province_name ?></option>
+								<?php endforeach ?>
+							</select>
+							<?php echo form_error('province'); ?>
 						</div>
 						<div class="form-group">
-							<input type="text" name="districs" class="form-control auth-form-input" placeholder="<?php echo trans("districs"); ?>" value="<?php echo old("districs"); ?>" required>
+							<?php if (!empty(set_value("province"))) : ?>
+								<select id="form_city" name="city" class="form-control auth-form-input" disabled>
+									<option value="0"> Kota dipilih setelah pilih provinsi terlebih dahulu </option>
+								</select>
+								<?php echo form_error('city'); ?>
+							<?php else : ?>
+								<select id="form_city" name="city" class="form-control auth-form-input" disabled>
+									<option value="0"> Kota dipilih setelah pilih provinsi terlebih dahulu </option>
+								</select>
+								<?php echo form_error('city'); ?>
+							<?php endif ?>
 						</div>
 						<div class="form-group">
-							<input type="text" name="sub_distric" class="form-control auth-form-input" placeholder="<?php echo trans("sub_distric"); ?>" value="<?php echo old("sub_distric"); ?>" required>
+							<input type="text" name="district" class="form-control auth-form-input" placeholder="<?php echo trans("district"); ?>" value="<?php echo set_value("district"); ?>" required>
+							<?php echo form_error('district'); ?>
 						</div>
 						<div class="form-group">
-							<input type="text" name="village" class="form-control auth-form-input" placeholder="<?php echo trans("village"); ?>" value="<?php echo old("village"); ?>" required>
+							<input type="text" name="village" class="form-control auth-form-input" placeholder="<?php echo trans("village"); ?>" value="<?php echo set_value("village"); ?>" required>
+							<?php echo form_error('village'); ?>
 						</div>
 						<div class="form-group">
-							<input type="number" name="postal_code" class="form-control auth-form-input" placeholder="<?php echo trans("postal_code"); ?>" value="<?php echo old("postal_code"); ?>" required>
+							<input type="text" name="postal_code" class="form-control auth-form-input" minlength="5" maxlength="5" placeholder="<?php echo trans("postal_code"); ?>" value="<?php echo set_value("postal_code"); ?>" required>
+							<?php echo form_error('postal_code'); ?>
 						</div>
 						<!-- END OF COMPLETE ADDRESS -->
 						<!-- NIB -->
 						<div class="form-group">
-							<input type="number" name="nib" class="form-control auth-form-input" placeholder="<?php echo trans("nib"); ?>" value="<?php echo old("nib"); ?>" required>
+							<input type="text" name="nib" class="form-control auth-form-input" placeholder="<?php echo trans("nib"); ?>" value="<?php echo set_value("nib"); ?>" required>
+							<?php echo form_error('nib'); ?>
 						</div>
-						<div class="">
-							<div class="m-b-30">
-								<label class="control-label font-600"><?php echo trans("upload_selected_document"); ?></label>
-								<?php $this->load->view("auth/_document_upload"); ?>
-							</div>
+
+						<div class="m-b-30 form-group">
+							<label class="control-label font-600"><?php echo trans("upload_selected_document"); ?></label>
+							<input type="file" class="form-control auth-form-input" name="nib_document" id="form_selected_document">
+							<?php echo form_error('nib_document'); ?>
 						</div>
+
 						<!-- END OF NIB -->
 						<!-- BANK ACCOUNT -->
 						<h4 class="title-auth">2. <?php echo trans("bank_title"); ?></h4>
 						<div class="form-group">
-							<input type="text" name="bank_name" class="form-control auth-form-input" placeholder="<?php echo trans("bank_name"); ?>" value="<?php echo old("bank_name"); ?>" required>
+							<select id="form_bank" name="bank" class="form-control auth-form-input">
+								<option value="0"> Pilih salah satu bank</option>
+								<?php foreach ($banks as $bank) : ?>
+									<option value="<?= $bank->id ?>" <?= set_value("bank") == $bank->id ? "selected" : "" ?>> <?= $bank->bank_name ?></option>
+								<?php endforeach ?>
+							</select>
+							<?php echo form_error('bank'); ?>
 						</div>
 						<div class="form-group">
-							<input type="number" name="account_number" class="form-control auth-form-input" placeholder="<?php echo trans("account_number"); ?>" value="<?php echo old("account_number"); ?>" required>
+							<input type="text" name="account_number" class="form-control auth-form-input" placeholder="<?php echo trans("account_number"); ?>" value="<?php echo set_value("account_number"); ?>" required>
+							<?php echo form_error('account_number'); ?>
 						</div>
 						<div class="form-group">
-							<input type="text" name="bank_account_holder" class="form-control auth-form-input" placeholder="<?php echo trans("bank_account_holder"); ?>" value="<?php echo old("bank_account_holder"); ?>" required>
+							<input type="text" name="bank_account_holder" class="form-control auth-form-input" placeholder="<?php echo trans("bank_account_holder"); ?>" value="<?php echo set_value("bank_account_holder"); ?>" required>
+							<?php echo form_error('bank_account_holder'); ?>
 						</div>
 						<!-- END OF BANK ACCOUNT -->
 						<!-- RESPONSIBLE PERSON -->
 						<h4 class="title-auth">3. <?php echo trans("responsible_title"); ?></h4>
+						<div id="form_container_responsible_person">
+							<div class="form-group">
+								<input type="text" name="responsible_person_name" class="form-control auth-form-input" placeholder="<?php echo trans("full_name"); ?>" value="<?php echo set_value("responsible_person_name"); ?>" maxlength="<?php echo $this->username_maxlength; ?>" required>
+								<?php echo form_error('responsible_person_name'); ?>
+							</div>
+							<div class="form-group">
+								<input type="text" name="responsible_person_position" class="form-control auth-form-input" placeholder="<?php echo trans("user_position"); ?>" value="<?php echo set_value("responsible_person_position"); ?>" maxlength="<?php echo $this->username_maxlength; ?>" required>
+								<?php echo form_error('responsible_person_position'); ?>
+							</div>
+							<div class="m-b-30 form-group">
+								<label class="control-label font-600">Upload Surat Ijin Usaha Perdagangan (Opsional)</label>
+								<input type="file" class="form-control auth-form-input" name="siup_document" id="form_selected_document">
+								<?php echo form_error('siup_document'); ?>
+							</div>
+						</div>
+						<h4 class="title-auth">4. <?php echo trans("create_user"); ?></h4>
 						<div class="form-group">
-							<input type="text" name="username" class="form-control auth-form-input" placeholder="<?php echo trans("full_name"); ?>" value="<?php echo old("full_name"); ?>" maxlength="<?php echo $this->username_maxlength; ?>" required>
+							<input type="email" name="email_address" class="form-control auth-form-input" placeholder="<?php echo trans("email_address"); ?>" value="<?php echo set_value("email_address"); ?>" required>
+							<?php echo form_error('email'); ?>
 						</div>
 						<div class="form-group">
-							<input type="email" name="email" class="form-control auth-form-input" placeholder="<?php echo trans("email_address"); ?>" value="<?php echo old("email"); ?>" required>
+							<input type="number" name="phone_number" class="form-control auth-form-input" placeholder="<?php echo trans("phone_number"); ?>" value="<?php echo set_value("phone_number"); ?>" required>
+							<?php echo form_error('phone_number'); ?>
 						</div>
 						<div class="form-group">
-							<input type="number" name="phone_number" class="form-control auth-form-input" placeholder="<?php echo trans("phone_number"); ?>" value="<?php echo old("phone_number"); ?>" required>
-						</div>
-						<div class="form-group">
-							<input type="number" name="nik" class="form-control auth-form-input" placeholder="<?php echo trans("nik"); ?>" value="<?php echo old("nik"); ?>" required>
-						</div>
-						<h4 class="title-auth">4. <?php echo trans("password_title"); ?></h4>
-						<div class="form-group">
-							<input type="password" name="password" class="form-control auth-form-input" placeholder="<?php echo trans("password"); ?>" value="<?php echo old("password"); ?>" required>
+							<input type="password" name="password" class="form-control auth-form-input" placeholder="<?php echo trans("password"); ?>" required>
+							<?php echo form_error('password'); ?>
 						</div>
 						<div class="form-group">
 							<input type="password" name="confirm_password" class="form-control auth-form-input" placeholder="<?php echo trans("password_confirm"); ?>" required>
+							<?php echo form_error('confirm_password'); ?>
 						</div>
 						<!-- END OF RESPONSIBLE PERSON -->
 						<div class="form-group m-t-30 m-b-20">
@@ -153,11 +208,7 @@
 								<label for="checkbox_terms" class="custom-control-label"><?php echo trans("terms_conditions_exp"); ?>&nbsp;<a href="<?php echo lang_base_url() . $page_terms_condition->slug; ?>" class="link-terms" target="_blank"><strong><?php echo html_escape($page_terms_condition->title); ?></strong></a></label>
 							</div>
 						</div>
-						<?php if ($recaptcha_status) : ?>
-							<div class="recaptcha-cnt">
-								<?php generate_recaptcha(); ?>
-							</div>
-						<?php endif; ?>
+
 						<div class="form-group">
 							<button type="submit" class="btn btn-md btn-custom btn-block"><?php echo trans("register"); ?></button>
 						</div>
@@ -171,4 +222,36 @@
 		</div>
 	</div>
 </div>
+
+<script>
+	function select_province() {
+		let id = $("#form_province option:selected").val();
+		$.get("<?= base_url() ?>get-city-option?province_id=" + id).done(function(data) {
+			$("#form_city").html(data);
+			$("#form_city").removeAttr("disabled");
+		})
+	}
+
+	$("#label_nonpkp_business_type, #label_pkp_business_type").click(function() {
+		$("#form_container_responsible_person").html(
+			`<div class="form-group">
+				<input type="text" name="responsible_person_name" class="form-control auth-form-input" placeholder="<?php echo trans("full_name"); ?>" value="<?php echo set_value("full_name"); ?>" maxlength="<?php echo $this->username_maxlength; ?>" required>
+			</div>
+			<div class="form-group">
+				<input type="text" name="responsible_person_position" class="form-control auth-form-input" placeholder="<?php echo trans("user_position"); ?>" value="<?php echo set_value("full_name"); ?>" maxlength="<?php echo $this->username_maxlength; ?>" required>
+			</div>
+			<div class="m-b-30 form-group">
+				<label class="control-label font-600">Upload Surat Ijin Usaha Perdagangan (Opsional)</label>
+				<input type="file" class="form-control auth-form-input" name="siup_document" id="form_selected_document">
+			</div>
+			`);
+	});
+	$("#label_individual_business_type").click(function() {
+		$("#form_container_responsible_person").html(
+			`<div class="form-group">
+				<input type="text" name="nik" class="form-control auth-form-input" placeholder="<?php echo trans("nik"); ?>" value="<?php echo set_value("nik"); ?>" required>
+			</div>`
+		);
+	});
+</script>
 <!-- Wrapper End-->

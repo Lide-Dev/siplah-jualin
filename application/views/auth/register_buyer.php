@@ -72,7 +72,7 @@
                             <input type="text" name="districs" class="form-control auth-form-input" placeholder="<?php echo trans("districs"); ?>" value="<?php echo old("districs"); ?>" required>
                         </div>
                         <div class="form-group">
-                            <input type="text" name="sub_distric" class="form-control auth-form-input" placeholder="<?php echo trans("sub_distric"); ?>" value="<?php echo old("sub_distric"); ?>" required>
+                            <input type="text" name="district" class="form-control auth-form-input" placeholder="<?php echo trans("district"); ?>" value="<?php echo old("district"); ?>" required>
                         </div>
                         <div class="form-group">
                             <input type="text" name="village" class="form-control auth-form-input" placeholder="<?php echo trans("village"); ?>" value="<?php echo old("village"); ?>" required>
@@ -129,7 +129,7 @@
                             <input type="text" name="districs_official" class="form-control auth-form-input" placeholder="<?php echo trans("districs"); ?>" value="<?php echo old("districs"); ?>" required>
                         </div>
                         <div class="form-group">
-                            <input type="text" name="sub_distric_official" class="form-control auth-form-input" placeholder="<?php echo trans("sub_distric"); ?>" value="<?php echo old("sub_distric"); ?>" required>
+                            <input type="text" name="sub_distric_official" class="form-control auth-form-input" placeholder="<?php echo trans("district"); ?>" value="<?php echo old("district"); ?>" required>
                         </div>
                         <div class="form-group">
                             <input type="text" name="village_official" class="form-control auth-form-input" placeholder="<?php echo trans("village"); ?>" value="<?php echo old("village"); ?>" required>

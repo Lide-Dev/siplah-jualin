@@ -49,7 +49,7 @@ class Core_Controller extends CI_Controller
         //currencies
         $this->currencies = $this->get_currencies_array();
         //countries
-        $this->countries = $this->location_model->get_active_countries();
+        // $this->countries = $this->location_model->get_active_countries();
         //check auth
         $this->auth_check = auth_check();
         if ($this->auth_check) {

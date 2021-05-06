@@ -1,5 +1,5 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
 class Auth_model extends CI_Model
 {
@@ -17,12 +17,12 @@ class Auth_model extends CI_Model
     }
 
     //login
-    public function login()
+    public function login($role = null)
     {
         $this->load->library('bcrypt');
 
         $data = $this->input_values();
-        $user = $this->get_user_by_email($data['email']);
+        $user = $this->get_user_by_email($data['email'], $role);
 
         if (!empty($user)) {
             //check password
@@ -267,6 +267,70 @@ class Auth_model extends CI_Model
         }
     }
 
+    /**
+     * Register user with role supplier
+     *
+     * @param array $data
+     * @param array $file
+     * @return void
+     * @author Herlandro T. <herlandrotri@gmail.com>
+     */
+    public function register_supplier($data, $file)
+    {
+        $this->load->model("upload_model");
+
+        $this->db->trans_begin();
+        $this->load->library('bcrypt');
+        $this->db->insert('users', [
+            "email" => $data["user"]["email"],
+            "password" => $this->bcrypt->hash_password($data["user"]['password']),
+            "is_active_shop_request" => 1,
+        ]);
+
+        $user_id = $this->db->insert_id();
+        $file_info = $this->upload_model->upload_document_supplier($file, $user_id);
+        dd($file_info);
+        $data["profile"]["user_id"] = $user_id;
+        foreach ($file_info as $key => $value) {
+            $data["profile"]["{$key}_path"] = $value;
+        }
+        $this->db->insert("supplier_profiles", $data["profile"]);
+        $this->db->trans_complete();
+        return $this->db->trans_status();
+    }
+
+
+    /**
+     * Validate phone number
+     *
+     * @param mixed $value
+     * @param boolean $return_first_digit
+     * If true, return the first digit specified that was matches with value like `62`, `08`, or `8`. Still return `false` if phone number not valid.
+     * @return boolean|string
+     */
+    public function valid_phone_number($value, $return_first_digit = false)
+    {
+        if (!ctype_digit($value)) {
+            return false;
+        }
+
+        if (substr($value, 0, 2) == "62") {
+            $limitup = 11;
+            $first_digit = "62";
+        } else if (substr($value, 0, 2) == "08") {
+            $limitup = 10;
+            $first_digit = "08";
+        } else if (substr($value, 0, 1) == "8") {
+            $limitup = 9;
+            $first_digit = "8";
+        } else {
+            return false;
+        }
+        if ($return_first_digit) {
+            return $first_digit;
+        } else
+            return strlen($value) >= $limitup && strlen($value) < 15;
+    }
     //send email activation
     public function send_email_activation($user_id, $token)
     {
@@ -360,7 +424,6 @@ class Auth_model extends CI_Model
             );
             $this->db->where('id', $id);
             $this->db->update('users', $data);
-
         } else {
             if ($this->check_is_slug_unique($user->slug, $id) == true) {
                 $data = array(
@@ -500,8 +563,11 @@ class Auth_model extends CI_Model
     }
 
     //get user by email
-    public function get_user_by_email($email)
+    public function get_user_by_email($email, $role = null)
     {
+        if (!empty($role)) {
+            $this->db->where('role', $role);
+        }
         $this->db->where('email', $email);
         $query = $this->db->get('users');
         return $query->row();
@@ -602,7 +668,7 @@ class Auth_model extends CI_Model
     public function get_shop_opening_requests()
     {
         $this->db->where('is_active_shop_request', 1);
-        $query = $this->db->get('users');
+        $query = $this->db->join("supplier_profiles", "supplier_profiles.user_id = users.id")->get('users');
         return $query->result();
     }
 
@@ -757,5 +823,4 @@ class Auth_model extends CI_Model
 
         return false;
     }
-
 }

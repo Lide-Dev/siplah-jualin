@@ -1,5 +1,8 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+
+use League\OAuth2\Client\Provider\Exception\IdentityProviderException;
+
+defined('BASEPATH') or exit('No direct script access allowed');
 
 class Auth_controller extends Home_Core_Controller
 {
@@ -11,7 +14,7 @@ class Auth_controller extends Home_Core_Controller
     /**
      * Login Post
      */
-    public function login_post()
+    public function login_ajax_post()
     {
         //check auth
         if ($this->auth_check) {
@@ -40,6 +43,31 @@ class Auth_controller extends Home_Core_Controller
                     'error_message' => $this->load->view('partials/_messages', '', true)
                 );
                 echo json_encode($data);
+            }
+            reset_flash_data();
+        }
+    }
+
+    public function login_post($role = null)
+    {
+        //check auth
+        if ($this->auth_check) {
+            redirect(lang_base_url());
+        }
+        //validate inputs
+        $this->form_validation->set_rules('email', trans("email_address"), 'required|xss_clean|max_length[100]');
+        $this->form_validation->set_rules('password', trans("password"), 'required|xss_clean|max_length[30]');
+        if ($this->form_validation->run() == false) {
+            $this->session->set_tempdata('errors', validation_errors(), 10);
+            $this->session->set_tempdata('form_data', $this->auth_model->input_values(), 10);
+            redirect(base_url("login/$role"));
+        } else {
+            if ($this->auth_model->login($role)) {
+                if ($role == "admin")
+                    redirect(admin_url());
+                redirect(lang_base_url());
+            } else {
+                redirect(base_url("login/$role"));
             }
             reset_flash_data();
         }
@@ -126,7 +154,6 @@ class Auth_controller extends Home_Core_Controller
             $this->session->set_userdata('g_login_referrer', $this->agent->referrer());
             header('Location: ' . $authUrl);
             exit();
-
         } elseif (empty($_GET['state']) || ($_GET['state'] !== $_SESSION['oauth2state'])) {
             // State is invalid, possible CSRF attack in progress
             unset($_SESSION['oauth2state']);
@@ -154,7 +181,6 @@ class Auth_controller extends Home_Core_Controller
                 } else {
                     redirect(base_url());
                 }
-
             } catch (Exception $e) {
                 // Failed to get user details
                 exit('Something went wrong: ' . $e->getMessage());
@@ -280,9 +306,11 @@ class Auth_controller extends Home_Core_Controller
         $data['title'] = trans("register_seller");
         $data['description'] = trans("register_seller") . " - " . $this->app_name;
         $data['keywords'] = trans("register_seller") . "," . $this->app_name;
-
+        $data["provinces"] = $this->location_model->get_province();
+        $data["banks"] = $this->bank_model->get_bank();
+        // dd($data);
         $this->load->view('partials/_header', $data);
-        $this->load->view('auth/register_seller');
+        $this->load->view('auth/register_seller', $data);
         $this->load->view('partials/_footer');
     }
 
@@ -308,70 +336,213 @@ class Auth_controller extends Home_Core_Controller
     /**
      * Register Post
      */
-    public function register_post()
+    // public function register_post()
+    // {
+    //     //check if logged in
+    //     if ($this->auth_check) {
+    //         redirect(lang_base_url());
+    //     }
+
+    //     if ($this->recaptcha_status == true) {
+    //         if (!$this->recaptcha_verify_request()) {
+    //             $this->session->set_flashdata('form_data', $this->auth_model->input_values());
+    //             $this->session->set_flashdata('error', trans("msg_recaptcha"));
+    //             redirect($this->agent->referrer());
+    //             exit();
+    //         }
+    //     }
+
+    //     //validate inputs
+    //     $this->form_validation->set_rules('username', trans("username"), 'required|xss_clean|min_length[4]|max_length[100]');
+    //     $this->form_validation->set_rules('email', trans("email_address"), 'required|xss_clean|max_length[200]');
+    //     $this->form_validation->set_rules('password', trans("password"), 'required|xss_clean|min_length[4]|max_length[50]');
+    //     $this->form_validation->set_rules('confirm_password', trans("password_confirm"), 'required|xss_clean|matches[password]');
+
+    //     if ($this->form_validation->run() === false) {
+    //         $this->session->set_flashdata('errors', validation_errors());
+    //         $this->session->set_flashdata('form_data', $this->auth_model->input_values());
+    //         redirect($this->agent->referrer());
+    //     } else {
+    //         $email = $this->input->post('email', true);
+    //         $username = $this->input->post('username', true);
+
+    //         //is email unique
+    //         if (!$this->auth_model->is_unique_email($email)) {
+    //             $this->session->set_flashdata('form_data', $this->auth_model->input_values());
+    //             $this->session->set_flashdata('error', trans("msg_email_unique_error"));
+    //             redirect($this->agent->referrer());
+    //         }
+    //         //is username unique
+    //         if (!$this->auth_model->is_unique_username($username)) {
+    //             $this->session->set_flashdata('form_data', $this->auth_model->input_values());
+    //             $this->session->set_flashdata('error', trans("msg_username_unique_error"));
+    //             redirect($this->agent->referrer());
+    //         }
+    //         //register
+    //         $user_id = $this->auth_model->register();
+    //         if ($user_id) {
+    //             $user = get_user($user_id);
+    //             if (!empty($user)) {
+    //                 //update slug
+    //                 $this->auth_model->update_slug($user->id);
+    //                 if ($this->general_settings->email_verification != 1) {
+    //                     $this->auth_model->login_direct($user);
+    //                     $this->session->set_flashdata('success', trans("msg_register_success"));
+    //                     redirect(generate_url("settings", "update_profile"));
+    //                 }
+    //             }
+    //             redirect(generate_url("register"));
+    //         } else {
+    //             //error
+    //             $this->session->set_flashdata('form_data', $this->auth_model->input_values());
+    //             $this->session->set_flashdata('error', trans("msg_error"));
+    //             redirect(generate_url("register"));
+    //         }
+    //     }
+    // }
+
+    /**
+     * Register the user by role. Requirement data different by role.
+     *
+     * @param mixed $data
+     * Prefer to be array.
+     * @param string $role
+     * Can be used with constant ROLE_ADMIN, any other ROLE_...
+     * @return void
+     * @author Herlandro T <herlandrotri@gmail.com>
+     */
+    public function register_post(string $role)
     {
-        //check if logged in
-        if ($this->auth_check) {
-            redirect(lang_base_url());
+        $data['title'] = trans("register_seller");
+        $data['description'] = trans("register_seller") . " - " . $this->app_name;
+        $data['keywords'] = trans("register_seller") . "," . $this->app_name;
+        $data["provinces"] = $this->location_model->get_province();
+        $data["banks"] = $this->bank_model->get_bank();
+        $this->load->helper('file');
+
+        // if ($this->auth_check) {
+        //     redirect(lang_base_url());
+        // }
+
+        if (!in_array($role, [ROLE_ADMIN, ROLE_SATDIK, ROLE_SUPPLIER, ROLE_INSPECTOR])) {
+            $this->session->set_flashdata('error', trans("msg_email_unique_error"));
+            $this->load->view('partials/_header', $data);
+            $this->load->view('auth/register_seller', $data);
+            $this->load->view('partials/_footer');
         }
+        // dd(, $_FILES);
 
-        if ($this->recaptcha_status == true) {
-            if (!$this->recaptcha_verify_request()) {
-                $this->session->set_flashdata('form_data', $this->auth_model->input_values());
-                $this->session->set_flashdata('error', trans("msg_recaptcha"));
-                redirect($this->agent->referrer());
-                exit();
-            }
-        }
-
-        //validate inputs
-        $this->form_validation->set_rules('username', trans("username"), 'required|xss_clean|min_length[4]|max_length[100]');
-        $this->form_validation->set_rules('email', trans("email_address"), 'required|xss_clean|max_length[200]');
-        $this->form_validation->set_rules('password', trans("password"), 'required|xss_clean|min_length[4]|max_length[50]');
-        $this->form_validation->set_rules('confirm_password', trans("password_confirm"), 'required|xss_clean|matches[password]');
-
-        if ($this->form_validation->run() === false) {
-            $this->session->set_flashdata('errors', validation_errors());
-            $this->session->set_flashdata('form_data', $this->auth_model->input_values());
-            redirect($this->agent->referrer());
+        $this->form_validation->set_rules("business_type", trans("business_type"), "required|in_list[pkp,individual,non_pkp]");
+        $this->form_validation->set_rules("business_name", trans("business_name"), "required|is_unique[supplier_profiles.supplier_name]|max_length[254]");
+        $this->form_validation->set_rules("npwp", "NPWP", "required|is_unique[supplier_profiles.npwp]");
+        $this->form_validation->set_rules("umkm", trans("tax_status"), "required|in_list[umkm,non_umkm]");
+        $this->form_validation->set_rules("complete_address", trans("complete_address"), "required|max_length[254]");
+        $this->form_validation->set_rules("province", trans("province"), ["required", ["callback_valid_province", [$this->location_model, "valid_province"]]]);
+        $this->form_validation->set_rules("city", trans("city"), ["required", ["callback_valid_city", [$this->location_model, "valid_city"]]]);
+        $this->form_validation->set_rules("district", trans("district"), "required|max_length[254]");
+        $this->form_validation->set_rules("village", trans("village"), "required|max_length[254]");
+        $this->form_validation->set_rules("postal_code", trans("postal_code"), "required|max_length[254]");
+        $this->form_validation->set_rules("nib", "NIB", "required|max_length[254]");
+        $this->form_validation->set_rules("bank", "Bank", ["required", ["callback_valid_bank", [$this->bank_model, "valid_bank"]]]);
+        $this->form_validation->set_rules("account_number", trans("account_number"), "required|max_length[20]|numeric");
+        $this->form_validation->set_rules("bank_account_holder", trans("bank_account_holder"), "required|max_length[254]");
+        // $this->form_validation->set_rules("full_name", trans("full_name"), "required|max_length[254]");
+        // $this->form_validation->set_rules("position", trans("position"), "required|max_length[254]");
+        $this->form_validation->set_rules("email_address", trans("email_address"), "required|is_unique[users.email]|valid_email");
+        $this->form_validation->set_rules("password", trans("password"), "required|min_length[8]");
+        $this->form_validation->set_rules("confirm_password", "Konfirmasi Password", "required|min_length[8]|matches[password]");
+        $this->form_validation->set_rules("phone_number", trans("phone_number"), ["required", "min_length[8]", "max_length[20]" . "numeric", ["callback_valid_phone_number", [$this->auth_model, "valid_phone_number"]]]);
+        $this->form_validation->set_rules('npwp_document', 'Dokumen NPWP', 'callback_file_check[npwp_document]');
+        $this->form_validation->set_rules('nib_document', 'Dokumen NIB', 'callback_file_check[nib_document]');
+        if ($this->input->post("business_type") == "individual") {
+            $this->form_validation->set_rules("nik", trans("full_name") . " Penanggung Jawab", "required|max_length[254]");
         } else {
-            $email = $this->input->post('email', true);
-            $username = $this->input->post('username', true);
+            $this->form_validation->set_rules("responsible_person_name", trans("full_name") . "Penanggung Jawab", "required|max_length[254]");
+            $this->form_validation->set_rules("responsible_person_position", trans("position"), "required|max_length[254]");
+            if (empty($_FILES["siup_document"])) {
+                $this->form_validation->set_rules('siup_document', 'Dokumen NIB', 'callback_file_check[siup_document]');
+            }
+        }
+        $this->form_validation->set_error_delimiters("<small class='text-danger'>", "</small>");
+        $legal_status = ["individual" => 1, "pkp" => 2, "non_pkp" => 3];
 
-            //is email unique
-            if (!$this->auth_model->is_unique_email($email)) {
-                $this->session->set_flashdata('form_data', $this->auth_model->input_values());
-                $this->session->set_flashdata('error', trans("msg_email_unique_error"));
-                redirect($this->agent->referrer());
-            }
-            //is username unique
-            if (!$this->auth_model->is_unique_username($username)) {
-                $this->session->set_flashdata('form_data', $this->auth_model->input_values());
-                $this->session->set_flashdata('error', trans("msg_username_unique_error"));
-                redirect($this->agent->referrer());
-            }
-            //register
-            $user_id = $this->auth_model->register();
-            if ($user_id) {
-                $user = get_user($user_id);
-                if (!empty($user)) {
-                    //update slug
-                    $this->auth_model->update_slug($user->id);
-                    if ($this->general_settings->email_verification != 1) {
-                        $this->auth_model->login_direct($user);
-                        $this->session->set_flashdata('success', trans("msg_register_success"));
-                        redirect(generate_url("settings", "update_profile"));
-                    }
-                }
-                redirect(generate_url("register"));
-            } else {
-                //error
-                $this->session->set_flashdata('form_data', $this->auth_model->input_values());
-                $this->session->set_flashdata('error', trans("msg_error"));
-                redirect(generate_url("register"));
-            }
+        if ($this->form_validation->run() == FALSE) {
+            $this->session->set_flashdata("status_message", "<div class='alert alert-danger' role='alert'>Gagal Registrasi! Silahkan mengecek kembali form data yang masih kurang lengkap.</div>");
+            $this->load->view('partials/_header', $data);
+            $this->load->view('auth/register_seller', $data);
+            $this->load->view('partials/_footer');
+        } else {
+
+            $user_data = [
+                "user" => [
+                    "email" => $this->input->post("email_address"),
+                    "password" => $this->input->post("password"),
+                    "role" => "supplier"
+                ],
+                "profile" => [
+                    "supplier_name" => $this->input->post("business_name"),
+                    "npwp" => $this->input->post("npwp"),
+                    "nib" => $this->input->post("nib"),
+                    "phone_number" => $this->input->post("phone_number"),
+                    "legal_status_id" => $legal_status[$this->input->post("business_type")],
+                    "bank_id" => $this->input->post("bank"),
+                    "bank_account" => $this->input->post("bank_account"),
+                    "bank_account_owner_name" => $this->input->post("bank_account_holder"),
+                    "full_address" => $this->input->post("complete_address"),
+                    "city_id" => $this->input->post("city"),
+                    "district" => $this->input->post("district"),
+                    "village" => $this->input->post("village"),
+                    "zip_code" => $this->input->post("postal_code"),
+                ]
+            ];
+            $file_data = [
+                "npwp" => $_FILES["npwp_document"],
+                "nib" => $_FILES["nib_document"],
+                "siup" => $_FILES["siup_document"] ?? null,
+            ];
+            $transact = $this->auth_model->register_supplier($user_data, $file_data) ? "TRUE" : "FALSE";
+
+            // $this->session->set_flashdata("status_message", "<div class='alert alert-danger' role='alert'>Gagal Registrasi! (SERVER) Silahkan mengecek kembali form data yang masih kurang lengkap.</div>");
+            // $this->load->view('partials/_header', $data);
+            // $this->load->view('auth/register_seller', $data);
+            // $this->load->view('partials/_footer');
+            // dd("Validation_complete, Transact fail");
+
+            // dd("Validation_complete, Transact complete");
+
+            $this->session->set_tempdata("status_message", "<div class='alert alert-primary' role='alert'>Berhasil Registrasi! ($transact) Silahkan verifikasi email dan menunggu konfirmasi toko anda telah dibuka.</div>", 10);
+            redirect(base_url("register_seller"));
         }
     }
+
+    /**
+     * Validate file document on register
+     *
+     * @param [type] $str
+     * @return void
+     */
+    public function file_check($str, $field)
+    {
+        $allowed_max_byte = 2097152;
+        $allowed_mime_type_arr = array('application/pdf', 'image/jpeg', 'image/jpg', 'image/png');
+        $mime = get_mime_by_extension($_FILES[$field]['name']);
+        if (isset($_FILES[$field]['name']) && $_FILES[$field]['name'] != "") {
+            if (!in_array($mime, $allowed_mime_type_arr)) {
+                $this->form_validation->set_message('file_check', 'Hanya ekstensi pdf/jpg/png file {field} yang diterima.');
+                return false;
+            }
+        } else {
+            $this->form_validation->set_message('file_check', 'Pilih file {field} untuk di upload.');
+            return false;
+        }
+        if ($_FILES[$field]["size"] > $allowed_max_byte) {
+            $this->form_validation->set_message('file_check', 'Ukuran file {field} melebihi batas maksimal. Batas maksimal ' . byte_format($allowed_max_byte));
+            return false;
+        }
+
+        return true;
+    }
+
 
     /**
      * Logout

@@ -1,5 +1,5 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
 /*
 | -------------------------------------------------------------------------
@@ -57,7 +57,7 @@ $route['404_override'] = 'home_controller/error_404';
 $route['translate_uri_dashes'] = FALSE;
 $route['error-404'] = 'home_controller/error_404';
 $route['notification'] = 'notification';
-
+$route["upload_npwp"]["GET"] = "register_upload_controller/upload_npwp";
 $general_settings = $this->config->item('general_settings');
 $languages = $this->config->item('languages');
 foreach ($languages as $language) {
@@ -68,12 +68,14 @@ foreach ($languages as $language) {
             $route[$language->short_form] = 'home_controller/index';
             $route[$key . '/error-404'] = 'home_controller/error_404';
         }
-
         //auth
         $route[$key . $routes->register_buyer]['GET'] = 'auth_controller/register_buyer';
         $route[$key . $routes->register_seller]['GET'] = 'auth_controller/register_seller';
+        // $route[$key . "register_post" . '/(:any)']['POST'] = 'auth_controller/register_seller/$1';
         $route[$key . $routes->forgot_password]['GET'] = 'auth_controller/forgot_password';
         $route[$key . $routes->reset_password]['GET'] = 'auth_controller/reset_password';
+        $route[$key . "upload_npwp"]["GET"] = "register_upload_controller/upload_npwp";
+
         //profile
         $route[$key . $routes->profile . '/(:any)']['GET'] = 'profile_controller/profile/$1';
         $route[$key . $routes->wishlist . '/(:any)']['GET'] = 'profile_controller/wishlist/$1';
@@ -124,7 +126,7 @@ foreach ($languages as $language) {
         $route[$key . $routes->cart . '/' . $routes->payment_method]['GET'] = 'cart_controller/payment_method';
         $route[$key . $routes->cart . '/' . $routes->payment]['GET'] = 'cart_controller/payment';
         $route[$key . $routes->cart . '/' . $routes->token_midtrans]['GET'] = 'cart_controller/token_midtrans';
-        $route[$key . $routes->cart . '/' . $routes->token_midtrans]['POST'] = 'cart_controller/token_midtrans'; 
+        $route[$key . $routes->cart . '/' . $routes->token_midtrans]['POST'] = 'cart_controller/token_midtrans';
         $route[$key . $routes->cart . '/' . $routes->negotiation]['GET'] = 'cart_controller/negotiation';
         /*orders*/
         $route[$key . $routes->orders]['GET'] = 'order_controller/orders';
@@ -146,10 +148,10 @@ foreach ($languages as $language) {
         $route[$key . $routes->quote_requests]['GET'] = 'bidding_controller/quote_requests';
         $route[$key . $routes->sent_quote_requests]['GET'] = 'bidding_controller/sent_quote_requests';
         /*Multi Login*/
-        $route[$key . 'login/buyer']['GET'] = 'buyer_controller/index';
+        $route[$key . 'login/member']['GET'] = 'buyer_controller/index';
         $route[$key . 'login/supervisor']['GET'] = 'supervisor_controller/index';
-        $route[$key . 'login/seller']['GET'] = 'seller_controller/index';
-        $route[$key . 'login/partners']['GET'] = 'partners_controller/index';
+        $route[$key . 'login/supplier']['GET'] = 'seller_controller/index';
+        $route[$key . 'login/admin']['GET'] = 'partners_controller/index';
         /*any*/
         if ($general_settings->site_lang != $language->id) {
             $route[$key . '(:any)/(:any)']['GET'] = 'home_controller/subcategory/$1/$2';
@@ -314,11 +316,5 @@ $route[$routes->admin . '/supervisor'] = 'admin_supervisor_controller/index';
 $route[$routes->admin . '/partners'] = 'admin_partners_controller/index';
 
 
-
 $route['(:any)/(:any)']['GET'] = 'home_controller/subcategory/$1/$2';
 $route['(:any)']['GET'] = 'home_controller/any/$1';
-
-
-
-
-

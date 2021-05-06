@@ -16,13 +16,13 @@
             </div>
             <div class="col-6 col-right">
                 <ul class="navbar-nav">
-                    <?php if (item_count($this->countries) > 1) : ?>
+                    <!-- <?php if (item_count($this->countries) > 1) : ?>
                         <li class="nav-item">
                             <a href="javascript:void(0)" data-toggle="modal" data-target="#locationModal" class="nav-link btn-modal-location">
                                 <i class="icon-map-marker" aria-hidden="true"></i>&nbsp;<?php echo trans("location"); ?>
                             </a>
                         </li>
-                    <?php endif; ?>
+                    <?php endif; ?> -->
                     <?php if ($this->general_settings->multilingual_system == 1 && count($this->languages) > 1) : ?>
                         <li class="nav-item dropdown language-dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
