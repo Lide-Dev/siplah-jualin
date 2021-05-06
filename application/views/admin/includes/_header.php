@@ -133,7 +133,7 @@
                         <span><?php echo trans("slider"); ?></span>
                     </a>
                 </li>
-                <li class="treeview">
+                <!-- <li class="treeview">
                     <a href="#">
                         <i class="fa fa-shopping-cart"></i>
                         <span><?php echo trans("orders"); ?></span>
@@ -145,7 +145,7 @@
                         <li><a href="<?php echo admin_url(); ?>order-bank-transfers"> <?php echo trans("bank_transfer_notifications"); ?></a></li>
                         <li><a href="<?php echo admin_url(); ?>invoices"> <?php echo trans("invoices"); ?></a></li>
                     </ul>
-                </li>
+                </li> -->
                 <li>
                     <a href="<?php echo admin_url(); ?>digital-sales">
                         <i class="fa fa-shopping-bag"></i>
@@ -159,7 +159,7 @@
                         <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
                     </a>
                     <ul class="treeview-menu">
-                        <li><a href="<?php echo generate_url("sell_now"); ?>" target="_blank"> <?php echo trans("add_product"); ?></a></li>
+                        <!-- <li><a href="<?php echo generate_url("sell_now"); ?>" target="_blank"> <?php echo trans("add_product"); ?></a></li> -->
                         <li><a href="<?php echo admin_url(); ?>products"> <?php echo trans("product_submitted"); ?></a></li>
                         <li><a href="<?php echo admin_url(); ?>products"> <?php echo trans("products"); ?></a></li>
                         <li><a href="<?php echo admin_url(); ?>pending-products"> <?php echo trans("pending_products"); ?></a></li>
@@ -181,9 +181,9 @@
                     </ul>
                 </li>
                 <li>
-                    <a href="<?php echo admin_url(); ?>quote-requests">
+                    <!-- <a href="<?php echo admin_url(); ?>quote-requests">
                         <i class="fa fa-tag"></i> <span><?php echo trans("quote_requests"); ?></span>
-                    </a>
+                    </a> -->
                 </li>
                 <li>
                     <a href="<?php echo admin_url(); ?>categories">

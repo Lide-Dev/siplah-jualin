@@ -289,7 +289,7 @@ class Auth_model extends CI_Model
 
         $user_id = $this->db->insert_id();
         $file_info = $this->upload_model->upload_document_supplier($file, $user_id);
-        dd($file_info);
+        // dd($file_info);
         $data["profile"]["user_id"] = $user_id;
         foreach ($file_info as $key => $value) {
             $data["profile"]["{$key}_path"] = $value;

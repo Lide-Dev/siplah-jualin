@@ -93,6 +93,19 @@
 							</div>
 						</div>
 						<!-- END OF UPLOAD DOC NPWP -->
+						<!-- NIB -->
+						<div class="form-group">
+							<input type="text" name="nib" class="form-control auth-form-input" placeholder="<?php echo trans("nib"); ?>" value="<?php echo set_value("nib"); ?>" required>
+							<?php echo form_error('nib'); ?>
+						</div>
+
+						<div class="m-b-30 form-group">
+							<label class="control-label font-600"><?php echo "Unggah Dokumen NIB" ?></label>
+							<input type="file" class="form-control auth-form-input" name="nib_document" id="form_selected_document">
+							<?php echo form_error('nib_document'); ?>
+						</div>
+
+						<!-- END OF NIB -->
 						<!-- COMPLETE ADDRESS -->
 						<div class="form-group">
 							<textarea type="text" name="complete_address" class="form-control auth-form-input" placeholder="<?php echo trans("complete_address"); ?>" required><?php echo set_value("complete_address"); ?></textarea>
@@ -132,20 +145,21 @@
 							<input type="text" name="postal_code" class="form-control auth-form-input" minlength="5" maxlength="5" placeholder="<?php echo trans("postal_code"); ?>" value="<?php echo set_value("postal_code"); ?>" required>
 							<?php echo form_error('postal_code'); ?>
 						</div>
-						<!-- END OF COMPLETE ADDRESS -->
-						<!-- NIB -->
 						<div class="form-group">
-							<input type="text" name="nib" class="form-control auth-form-input" placeholder="<?php echo trans("nib"); ?>" value="<?php echo set_value("nib"); ?>" required>
-							<?php echo form_error('nib'); ?>
+							<label class="control-label font-600"><?php echo "Pilih Titik Lokasi" ?></label>
+							<div id="map-result">
+								<!--load map-->
+								<?php
+								if ($product->country_id == 0) {
+									$this->load->view("product/_load_map", ["map_address" => get_location($this->auth_user)]);
+								} else {
+									$this->load->view("product/_load_map", ["map_address" => get_location($product)]);
+								}
+								?>
+							</div>
 						</div>
+						<!-- END OF COMPLETE ADDRESS -->
 
-						<div class="m-b-30 form-group">
-							<label class="control-label font-600"><?php echo trans("upload_selected_document"); ?></label>
-							<input type="file" class="form-control auth-form-input" name="nib_document" id="form_selected_document">
-							<?php echo form_error('nib_document'); ?>
-						</div>
-
-						<!-- END OF NIB -->
 						<!-- BANK ACCOUNT -->
 						<h4 class="title-auth">2. <?php echo trans("bank_title"); ?></h4>
 						<div class="form-group">
