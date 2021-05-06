@@ -216,21 +216,27 @@ class Location_model extends CI_Model
 
     public function valid_province($value)
     {
+        $this->form_validation->set_message('valid_province', 'Provinsi pada input {field} tidak ditemukan.');
+        if (empty($value)) {
+            return false;
+        }
         $value = clean_number($value);
         $this->db->where("id", $value);
         $count = $this->db->get("provinces")->num_rows();
-        $this->form_validation->set_message('valid_province', 'Provinsi pada input {field} tidak ditemukan.');
 
         return $count > 0;
     }
 
     public function valid_city($value, $name_province = "province")
     {
+        $this->form_validation->set_message('valid_city', 'Kota/kabupaten pada input {field} tidak ditemukan.');
+        if (empty($value)) {
+            return false;
+        }
         $province_id = clean_number($this->input->post($name_province));
         $value = clean_number($value);
         $this->db->where("province_id", $province_id)->where("id", $value);
         $count = $this->db->get("cities")->num_rows();
-        $this->form_validation->set_message('valid_city', 'Kota/kabupaten pada input {field} tidak ditemukan.');
 
         return $count > 0;
     }

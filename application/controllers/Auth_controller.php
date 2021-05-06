@@ -459,7 +459,7 @@ class Auth_controller extends Home_Core_Controller
         } else {
             $this->form_validation->set_rules("responsible_person_name", trans("full_name") . "Penanggung Jawab", "required|max_length[254]");
             $this->form_validation->set_rules("responsible_person_position", trans("position"), "required|max_length[254]");
-            if (empty($_FILES["siup_document"])) {
+            if (!empty($_FILES["siup_document"])) {
                 $this->form_validation->set_rules('siup_document', 'Dokumen NIB', 'callback_file_check[siup_document]');
             }
         }

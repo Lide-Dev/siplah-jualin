@@ -285,6 +285,9 @@ class Auth_model extends CI_Model
             "email" => $data["user"]["email"],
             "password" => $this->bcrypt->hash_password($data["user"]['password']),
             "is_active_shop_request" => 1,
+            "role" => "vendor",
+            "username" => $this->generate_uniqe_username($data["profile"]["supplier_name"]),
+            "slug" => $this->generate_uniqe_slug($data["profile"]["supplier_name"])
         ]);
 
         $user_id = $this->db->insert_id();

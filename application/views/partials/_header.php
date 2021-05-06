@@ -184,7 +184,7 @@
                                         <?php endif; ?>
                                         <!--Check auth-->
                                         <?php if ($this->auth_check) : ?>
-                                            <?php if (is_multi_vendor_active()) : ?>
+                                            <?php if (is_multi_vendor_active() && $this->auth_user->role == "vendor") : ?>
                                                 <li class="nav-item m-r-0"><a href="<?php echo generate_url("sell_now"); ?>" class="btn btn-md btn-custom btn-sell-now m-r-0"><?php echo trans("sell_now"); ?></a></li>
                                             <?php endif; ?>
                                         <?php else : ?>
@@ -305,7 +305,7 @@
                             </div>
                             <div class="row mb-2">
                                 <div class="col-sm-12">
-                                    <a href="<?= base_url('login/supplier') ?>" class="text-dark">
+                                    <a href="<?= base_url('login/vendor') ?>" class="text-dark">
                                         <div class="card shadow">
                                             <div class="card-body">
                                                 <div class="row">

@@ -151,7 +151,7 @@ foreach ($languages as $language) {
         /*Multi Login*/
         $route[$key . 'login/member']['GET'] = 'buyer_controller/index';
         $route[$key . 'login/supervisor']['GET'] = 'supervisor_controller/index';
-        $route[$key . 'login/supplier']['GET'] = 'seller_controller/index';
+        $route[$key . 'login/vendor']['GET'] = 'seller_controller/index';
         $route[$key . 'login/admin']['GET'] = 'partners_controller/index';
         /*any*/
         if ($general_settings->site_lang != $language->id) {
