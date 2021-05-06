@@ -213,7 +213,6 @@ if (!function_exists('trans')) {
     {
         $ci = &get_instance();
         $ci->general_settings->site_lang;
-        
         $lang_collection = include(BASEPATH . "../application/language/id.php");
 
         // if (!empty($ci->language_translations[$string])) {
@@ -221,6 +220,22 @@ if (!function_exists('trans')) {
         // }
 
         return $lang_collection[$string] ?? $default;
+    }
+}
+
+//get translated message
+if (!function_exists('trans_valid')) {
+    function trans_valid($string, $default = "")
+    {
+        $ci = &get_instance();
+        $ci->general_settings->site_lang;
+        $lang_collection = include(BASEPATH . "../application/language/id.php");
+
+        // if (!empty($ci->language_translations[$string])) {
+        //     return $ci->language_translations[$string];
+        // }
+
+        return $lang_collection["validation.$string"] ?? $default;
     }
 }
 
@@ -1881,22 +1896,24 @@ if (!function_exists('is_user_online')) {
     }
 }
 
-//debug with var_dump() and exit()
+//clean up debug with var_dump() and exit()
 if (!function_exists('dd')) {
     /**
-     * Dumping variable to page and stopping the executing function
+     * Dumping variable to page with clean up the output buffering and stopping the all execution function.
      *
      * @var mixed $args Argument that want to be dumping.
      * @return void
      */
     function dd(...$args)
     {
-        echo '<pre>';
+        if (ob_get_level())
+            ob_end_clean();
+        echo '<pre style="background-color:black; color:orange; padding:20px">';
         if (empty($args)) {
             var_dump(null);
         } else {
             foreach ($args as $arg) {
-                highlight_string(var_dump($arg));
+                var_dump($arg);
             }
         }
         echo '</pre>';
