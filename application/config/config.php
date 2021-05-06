@@ -27,6 +27,7 @@ $root = (isset($_SERVER['HTTPS']) ? "https://" : "http://") . $_SERVER['HTTP_HOS
 $root .= str_replace(basename($_SERVER['SCRIPT_NAME']), '', $_SERVER['SCRIPT_NAME']);
 $config['base_url'] = $root;
 
+
 /*
 |--------------------------------------------------------------------------
 | Index File
@@ -78,7 +79,7 @@ $config['url_suffix'] = '';
 | than english.
 |
 */
-$config['language'] = 'english';
+$config['language'] = 'indonesian';
 
 /*
 |--------------------------------------------------------------------------
@@ -138,7 +139,7 @@ $config['subclass_prefix'] = 'Core_';
 | Note: This will NOT disable or override the CodeIgniter-specific
 |	autoloading (application/config/autoload.php)
 */
-$config['composer_autoload'] = FALSE;
+$config['composer_autoload'] = "vendor/autoload.php";
 
 /*
 |--------------------------------------------------------------------------
@@ -455,7 +456,7 @@ $config['csrf_token_name'] = 'csrf_modesy_token';
 $config['csrf_cookie_name'] = 'csrf_modesy_token';
 $config['csrf_expire'] = 7200;
 $config['csrf_regenerate'] = TRUE;
-$config['csrf_exclude_uris'] = 'notification';
+$config['csrf_exclude_uris'] = ['notification'];
 
 /*
 |--------------------------------------------------------------------------
@@ -546,4 +547,6 @@ defined('SITE_MDS_KEY') OR define('SITE_MDS_KEY', trim($config['general_settings
 defined('SITE_PRC_CD') OR define('SITE_PRC_CD', trim($config['general_settings']->purchase_code));
 $db->close();
 
+$config['error_prefix'] = '<div class="valid-feedback">';
+$config['error_suffix'] = '</div>';
 
