@@ -92,7 +92,7 @@
                                         <li>
                                             <a href="<?php echo generate_url("quote_requests"); ?>">
                                                 <i class="icon-price-tag-o"></i>
-                                                <?php echo trans("quote_requests"); ?>
+                                                <?php echo trans("negotiation"); ?>
                                             </a>
                                         </li>
                                     <?php endif; ?>
