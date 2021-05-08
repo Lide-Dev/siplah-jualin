@@ -135,7 +135,7 @@
                         </li>
                     <?php else : ?>
                         <li class="nav-item">
-                            <a href="javascript:void(0)" class="nav-link"><?php echo trans("guide"); ?></a>
+                            <a href="<?php echo generate_url("guide_user"); ?>" class="nav-link"><?php echo trans("guide"); ?></a>
                         </li>
                         <li class="nav-item">
                             <a href="javascript:void(0)" class="nav-link">FAQ</a>

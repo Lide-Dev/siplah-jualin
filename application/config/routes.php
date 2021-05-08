@@ -111,6 +111,7 @@ foreach ($languages as $language) {
         $route[$key . $routes->guide . '/(:any)']['GET'] = 'home_controller/blog_category/$1';
         $route[$key . $routes->guide . '/' . $routes->tag . '/(:any)']['GET'] = 'home_controller/tag/$1';
         $route[$key . $routes->guide . '/(:any)/(:any)']['GET'] = 'home_controller/post/$1/$2';
+        $route[$key . 'guide_user']['GET'] = 'guide_user_controller/guide_user';
         /*messages*/
         $route[$key . $routes->messages]['GET'] = 'message_controller/messages';
         $route[$key . $routes->messages . '/' . $routes->conversation . '/(:num)']['GET'] = 'message_controller/conversation/$1';
