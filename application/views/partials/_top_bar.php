@@ -61,13 +61,15 @@
                                         </a>
                                     </li>
                                 <?php endif; ?>
+                                <?php if ($this->auth_user->role != "admin") : ?>
                                 <li>
                                     <a href="<?php echo generate_profile_url($this->auth_user->slug); ?>">
                                         <i class="icon-user"></i>
                                         <?php echo trans("view_profile"); ?>
                                     </a>
                                 </li>
-                                <?php if (is_sale_active()) : ?>
+                                <?php endif; ?>
+                                <?php if (is_sale_active() && $this->auth_user->role != "admin") : ?>
                                     <li>
                                         <a href="<?php echo generate_url("orders"); ?>">
                                             <i class="icon-shopping-basket"></i>
@@ -105,6 +107,7 @@
                                         </li>
                                     <?php endif; ?>
                                 <?php endif; ?>
+                                <?php if ($this->auth_user->role != "admin") : ?>
                                 <li>
                                     <a href="<?php echo generate_url("messages"); ?>">
                                         <i class="icon-mail"></i>
@@ -125,6 +128,7 @@
                                         <?php echo trans("log_activity"); ?>
                                     </a>
                                 </li>
+                                <?php endif; ?>
                                 <li>
                                     <a href="<?php echo lang_base_url(); ?>logout" class="logout">
                                         <i class="icon-logout"></i>

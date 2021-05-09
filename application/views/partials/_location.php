@@ -31,7 +31,7 @@
                 </select>
             </div>
         </div> -->
-        <div id="get_cities_container" class="col-12 col-sm-4 m-b-15 <?php echo (!empty($cities)) ? '' : 'display-none'; ?>">
+        <!-- <div id="get_cities_container" class="col-12 col-sm-4 m-b-15 <?php echo (!empty($cities)) ? '' : 'display-none'; ?>">
             <div class="selectdiv">
                 <select id="select_cities" name="city_id" class="form-control" <?php echo (!empty($map)) ? 'onchange="update_product_map();"' : ''; ?>>
                     <option value=""><?php echo trans('city'); ?></option>
@@ -46,6 +46,6 @@
                     endif; ?>
                 </select>
             </div>
-        </div>
+        </div> -->
     </div>
 <?php endif; ?>
