@@ -145,22 +145,22 @@
                                                         </tr>
                                                         <tr>
                                                             <td class="td-left"><?php echo trans("location"); ?></td>
-                                                            <td class="td-right"><span><?php echo get_location($product); ?></span></td>
+                                                            <!-- <td class="td-right"><span><?php echo get_location($product); ?></span></td> -->
                                                         </tr>
                                                         </tbody>
                                                     </table>
                                                 <?php endif; ?>
                                                 <div class="row">
-                                                    <div class="col-12">
+                                                    <!-- <div class="col-12">
                                                         <?php if (!empty($product->country_id)): ?>
-                                                            <div class="product-location-map">
+                                                            <div class="product-location-map"> -->
                                                                 <!--load map-->
-                                                                <iframe src="https://maps.google.com/maps?width=100%&height=600&hl=en&q=<?php echo get_location($product); ?>&ie=UTF8&t=&z=8&iwloc=B&output=embed&disableDefaultUI=true"
+                                                                <!-- <iframe src="https://maps.google.com/maps?width=100%&height=600&hl=en&q=<?php echo get_location($product); ?>&ie=UTF8&t=&z=8&iwloc=B&output=embed&disableDefaultUI=true"
                                                                         frameborder="0" scrolling="no" marginheight="0"
                                                                         marginwidth="0"></iframe>
                                                             </div>
                                                         <?php endif; ?>
-                                                    </div>
+                                                    </div> -->
                                                 </div>
                                             </div>
                                         </div>
