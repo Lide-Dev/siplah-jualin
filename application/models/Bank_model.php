@@ -17,7 +17,7 @@ class Bank_model extends CI_Model
             $id = clean_number($id);
             $this->db->where('id', $id);
             $query = $this->db->get('bank_codes');
-            return $query->result()->first_row();
+            return $query->first_row();
         }
     }
 

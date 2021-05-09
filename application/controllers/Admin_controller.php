@@ -961,7 +961,7 @@ class Admin_controller extends Admin_Core_Controller
         $data['title'] = trans("shop_opening_requests");
 
         $data['shop'] = $this->auth_model->get_shop($user_id);
-
+        // dd( $data["shop"]);
         $this->load->view('admin/includes/_header', $data);
         $this->load->view('admin/users/detail_shop', $data);
         $this->load->view('admin/includes/_footer');

@@ -16,8 +16,8 @@
                             <div class="col-xs-12 col-sm-4 col-right">
                                 <strong> <?php echo trans("business_type"); ?></strong>
                             </div>
-                            <div class="col-xs-12 col-sm-6 col-right">
-                                <p> <?= $shop->businesstype ?></p>
+                            <div class="col-sm-8 col-right">
+                                <p> <?= $shop->legal_status ?></p>
                             </div>
                         </div>
 
@@ -26,7 +26,7 @@
                                 <strong>Tipe Usaha</strong>
                             </div>
                             <div class="col-sm-8">
-                                <strong class="font-right"></strong>
+                                <p> <?= $shop->is_umkm ? "UMKM" : "Non UMKM" ?></p>
                             </div>
                         </div>
                         <div class="row row-details">
@@ -34,7 +34,7 @@
                                 <strong> <?php echo trans("business_name"); ?></strong>
                             </div>
                             <div class="col-sm-8">
-                                <strong class="font-right"></strong>
+                                <p> <?= $shop->supplier_name ?></p>
                             </div>
                         </div>
                         <div class="row row-details">
@@ -42,7 +42,7 @@
                                 <strong>Dokumen NPWP</strong>
                             </div>
                             <div class="col-sm-8">
-                                <strong class="font-right"></strong>
+                                <p> <?= $shop->npwp_path ?></p>
                             </div>
                         </div>
                         <div class="row row-details">
@@ -50,7 +50,7 @@
                                 <strong>Dokumen NIB</strong>
                             </div>
                             <div class="col-sm-8">
-                                <strong class="font-right"></strong>
+                                <p> <?= $shop->nib_path ?></p>
                             </div>
                         </div>
                         <div class="row row-details">
@@ -58,7 +58,7 @@
                                 <strong>Alamat Lengkap</strong>
                             </div>
                             <div class="col-sm-8">
-                                <strong class="font-right"></strong>
+                                <p> <?= $shop->full_address ?></p>
                             </div>
                         </div>
                         <div class="row row-details">
@@ -78,7 +78,7 @@
                                 <strong>Nama BANK</strong>
                             </div>
                             <div class="col-sm-8">
-                                <strong class="font-right"></strong>
+                                <p> <?= $shop->bank_name ?></p>
                             </div>
                         </div>
                         <div class="row row-details">
@@ -86,7 +86,7 @@
                                 <strong>Nomor Rekening</strong>
                             </div>
                             <div class="col-sm-8">
-                                <strong class="font-right"></strong>
+                                <p> <?= $shop->bank_account ?></p>
                             </div>
                         </div>
                         <div class="row row-details">
@@ -94,7 +94,7 @@
                                 <strong>Nama Pemilik Rekening</strong>
                             </div>
                             <div class="col-sm-8">
-                                <strong class="font-right"></strong>
+                                <p> <?= $shop->bank_account_owner_name ?></p>
                             </div>
                         </div>
                         <div class="row row-details">
@@ -112,22 +112,34 @@
                 <div class="row">
                     <div class="col-sm-12 col-md-12 col-lg-6">
                         <h4 class="sec-title">Penanggung Jawab</h4>
-                        <div class="row row-details">
-                            <div class="col-xs-12 col-sm-4 col-right">
-                                <strong>Nama Penanggung Jawab</strong>
+                        <?php if ($shop->legal_status == "Individu") : ?>
+                            <div class="row row-details">
+                                <div class="col-xs-12 col-sm-4 col-right">
+                                    <strong>NIK</strong>
+                                </div>
+                                <div class="col-sm-8">
+                                    <p> <?= $shop->nik ?></p>
+                                </div>
                             </div>
-                            <div class="col-sm-8">
-                                <strong class="font-right"></strong>
+
+                        <?php else : ?>
+                            <div class="row row-details">
+                                <div class="col-xs-12 col-sm-4 col-right">
+                                    <strong>Nama Penanggung Jawab</strong>
+                                </div>
+                                <div class="col-sm-8">
+                                    <p> <?= $shop->responsible_person_name ?></p>
+                                </div>
                             </div>
-                        </div>
-                        <div class="row row-details">
-                            <div class="col-xs-12 col-sm-4 col-right">
-                                <strong>Jabatan</strong>
+                            <div class="row row-details">
+                                <div class="col-xs-12 col-sm-4 col-right">
+                                    <strong>Jabatan</strong>
+                                </div>
+                                <div class="col-sm-8">
+                                    <p> <?= $shop->responsible_person_position ?></p>
+                                </div>
                             </div>
-                            <div class="col-sm-8">
-                                <strong class="font-right"></strong>
-                            </div>
-                        </div>
+                        <?php endif; ?>
                     </div>
                     <!-- END OF RESPONSIBLE PERSON -->
                     <!-- DATA ACCOUNT -->
@@ -139,15 +151,15 @@
                                 <strong>Email</strong>
                             </div>
                             <div class="col-sm-8">
-                                <strong class="font-right"></strong>
+                                <p> <?= $shop->email ?></p>
                             </div>
                         </div>
                         <div class="row row-details">
                             <div class="col-xs-12 col-sm-4 col-right">
-                                <strong>No Telepone</strong>
+                                <strong>No Telepon</strong>
                             </div>
                             <div class="col-sm-8">
-                                <strong class="font-right"></strong>
+                                <p> <?= $shop->phone_number ?></p>
                             </div>
                         </div>
                     </div>
