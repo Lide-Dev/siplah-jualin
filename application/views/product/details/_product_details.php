@@ -123,8 +123,7 @@
 </div>
 
 <!-- Check Auth  -->
-<?php if ($this->auth_check) : ?>
-<?php if (is_multi_vendor_active() && $this->auth_user->role == "member") : ?>
+<?php if (is_multi_vendor_active() && ($this->auth_user->role == "member" || !$this->auth_check)) : ?>
 
 <?php echo form_open(get_product_form_data($product)->add_to_cart_url, ['id' => 'form_add_cart']); ?>
 <input type="hidden" name="product_id" value="<?php echo $product->id; ?>">
@@ -195,9 +194,6 @@
     <?php endif; ?>
 
 </div>
-<?php endif; ?>
-
-<?php else : ?>
 <?php endif; ?>
 <!-- End of Check Auth -->
 <?php echo form_close(); ?>

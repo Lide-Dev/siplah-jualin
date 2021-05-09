@@ -152,14 +152,12 @@
                                             <?php endif; ?>
                                             <?php echo form_close(); ?>
                                         </div>
-
                                     </div>
                                 </div>
                                 <div class="col-md-4 nav-top-right">
                                     <ul class="nav align-items-center">
                                         <!-- Check Auth  -->
-                                        <?php if ($this->auth_check) : ?>
-                                            <?php if (is_multi_vendor_active() && $this->auth_user->role == "member") : ?>
+                                        <?php if (is_multi_vendor_active() && ($this->auth_user->role == "member" || !$this->auth_check)) : ?>
                                                 <?php if (is_sale_active()) : ?>
                                                     <li class="nav-item nav-item-cart li-main-nav-right">
                                                         <a href="<?php echo generate_url("cart"); ?>">
@@ -172,15 +170,10 @@
                                                     </li>
                                                 <?php endif; ?>
                                             <?php endif; ?>
-                                        <?php else : ?>
-                                            <li class="">
-                                            </li>
-                                        <?php endif; ?>
                                         <!-- End of Check Auth -->
 
                                         <!-- Check Auth  -->
-                                        <?php if ($this->auth_check) : ?>
-                                            <?php if (is_multi_vendor_active() && $this->auth_user->role == "member") : ?>
+                                            <?php if (is_multi_vendor_active() && ($this->auth_user->role == "member" || !$this->auth_check)) : ?>
                                                 <?php if ($this->auth_check) : ?>
                                                     <li class="nav-item li-main-nav-right">
                                                         <a href="<?php echo generate_url("wishlist") . "/" . $this->auth_user->slug; ?>">
@@ -195,10 +188,6 @@
                                                     </li>
                                                 <?php endif; ?>
                                             <?php endif; ?>
-                                        <?php else : ?>
-                                            <li class="">
-                                            </li>
-                                        <?php endif; ?>
                                         <!-- End of Check Auth -->
 
                                         <!--Check auth-->

@@ -20,6 +20,7 @@
             </div>
             <!-- END OF LABEL PRODUCT -->
 
+            <?php if (is_multi_vendor_active() && ($this->auth_user->role == "member" || !$this->auth_check)) : ?>
             <div class="product-item-options">
                 <a href="javascript:void(0)" class="item-option btn-add-remove-wishlist" data-toggle="tooltip" data-placement="left" data-product-id="<?php echo $product->id; ?>" data-reload="0" title="<?php echo trans("wishlist"); ?>">
                     <?php if (is_product_in_wishlist($product) == 1) : ?>
@@ -29,6 +30,7 @@
                     <?php endif; ?>
                 </a>
             </div>
+            <?php endif; ?>
         </div>
         <?php if ($product->is_promoted && $this->general_settings->promoted_products == 1 && isset($promoted_badge) && $promoted_badge == true) : ?>
             <span class="badge badge-dark badge-promoted"><?php echo trans("featured"); ?></span>
@@ -43,12 +45,16 @@
                 <?php echo get_shop_name_product($product); ?>
             </a>
         </p>
+
+        <?php if (is_multi_vendor_active() && ($this->auth_user->role == "member" || !$this->auth_check)) : ?>
         <div class="product-item-rating">
             <?php if ($this->general_settings->reviews == 1) {
                 $this->load->view('partials/_review_stars', ['review' => $product->rating]);
             } ?>
             <span class="item-wishlist"><i class="icon-heart-o"></i><?php echo $product->wishlist_count; ?></span>
         </div>
+        <?php endif; ?>
+        
         <div class="item-meta">
             <?php $this->load->view('product/_price_product_item', ['product' => $product]); ?>
         </div>
