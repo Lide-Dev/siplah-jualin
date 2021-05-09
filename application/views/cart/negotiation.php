@@ -94,13 +94,6 @@
                             <div class="col-sm-12 col-lg-4">
                                 <div class="right">
                                     <!-- MESSAGE -->
-                                    <div class="row row-col-messages">
-                                        <?php if (empty($unread_conversations) && empty($read_conversations)) : ?>
-                                            <div class="col-12">
-                                                <p class="text-center"><?php echo trans("no_messages_found"); ?></p>
-                                            </div>
-                                        <?php else : ?>
-
                                             <div class="col-sm-12 col-message-content">
                                                 <?php
                                                 $profile_id = $conversation->sender_id;
@@ -185,10 +178,7 @@
                                                         <!-- form end -->
                                                     </div>
                                                 </div>
-
                                             </div>
-
-                                        <?php endif; ?>
                                     </div>
                                     <!-- END OF MESSAGE -->
                                 </div>
