@@ -286,8 +286,10 @@ class Auth_model extends CI_Model
             "password" => $this->bcrypt->hash_password($data["user"]['password']),
             "is_active_shop_request" => 1,
             "role" => "vendor",
+            "email_status" => 1,
             "username" => $this->generate_uniqe_username($data["profile"]["supplier_name"]),
-            "slug" => $this->generate_uniqe_slug($data["profile"]["supplier_name"])
+            "slug" => $this->generate_uniqe_slug($data["profile"]["supplier_name"]),
+            'token' => generate_token()
         ]);
 
         $user_id = $this->db->insert_id();
@@ -299,6 +301,13 @@ class Auth_model extends CI_Model
         }
         $this->db->insert("supplier_profiles", $data["profile"]);
         $this->db->trans_complete();
+        if ($this->general_settings->email_verification == 1) {
+            $user = $this->get_user($user_id);
+            if (!empty($user)) {
+                $this->session->set_tempdata('success', trans("msg_register_success") . " " . trans("msg_send_confirmation_email") . "&nbsp;<a href='javascript:void(0)' class='link-resend-activation-email' onclick=\"send_activation_email_register('" . $user->id . "','" . $user->token . "');\">" . trans("resend_activation_email") . "</a>", 10);
+                $this->send_email_activation_ajax($user->id, $user->token);
+            }
+        }
         return $this->db->trans_status();
     }
 
@@ -670,6 +679,7 @@ class Auth_model extends CI_Model
     //get shop opening requests
     public function get_shop_opening_requests()
     {
+        $this->db->select("users.username, users.email, users.email_status, users.slug, users.id, users.avatar, users.last_seen, supplier_profiles.phone_number, supplier_profiles.supplier_name, supplier_profiles.nib, supplier_profiles.npwp");
         $this->db->where('is_active_shop_request', 1);
         $query = $this->db->join("supplier_profiles", "supplier_profiles.user_id = users.id")->get('users');
         return $query->result();

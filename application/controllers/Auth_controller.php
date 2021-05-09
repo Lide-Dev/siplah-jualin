@@ -419,7 +419,7 @@ class Auth_controller extends Home_Core_Controller
         $data["provinces"] = $this->location_model->get_province();
         $data["banks"] = $this->bank_model->get_bank();
         $this->load->helper('file');
-
+        // dd($this->input->post());
         // if ($this->auth_check) {
         //     redirect(lang_base_url());
         // }
