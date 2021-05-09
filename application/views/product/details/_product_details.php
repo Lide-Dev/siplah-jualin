@@ -121,6 +121,11 @@
         </div>
     </div>
 </div>
+
+<!-- Check Auth  -->
+<?php if ($this->auth_check) : ?>
+<?php if (is_multi_vendor_active() && $this->auth_user->role == "member") : ?>
+
 <?php echo form_open(get_product_form_data($product)->add_to_cart_url, ['id' => 'form_add_cart']); ?>
 <input type="hidden" name="product_id" value="<?php echo $product->id; ?>">
 <div class="row">
@@ -142,10 +147,13 @@
     </div>
 </div>
 
+
 <div class="row">
     <div class="col-12"><?php $this->load->view('product/details/_messages'); ?></div>
 </div>
 <div class="row">
+
+
     <div class="col-12 product-add-to-cart-container">
         <?php if ($product->listing_type != 'ordinary_listing' && $product->product_type != 'digital'): ?>
             <div class="number-spinner">
@@ -187,6 +195,11 @@
     <?php endif; ?>
 
 </div>
+<?php endif; ?>
+
+<?php else : ?>
+<?php endif; ?>
+<!-- End of Check Auth -->
 <?php echo form_close(); ?>
 
 <!--Include social share-->
