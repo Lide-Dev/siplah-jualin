@@ -111,6 +111,7 @@ foreach ($languages as $language) {
         $route[$key . $routes->guide . '/(:any)']['GET'] = 'home_controller/blog_category/$1';
         $route[$key . $routes->guide . '/' . $routes->tag . '/(:any)']['GET'] = 'home_controller/tag/$1';
         $route[$key . $routes->guide . '/(:any)/(:any)']['GET'] = 'home_controller/post/$1/$2';
+        $route[$key . 'guide_user']['GET'] = 'guide_user_controller/guide_user';
         /*messages*/
         $route[$key . $routes->messages]['GET'] = 'message_controller/messages';
         $route[$key . $routes->messages . '/' . $routes->conversation . '/(:num)']['GET'] = 'message_controller/conversation/$1';
@@ -277,6 +278,8 @@ $route[$routes->admin . '/administrators'] = 'admin_controller/administrators';
 $route[$routes->admin . '/shop-opening-requests'] = 'admin_controller/shop_opening_requests';
 $route[$routes->admin . '/add-administrator'] = 'admin_controller/add_administrator';
 $route[$routes->admin . '/edit-user/(:num)'] = 'admin_controller/edit_user/$1';
+/* Details Shop */
+$route[$routes->admin . '/details_shop'] = 'admin_controller/details_shop';
 
 $route[$routes->admin . '/cache-system'] = 'admin_controller/cache_system';
 $route[$routes->admin . '/storage'] = 'admin_controller/storage';

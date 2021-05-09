@@ -76,6 +76,13 @@
 														<i class="fa fa-times option-icon"></i><?php echo trans('decline'); ?>
 													</button>
 												</li>
+												<li>
+													<a href="<?php echo admin_url(); ?>details_shop">
+													<button type="button" name="detail_shop" class="btn-list-button">
+														<i class="fa fa-info option-icon"></i><?php echo trans('details'); ?>
+													</button>
+													</a>
+												</li>
 											</ul>
 										</div>
 										<?php echo form_close(); ?>

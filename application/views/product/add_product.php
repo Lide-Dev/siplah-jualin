@@ -240,19 +240,19 @@
                                             </div>
                                             <div class="row">
                                                 <div class="form-group col-3">
-                                                    <label class=""><?php echo trans("long"); ?></label>
+                                                    <label class="">Panjang</label>
                                                     <input type="number" name="" class="form-control form-input" placeholder="<?php echo trans(""); ?>">
                                                 </div>
                                                 <div class="form-group col-3">
-                                                    <label class=""><?php echo trans("width"); ?></label>
+                                                    <label class="">Lebar</label>
                                                     <input type="number" name="" class="form-control form-input" placeholder="<?php echo trans(""); ?>">
                                                 </div>
                                                 <div class="form-group col-3">
-                                                    <label class=""><?php echo trans("height"); ?></label>
+                                                    <label class="">Tinggi</label>
                                                     <input type="number" name="" class="form-control form-input" placeholder="<?php echo trans(""); ?>">
                                                 </div>
                                                 <div class="form-group col-3">
-                                                    <label class=""><?php echo trans("weight"); ?></label>
+                                                    <label class="">Berat</label>
                                                     <input type="number" name="" class="form-control form-input" placeholder="<?php echo trans(""); ?>">
                                                 </div>
                                             </div>

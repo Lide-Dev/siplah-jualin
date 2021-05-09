@@ -92,7 +92,7 @@
                                         <li>
                                             <a href="<?php echo generate_url("quote_requests"); ?>">
                                                 <i class="icon-price-tag-o"></i>
-                                                <?php echo trans("quote_requests"); ?>
+                                                <?php echo trans("negotiation"); ?>
                                             </a>
                                         </li>
                                     <?php endif; ?>
@@ -135,7 +135,7 @@
                         </li>
                     <?php else : ?>
                         <li class="nav-item">
-                            <a href="javascript:void(0)" class="nav-link"><?php echo trans("guide"); ?></a>
+                            <a href="<?php echo generate_url("guide_user"); ?>" class="nav-link"><?php echo trans("guide"); ?></a>
                         </li>
                         <li class="nav-item">
                             <a href="javascript:void(0)" class="nav-link">FAQ</a>

@@ -955,6 +955,20 @@ class Admin_controller extends Admin_Core_Controller
         $this->load->view('admin/includes/_footer');
     }
 
+        /**
+     * Details Shop
+     */
+    public function details_shop()
+    {
+        $data['title'] = trans("shop_opening_requests");
+
+        $data['requests'] = $this->auth_model->get_shop_opening_requests();
+
+        $this->load->view('admin/includes/_header', $data);
+        $this->load->view('admin/users/details_shop');
+        $this->load->view('admin/includes/_footer');
+    }
+
     /**
      * Approve Shop Opening Request
      */
