@@ -9,6 +9,9 @@
 						<h1 class="title"><?php echo trans("register_seller"); ?></h1>
 
 						<?= $_SESSION["status_message"] ?? "" ?>
+
+						<?= $_SESSION["success"] ?? "" ?>
+
 						<!-- form start -->
 						<?php
 						// if ($recaptcha_status) {
@@ -43,16 +46,16 @@
 									<label class="control-label font-600 col-sm-6 mt-3" for="form_business_type"><?= trans("business_type") ?></label>
 									<ul class="nav nav-pills">
 										<li class="nav-item col-sm-4">
-											<label class="nav-link border border-muted text-center font-weight-bold" for="form_individual_business_type" id="label_individual_business_type" data-toggle="tab" aria-selected="">Individu</label>
-											<input type="radio" name="business_type" id="form_individual_business_type" value="individual" style="display:none">
+											<label class="nav-link border border-muted text-center font-weight-bold <?= set_value("business_type") == "individual" ? "active" : "" ?> " for="form_individual_business_type" id="label_individual_business_type" data-toggle="tab" aria-selected="">Individu</label>
+											<input type="radio" name="business_type" id="form_individual_business_type" value="individual" style="display:none" <?= set_value("business_type") == "individual" ? "checked" : "" ?>>
 										</li>
 										<li class="nav-item col-sm-4">
-											<label class="nav-link border border-muted text-center font-weight-bold active" for="form_nonpkp_business_type" id="label_nonpkp_business_type" data-toggle="tab" aria-selected=""> Non PKP</label>
-											<input type="radio" name="business_type" id="form_nonpkp_business_type" value="non_pkp" style="display:none" checked>
+											<label class="nav-link border border-muted text-center font-weight-bold  <?= set_value("business_type") == "non_pkp" ? "active" : "" ?> <?= empty(set_value("business_type")) ? "active" : "" ?>" for="form_nonpkp_business_type" id="label_nonpkp_business_type" data-toggle="tab" aria-selected=""> Non PKP</label>
+											<input type="radio" name="business_type" id="form_nonpkp_business_type" value="non_pkp" style="display:none" <?= set_value("business_type") == "non_pkp" ? "checked" : "" ?> <?= empty(set_value("business_type")) ? "checked" : "" ?>>
 										</li>
 										<li class="nav-item col-sm-4">
-											<label class="nav-link border border-muted text-center font-weight-bold" for="form_pkp_business_type" id="label_pkp_business_type" data-toggle="tab" aria-selected="">PKP</label>
-											<input type="radio" name="business_type" id="form_pkp_business_type" value="pkp" style="display:none">
+											<label class="nav-link border border-muted text-center font-weight-bold <?= set_value("business_type") == "pkp" ? "active" : "" ?>" for="form_pkp_business_type" id="label_pkp_business_type" data-toggle="tab" aria-selected="">PKP</label>
+											<input type="radio" name="business_type" id="form_pkp_business_type" value="pkp" style="display:none" <?= set_value("business_type") == "pkp" ? "checked" : "" ?>>
 										</li>
 									</ul>
 									<?php echo form_error('business_type'); ?>
@@ -62,12 +65,12 @@
 									<label class="control-label font-600 col-sm-6 mt-3" for="form_umkm_type">Tipe Usaha</label>
 									<ul class="nav nav-pills">
 										<li class="nav-item col-sm-6">
-											<label class="nav-link border border-muted text-center font-weight-bold" for="form_umkm_business_type" id="label_umkm_business_type" data-toggle="tab" aria-selected="">UMKM</label>
-											<input type="radio" name="umkm" id="form_umkm_business_type" value="umkm" style="display:none">
+											<label class="nav-link border border-muted text-center font-weight-bold <?= set_value("umkm")  == "umkm" || empty(set_value("umkm")) ? "active" : "" ?>" for="form_umkm_business_type" id="label_umkm_business_type" data-toggle="tab" aria-selected="">UMKM</label>
+											<input type="radio" name="umkm" id="form_umkm_business_type" value="umkm" style="display:none" <?= set_value("umkm") == "umkm" ? "checked" : "" ?> <?= empty(set_value("umkm")) ? "checked" : "" ?>>
 										</li>
 										<li class="nav-item col-sm-6">
-											<label class="nav-link border border-muted text-center font-weight-bold active" for="form_nonumkm_business_type" id="label_nonumkm_business_type" data-toggle="tab" aria-selected=""> Non UMKM</label>
-											<input type="radio" name="umkm" id="form_nonumkm_business_type" value="non_umkm" style="display:none" checked>
+											<label class="nav-link border border-muted text-center font-weight-bold <?= set_value("umkm") == "non_umkm" ? "active" : "" ?>" for="form_nonumkm_business_type" <?= set_value("umkm") == "non_umkm" ? "active" : "" ?> id="label_nonumkm_business_type" data-toggle="tab" aria-selected=""> Non UMKM</label>
+											<input type="radio" name="umkm" id="form_nonumkm_business_type" value="non_umkm" style="display:none" <?= set_value("umkm") == "non_umkm" ? "checked" : "" ?>>
 										</li>
 									</ul>
 									<?php echo form_error('umkm'); ?>
@@ -181,22 +184,29 @@
 						</div>
 						<!-- END OF BANK ACCOUNT -->
 						<!-- RESPONSIBLE PERSON -->
-						<h4 class="title-auth">3. <?php echo trans("responsible_title"); ?></h4>
-						<div id="form_container_responsible_person">
+						<?php if (set_value("business_type") != "individual" || empty(set_value("business_type"))) : ?>
+							<h4 class="title-auth">3. <?php echo trans("responsible_title"); ?></h4>
+							<div id="form_container_responsible_person">
+								<div class="form-group">
+									<input type="text" name="responsible_person_name" class="form-control auth-form-input" placeholder="<?php echo trans("full_name"); ?>" value="<?php echo set_value("responsible_person_name"); ?>" maxlength="<?php echo $this->username_maxlength; ?>" required>
+									<?php echo form_error('responsible_person_name'); ?>
+								</div>
+								<div class="form-group">
+									<input type="text" name="responsible_person_position" class="form-control auth-form-input" placeholder="<?php echo trans("user_position"); ?>" value="<?php echo set_value("responsible_person_position"); ?>" maxlength="<?php echo $this->username_maxlength; ?>" required>
+									<?php echo form_error('responsible_person_position'); ?>
+								</div>
+								<div class="m-b-30 form-group">
+									<label class="control-label font-600">Upload Surat Ijin Usaha Perdagangan (Opsional)</label>
+									<input type="file" class="form-control auth-form-input" name="siup_document" id="form_selected_document">
+									<?php echo form_error('siup_document'); ?>
+								</div>
+							</div>
+						<?php else : ?>
+							<h4 class="title-auth">3. <?php echo trans("responsible_title"); ?></h4>
 							<div class="form-group">
-								<input type="text" name="responsible_person_name" class="form-control auth-form-input" placeholder="<?php echo trans("full_name"); ?>" value="<?php echo set_value("responsible_person_name"); ?>" maxlength="<?php echo $this->username_maxlength; ?>" required>
-								<?php echo form_error('responsible_person_name'); ?>
+								<input type="text" name="nik" class="form-control auth-form-input" placeholder="<?php echo trans("nik"); ?>" value="<?php echo set_value("nik"); ?>" required>
 							</div>
-							<div class="form-group">
-								<input type="text" name="responsible_person_position" class="form-control auth-form-input" placeholder="<?php echo trans("user_position"); ?>" value="<?php echo set_value("responsible_person_position"); ?>" maxlength="<?php echo $this->username_maxlength; ?>" required>
-								<?php echo form_error('responsible_person_position'); ?>
-							</div>
-							<div class="m-b-30 form-group">
-								<label class="control-label font-600">Upload Surat Ijin Usaha Perdagangan (Opsional)</label>
-								<input type="file" class="form-control auth-form-input" name="siup_document" id="form_selected_document">
-								<?php echo form_error('siup_document'); ?>
-							</div>
-						</div>
+						<?php endif; ?>
 						<h4 class="title-auth">4. <?php echo trans("create_user"); ?></h4>
 						<div class="form-group">
 							<input type="email" name="email_address" class="form-control auth-form-input" placeholder="<?php echo trans("email_address"); ?>" value="<?php echo set_value("email_address"); ?>" required>
@@ -266,6 +276,21 @@
 				<input type="text" name="nik" class="form-control auth-form-input" placeholder="<?php echo trans("nik"); ?>" value="<?php echo set_value("nik"); ?>" required>
 			</div>`
 		);
+		$("#form_individual_business_type").prop("checked", true);
+	});
+
+	$("#label_nonpkp_business_type").click(function() {
+		$("#form_nonpkp_business_type").prop("checked", true);
+	});
+	$("#label_pkp_business_type").click(function() {
+		$("#form_pkp_business_type").prop("checked", true);
+	});
+
+	$("#label_umkm_business_type").click(function() {
+		$("#form_umkm_business_type").prop("checked", true);
+	});
+	$("#label_nonumkm_business_type").click(function() {
+		$("#form_nonumkm_business_type").prop("checked", true);
 	});
 </script>
 <!-- Wrapper End-->
