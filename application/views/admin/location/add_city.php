@@ -22,7 +22,7 @@
             <div class="box-body">
                 <!-- include message block -->
                 <?php $this->load->view('admin/includes/_messages'); ?>
-                <div class="form-group">
+                <!-- <div class="form-group">
                     <label><?php echo trans('country'); ?></label>
                     <select name="country_id" class="form-control" onchange="get_states_by_country($(this).val());" required>
                         <option value=""><?php echo trans("select"); ?></option>
@@ -33,7 +33,7 @@
                             </option>
                         <?php endforeach; ?>
                     </select>
-                </div>
+                </div> -->
 
                 <div class="form-group">
                     <label><?php echo trans('state'); ?></label>

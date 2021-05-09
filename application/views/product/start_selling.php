@@ -62,19 +62,19 @@
                                                             <div class="col-12 col-sm-4 m-b-15">
                                                                 <label class="control-label"><?php echo trans('country'); ?></label>
                                                                 <div class="selectdiv">
-                                                                    <select id="select_countries" name="country_id" class="form-control" onchange="get_states(this.value, false);" required>
+                                                                    <!-- <select id="select_countries" name="country_id" class="form-control" onchange="get_states(this.value, false);" required>
                                                                         <option value=""><?php echo trans('select'); ?></option>
                                                                         <?php foreach ($this->countries as $item): ?>
                                                                             <option value="<?php echo $item->id; ?>" <?php echo ($item->id == $this->auth_user->country_id) ? 'selected' : ''; ?>><?php echo html_escape($item->name); ?></option>
                                                                         <?php endforeach; ?>
-                                                                    </select>
+                                                                    </select> -->
                                                                 </div>
                                                             </div>
 
                                                             <div class="col-12 col-sm-4 m-b-15">
                                                                 <label class="control-label"><?php echo trans('state') . "/" . trans('city'); ?></label>
                                                                 <div class="selectdiv">
-                                                                    <select id="select_states" name="state_id" class="form-control" onchange="get_cities(this.value, false);">
+                                                                    <!-- <select id="select_states" name="state_id" class="form-control" onchange="get_cities(this.value, false);">
                                                                         <option value=""><?php echo trans('select'); ?></option>
                                                                         <?php
                                                                         if (!empty($this->auth_user->country_id)) {
@@ -85,7 +85,7 @@
                                                                                 <option value="<?php echo $item->id; ?>" <?php echo ($item->id == $this->auth_user->state_id) ? 'selected' : ''; ?>><?php echo html_escape($item->name); ?></option>
                                                                             <?php endforeach;
                                                                         endif; ?>
-                                                                    </select>
+                                                                    </select> -->
                                                                 </div>
                                                             </div>
 

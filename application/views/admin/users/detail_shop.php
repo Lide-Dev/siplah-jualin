@@ -4,7 +4,7 @@
     <div class="col-sm-12">
         <div class="box">
             <div class="box-header with-border">
-                <h3 class="box-title"><?php echo trans("details_shop"); ?></h3>
+                <h3 class="box-title"><?php echo trans("detail_shop"); ?></h3>
             </div><!-- /.box-header -->
 
             <div class="box-body">
@@ -15,6 +15,9 @@
                         <div class="row row-details">
                             <div class="col-xs-12 col-sm-4 col-right">
                                 <strong> <?php echo trans("business_type"); ?></strong>
+                            </div>
+                            <div class="col-xs-12 col-sm-6 col-right">
+                                <p> <?= $shop->businesstype ?></p>
                             </div>
                         </div>
 

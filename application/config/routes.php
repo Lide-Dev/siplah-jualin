@@ -279,7 +279,7 @@ $route[$routes->admin . '/shop-opening-requests'] = 'admin_controller/shop_openi
 $route[$routes->admin . '/add-administrator'] = 'admin_controller/add_administrator';
 $route[$routes->admin . '/edit-user/(:num)'] = 'admin_controller/edit_user/$1';
 /* Details Shop */
-$route[$routes->admin . '/details_shop'] = 'admin_controller/details_shop';
+$route[$routes->admin . '/detail_shop/(:any)'] = 'admin_controller/detail_shop/$1';
 
 $route[$routes->admin . '/cache-system'] = 'admin_controller/cache_system';
 $route[$routes->admin . '/storage'] = 'admin_controller/storage';

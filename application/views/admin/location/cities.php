@@ -39,7 +39,7 @@
 
                                 <div class="item-table-filter">
                                     <label><?php echo trans('country'); ?></label>
-                                    <select name="country" class="form-control" onchange="get_states_by_country($(this).val());" style="width: 180px;">
+                                    <!-- <select name="country" class="form-control" onchange="get_states_by_country($(this).val());" style="width: 180px;">
                                         <option value=""><?php echo trans("all"); ?></option>
                                         <?php
                                         foreach ($countries as $item): ?>
@@ -47,12 +47,12 @@
                                                 <?php echo html_escape($item->name); ?>
                                             </option>
                                         <?php endforeach; ?>
-                                    </select>
+                                    </select> -->
                                 </div>
 
                                 <div class="item-table-filter">
                                     <label><?php echo trans('state'); ?></label>
-                                    <select name="state" id="select_states" class="form-control" style="width: 180px;">
+                                    <!-- <select name="state" id="select_states" class="form-control" style="width: 180px;">
                                         <option value=""><?php echo trans("all"); ?></option>
                                         <?php
                                         $country_id = $this->input->get('country', true);
@@ -64,7 +64,7 @@
                                                 <?php echo html_escape($item->name); ?>
                                             </option>
                                         <?php endforeach; ?>
-                                    </select>
+                                    </select> -->
                                 </div>
 
                                 <div class="item-table-filter">

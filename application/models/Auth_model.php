@@ -676,6 +676,18 @@ class Auth_model extends CI_Model
         return $query->result();
     }
 
+    public function get_shop($id)
+    {
+        $column = $this->get_columns("supplier_profiles", "supplier_profiles", ["id" => "supplier_id"]);
+        $column += $this->get_columns("users", "users");
+        $this->db->select($column)->join("supplier_profiles", "supplier_profiles.user_id = users.id");
+        if (!empty($id)) {
+            $this->db->where("users.id", $id);
+        }
+        $query = $this->db->get("users");
+        return $query->result();
+    }
+
     //get shop opening requests
     public function get_shop_opening_requests()
     {
@@ -835,5 +847,36 @@ class Auth_model extends CI_Model
         }
 
         return false;
+    }
+
+    /**
+     * Get all column by table.
+     *
+     * @param string $table
+     * @param string $alias
+     * @param array $alias_column
+     * @return array
+     */
+    public function get_columns(string $table, string $alias = "", array $alias_column = [])
+    {
+        $result = [];
+        $columns = $this->db->query("SELECT COLUMN_NAME as column_name FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = '{$table}' AND TABLE_SCHEMA = 'db_siplah_jualin' ORDER BY ORDINAL_POSITION")->result();
+        if (empty($columns)) {
+            return $result;
+        }
+
+
+        foreach ($columns as $key1 => $column) {
+            $name = empty($alias) ? $column->column_name : "{$alias}.{$column->column_name}";
+            if (!empty($alias_column)) {
+                foreach ($alias_column as $key2 => $value) {
+                    if ($key2 == $column->column_name) {
+                        $name .= " as $value";
+                    }
+                }
+            }
+            array_push($result, $name);
+        }
+        return $result;
     }
 }

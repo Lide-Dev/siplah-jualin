@@ -422,7 +422,7 @@ class Profile_controller extends Home_Core_Controller
         $data['keywords'] = trans("personal_information") . "," . $this->app_name;
 
         $data["active_tab"] = "personal_information";
-        $data["countries"] = $this->location_model->get_countries();
+        // $data["countries"] = $this->location_model->get_countries();
         $data["states"] = $this->location_model->get_states_by_country($this->auth_user->country_id);
         $data["cities"] = $this->location_model->get_cities_by_state($this->auth_user->state_id);
         
@@ -466,7 +466,7 @@ class Profile_controller extends Home_Core_Controller
             redirect(lang_base_url());
         }
         $data["active_tab"] = "shipping_address";
-        $data["countries"] = $this->location_model->get_countries();
+        // $data["countries"] = $this->location_model->get_countries();
         
         $this->load->view('partials/_header', $data);
         $this->load->view('settings/shipping_address', $data);
