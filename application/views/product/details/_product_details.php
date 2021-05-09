@@ -146,12 +146,10 @@
     </div>
 </div>
 
-
 <div class="row">
     <div class="col-12"><?php $this->load->view('product/details/_messages'); ?></div>
 </div>
 <div class="row">
-
 
     <div class="col-12 product-add-to-cart-container">
         <?php if ($product->listing_type != 'ordinary_listing' && $product->product_type != 'digital'): ?>
