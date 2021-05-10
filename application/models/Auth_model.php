@@ -679,7 +679,7 @@ class Auth_model extends CI_Model
     public function get_shop($id)
     {
         $column = $this->get_columns("supplier_profiles", "supplier_profiles", ["id" => "supplier_id"]);
-        $column = array_merge($column, $this->get_columns("users", "users",["phone_number"=>"number"]));
+        $column = array_merge($column, $this->get_columns("users", "users", ["phone_number" => "number"]));
         // dd($column,$this->get_columns("users", "users"));
         $this->db->select($column)->join("supplier_profiles", "supplier_profiles.user_id = users.id");
         if (!empty($id)) {
@@ -924,6 +924,32 @@ class Shop
         return $ci->bank_model->get_bank($this->bank_id)->bank_name;
     }
 
+    public function nib_ext()
+    {
+        if (empty($this->nib_path)) {
+            return "";
+        }
+        $arr =explode(".", $this->nib_path);
+        return end($arr);
+    }
+
+    public function npwp_ext()
+    {
+        if (empty($this->npwp_path)) {
+            return "";
+        }
+        $arr=explode(".", $this->npwp_path);
+        return end($arr);
+    }
+    public function siup_ext()
+    {
+        if (empty($this->siup_path)) {
+            return "";
+        }
+        $arr=explode(".", $this->siup_path);
+        return end($arr);
+    }
+
 
     public function __set($name, $value)
     {
@@ -934,6 +960,11 @@ class Shop
             $this->legal_status = $arr[(string)$this->legal_status_id];
         }
         if ($name === "bank_name") {
+        }
+        if (in_array($name, ["nib_ext", "npwp_ext", "siup_ext"])) {
+            $file = explode("_", $name)[0] . "_path";
+            $ext = end(explode(".", $file));
+            $this->$name = $ext;
         }
     }
 

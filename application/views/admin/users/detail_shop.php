@@ -42,7 +42,10 @@
                                 <strong>Dokumen NPWP</strong>
                             </div>
                             <div class="col-sm-8">
-                                <p> <?= $shop->npwp_path ?></p>
+                                <button id="npwp_document" type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal_document_viewer">
+                                    Lihat Dokumen
+                                </button>
+
                             </div>
                         </div>
                         <div class="row row-details">
@@ -50,7 +53,10 @@
                                 <strong>Dokumen NIB</strong>
                             </div>
                             <div class="col-sm-8">
-                                <p> <?= $shop->nib_path ?></p>
+                                <button id="nib_document" type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal_document_viewer">
+                                    Lihat Dokumen
+                                </button>
+
                             </div>
                         </div>
                         <div class="row row-details">
@@ -139,6 +145,16 @@
                                     <p> <?= $shop->responsible_person_position ?></p>
                                 </div>
                             </div>
+                            <div class="row row-details">
+                                <div class="col-xs-12 col-sm-4 col-right">
+                                    <strong>Jabatan</strong>
+                                </div>
+                                <div class="col-sm-8">
+                                    <button id="siup_document" type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal_document_viewer">
+                                        Lihat Dokumen
+                                    </button>
+                                </div>
+                            </div>
                         <?php endif; ?>
                     </div>
                     <!-- END OF RESPONSIBLE PERSON -->
@@ -168,7 +184,75 @@
             </div><!-- /.box-body -->
         </div>
     </div>
+
 </div>
+
+<div class="modal fade" id="modal_document_viewer" tabindex="-1" role="dialog" aria-labelledby="modal_center_document_viewer" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modal_title_document_viewer">Dokumen</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div id="document_viewer_body" class="container">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    var files = {
+        npwp_document: {
+            ext: "<?= $shop->npwp_ext ?>",
+            url: "<?= base_url("uploads/supplier_document/{$shop->npwp_path}") ?>",
+            alt: "NPWP Dokumen"
+        },
+        nib_document: {
+            ext: "<?= $shop->nib_ext ?>",
+            url: "<?= base_url("uploads/supplier_document/{$shop->nib_path}") ?>",
+            alt: "NIB Dokumen"
+        },
+        siup_document: {
+            ext: "<?= $shop->siup_ext ?>",
+            url: "<?= base_url("uploads/supplier_document/{$shop->siup_path}") ?>",
+            alt: "SIUP Dokumen"
+        }
+    }
+
+    $("#npwp_document").click(function() {
+        console.log("t1");
+        document_viewer("npwp_document")
+    });
+    $("#nib_document").click(function() {
+        console.log("t2");
+        document_viewer("nib_document")
+    });
+    $("#siup_document").click(function() {
+        console.log("t3");
+        document_viewer("siup_document")
+    });
+
+    function document_viewer(type) {
+        if (files[type].ext != "pdf") {
+            $("#document_viewer_body").html(
+                `<img src="${files[type].url}" class="img-fluid" alt="${files[type].alt}">`
+            )
+        } else {
+            $("#document_viewer_body").html(
+                `<iframe frameborder="0" scrolling="no" width="100%" height="480" src="https://docs.google.com/gview?url=${files[type].url}&embedded=true"></iframe>`
+            )
+        }
+    }
+</script>
+
 
 <style>
     .sec-title {

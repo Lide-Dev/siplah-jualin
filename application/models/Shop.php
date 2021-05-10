@@ -31,6 +31,9 @@ class Shop
     //Custom
     public $legal_status;
     public $bank_name;
+    public $nib_ext;
+    public $npwp_ext;
+    public $siup_ext;
 
 
     public function __set($name, $value)
@@ -43,6 +46,11 @@ class Shop
             $ci = get_instance();
             $ci->load->model("bank_model");
             $ci->bank_model->get_bank($this->bank_id);
+        }
+        if (in_array($name, ["nib_ext", "npwp_ext", "siup_ext"])) {
+            $file = explode("_", $name)[0] . "_path";
+            $ext = end(explode(".", $file));
+            $this->$name = $ext;
         }
     }
 

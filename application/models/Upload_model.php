@@ -25,21 +25,28 @@ class Upload_model extends CI_Model
     public function upload_document_supplier($file, $user_id)
     {
         $result = [];
+        $this->load->library('upload');
         foreach ($file as $key => $value) {
-            if ($key=="siup" && empty($value["name"])){
+            if ($key == "siup" && empty($value["name"])) {
                 continue;
             }
+            $extension = pathinfo($_FILES["{$key}_document"]["name"], PATHINFO_EXTENSION);
+
+
             $config["upload_path"] = "./uploads/supplier_document/";
             $config["allowed_types"] = "jpg|jpeg|png|pdf";
             // $config['upload_path'] = './uploads/temp/';
             $config["file_name"] = "supplier_{$user_id}_{$key}_" . generate_unique_id();
-            $this->load->library('upload', $config);
+            $this->upload->initialize($config);
+
             if ($this->upload->do_upload("{$key}_document")) {
-                $result[$key] = $config["file_name"];
+                $result[$key] = "{$config['file_name']}.{$extension}";
             } else {
                 dd($value, "error $key : {$this->upload->display_errors()}", $config); // throw new Exception("Upload file is not properly right!");
             }
         }
+
+
         return $result;
     }
 

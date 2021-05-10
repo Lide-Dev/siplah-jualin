@@ -460,7 +460,7 @@ class Auth_controller extends Home_Core_Controller
             $this->form_validation->set_rules("responsible_person_name", trans("full_name") . "Penanggung Jawab", "required|max_length[254]");
             $this->form_validation->set_rules("responsible_person_position", trans("position"), "required|max_length[254]");
             if (!empty($_FILES["siup_document"])) {
-                $this->form_validation->set_rules('siup_document', 'Dokumen NIB', 'callback_file_check[siup_document]');
+                $this->form_validation->set_rules('siup_document', 'Dokumen SIUP', 'callback_file_check[siup_document]');
             }
         }
         $this->form_validation->set_error_delimiters("<small class='text-danger'>", "</small>");
@@ -495,6 +495,13 @@ class Auth_controller extends Home_Core_Controller
                     "zip_code" => $this->input->post("postal_code"),
                 ]
             ];
+            if ($this->input->post("business_type")=="individual"){
+                $user_data["profile"]["nik"]=$this->input->post("nik");
+            }
+            else{
+                $user_data["profile"]["responsible_person_name"]=$this->input->post("responsible_person_name");
+                $user_data["profile"]["responsible_person_position"]=$this->input->post("responsible_person_position");
+            }
             $file_data = [
                 "npwp" => $_FILES["npwp_document"],
                 "nib" => $_FILES["nib_document"],
