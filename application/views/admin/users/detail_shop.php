@@ -43,6 +43,9 @@
                             </div>
                             <div class="col-sm-8">
                                 <p> <?= $shop->npwp_path ?></p>
+                                <p class="m-0">
+                                    <button type="button" class="btn btn-xs btn-primary" data-toggle="modal" data-target="#<?php ?>">Lihat Dokumen</button>
+                                </p>
                             </div>
                         </div>
                         <div class="row row-details">
@@ -51,6 +54,9 @@
                             </div>
                             <div class="col-sm-8">
                                 <p> <?= $shop->nib_path ?></p>
+                                <p class="m-0">
+                                    <button type="button" class="btn btn-xs btn-primary" data-toggle="modal" data-target="#<?php ?>">Lihat Dokumen</button>
+                                </p>
                             </div>
                         </div>
                         <div class="row row-details">
@@ -170,6 +176,58 @@
     </div>
 </div>
 
+<!-- MODAL -->
+<?php foreach ($payout_requests as $item) :
+    $payout = $this->earnings_model->get_user_payout_account($item->user_id);
+?>
+    <!-- Modal -->
+    <div id="accountDetailsModel_<?php echo $item->id; ?>" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title"><?php echo trans($item->payout_method); ?></h4>
+                </div>
+                <div class="modal-body">
+                    <?php if (!empty($payout)) : ?>
+                        <?php if ($item->payout_method == "paypal") : ?>
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <?php echo trans("user"); ?>
+                                </div>
+                                <div class="col-sm-8">
+                                    <?php $user = get_user($payout->user_id);
+                                    if (!empty($user)) : ?>
+                                        <strong>
+                                            &nbsp;<?php echo $user->username; ?>
+                                        </strong>
+                                    <?php endif; ?>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <?php echo trans("paypal_email_address"); ?>
+                                </div>
+                                <div class="col-sm-8">
+                                    <strong>
+                                        &nbsp;<?php echo $payout->payout_paypal_email; ?>
+                                    </strong>
+                                </div>
+                            </div>
+                            <?php endif; ?>
+                    <?php endif; ?>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+<?php endforeach; ?>
+<!-- END OF MODAL -->
+
 <style>
     .sec-title {
         margin-bottom: 20px;
@@ -208,5 +266,9 @@
         .col-sm-8 strong {
             margin-left: 0;
         }
+    }
+
+    .modal-body .row {
+        margin-bottom: 8px;
     }
 </style>
