@@ -243,7 +243,7 @@
     function document_viewer(type) {
         if (files[type].ext != "pdf") {
             $("#document_viewer_body").html(
-                `<img src="${files[type].url}" class="img-fluid" alt="${files[type].alt}">`
+                `<img src="${files[type].url}" class="img-doc" alt="${files[type].alt}">`
             )
         } else {
             $("#document_viewer_body").html(
@@ -296,5 +296,13 @@
 
     .modal-body .row {
         margin-bottom: 8px;
+    }
+
+    .img-doc {
+        margin-left: auto;
+        margin-right: auto;
+        width: 100%;
+        max-width: 500px;
+        height: auto;
     }
 </style>

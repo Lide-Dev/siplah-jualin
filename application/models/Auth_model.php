@@ -862,7 +862,7 @@ class Auth_model extends CI_Model
     public function get_columns(string $table, string $alias = "", array $alias_column = [])
     {
         $result = [];
-        $columns = $this->db->query("SELECT COLUMN_NAME as column_name FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = '{$table}' AND TABLE_SCHEMA = 'db_siplah_jualin' ORDER BY ORDINAL_POSITION")->result();
+        $columns = $this->db->query("SELECT COLUMN_NAME as column_name FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = '{$table}' AND TABLE_SCHEMA = 'u1432237_siplah_jualin' ORDER BY ORDINAL_POSITION")->result();
         if (empty($columns)) {
             return $result;
         }
@@ -913,8 +913,9 @@ class Shop
     //Custom
     public function legal_status()
     {
+
         $arr = ["1" => "Individu", "2" => "PKP", "3" => "Non PKP"];
-        return $arr[(string)$this->legal_status_id];
+        return $arr["{$this->legal_status_id}"];
     }
 
     public function bank_name()
