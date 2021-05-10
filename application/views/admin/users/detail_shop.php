@@ -293,4 +293,8 @@
             margin-left: 0;
         }
     }
+
+    .modal-body .row {
+        margin-bottom: 8px;
+    }
 </style>

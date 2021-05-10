@@ -79,7 +79,7 @@
 												<li>
 													<a href="<?php echo admin_url(); ?>detail_shop/<?=$user->id?>">
 													<button type="button" name="detail_shop" class="btn-list-button">
-														<i class="fa fa-info option-icon"></i><?php echo trans('details'); ?>
+														<i class="fa fa-info option-icon"></i>Detail Toko
 													</button>
 													</a>
 												</li>

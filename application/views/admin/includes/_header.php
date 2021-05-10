@@ -77,7 +77,7 @@
                         </a>
 
                         <ul class="dropdown-menu  pull-right" role="menu" aria-labelledby="user-options">
-                            <li>
+                            <!-- <li>
                                 <a href="<?php echo generate_profile_url($this->auth_user->slug); ?>"><i class="fa fa-user"></i> <?php echo trans("profile"); ?></a>
                             </li>
                             <li>
@@ -85,7 +85,7 @@
                             </li>
                             <li>
                                 <a href="<?php echo generate_url("settings", "change_password"); ?>"><i class="fa fa-lock"></i> <?php echo trans("change_password"); ?></a>
-                            </li>
+                            </li> -->
                             <li class="divider"></li>
                             <li>
                                 <a href="<?php echo base_url(); ?>logout"><i class="fa fa-sign-out"></i> <?php echo trans("logout"); ?></a>
