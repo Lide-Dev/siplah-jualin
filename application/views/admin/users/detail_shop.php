@@ -247,7 +247,7 @@
             )
         } else {
             $("#document_viewer_body").html(
-                `<iframe frameborder="0" scrolling="no" width="100%" height="480" src="https://docs.google.com/gview?url=${files[type].url}&embedded=true"></iframe>`
+                `<iframe frameborder="0" scrolling="no" class="prev-pdf" width="100%" height="480" src="https://docs.google.com/gview?url=${files[type].url}&embedded=true"></iframe>`
             )
         }
     }
@@ -302,7 +302,15 @@
         margin-left: auto;
         margin-right: auto;
         width: 100%;
-        max-width: 500px;
+        max-width: 540px;
+        height: auto;
+    }
+
+    .prev-pdf {
+        margin-left: auto;
+        margin-right: auto;
+        width: 100%;
+        max-width: 540px;
         height: auto;
     }
 </style>
