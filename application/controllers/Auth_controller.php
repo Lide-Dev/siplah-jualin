@@ -54,6 +54,7 @@ class Auth_controller extends Home_Core_Controller
         if ($this->auth_check) {
             redirect(lang_base_url());
         }
+        
         //validate inputs
         $role = xss_clean($role);
         $this->form_validation->set_rules('email', trans("email_address"), 'required|xss_clean|max_length[100]');

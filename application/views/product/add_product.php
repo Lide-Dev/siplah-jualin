@@ -66,7 +66,7 @@
                                 <div class="col-12">
                                     <?php echo form_open('add-product-post', ['id' => 'form_validate', 'onkeypress' => "return event.keyCode != 13;"]); ?>
 
-                                    <?php if ($this->general_settings->physical_products_system == 1 && $this->general_settings->digital_products_system == 0) : ?>
+                                    <!-- <?php if ($this->general_settings->physical_products_system == 1 && $this->general_settings->digital_products_system == 0) : ?>
                                         <input type="hidden" name="product_type" value="physical">
                                     <?php elseif ($this->general_settings->physical_products_system == 0 && $this->general_settings->digital_products_system == 1) : ?>
                                         <input type="hidden" name="product_type" value="digital">
@@ -100,9 +100,9 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    <?php endif; ?>
+                                    <?php endif; ?> -->
 
-                                    <?php if ($active_product_system_array['active_system_count'] > 1) : ?>
+                                    <!-- <?php if ($active_product_system_array['active_system_count'] > 1) : ?>
                                         <div class="form-box">
                                             <div class="form-box-head">
                                                 <h4 class="title"><?php echo trans('listing_type'); ?></h4>
@@ -143,25 +143,26 @@
                                         </div>
                                     <?php else : ?>
                                         <input type="hidden" name="listing_type" value="<?php echo $active_product_system_array['active_system_value']; ?>">
-                                    <?php endif; ?>
+                                    <?php endif; ?> -->
+
                                     <!-- END OF PRODUCT TYPE -->
                                     <!-- DETAILS PRODUCT -->
                                     <div class="form-box">
                                         <div class="form-box-head">
-                                            <h4 class="title"><?php echo trans('details'); ?></h4>
+                                            <h4 class="title"><?php echo trans('detail_product'); ?></h4>
                                         </div>
                                         <div class="form-box-body">
                                             <div class="row">
-                                                <div class="col-6">
+                                                <div class="col-md-6 col-12">
                                                     <div class="form-group">
                                                         <label class="control-label"><?php echo trans("product_title"); ?></label>
                                                         <input type="text" name="title" class="form-control form-input" placeholder="<?php echo trans("product_title"); ?>" required>
                                                     </div>
                                                 </div>
-                                                <div class="col-6">
+                                                <div class="col-md-6 col-12">
                                                     <div class="form-group">
-                                                        <label class="control-label"><?php echo trans("brand"); ?></label>
-                                                        <input type="text" name="title" class="form-control form-input" placeholder="<?php echo trans("brand"); ?>" required>
+                                                        <label class="control-label"><?php echo trans("brand") . "/" . trans("publisher"); ?></label>
+                                                        <input type="text" name="title" class="form-control form-input" placeholder="<?php echo trans("brand") . "/" . trans("publisher"); ?>" required>
                                                     </div>
                                                 </div>
                                             </div>
@@ -181,7 +182,7 @@
                                             <div class="row">
                                                 <div class="form-group col-6">
                                                     <label class="control-label"><?php echo trans("category_made_in"); ?></label>
-                                                    <input type="text" name="" class="form-control form-input" placeholder="<?php echo trans("category_made_in"); ?>">
+                                                    <input type="text" name="custom_category" class="form-control form-input" placeholder="<?php echo trans("category_made_in"); ?>">
                                                 </div>
                                                 <div class="form-group col-6">
                                                     <label class="control-label"><?php echo trans("code_kbki"); ?></label>
@@ -207,18 +208,51 @@
                                             <!-- END OF SKU -->
                                             <div class="form-group">
                                                 <label class="control-label"><?php echo trans("description"); ?></label>
-                                                <div class="row">
+                                                <!-- <div class="row">
                                                     <div class="col-sm-12 m-b-5">
                                                         <button type="button" class="btn btn-sm btn-secondary color-white btn_ck_add_image m-b-5"><i class="icon-image"></i><?php echo trans("add_image"); ?></button>
                                                         <button type="button" class="btn btn-sm btn-info color-white btn_ck_add_video m-b-5"><i class="icon-image"></i><?php echo trans("add_video"); ?></button>
                                                         <button type="button" class="btn btn-sm btn-warning color-white btn_ck_add_iframe m-b-5"><i class="icon-image"></i><?php echo trans("add_iframe"); ?></button>
                                                     </div>
                                                 </div>
-                                                <textarea name="description" id="ckEditor" class="text-editor"></textarea>
+                                                <textarea name="description" id="ckEditor" class="text-editor"></textarea> -->
+
+                                                <textarea name="description" class="form-control form-input text-editor"></textarea>
+
+
                                             </div>
 
                                         </div>
+                                    </div>
 
+                                    <!-- SPECIFICATION PRODUCT -->
+                                    <div class="form-box">
+                                        <div class="form-box-head">
+                                            <h4 class="title"><?php echo trans('delivery_setting'); ?></h4>
+                                        </div>
+                                        <div class="form-box-body">
+                                            <div class="row">
+                                                <div class="col-md-6 col-12">
+                                                    <div class="form-group">
+                                                        <label class="control-label"><?php echo trans("product_title"); ?></label>
+                                                        <input type="text" name="title" class="form-control form-input" placeholder="<?php echo trans("product_title"); ?>" required>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6 col-12">
+                                                    <div class="form-group">
+                                                        <label class="control-label"><?php echo trans("brand") . "/" . trans("publisher"); ?></label>
+                                                        <input type="text" name="title" class="form-control form-input" placeholder="<?php echo trans("brand") . "/" . trans("publisher"); ?>" required>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- END OF SPECIFICATION PRODUCT -->
+
+                                    <div class="form-box">
+                                        <div class="form-box-head">
+                                            <h4 class="title"><?php echo trans('delivery_setting'); ?></h4>
+                                        </div>
                                         <div class="form-box-body">
                                             <!-- DELIVERY TIME & SHIPPING WAY -->
                                             <div class="row">
@@ -232,34 +266,10 @@
                                                 </div>
                                             </div>
                                             <!-- END OF DELIVERY TIME & SHIPPING WAY -->
-                                            <!-- DIMENSION PRODUCT -->
-                                            <div class="row">
-                                                <div class="form-box-head">
-                                                    <h4 class="title"><?php echo trans('dimension_product'); ?></h4>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="form-group col-3">
-                                                    <label class="">Panjang</label>
-                                                    <input type="number" name="" class="form-control form-input" placeholder="<?php echo trans(""); ?>">
-                                                </div>
-                                                <div class="form-group col-3">
-                                                    <label class="">Lebar</label>
-                                                    <input type="number" name="" class="form-control form-input" placeholder="<?php echo trans(""); ?>">
-                                                </div>
-                                                <div class="form-group col-3">
-                                                    <label class="">Tinggi</label>
-                                                    <input type="number" name="" class="form-control form-input" placeholder="<?php echo trans(""); ?>">
-                                                </div>
-                                                <div class="form-group col-3">
-                                                    <label class="">Berat</label>
-                                                    <input type="number" name="" class="form-control form-input" placeholder="<?php echo trans(""); ?>">
-                                                </div>
-                                            </div>
-                                            <!-- END OF DIMENSION PRODUCT -->
                                         </div>
                                     </div>
                                     <!-- END OF DETAILS PRODUCT -->
+
                                     <div class="form-group">
                                         <button type="submit" class="btn btn-lg btn-custom float-right"><?php echo trans("save_and_continue"); ?></button>
                                     </div>

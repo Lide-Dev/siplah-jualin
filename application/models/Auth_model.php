@@ -885,7 +885,6 @@ class Auth_model extends CI_Model
 
 class Shop
 {
-
     public $supplier_id;
     public $supplier_name;
     public $npwp;
