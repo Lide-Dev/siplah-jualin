@@ -862,7 +862,7 @@ class Auth_model extends CI_Model
     public function get_columns(string $table, string $alias = "", array $alias_column = [])
     {
         $result = [];
-        $columns = $this->db->query("SELECT COLUMN_NAME as column_name FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = '{$table}' AND TABLE_SCHEMA = 'db_siplah_jualin' ORDER BY ORDINAL_POSITION")->result();
+        $columns = $this->db->query("SELECT COLUMN_NAME as column_name FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = '{$table}' AND TABLE_SCHEMA = 'u1432237_siplah_jualin' ORDER BY ORDINAL_POSITION")->result();
         if (empty($columns)) {
             return $result;
         }

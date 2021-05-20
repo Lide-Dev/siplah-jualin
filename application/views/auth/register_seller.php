@@ -125,19 +125,19 @@
 						</div>
 						<div class="form-group">
 							<?php if (!empty(set_value("province"))) : ?>
-								<select id="form_city" name="city" class="form-control auth-form-input" disabled>
+								<select id="form_city" name="city" class="form-control auth-form-input" onchange="select_city()" disabled>
 									<option value="0"> Kota dipilih setelah pilih provinsi terlebih dahulu </option>
 								</select>
 								<?php echo form_error('city'); ?>
 							<?php else : ?>
-								<select id="form_city" name="city" class="form-control auth-form-input" disabled>
+								<select id="form_city" name="city" class="form-control auth-form-input" onchange="select_city()" disabled>
 									<option value="0"> Kota dipilih setelah pilih provinsi terlebih dahulu </option>
 								</select>
 								<?php echo form_error('city'); ?>
 							<?php endif ?>
 						</div>
 						<div class="form-group">
-							<input type="text" name="district" class="form-control auth-form-input" placeholder="<?php echo trans("district"); ?>" value="<?php echo set_value("district"); ?>" required>
+							<input type="text" id="form_district" onchange="change_district()" name="district" class="form-control auth-form-input" placeholder="<?php echo trans("district"); ?>" value="<?php echo set_value("district"); ?>" required>
 							<?php echo form_error('district'); ?>
 						</div>
 						<div class="form-group">
@@ -145,20 +145,15 @@
 							<?php echo form_error('village'); ?>
 						</div>
 						<div class="form-group">
-							<input type="text" name="postal_code" class="form-control auth-form-input" minlength="5" maxlength="5" placeholder="<?php echo trans("postal_code"); ?>" value="<?php echo set_value("postal_code"); ?>" required>
+							<input type="text" id="form_postal_code" onchange="change_postal_code()" name="postal_code" class="form-control auth-form-input" minlength="5" maxlength="5" placeholder="<?php echo trans("postal_code"); ?>" value="<?php echo set_value("postal_code"); ?>" required>
 							<?php echo form_error('postal_code'); ?>
 						</div>
 						<div class="form-group">
 							<label class="control-label font-600"><?php echo "Pilih Titik Lokasi" ?></label>
 							<div id="map-result">
-								<!--load map-->
-								<?php
-								if ($product->country_id == 0) {
-									$this->load->view("product/_load_map", ["map_address" => get_location($this->auth_user)]);
-								} else {
-									$this->load->view("product/_load_map", ["map_address" => get_location($product)]);
-								}
-								?>
+								<div class="map-container">
+									<iframe src="https://maps.google.com/maps?width=100%&height=600&hl=en&q=&ie=UTF8&t=&z=8&iwloc=B&output=embed&disableDefaultUI=true" id="IframeMap" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe>
+								</div>
 							</div>
 						</div>
 						<!-- END OF COMPLETE ADDRESS -->
@@ -248,12 +243,45 @@
 </div>
 
 <script>
+	var full_address = {
+		province: "",
+		city: "",
+		district: "",
+		postal_code: ""
+	};
+
 	function select_province() {
 		let id = $("#form_province option:selected").val();
+		set_address("province", $("#form_province option:selected").html());
+		full_address.city = "";
 		$.get("<?= base_url() ?>get-city-option?province_id=" + id).done(function(data) {
 			$("#form_city").html(data);
 			$("#form_city").removeAttr("disabled");
 		})
+	}
+
+	function select_city() {
+		set_address("city", $("#form_city option:selected").html());
+	}
+
+	function change_district() {
+		let val = $("#form_district").val();
+		if (val.length > 2)
+			set_address("district", val);
+	}
+
+	function change_postal_code() {
+		let val = $("#form_postal_code").val();
+		if (val.length > 4)
+			set_address("postal_code", val);
+		else
+			set_address("postal_code", "");
+	}
+
+	function set_address(key, value) {
+		full_address[key] = value;
+		// let address = full_address.join(" ");
+		$("#IframeMap").attr("src", `https://maps.google.com/maps?width=100%&height=600&hl=en&q=${full_address.province} ${full_address.city} ${full_address.district} ${full_address.postal_code}&ie=UTF8&t=&z=11&iwloc=B&output=embed&disableDefaultUI=true`);
 	}
 
 	$("#label_nonpkp_business_type, #label_pkp_business_type").click(function() {

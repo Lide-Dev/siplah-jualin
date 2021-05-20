@@ -196,9 +196,9 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body">
-                <div id="document_viewer_body" class="container">
-                </div>
+            <div id="document_viewer_body" class="modal-body container">
+
+
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -247,7 +247,7 @@
             )
         } else {
             $("#document_viewer_body").html(
-                `<iframe frameborder="0" scrolling="no" width="100%" height="480" src="https://docs.google.com/gview?url=${files[type].url}&embedded=true"></iframe>`
+                `<iframe class="pdf-viewer" frameborder="0" scrolling="no" src="https://docs.google.com/gview?url=${files[type].url}&embedded=true"></iframe>`
             )
         }
     }
@@ -255,6 +255,12 @@
 
 
 <style>
+    .pdf-viewer {
+        max-width: 500px;
+        width: 100%;
+        height: 480px;
+    }
+
     .sec-title {
         margin-bottom: 20px;
         padding-bottom: 10px;

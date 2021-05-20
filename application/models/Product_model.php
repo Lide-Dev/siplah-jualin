@@ -273,7 +273,7 @@ class Product_model extends Core_Model
             $select = "COUNT(products.id) AS count";
         } else {
             $select = "products.id, products.title, products.slug, products.product_type, products.listing_type, products.category_id,  products.price, products.currency, products.discount_rate,
-            products.user_id, products.is_promoted, products.rating, products.hit, products.is_free_product, products.promote_end_date, products.description, products.product_condition, products.created_at, 
+            products.user_id, products.is_promoted, products.rating, products.hit, products.is_free_product, products.promote_end_date, products.description, products.product_condition, products.created_at,
             users.username AS user_username, users.shop_name AS shop_name, users.role AS user_role, users.slug AS user_slug,
             (SELECT CONCAT(storage, '::', image_small) FROM images WHERE products.id = images.product_id ORDER BY is_main DESC LIMIT 1) AS image,
             (SELECT CONCAT(storage, '::', image_small) FROM images WHERE products.id = images.product_id ORDER BY is_main DESC LIMIT 1, 1) AS image_second,

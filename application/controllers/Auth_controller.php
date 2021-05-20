@@ -55,6 +55,7 @@ class Auth_controller extends Home_Core_Controller
             redirect(lang_base_url());
         }
         //validate inputs
+        $role = xss_clean($role);
         $this->form_validation->set_rules('email', trans("email_address"), 'required|xss_clean|max_length[100]');
         $this->form_validation->set_rules('password', trans("password"), 'required|xss_clean|max_length[30]');
         if ($this->form_validation->run() == false) {
@@ -670,7 +671,7 @@ class Auth_controller extends Home_Core_Controller
         if ($success == 1) {
             redirect(lang_base_url());
         }
-
+        // SUBSTITUTE( SUBSTITUTE ( SUBSTITUTE( LOWER(C20) ;" ";"-") ;"&";"%26") ;"/";"%47")
         $this->form_validation->set_rules('password', trans("new_password"), 'required|xss_clean|min_length[4]|max_length[50]');
         $this->form_validation->set_rules('password_confirm', trans("password_confirm"), 'required|xss_clean|matches[password]');
 
