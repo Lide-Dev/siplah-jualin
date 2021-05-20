@@ -913,8 +913,9 @@ class Shop
     //Custom
     public function legal_status()
     {
+
         $arr = ["1" => "Individu", "2" => "PKP", "3" => "Non PKP"];
-        return $arr[(string)$this->legal_status_id];
+        return $arr["{$this->legal_status_id}"];
     }
 
     public function bank_name()

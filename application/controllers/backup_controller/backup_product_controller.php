@@ -319,6 +319,17 @@ class Product_controller extends Home_Core_Controller
             $data['keywords'] = trans("edit_product") . "," . $this->app_name;
         }
 
+        // if ($data["product"]->country_id == 0) {
+        //     $data["states"] = $this->location_model->get_states_by_country($this->auth_user->country_id);
+        // } else {
+        //     $data["states"] = $this->location_model->get_states_by_country($data["product"]->country_id);
+        // }
+        // if ($data["product"]->country_id == 0) {
+        //     $data["cities"] = $this->location_model->get_cities_by_state($this->auth_user->state_id);
+        // } else {
+        //     $data["cities"] = $this->location_model->get_cities_by_state($data["product"]->state_id);
+        // }
+
         $data["custom_field_array"] = $this->field_model->generate_custom_fields_array($data["product"]->category_id, $data["product"]->id);
         $data["product_variations"] = $this->variation_model->get_product_variations($data["product"]->id);
         $data["user_variations"] = $this->variation_model->get_variation_by_user_id($data["product"]->user_id);
@@ -517,8 +528,8 @@ class Product_controller extends Home_Core_Controller
     {
         // $country_text = $this->input->post('country_text', true);
         // $country_val = $this->input->post('country_val', true);
-        // $state_text = $this->input->post('state_text', true);
-        // $state_val = $this->input->post('state_val', true);
+        $state_text = $this->input->post('state_text', true);
+        $state_val = $this->input->post('state_val', true);
         $address = $this->input->post('address', true);
         $zip_code = $this->input->post('zip_code', true);
 
@@ -527,9 +538,9 @@ class Product_controller extends Home_Core_Controller
         if (!empty($adress_details)) {
             $data["map_address"] = $adress_details . " ";
         }
-        // if (!empty($state_val)) {
-        //     $data["map_address"] = $data["map_address"] . $state_text . " ";
-        // }
+        if (!empty($state_val)) {
+            $data["map_address"] = $data["map_address"] . $state_text . " ";
+        }
         // if (!empty($country_val)) {
         //     $data["map_address"] = $data["map_address"] . $country_text;
         // }

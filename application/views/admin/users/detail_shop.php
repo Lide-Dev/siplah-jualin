@@ -243,11 +243,11 @@
     function document_viewer(type) {
         if (files[type].ext != "pdf") {
             $("#document_viewer_body").html(
-                `<img src="${files[type].url}" class="img-fluid" alt="${files[type].alt}">`
+                `<img src="${files[type].url}" class="img-doc" alt="${files[type].alt}">`
             )
         } else {
             $("#document_viewer_body").html(
-                `<iframe class="pdf-viewer" frameborder="0" scrolling="no" src="https://docs.google.com/gview?url=${files[type].url}&embedded=true"></iframe>`
+                `<iframe frameborder="0" scrolling="no" class="prev-pdf" width="100%" height="480" src="https://docs.google.com/gview?url=${files[type].url}&embedded=true"></iframe>`
             )
         }
     }
@@ -302,5 +302,21 @@
 
     .modal-body .row {
         margin-bottom: 8px;
+    }
+
+    .img-doc {
+        margin-left: auto;
+        margin-right: auto;
+        width: 100%;
+        max-width: 540px;
+        height: auto;
+    }
+
+    .prev-pdf {
+        margin-left: auto;
+        margin-right: auto;
+        width: 100%;
+        max-width: 540px;
+        height: auto;
     }
 </style>
