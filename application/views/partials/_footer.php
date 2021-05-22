@@ -162,7 +162,9 @@ $this->session->unset_userdata('mds_send_email_data'); ?>
 <!-- Popper JS-->
 <script src="<?php echo base_url(); ?>assets/vendor/bootstrap/js/popper.min.js"></script>
 <!-- Bootstrap JS-->
-<script src="<?php echo base_url(); ?>assets/vendor/bootstrap/js/bootstrap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous"></script>
+
+<!-- <script src="<?php echo base_url(); ?>assets/vendor/bootstrap/js/bootstrap.min.js"></script> -->
 <!-- Plugins JS-->
 <script src="<?php echo base_url(); ?>assets/js/plugins-1.6.js"></script>
 <script src="<?php echo base_url(); ?>assets/js/update_jualin/slider-home-page.js"></script>

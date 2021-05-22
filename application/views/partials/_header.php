@@ -62,7 +62,9 @@
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/vendor/font-icons/css/font-icon.min.css" />
     <?php echo !empty($this->fonts->font_url) ? $this->fonts->font_url : ''; ?>
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/vendor/bootstrap/css/bootstrap.min.css" />
+    <!-- <link rel="stylesheet" href="<?php echo base_url(); ?>assets/vendor/bootstrap/css/bootstrap.min.css" /> -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+
     <!-- Style CSS -->
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/style-1.6.css" />
     <!-- <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/update_jualin/slick.css" /> -->
@@ -79,6 +81,61 @@
         <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/colors/default.css" />
     <?php endif; ?>
     <style>
+        /*-----ADD-------*/
+
+        .toggle-control {
+            display: block;
+            position: relative;
+            padding-left: 50px;
+            margin-bottom: 12px;
+            cursor: pointer;
+            font-size: 22px;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        .toggle-control input {
+            position: absolute;
+            opacity: 0;
+            cursor: pointer;
+            height: 0;
+            width: 0;
+        }
+
+        .toggle-control input:checked~.control {
+            background-color: #2f279a;
+        }
+
+        .toggle-control input:checked~.control:after {
+            left: 30px;
+        }
+
+        .toggle-control .control {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 25px;
+            width: 50px;
+            border-radius: 12.5px;
+            background-color: darkgray;
+            transition: background-color 0.15s ease-in;
+        }
+
+        .toggle-control .control:after {
+            content: "";
+            position: absolute;
+            left: 5px;
+            top: 5px;
+            width: 15px;
+            height: 15px;
+            border-radius: 12.5px;
+            background: white;
+            transition: left 0.15s ease-in;
+        }
+
+        /*-----ADD END-------*/
         body {
             <?php echo $this->fonts->font_family; ?>
         }
@@ -158,36 +215,36 @@
                                     <ul class="nav align-items-center">
                                         <!-- Check Auth  -->
                                         <?php if (is_multi_vendor_active() && ($this->auth_user->role == "member" || !$this->auth_check)) : ?>
-                                                <?php if (is_sale_active()) : ?>
-                                                    <li class="nav-item nav-item-cart li-main-nav-right">
-                                                        <a href="<?php echo generate_url("cart"); ?>">
-                                                            <i class="icon-cart"></i><span><?php echo trans("cart"); ?></span>
-                                                            <?php $cart_product_count = get_cart_product_count();
-                                                            if ($cart_product_count > 0) : ?>
-                                                                <span class="notification"><?php echo $cart_product_count; ?></span>
-                                                            <?php endif; ?>
-                                                        </a>
-                                                    </li>
-                                                <?php endif; ?>
+                                            <?php if (is_sale_active()) : ?>
+                                                <li class="nav-item nav-item-cart li-main-nav-right">
+                                                    <a href="<?php echo generate_url("cart"); ?>">
+                                                        <i class="icon-cart"></i><span><?php echo trans("cart"); ?></span>
+                                                        <?php $cart_product_count = get_cart_product_count();
+                                                        if ($cart_product_count > 0) : ?>
+                                                            <span class="notification"><?php echo $cart_product_count; ?></span>
+                                                        <?php endif; ?>
+                                                    </a>
+                                                </li>
                                             <?php endif; ?>
+                                        <?php endif; ?>
                                         <!-- End of Check Auth -->
 
                                         <!-- Check Auth  -->
-                                            <?php if (is_multi_vendor_active() && ($this->auth_user->role == "member" || !$this->auth_check)) : ?>
-                                                <?php if ($this->auth_check) : ?>
-                                                    <li class="nav-item li-main-nav-right">
-                                                        <a href="<?php echo generate_url("wishlist") . "/" . $this->auth_user->slug; ?>">
-                                                            <i class="icon-heart-o"></i><?php echo trans("wishlist"); ?>
-                                                        </a>
-                                                    </li>
-                                                <?php else : ?>
-                                                    <li class="nav-item li-main-nav-right">
-                                                        <a href="<?php echo generate_url("wishlist"); ?>">
-                                                            <i class="icon-heart-o"></i><?php echo trans("wishlist"); ?>
-                                                        </a>
-                                                    </li>
-                                                <?php endif; ?>
+                                        <?php if (is_multi_vendor_active() && ($this->auth_user->role == "member" || !$this->auth_check)) : ?>
+                                            <?php if ($this->auth_check) : ?>
+                                                <li class="nav-item li-main-nav-right">
+                                                    <a href="<?php echo generate_url("wishlist") . "/" . $this->auth_user->slug; ?>">
+                                                        <i class="icon-heart-o"></i><?php echo trans("wishlist"); ?>
+                                                    </a>
+                                                </li>
+                                            <?php else : ?>
+                                                <li class="nav-item li-main-nav-right">
+                                                    <a href="<?php echo generate_url("wishlist"); ?>">
+                                                        <i class="icon-heart-o"></i><?php echo trans("wishlist"); ?>
+                                                    </a>
+                                                </li>
                                             <?php endif; ?>
+                                        <?php endif; ?>
                                         <!-- End of Check Auth -->
 
                                         <!--Check auth-->
@@ -294,7 +351,7 @@
                         <section class="container">
                             <div class="row mb-2">
                                 <div class="col-sm-12">
-                                    <a href="<?= base_url('login/member') ?>" class="text-dark">
+                                    <a href="http://dev-sso.datadik.kemdikbud.go.id/app/<?= $this->config->item("dapodik_app_id") ?>" class="text-dark">
                                         <div class="card shadow">
                                             <div class="card-body">
                                                 <div class="row">

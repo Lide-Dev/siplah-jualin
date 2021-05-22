@@ -103,7 +103,7 @@ $autoload['helper'] = array('url', 'security', 'custom', 'text', 'product','file
 | config files.  Otherwise, leave it blank.
 |
 */
-$autoload['config'] = array();
+$autoload['config'] = array("dapodik_config");
 
 /*
 | -------------------------------------------------------------------
@@ -136,4 +136,4 @@ $autoload['model'] = array('settings_model', 'language_model', 'auth_model', 'ca
     'product_model', 'product_admin_model', 'bank_model','blog_category_model', 'blog_model', 'profile_model', 'slider_model', 'review_model',
     'comment_model', 'message_model', 'tag_model', 'newsletter_model', 'contact_model', 'location_model', 'ad_model',
     'field_model', 'cart_model', 'order_model', 'currency_model', 'transaction_model', 'promote_model', 'order_admin_model', 'earnings_model',
-    'earnings_admin_model', 'variation_model');
+    'earnings_admin_model', 'variation_model','satdik_model');
