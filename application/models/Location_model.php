@@ -214,6 +214,13 @@ class Location_model extends CI_Model
         }
     }
 
+    public function get_city_by_region($region_id)
+    {
+        $region_id = clean_number($region_id);
+        $this->db->where('region_id', $region_id);
+        return $this->db->get("cities")->result()->first_row();
+    }
+
     public function valid_province($value)
     {
         $this->form_validation->set_message('valid_province', 'Provinsi pada input {field} tidak ditemukan.');
