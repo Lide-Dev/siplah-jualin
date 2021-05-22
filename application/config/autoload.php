@@ -103,7 +103,7 @@ $autoload['helper'] = array('url', 'security', 'custom', 'text', 'product','file
 | config files.  Otherwise, leave it blank.
 |
 */
-$autoload['config'] = array();
+$autoload['config'] = array("dapodik_config");
 
 /*
 | -------------------------------------------------------------------

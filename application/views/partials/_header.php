@@ -351,7 +351,7 @@
                         <section class="container">
                             <div class="row mb-2">
                                 <div class="col-sm-12">
-                                    <a href="<?= base_url('login/member') ?>" class="text-dark">
+                                    <a href="http://dev-sso.datadik.kemdikbud.go.id/app/<?= $this->config->item("dapodik_app_id") ?>" class="text-dark">
                                         <div class="card shadow">
                                             <div class="card-body">
                                                 <div class="row">
