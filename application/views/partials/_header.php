@@ -157,6 +157,7 @@
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
     <?php echo $this->general_settings->google_adsense_code; ?>
+
 </head>
 
 <body>

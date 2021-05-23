@@ -1034,7 +1034,7 @@ $lang = [
     "type_tag" => "Ketik tag dan tekan enter",
     "unconfirmed" => "Belum dikonfirmasi",
     "unfollow" => "Unfollow",
-    "unit_price" => "Patokan Harga",
+    "unit_price" => "harga Satuan",
     "unsubscribe" => "Unsubscribe",
     "unsubscribe_successful" => "Berhasil Unsubscribe!",
     "updated" => "Perbarui",
@@ -1140,6 +1140,9 @@ $lang = [
     "you_may_also_like" => "Anda mungkin juga suka",
     "you_will_earn" => "Anda Akan Menghasilkan",
     "zip_code" => "Zip Code",
+    "payment_source" => "Sumber Pendanaan",
+    "choose_source" => "Pilih Sumber",
+    "compare" => "Bandingkan"
 ];
 
 $validation = include(BASEPATH . "../application/language/id_validation.php");

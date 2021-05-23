@@ -130,6 +130,7 @@ foreach ($languages as $language) {
         $route[$key . $routes->cart . '/' . $routes->token_midtrans]['POST'] = 'cart_controller/token_midtrans';
         $route[$key . $routes->cart . '/' . $routes->negotiation]['GET'] = 'cart_controller/negotiation';
         $route[$key . $routes->cart . '/' . $routes->make_an_offer]['GET'] = 'cart_controller/make_an_offer';
+        $route[$key . 'cart/compare']['GET'] = 'cart_controller/compare';
         /*orders*/
         $route[$key . $routes->orders]['GET'] = 'order_controller/orders';
         $route[$key . $routes->orders . '/' . $routes->completed_orders]['GET'] = 'order_controller/completed_orders';
@@ -149,6 +150,10 @@ foreach ($languages as $language) {
         /*bidding*/
         $route[$key . $routes->quote_requests]['GET'] = 'bidding_controller/quote_requests';
         $route[$key . $routes->sent_quote_requests]['GET'] = 'bidding_controller/sent_quote_requests';
+        /*Compare*/
+        $route[$key . 'compare']['GET'] = 'compare_controller/compare';
+        $route[$key . 'compare/compared_product']['POST'] = 'compare_controller/compared_product';
+        $route[$key . 'compare/add_compared_product']['GET'] = 'compare_controller/add_compared_product';
         /*Multi Login*/
         $route[$key . 'login/member']['GET'] = 'buyer_controller/index';
         $route[$key . 'login/supervisor']['GET'] = 'supervisor_controller/index';

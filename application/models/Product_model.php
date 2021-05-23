@@ -504,6 +504,14 @@ class Product_model extends Core_Model
         return $query->row()->count;
     }
 
+    // get similar products
+    public function get_similar_product_by_category($category_id)
+    {
+        $sql = "SELECT * FROM products WHERE products.category_id = ? LIMIT 10";
+        $query = $this->db->query($sql, array(clean_number($category_id)));
+        return $query->result();
+    }
+
     //get related products
     public function get_related_products($product)
     {
@@ -801,7 +809,7 @@ class Product_model extends Core_Model
     //increase product hit
     public function increase_product_hit($product)
     {
-        if (!empty($product)):
+        if (!empty($product)) :
             if (!isset($_COOKIE['modesy_product_' . $product->id])) :
                 //increase hit
                 setcookie("modesy_product_" . $product->id, '1', time() + (86400 * 300), "/");
@@ -903,7 +911,6 @@ class Product_model extends Core_Model
                         );
                         $this->db->insert('product_license_keys', $data);
                     }
-
                 }
             }
         }
@@ -961,5 +968,4 @@ class Product_model extends Core_Model
         }
         return false;
     }
-
 }
