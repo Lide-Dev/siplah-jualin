@@ -100,6 +100,7 @@
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
     <?php echo $this->general_settings->google_adsense_code; ?>
+
 </head>
 
 <body>
@@ -158,36 +159,36 @@
                                     <ul class="nav align-items-center">
                                         <!-- Check Auth  -->
                                         <?php if (is_multi_vendor_active() && ($this->auth_user->role == "member" || !$this->auth_check)) : ?>
-                                                <?php if (is_sale_active()) : ?>
-                                                    <li class="nav-item nav-item-cart li-main-nav-right">
-                                                        <a href="<?php echo generate_url("cart"); ?>">
-                                                            <i class="icon-cart"></i><span><?php echo trans("cart"); ?></span>
-                                                            <?php $cart_product_count = get_cart_product_count();
-                                                            if ($cart_product_count > 0) : ?>
-                                                                <span class="notification"><?php echo $cart_product_count; ?></span>
-                                                            <?php endif; ?>
-                                                        </a>
-                                                    </li>
-                                                <?php endif; ?>
+                                            <?php if (is_sale_active()) : ?>
+                                                <li class="nav-item nav-item-cart li-main-nav-right">
+                                                    <a href="<?php echo generate_url("cart"); ?>">
+                                                        <i class="icon-cart"></i><span><?php echo trans("cart"); ?></span>
+                                                        <?php $cart_product_count = get_cart_product_count();
+                                                        if ($cart_product_count > 0) : ?>
+                                                            <span class="notification"><?php echo $cart_product_count; ?></span>
+                                                        <?php endif; ?>
+                                                    </a>
+                                                </li>
                                             <?php endif; ?>
+                                        <?php endif; ?>
                                         <!-- End of Check Auth -->
 
                                         <!-- Check Auth  -->
-                                            <?php if (is_multi_vendor_active() && ($this->auth_user->role == "member" || !$this->auth_check)) : ?>
-                                                <?php if ($this->auth_check) : ?>
-                                                    <li class="nav-item li-main-nav-right">
-                                                        <a href="<?php echo generate_url("wishlist") . "/" . $this->auth_user->slug; ?>">
-                                                            <i class="icon-heart-o"></i><?php echo trans("wishlist"); ?>
-                                                        </a>
-                                                    </li>
-                                                <?php else : ?>
-                                                    <li class="nav-item li-main-nav-right">
-                                                        <a href="<?php echo generate_url("wishlist"); ?>">
-                                                            <i class="icon-heart-o"></i><?php echo trans("wishlist"); ?>
-                                                        </a>
-                                                    </li>
-                                                <?php endif; ?>
+                                        <?php if (is_multi_vendor_active() && ($this->auth_user->role == "member" || !$this->auth_check)) : ?>
+                                            <?php if ($this->auth_check) : ?>
+                                                <li class="nav-item li-main-nav-right">
+                                                    <a href="<?php echo generate_url("wishlist") . "/" . $this->auth_user->slug; ?>">
+                                                        <i class="icon-heart-o"></i><?php echo trans("wishlist"); ?>
+                                                    </a>
+                                                </li>
+                                            <?php else : ?>
+                                                <li class="nav-item li-main-nav-right">
+                                                    <a href="<?php echo generate_url("wishlist"); ?>">
+                                                        <i class="icon-heart-o"></i><?php echo trans("wishlist"); ?>
+                                                    </a>
+                                                </li>
                                             <?php endif; ?>
+                                        <?php endif; ?>
                                         <!-- End of Check Auth -->
 
                                         <!--Check auth-->

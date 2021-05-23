@@ -929,7 +929,7 @@ class Shop
         if (empty($this->nib_path)) {
             return "";
         }
-        $arr =explode(".", $this->nib_path);
+        $arr = explode(".", $this->nib_path);
         return end($arr);
     }
 
@@ -938,7 +938,7 @@ class Shop
         if (empty($this->npwp_path)) {
             return "";
         }
-        $arr=explode(".", $this->npwp_path);
+        $arr = explode(".", $this->npwp_path);
         return end($arr);
     }
     public function siup_ext()
@@ -946,7 +946,7 @@ class Shop
         if (empty($this->siup_path)) {
             return "";
         }
-        $arr=explode(".", $this->siup_path);
+        $arr = explode(".", $this->siup_path);
         return end($arr);
     }
 
