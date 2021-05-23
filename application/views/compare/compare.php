@@ -73,11 +73,11 @@
 													<?php if ($products[$product_index] != null) : ?>
 														<div class="row">
 															<div class="<?= $products[$product_index]->title = $products[0]->title ? "col-md-12" : "col-md-6" ?>" align="center">
-																<button type="button" class="btn btn-success btn-lg" style="color: white;"><?= trans("make_an_offer") ?></button>
+																<a class="btn btn-success btn-lg" style="color: white;" href="<?= base_url('cart/negotiation?product_id=' . $product[$product_index]->id) ?>"><?= trans("make_an_offer") ?></a>
 															</div>
 															<?php if (($products[$product_index]->title != $products[0]->title)) : ?>
 																<div class="col-md-6" align="center">
-																	<button type="button" class="btn btn-danger btn-lg" style="color: white;"><?= trans("remove") ?></button>
+																	<a class="btn btn-danger btn-lg" style="color: white;"><?= trans("remove") ?></a>
 																</div>
 															<?php endif ?>
 														</div>

@@ -42,6 +42,13 @@ class Cart_controller extends Home_Core_Controller
     $this->load->view('partials/_footer');
   }
 
+  public function compare()
+  {
+    $product_id = $this->input->get("product_id");
+    $this->session->set_userdata("compared_products_id", array($product_id));
+    redirect(base_url('compare'));
+  }
+
   /**
    * MAKE AN OFFER
    */

@@ -125,6 +125,10 @@
 														<?php endif;
 														endif; ?>
 														<!-- END OF BUTTON NEGOTIATION-->
+														<!-- BUTTON COMPARE -->
+														<?php if ($cart_item->total_price > FIFTY_MILLION) : ?>
+															<a href="<?= base_url('cart/compare?product_id=' . $cart_item->product_id) ?>" class="btn btn-md btn-block text-center text-white mt-3 col-12"><?php echo trans("compare"); ?></a>
+														<?php endif ?>
 													</div>
 												</div>
 									<?php endif;
@@ -167,11 +171,6 @@
 											endif;
 										endif; ?>
 									</p>
-									<?php if ($cart_item->total_price > FIFTY_MILLION) : ?>
-										<p>
-											<a href="<?= base_url('cart/compare?') ?>" class="btn btn-block"><?php echo trans("compare"); ?></a>
-										</p>
-									<?php endif ?>
 									<div class="payment-icons">
 										<img src="<?php echo base_url(); ?>assets/img/payment/olshope.svg" alt="olshope">
 										<img src="<?php echo base_url(); ?>assets/img/payment/bank.svg" alt="bank">
