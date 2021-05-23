@@ -175,7 +175,7 @@
 						</div>
 						<div class="form-group">
 							<input type="text" name="bank_account_holder" class="form-control auth-form-input" placeholder="<?php echo trans("bank_account_holder"); ?>" value="<?php echo set_value("bank_account_holder"); ?>" required>
-							<?php echo form_error('bank_account_holder'); ?>
+							<?= form_error('bank_account_holder'); ?>
 						</div>
 						<!-- END OF BANK ACCOUNT -->
 						<!-- RESPONSIBLE PERSON -->
