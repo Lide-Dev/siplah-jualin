@@ -109,10 +109,10 @@
 						</div>
 
 						<!-- END OF NIB -->
-						<!-- COMPLETE ADDRESS -->
+						<!-- ADDRESS -->
 						<div class="form-group">
-							<textarea type="text" name="complete_address" class="form-control auth-form-input" placeholder="<?php echo trans("complete_address"); ?>" required><?php echo set_value("complete_address"); ?></textarea>
-							<?php echo form_error('complete_address'); ?>
+							<textarea type="text" name="address" class="form-control auth-form-input" placeholder="<?php echo trans("address"); ?>" required><?php echo set_value("address"); ?></textarea>
+							<?php echo form_error('address'); ?>
 						</div>
 						<div class="form-group">
 							<select id="form_province" name="province" class="form-control auth-form-input" onchange="select_province()">

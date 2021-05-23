@@ -2,6 +2,13 @@
 
 <!-- File Manager -->
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/vendor/file-manager/file-manager.css">
+
+<!-- Added Video Upload -->
+<link rel="stylesheet" href="<?php echo base_url(); ?>assets/vendor/file-uploader/css/jquery.dm-uploader.min.css" />
+<link rel="stylesheet" href="<?php echo base_url(); ?>assets/vendor/file-uploader/css/styles.css" />
+<script src="<?php echo base_url(); ?>assets/vendor/file-uploader/js/jquery.dm-uploader.min.js"></script>
+<script src="<?php echo base_url(); ?>assets/vendor/file-uploader/js/demo-ui.js"></script>
+
 <script src="<?php echo base_url(); ?>assets/vendor/file-manager/file-manager.js"></script>
 <!-- Ckeditor js -->
 <script src="<?php echo base_url(); ?>assets/vendor/ckeditor/ckeditor.js"></script>
@@ -58,6 +65,14 @@
                                 <div class="col-12 m-b-30">
                                     <label class="control-label font-600"><?php echo trans("images"); ?></label>
                                     <?php $this->load->view("product/_image_upload_box"); ?>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-12 col-sm-6 m-b-30">
+                                    <label class="control-label font-600"><?php echo trans("video_preview"); ?></label>
+                                    <small>(<?php echo trans("video_preview_exp"); ?>)</small>
+                                    <?php $this->load->view("product/_video_upload_box"); ?>
                                 </div>
                             </div>
                             <!-- END OFF UPLOAD PHOTO -->
@@ -159,12 +174,6 @@
                                                         <input type="text" name="title" class="form-control form-input" placeholder="<?php echo trans("product_title"); ?>" required>
                                                     </div>
                                                 </div>
-                                                <div class="col-md-6 col-12">
-                                                    <div class="form-group">
-                                                        <label class="control-label"><?php echo trans("brand") . "/" . trans("publisher"); ?></label>
-                                                        <input type="text" name="title" class="form-control form-input" placeholder="<?php echo trans("brand") . "/" . trans("publisher"); ?>" required>
-                                                    </div>
-                                                </div>
                                             </div>
                                             <!-- MINIMUM ORDER & STOK -->
                                             <div class="row">
@@ -190,22 +199,25 @@
                                                 </div>
                                             </div>
                                             <!-- END OF CATEGORY MADE & CODE KBKI -->
-                                            <!-- SKU -->
-                                            <div class="row">
-                                                <div class="form-group col-6">
-                                                    <label class="control-label"><?php echo trans("guarantee"); ?></label>
-                                                    <input type="text" name="sku" class="form-control form-input" placeholder="<?php echo trans("guarantee"); ?>">
+                                            <!-- ASSURANCE -->
+                                            <?php if (!empty($type_product) && $type_product === "service") : ?>
+                                                <div class="row">
+                                                    <div class="form-group col-6">
+                                                        <label class="control-label"><?php echo trans("service_assurance"); ?></label>
+                                                        <input type="file" name="service_assurance" class="form-control form-input" placeholder="<?php echo trans("service_assurance"); ?>">
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <!-- END OF SKU -->
-                                            <!-- SKU -->
-                                            <div class="row">
-                                                <div class="form-group col-6">
-                                                    <label class="control-label"><?php echo trans("sku"); ?>&nbsp;(<?php echo trans("product_code"); ?>)</label>
-                                                    <input type="text" name="sku" class="form-control form-input" placeholder="<?php echo trans("sku"); ?>">
+                                            <?php else : ?>
+                                                <div class="row">
+                                                    <div class="form-group col-6">
+                                                        <label class="control-label"><?php echo trans("delivery_assurance"); ?></label>
+                                                        <input type="file" name="delivery_assurance" class="form-control form-input" placeholder="<?php echo trans("delivery_assurance"); ?>">
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <!-- END OF SKU -->
+                                            <?php endif; ?>
+
+                                            <!-- END OF ASSURANCE -->
+
                                             <div class="form-group">
                                                 <label class="control-label"><?php echo trans("description"); ?></label>
                                                 <!-- <div class="row">
@@ -216,11 +228,32 @@
                                                     </div>
                                                 </div>
                                                 <textarea name="description" id="ckEditor" class="text-editor"></textarea> -->
-
                                                 <textarea name="description" class="form-control form-input text-editor"></textarea>
-
-
                                             </div>
+                                            <div class="row">
+                                                <div class="form-group col-md-6">
+                                                    <label for="form_category_homemade" class="control-label"><?php echo trans("category_homemade"); ?></label>
+                                                    <label for="form_category_homemade" class="toggle-control">
+                                                        <input id="form_category_homemade" type="checkbox" checked="checked">
+                                                        <span class="control"></span>
+                                                    </label>
+                                                </div>
+                                                <div class="form-group col-md-6">
+                                                    <label for="form_category_umkm" class="control-label"><?php echo trans("category_umkm"); ?></label>
+                                                    <label for="form_category_umkm" class="toggle-control">
+                                                        <input id="form_category_umkm" type="checkbox" checked="checked">
+                                                        <span class="control"></span>
+                                                    </label>
+                                                </div>
+                                                <div class="form-group col-md-6">
+                                                    <label for="form_category_kemendikbud" class="control-label"><?php echo trans("category_kemendikbud"); ?></label>
+                                                    <label for="form_category_kemendikbud" class="toggle-control">
+                                                        <input id="form_category_kemendikbud" type="checkbox" checked="checked">
+                                                        <span class="control"></span>
+                                                    </label>
+                                                </div>
+                                            </div>
+
 
                                         </div>
                                     </div>
@@ -228,20 +261,56 @@
                                     <!-- SPECIFICATION PRODUCT -->
                                     <div class="form-box">
                                         <div class="form-box-head">
-                                            <h4 class="title"><?php echo trans('delivery_setting'); ?></h4>
+                                            <h4 class="title"><?php echo trans('specification_product'); ?></h4>
                                         </div>
                                         <div class="form-box-body">
+
                                             <div class="row">
-                                                <div class="col-md-6 col-12">
-                                                    <div class="form-group">
-                                                        <label class="control-label"><?php echo trans("product_title"); ?></label>
-                                                        <input type="text" name="title" class="form-control form-input" placeholder="<?php echo trans("product_title"); ?>" required>
-                                                    </div>
-                                                </div>
                                                 <div class="col-md-6 col-12">
                                                     <div class="form-group">
                                                         <label class="control-label"><?php echo trans("brand") . "/" . trans("publisher"); ?></label>
                                                         <input type="text" name="title" class="form-control form-input" placeholder="<?php echo trans("brand") . "/" . trans("publisher"); ?>" required>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6 col-12">
+                                                    <div class="form-group">
+                                                        <label class="control-label"><?php echo trans("condition"); ?></label>
+                                                        <input type="text" name="sku" class="form-control form-input" placeholder="<?php echo trans("condition"); ?>">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- SKU -->
+                                            <div class="row">
+                                                <div class="form-group col-6">
+                                                    <label class="control-label"><?php echo trans("sku"); ?>&nbsp;(<?php echo trans("product_code"); ?>)</label>
+                                                    <input type="text" name="sku" class="form-control form-input" placeholder="<?php echo trans("sku"); ?>">
+                                                </div>
+                                            </div>
+                                            <!-- END OF SKU -->
+
+                                            <div class="row">
+                                                <div class="col-md-3 col-4">
+                                                    <div class="form-group">
+                                                        <label class="control-label"><?php echo trans("width"); ?></label>
+                                                        <input type="text" name="width" class="form-control form-input" placeholder="<?php echo trans("width"); ?>" required>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3 col-4">
+                                                    <div class="form-group">
+                                                        <label class="control-label"><?php echo trans("length") ?></label>
+                                                        <input type="text" name="length" class="form-control form-input" placeholder="<?php echo trans("length")  ?>" required>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3 col-4">
+                                                    <div class="form-group">
+                                                        <label class="control-label"><?php echo trans("height") ?></label>
+                                                        <input type="text" name="height" class="form-control form-input" placeholder="<?php echo trans("height") ?>" required>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3 col-4">
+                                                    <div class="form-group">
+                                                        <label class="control-label"><?php echo trans("weight") ?></label>
+                                                        <input type="text" name="weight" class="form-control form-input" placeholder="<?php echo trans("weight") ?>" required>
                                                     </div>
                                                 </div>
                                             </div>
@@ -255,12 +324,13 @@
                                         </div>
                                         <div class="form-box-body">
                                             <!-- DELIVERY TIME & SHIPPING WAY -->
+
                                             <div class="row">
-                                                <div class="form-group col-6">
+                                                <div class="form-group col-3">
                                                     <label class="control-label"><?php echo trans("delivery_time"); ?></label>
                                                     <input type="text" name="" class="form-control form-input" placeholder="<?php echo trans("delivery_time"); ?>">
                                                 </div>
-                                                <div class="form-group col-6">
+                                                <div class="form-group col-3">
                                                     <label class="control-label"><?php echo trans("shipping_way"); ?></label>
                                                     <input type="text" name="" class="form-control form-input" placeholder="<?php echo trans("shipping_way"); ?>">
                                                 </div>
@@ -286,6 +356,8 @@
     </div>
 </div>
 <!-- Wrapper End-->
+<script src="<?php echo base_url(); ?>assets/vendor/plyr/plyr.min.js"></script>
+<script src="<?php echo base_url(); ?>assets/vendor/plyr/plyr.polyfilled.min.js"></script>
 
 <script>
     function get_subcategories(category_id, data_select_id) {

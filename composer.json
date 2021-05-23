@@ -12,7 +12,9 @@
 	},
 	"require": {
 		"php": ">=5.6",
-		"nesbot/carbon": "^2.46"
+		"nesbot/carbon": "^2.46",
+		"guzzlehttp/guzzle": "^7.0",
+		"ramsey/uuid": "^4.1"
 	},
 	"suggest": {
 		"paragonie/random_compat": "Provides better randomness in PHP 5.x"

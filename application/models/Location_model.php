@@ -191,7 +191,7 @@ class Location_model extends CI_Model
             $id = clean_number($id);
             $this->db->where('id', $id);
             $query = $this->db->get('provinces');
-            return $query->result()->first_row();
+            return $query->first_row();
         }
     }
 
@@ -208,10 +208,25 @@ class Location_model extends CI_Model
         if ($with_id) {
             $id = clean_number($id);
             $this->db->where('id', $id);
-            return $this->db->get("cities")->result()->first_row();
+            return $this->db->get("cities")->first_row();
         } else {
             return $this->db->get("cities")->result();
         }
+    }
+
+    public function get_city_by_id($id = null)
+    {
+        $id = clean_number($id);
+        $this->db->where('id', $id);
+        // dd($this->db->get("cities")->first_row(), $id);
+        return $this->db->get("cities")->first_row();
+    }
+
+    public function get_city_by_region($region_id)
+    {
+        $region_id = clean_number($region_id);
+        $this->db->where('region_id', $region_id);
+        return $this->db->get("cities")->first_row();
     }
 
     public function valid_province($value)

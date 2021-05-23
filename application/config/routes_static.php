@@ -16,6 +16,7 @@ $route['reset-password-post']['POST'] = 'auth_controller/reset_password_post';
 $route['register-post/(:any)']['POST'] = 'auth_controller/register_post/$1';
 $route["login-post/(:any)"]['POST'] = "auth_controller/login_post/$1";
 $route["login-post/(:any)"]['GET'] = "auth_controller/login_post/$1";
+$route["login/satdik/redirect"]['GET'] = "auth_controller/redirect_login_satdik";
 
 //bidding
 $route['request-quote']['POST'] = 'bidding_controller/request_quote';

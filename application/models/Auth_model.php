@@ -1,4 +1,7 @@
 <?php
+
+use Ramsey\Uuid\Uuid;
+
 defined('BASEPATH') or exit('No direct script access allowed');
 
 class Auth_model extends CI_Model
@@ -281,7 +284,9 @@ class Auth_model extends CI_Model
 
         $this->db->trans_begin();
         $this->load->library('bcrypt');
+        $id = Uuid::uuid4()->toString();
         $this->db->insert('users', [
+            "id" => $id,
             "email" => $data["user"]["email"],
             "password" => $this->bcrypt->hash_password($data["user"]['password']),
             "is_active_shop_request" => 1,
@@ -292,7 +297,7 @@ class Auth_model extends CI_Model
             'token' => generate_token()
         ]);
 
-        $user_id = $this->db->insert_id();
+        $user_id = $id;
         $file_info = $this->upload_model->upload_document_supplier($file, $user_id);
         // dd($file_info);
         $data["profile"]["user_id"] = $user_id;
@@ -310,7 +315,6 @@ class Auth_model extends CI_Model
         }
         return $this->db->trans_status();
     }
-
 
     /**
      * Validate phone number
@@ -679,13 +683,15 @@ class Auth_model extends CI_Model
     public function get_shop($id)
     {
         $column = $this->get_columns("supplier_profiles", "supplier_profiles", ["id" => "supplier_id"]);
-        $column = array_merge($column, $this->get_columns("users", "users", ["phone_number" => "number"]));
+        $column = array_merge($column, $this->get_columns("users", "users", ["phone_number" => "number","city_id"=>"unknown_city","zip_code"=>"unknown_zip_code","address"=>"unksa"]));
         // dd($column,$this->get_columns("users", "users"));
+
         $this->db->select($column)->join("supplier_profiles", "supplier_profiles.user_id = users.id");
         if (!empty($id)) {
             $this->db->where("users.id", $id);
         }
         $query = $this->db->get("users");
+        // dd($query->result());
         // dd($query->result());
         return $query->first_row("Shop");
     }
@@ -900,7 +906,7 @@ class Shop
     public $bank_account;
     public $bank_id;
     public $bank_account_owner_name;
-    public $full_address;
+    public $address;
     public $district;
     public $village;
     public $city_id;
@@ -922,6 +928,35 @@ class Shop
         $ci = get_instance();
         $ci->load->model("bank_model");
         return $ci->bank_model->get_bank($this->bank_id)->bank_name;
+    }
+
+    public function city_name()
+    {
+        $ci = get_instance();
+        $ci->load->model("location_model");
+        // dd()
+        return $ci->location_model->get_city_by_id($this->city_id)->city_name;
+    }
+
+    public function province_id()
+    {
+        $ci = get_instance();
+        $ci->load->model("location_model");
+        // dd($this);
+        return $ci->location_model->get_city_by_id($this->city_id)->province_id;
+    }
+
+    public function province_name()
+    {
+        $ci = get_instance();
+        $ci->load->model("location_model");
+        // dd($this->province_id());
+        return $ci->location_model->get_province($this->province_id())->province_name;
+    }
+
+    public function full_address()
+    {
+        return "{$this->province_name()}, {$this->city_name()}, {$this->district}, {$this->village}";
     }
 
     public function nib_ext()
@@ -954,12 +989,14 @@ class Shop
     public function __set($name, $value)
     {
         // echo $name;
-
+        // echo $name.":".$value."<br>";
         if ($name === 'legal_status') {
             $arr = ["1" => "Individu", "2" => "PKP", "3" => "Non PKP"];
             $this->legal_status = $arr[(string)$this->legal_status_id];
         }
-        if ($name === "bank_name") {
+        if ($name === "city_id") {
+            $this->$name = $value;
+
         }
         if (in_array($name, ["nib_ext", "npwp_ext", "siup_ext"])) {
             $file = explode("_", $name)[0] . "_path";
@@ -971,7 +1008,6 @@ class Shop
     public function __get($name)
     {
         if (isset($this->$name)) {
-
             return $this->$name;
         } else if (method_exists($this, $name)) {
             return $this->$name();

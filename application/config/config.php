@@ -549,4 +549,3 @@ $db->close();
 
 $config['error_prefix'] = '<div class="valid-feedback">';
 $config['error_suffix'] = '</div>';
-

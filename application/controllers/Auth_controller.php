@@ -1,6 +1,8 @@
 <?php
 
+use GuzzleHttp\Client;
 use League\OAuth2\Client\Provider\Exception\IdentityProviderException;
+use Ramsey\Uuid\Uuid;
 
 defined('BASEPATH') or exit('No direct script access allowed');
 
@@ -54,24 +56,147 @@ class Auth_controller extends Home_Core_Controller
         if ($this->auth_check) {
             redirect(lang_base_url());
         }
-        
+
         //validate inputs
         $role = xss_clean($role);
         $this->form_validation->set_rules('email', trans("email_address"), 'required|xss_clean|max_length[100]');
         $this->form_validation->set_rules('password', trans("password"), 'required|xss_clean|max_length[30]');
         if ($this->form_validation->run() == false) {
-            $this->session->set_tempdata('errors', validation_errors(), 10);
-            $this->session->set_tempdata('form_data', $this->auth_model->input_values(), 10);
+            $this->session->set_flashdata('errors', validation_errors());
+            $this->session->set_flashdata('form_data', $this->auth_model->input_values());
             redirect(base_url("login/$role"));
         } else {
             if ($this->auth_model->login($role)) {
-                if ($role == "admin")
-                    redirect(admin_url());
-                redirect(lang_base_url());
+                switch ($role) {
+                    case 'admin':
+                        redirect(admin_url());
+                        break;
+                    default:
+                        redirect(lang_base_url());
+                        break;
+                }
             } else {
                 redirect(base_url("login/$role"));
             }
             reset_flash_data();
+        }
+    }
+
+    /**
+     * Handle after redirect from Dapodik SSO.
+     *
+     * @return void
+     * @author Herlandro T. <herlandrotri@gmail.com>
+     */
+    public function redirect_login_satdik()
+    {
+        $this->config->load("dapodik_config");
+        $code = $this->input->get("code");
+        $dapodik_config = $this->config->item('dapodik_config');
+        // WE USING TRY & CATCH FOR TESTING PURPOSE ONLY. IF WE GOT A ERROR IT WiLL NOT RUINING ALL FUNCTION.
+        try {
+            // GET TOKEN FROM DAPODIK BY CODE FROM URL REDIRECT
+            $client = new Client([
+                "base_uri" => $dapodik_config("dapodik_sso_base_url"),
+            ]);
+            $response = $client->post("token", ["json" => [
+                "code" => $code,
+                "app_id" => $dapodik_config["dapodik_app_id"],
+                "client_secret" => $dapodik_config["dapodik_client_secret"],
+            ]]);
+            switch ($response->getStatusCode()) {
+                case 200:
+                    $token = $response->getBody();
+                case 500:
+                    $this->session->set_flashdata("errors", "Kesalahan dari server Dapodik. Silahkan menunggu beberapa menit atau jika pernah terdaftar di Jualin maka masuk dengan emergency login.");
+                    redirect(base_url("login/member"));
+                    break;
+                default:
+                    $this->session->set_flashdata("errors", "Laporkan ke Admin Jualin untuk lebih lanjut. Error code: 201.");
+                    redirect(base_url("login/member"));
+                    break;
+            }
+            $response = $client->post("profile", ["json" => [
+                "token" => $token,
+            ]]);
+
+            // GET USER PROFILE SATDIK
+            $user_profile = [];
+            $auth_data = [];
+            switch ($response->getStatusCode()) {
+                case 200:
+                    $json = json_decode($response->getBody());
+                    $auth_data["id"] = $json["pengguna_id"];
+                    $auth_data["email"] = $json["username"];
+                    $user_profile["user_id"] = $json["pengguna_id"];
+                    $user_profile["name"] = $json["nama"];
+                    $user_profile["nik"] = $json["nik"];
+                    $user_profile["nip"] = $json["nip"];
+                    // $user_profile["nuptk"] = $json["ptk_id"];
+                    $user_profile["role_id"] = $json["peran_id"];
+                    $user_profile["role"] = $json["peran"];
+                    $user_profile["satdik_id"] = $json["sekolah_id"];
+                    $user_profile["position"] = $json["jabatan"];
+                    $user_profile["phone_number"] = $json["no_hp"] ?? $json["no_telepon"];
+
+                case 500:
+                    $this->session->set_flashdata("errors", "Kesalahan dari server Dapodik. Silahkan menunggu beberapa menit atau jika pernah terdaftar di Jualin maka masuk dengan emergency login.");
+                    redirect(base_url("login/member"));
+                    break;
+                default:
+                    $this->session->set_flashdata("errors", "Laporkan ke Admin Jualin untuk lebih lanjut. Error code: 201.");
+                    redirect(base_url("login/member"));
+                    break;
+            }
+
+
+            // GET PROFILE SCHOOL FROM DAPODIK BY TOKEN
+            $response = $client->post("infosp", ["json" => [
+                "token" => $token,
+            ]]);
+            $school_profile = [];
+            switch ($response->getStatusCode()) {
+                case 200:
+                    $json = json_decode($response->getBody());
+                    $school_profile["id"] = $json["sekolah_id"];
+                    $school_profile["school_name"] = $json["nama_sekolah"];
+                    $school_profile["npsn"] = $json["npsn"];
+                    $school_profile["status"] = $json["status"];
+                    $school_profile["format"] = $json["bentuk_pendidikan"];
+                    $school_profile["region_id"] = $json["kd_kab"];
+                    $school_profile["address"] = $json["alamat"];
+                    $school_profile["village"] = $json["desa"];
+                    $school_profile["district"] = $json["kec"];
+                    $school_profile["province"] = $json["prov"];
+                    $school_profile["zip_code"] = $json["kode_pos"];
+                    $school_profile["latitude"] = $json["lintang"];
+                    $school_profile["longitude"] = $json["bujur"];
+                    $school_profile["email"] = $json["email"];
+                    $school_profile["phone_number"] = $json["phone_number"];
+                case 500:
+                    $this->session->set_flashdata("errors", "Kesalahan dari server Dapodik. Silahkan menunggu beberapa menit atau jika pernah terdaftar di Jualin maka masuk dengan emergency login.");
+                    redirect(base_url("login/member"));
+                    break;
+                default:
+                    $this->session->set_flashdata("errors", "Laporkan ke Admin Jualin untuk lebih lanjut. Error code: 201.");
+                    redirect(base_url("login/member"));
+                    break;
+            }
+
+            $this->satdik_model->set_satdik($school_profile);
+            $this->satdik_model->set_satdik_user($user_profile, $auth_data);
+            $user_data = array(
+                'modesy_sess_user_id' => $user_profile["id"],
+                'modesy_sess_user_email' => $auth_data["email"],
+                'modesy_sess_user_role' => "member",
+                'modesy_sess_logged_in' => true,
+                'modesy_sess_app_key' => $this->config->item('app_key'),
+            );
+            $this->session->set_userdata($user_data);
+            redirect(base_url());
+        } catch (\Throwable $th) {
+            $this->session->set_flashdata("errors", "Laporkan ke Admin Jualin untuk lebih lanjut. Error code: 202.");
+            redirect(base_url("login/member"));
         }
     }
 
@@ -415,6 +540,7 @@ class Auth_controller extends Home_Core_Controller
      */
     public function register_post(string $role)
     {
+
         $data['title'] = trans("register_seller");
         $data['description'] = trans("register_seller") . " - " . $this->app_name;
         $data['keywords'] = trans("register_seller") . "," . $this->app_name;
@@ -438,7 +564,7 @@ class Auth_controller extends Home_Core_Controller
         $this->form_validation->set_rules("business_name", trans("business_name"), "required|is_unique[supplier_profiles.supplier_name]|max_length[254]");
         $this->form_validation->set_rules("npwp", "NPWP", "required|is_unique[supplier_profiles.npwp]");
         $this->form_validation->set_rules("umkm", trans("tax_status"), "required|in_list[umkm,non_umkm]");
-        $this->form_validation->set_rules("complete_address", trans("complete_address"), "required|max_length[254]");
+        $this->form_validation->set_rules("address", trans("address"), "required|max_length[254]");
         $this->form_validation->set_rules("province", trans("province"), ["required", ["callback_valid_province", [$this->location_model, "valid_province"]]]);
         $this->form_validation->set_rules("city", trans("city"), ["required", ["callback_valid_city", [$this->location_model, "valid_city"]]]);
         $this->form_validation->set_rules("district", trans("district"), "required|max_length[254]");
@@ -457,7 +583,7 @@ class Auth_controller extends Home_Core_Controller
         $this->form_validation->set_rules('npwp_document', 'Dokumen NPWP', 'callback_file_check[npwp_document]');
         $this->form_validation->set_rules('nib_document', 'Dokumen NIB', 'callback_file_check[nib_document]');
         if ($this->input->post("business_type") == "individual") {
-            $this->form_validation->set_rules("nik", trans("full_name") . " Penanggung Jawab", "required|max_length[254]");
+            $this->form_validation->set_rules("nik", "nik" . " Penanggung Jawab", "required|max_length[254]");
         } else {
             $this->form_validation->set_rules("responsible_person_name", trans("full_name") . "Penanggung Jawab", "required|max_length[254]");
             $this->form_validation->set_rules("responsible_person_position", trans("position"), "required|max_length[254]");
@@ -488,21 +614,20 @@ class Auth_controller extends Home_Core_Controller
                     "phone_number" => $this->input->post("phone_number"),
                     "legal_status_id" => $legal_status[$this->input->post("business_type")],
                     "bank_id" => $this->input->post("bank"),
-                    "bank_account" => $this->input->post("bank_account"),
+                    "bank_account" => $this->input->post("account_number"),
                     "bank_account_owner_name" => $this->input->post("bank_account_holder"),
-                    "full_address" => $this->input->post("complete_address"),
+                    "address" => $this->input->post("address"),
                     "city_id" => $this->input->post("city"),
                     "district" => $this->input->post("district"),
                     "village" => $this->input->post("village"),
                     "zip_code" => $this->input->post("postal_code"),
                 ]
             ];
-            if ($this->input->post("business_type")=="individual"){
-                $user_data["profile"]["nik"]=$this->input->post("nik");
-            }
-            else{
-                $user_data["profile"]["responsible_person_name"]=$this->input->post("responsible_person_name");
-                $user_data["profile"]["responsible_person_position"]=$this->input->post("responsible_person_position");
+            if ($this->input->post("business_type") == "individual") {
+                $user_data["profile"]["nik"] = $this->input->post("nik");
+            } else {
+                $user_data["profile"]["responsible_person_name"] = $this->input->post("responsible_person_name");
+                $user_data["profile"]["responsible_person_position"] = $this->input->post("responsible_person_position");
             }
             $file_data = [
                 "npwp" => $_FILES["npwp_document"],
