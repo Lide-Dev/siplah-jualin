@@ -2,6 +2,7 @@
 
 use GuzzleHttp\Client;
 use League\OAuth2\Client\Provider\Exception\IdentityProviderException;
+use Ramsey\Uuid\Uuid;
 
 defined('BASEPATH') or exit('No direct script access allowed');
 
@@ -539,6 +540,7 @@ class Auth_controller extends Home_Core_Controller
      */
     public function register_post(string $role)
     {
+
         $data['title'] = trans("register_seller");
         $data['description'] = trans("register_seller") . " - " . $this->app_name;
         $data['keywords'] = trans("register_seller") . "," . $this->app_name;
@@ -562,7 +564,7 @@ class Auth_controller extends Home_Core_Controller
         $this->form_validation->set_rules("business_name", trans("business_name"), "required|is_unique[supplier_profiles.supplier_name]|max_length[254]");
         $this->form_validation->set_rules("npwp", "NPWP", "required|is_unique[supplier_profiles.npwp]");
         $this->form_validation->set_rules("umkm", trans("tax_status"), "required|in_list[umkm,non_umkm]");
-        $this->form_validation->set_rules("complete_address", trans("complete_address"), "required|max_length[254]");
+        $this->form_validation->set_rules("address", trans("address"), "required|max_length[254]");
         $this->form_validation->set_rules("province", trans("province"), ["required", ["callback_valid_province", [$this->location_model, "valid_province"]]]);
         $this->form_validation->set_rules("city", trans("city"), ["required", ["callback_valid_city", [$this->location_model, "valid_city"]]]);
         $this->form_validation->set_rules("district", trans("district"), "required|max_length[254]");
@@ -581,7 +583,7 @@ class Auth_controller extends Home_Core_Controller
         $this->form_validation->set_rules('npwp_document', 'Dokumen NPWP', 'callback_file_check[npwp_document]');
         $this->form_validation->set_rules('nib_document', 'Dokumen NIB', 'callback_file_check[nib_document]');
         if ($this->input->post("business_type") == "individual") {
-            $this->form_validation->set_rules("nik", trans("full_name") . " Penanggung Jawab", "required|max_length[254]");
+            $this->form_validation->set_rules("nik", "nik" . " Penanggung Jawab", "required|max_length[254]");
         } else {
             $this->form_validation->set_rules("responsible_person_name", trans("full_name") . "Penanggung Jawab", "required|max_length[254]");
             $this->form_validation->set_rules("responsible_person_position", trans("position"), "required|max_length[254]");
@@ -612,9 +614,9 @@ class Auth_controller extends Home_Core_Controller
                     "phone_number" => $this->input->post("phone_number"),
                     "legal_status_id" => $legal_status[$this->input->post("business_type")],
                     "bank_id" => $this->input->post("bank"),
-                    "bank_account" => $this->input->post("bank_account"),
+                    "bank_account" => $this->input->post("account_number"),
                     "bank_account_owner_name" => $this->input->post("bank_account_holder"),
-                    "full_address" => $this->input->post("complete_address"),
+                    "address" => $this->input->post("address"),
                     "city_id" => $this->input->post("city"),
                     "district" => $this->input->post("district"),
                     "village" => $this->input->post("village"),

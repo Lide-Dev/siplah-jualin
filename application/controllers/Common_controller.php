@@ -52,10 +52,13 @@ class Common_controller extends Core_Controller
      */
     public function logout()
     {
+        // dd($this->agent->referrer());
         if (!$this->auth_check) {
             redirect(lang_base_url());
         }
+        // if ($_SESSION["modesy_sess_user_role"])
         $this->auth_model->logout();
-        redirect($this->agent->referrer());
+
+        redirect(base_url());
     }
 }
