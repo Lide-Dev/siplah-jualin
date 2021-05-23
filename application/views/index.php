@@ -10,10 +10,10 @@
     <div class="container">
         <div class="row">
             <h1 class="index-title"><?php echo html_escape($this->settings->site_title); ?></h1>
-            <?php if (item_count($featured_categories) > 0 && $this->general_settings->index_categories == 1) : ?>
+            <?php if (item_count($submain_categories) > 0 && $this->general_settings->index_categories == 1) : ?>
                 <div class="col-12 section section-categories">
                     <!-- featured categories -->
-                    <?php $this->load->view("partials/_featured_categories"); ?>
+                    <?php $this->load->view("partials/_submain_categories"); ?>
                 </div>
             <?php endif; ?>
             <div class="col-12">

@@ -1,4 +1,4 @@
-<?php defined('BASEPATH') OR exit('No direct script access allowed');
+<?php defined('BASEPATH') or exit('No direct script access allowed');
 
 class Category_model extends CI_Model
 {
@@ -188,7 +188,7 @@ class Category_model extends CI_Model
         if (empty($lang_id)) {
             $lang_id = $this->selected_lang->id;
         }
-        $ci =& get_instance();
+        $ci = &get_instance();
         if (item_count($ci->languages) > 1) {
             return "SELECT categories.*, categories.parent_id AS join_parent_id, categories_lang.name AS name,
                 (SELECT slug FROM categories WHERE id = join_parent_id) AS parent_slug,
@@ -209,6 +209,14 @@ class Category_model extends CI_Model
         $sql = $this->build_query() . "WHERE categories.id = ?";
         $query = $this->db->query($sql, array(clean_number($id)));
         return $query->row();
+    }
+
+    public function get_submain_categories()
+    {
+        $sql = $this->build_query() . " WHERE categories.parent_id = 1 OR categories.parent_id = 2";
+        $query = $this->db->query($sql);
+        // dd($query->result());
+        return $query->result();
     }
 
     //get category by lang
@@ -269,7 +277,7 @@ class Category_model extends CI_Model
     public function get_mobile_menu_categories()
     {
         $lang_id = $this->selected_lang->id;
-        $ci =& get_instance();
+        $ci = &get_instance();
         if (item_count($ci->languages) > 1) {
             $sql = "SELECT categories.*, categories.parent_id AS join_parent_id, categories_lang.name AS name,
                 (SELECT slug FROM categories WHERE id = join_parent_id) AS parent_slug,
