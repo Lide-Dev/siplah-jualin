@@ -61,10 +61,42 @@
                         </div>
                         <div class="row row-details">
                             <div class="col-xs-12 col-sm-4 col-right">
-                                <strong>Alamat Lengkap</strong>
+                                <strong>Provinsi</strong>
                             </div>
                             <div class="col-sm-8">
-                                <p> <?= $shop->full_address ?></p>
+                                <p> <?= $shop->province_name ?></p>
+                            </div>
+                        </div>
+                        <div class="row row-details">
+                            <div class="col-xs-12 col-sm-4 col-right">
+                                <strong>Kabupaten/Kota</strong>
+                            </div>
+                            <div class="col-sm-8">
+                                <p> <?= $shop->city_name ?></p>
+                            </div>
+                        </div>
+                        <div class="row row-details">
+                            <div class="col-xs-12 col-sm-4 col-right">
+                                <strong>Kecamatan</strong>
+                            </div>
+                            <div class="col-sm-8">
+                                <p> <?= $shop->district ?></p>
+                            </div>
+                        </div>
+                        <div class="row row-details">
+                            <div class="col-xs-12 col-sm-4 col-right">
+                                <strong>Desa</strong>
+                            </div>
+                            <div class="col-sm-8">
+                                <p> <?= $shop->village ?></p>
+                            </div>
+                        </div>
+                        <div class="row row-details">
+                            <div class="col-xs-12 col-sm-4 col-right">
+                                <strong>Alamat</strong>
+                            </div>
+                            <div class="col-sm-8">
+                                <p> <?= $shop->address ?></p>
                             </div>
                         </div>
                         <div class="row row-details">
@@ -72,7 +104,9 @@
                                 <strong>Titik Lokasi</strong>
                             </div>
                             <div class="col-sm-8">
-                                <strong class="font-right"></strong>
+                                <div class="map-container">
+                                    <iframe src="https://maps.google.com/maps?width=100%&height=600&hl=en&q=<?= $shop->full_address ?>&ie=UTF8&t=&z=8&iwloc=B&output=embed&disableDefaultUI=true" id="IframeMap" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe>
+                                </div>
                             </div>
                         </div>
                         <!-- END OF PROFILE business -->
