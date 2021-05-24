@@ -1142,7 +1142,8 @@ $lang = [
     "zip_code" => "Zip Code",
     "payment_source" => "Sumber Pendanaan",
     "choose_source" => "Pilih Sumber",
-    "compare" => "Bandingkan"
+    "compare" => "Bandingkan",
+    "specification" => "Spesifikasi",
 ];
 
 $validation = include(BASEPATH . "../application/language/id_validation.php");

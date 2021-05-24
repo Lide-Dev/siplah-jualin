@@ -44,8 +44,13 @@
 					<div class="col-12">
 						<div class="product-description">
 							<ul class="nav nav-tabs" role="tablist">
+								<!-- Tab Spesifikasi -->
 								<li class="nav-item">
-									<a class="nav-link active" id="tab_description" data-toggle="tab" href="#tab_description_content" role="tab" aria-controls="tab_description" aria-selected="true"><?php echo trans("description"); ?></a>
+									<a class="nav-link active" id="tab_specification" data-toggle="tab" href="#tab_specification_content" role="tab" aria-controls="tab_specification" aria-selected="true"><?php echo trans("specification"); ?></a>
+								</li>
+								<!-- End of tab spesifikasi -->
+								<li class="nav-item">
+									<a class="nav-link" id="tab_description" data-toggle="tab" href="#tab_description_content" role="tab" aria-controls="tab_description" aria-selected="true"><?php echo trans("description"); ?></a>
 								</li>
 								<?php if (!empty($custom_fields)) : ?>
 									<li class="nav-item">
@@ -76,7 +81,20 @@
 
 
 							<div id="accordion" class="tab-content">
-								<div class="tab-pane fade show active" id="tab_description_content" role="tabpanel">
+								<!-- content tab specification -->
+								<div class="tab-pane fade show active" id="tab_specification_content" role="tabpanel">
+									<table>
+										<tbody>
+											<tr>
+												<td class="">No SKU</td>
+												<td class="">Kategori</td>
+												<td class="">Merek</td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+								<!-- end of content tab specification -->
+								<div class="tab-pane fade show" id="tab_description_content" role="tabpanel">
 									<div class="card">
 										<div class="card-header">
 											<a class="card-link" data-toggle="collapse" href="#collapse_description_content">
