@@ -83,12 +83,39 @@
 							<div id="accordion" class="tab-content">
 								<!-- content tab specification -->
 								<div class="tab-pane fade show active" id="tab_specification_content" role="tabpanel">
-									<table>
+									<table class="table table-product-shipping">
 										<tbody>
 											<tr>
-												<td class="">No SKU</td>
-												<td class="">Kategori</td>
-												<td class="">Merek</td>
+												<td class="td-left">SKU</td>
+												<td class="td-right"><span></span></td>
+											</tr>
+											<tr>
+												<td class="td-left">Merek</td>
+												<td class="td-right"><span></span></td>
+											</tr>
+											<tr>
+												<td class="td-left">Kondisi</td>
+												<td class="td-right"><span></span></td>
+											</tr>
+											<tr>
+												<td class="td-left">Garansi</td>
+												<td class="td-right"><span></span></td>
+											</tr>
+											<tr>
+												<td class="td-left">Panjang</td>
+												<td class="td-right"><span></span></td>
+											</tr>
+											<tr>
+												<td class="td-left">Lebar</td>
+												<td class="td-right"><span></span></td>
+											</tr>
+											<tr>
+												<td class="td-left">Tinggi</td>
+												<td class="td-right"><span></span></td>
+											</tr>
+											<tr>
+												<td class="td-left">Berat</td>
+												<td class="td-right"><span></span></td>
 											</tr>
 										</tbody>
 									</table>
