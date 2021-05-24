@@ -59,7 +59,7 @@
 								<?php endif; ?>
 								<?php if ($product->product_type != "digital") : ?>
 									<li class="nav-item">
-										<a class="nav-link" id="tab_shipping" data-toggle="tab" href="#tab_shipping_content" role="tab" aria-controls="tab_shipping" aria-selected="false"><?php echo trans("shipping_location"); ?></a>
+										<a class="nav-link" id="tab_shipping" data-toggle="tab" href="#tab_shipping_content" role="tab" aria-controls="tab_shipping" aria-selected="false"><?php echo trans("shipping"); ?></a>
 									</li>
 								<?php endif; ?>
 								<?php if ($this->general_settings->reviews == 1) : ?>
@@ -195,15 +195,6 @@
 														</tbody>
 													</table>
 												<?php endif; ?>
-												<div class="row">
-													<div class="col-12">
-
-														<div class="product-location-map">
-
-														</div>
-
-													</div>
-												</div>
 											</div>
 										</div>
 									</div>
