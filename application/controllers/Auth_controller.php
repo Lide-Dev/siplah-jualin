@@ -471,74 +471,6 @@ class Auth_controller extends Home_Core_Controller
     }
 
     /**
-     * Register Post
-     */
-    // public function register_post()
-    // {
-    //     //check if logged in
-    //     if ($this->auth_check) {
-    //         redirect(lang_base_url());
-    //     }
-
-    //     if ($this->recaptcha_status == true) {
-    //         if (!$this->recaptcha_verify_request()) {
-    //             $this->session->set_flashdata('form_data', $this->auth_model->input_values());
-    //             $this->session->set_flashdata('error', trans("msg_recaptcha"));
-    //             redirect($this->agent->referrer());
-    //             exit();
-    //         }
-    //     }
-
-    //     //validate inputs
-    //     $this->form_validation->set_rules('username', trans("username"), 'required|xss_clean|min_length[4]|max_length[100]');
-    //     $this->form_validation->set_rules('email', trans("email_address"), 'required|xss_clean|max_length[200]');
-    //     $this->form_validation->set_rules('password', trans("password"), 'required|xss_clean|min_length[4]|max_length[50]');
-    //     $this->form_validation->set_rules('confirm_password', trans("password_confirm"), 'required|xss_clean|matches[password]');
-
-    //     if ($this->form_validation->run() === false) {
-    //         $this->session->set_flashdata('errors', validation_errors());
-    //         $this->session->set_flashdata('form_data', $this->auth_model->input_values());
-    //         redirect($this->agent->referrer());
-    //     } else {
-    //         $email = $this->input->post('email', true);
-    //         $username = $this->input->post('username', true);
-
-    //         //is email unique
-    //         if (!$this->auth_model->is_unique_email($email)) {
-    //             $this->session->set_flashdata('form_data', $this->auth_model->input_values());
-    //             $this->session->set_flashdata('error', trans("msg_email_unique_error"));
-    //             redirect($this->agent->referrer());
-    //         }
-    //         //is username unique
-    //         if (!$this->auth_model->is_unique_username($username)) {
-    //             $this->session->set_flashdata('form_data', $this->auth_model->input_values());
-    //             $this->session->set_flashdata('error', trans("msg_username_unique_error"));
-    //             redirect($this->agent->referrer());
-    //         }
-    //         //register
-    //         $user_id = $this->auth_model->register();
-    //         if ($user_id) {
-    //             $user = get_user($user_id);
-    //             if (!empty($user)) {
-    //                 //update slug
-    //                 $this->auth_model->update_slug($user->id);
-    //                 if ($this->general_settings->email_verification != 1) {
-    //                     $this->auth_model->login_direct($user);
-    //                     $this->session->set_flashdata('success', trans("msg_register_success"));
-    //                     redirect(generate_url("settings", "update_profile"));
-    //                 }
-    //             }
-    //             redirect(generate_url("register"));
-    //         } else {
-    //             //error
-    //             $this->session->set_flashdata('form_data', $this->auth_model->input_values());
-    //             $this->session->set_flashdata('error', trans("msg_error"));
-    //             redirect(generate_url("register"));
-    //         }
-    //     }
-    // }
-
-    /**
      * Register the user with role supplier.
      *
      * @param mixed $data
@@ -548,60 +480,51 @@ class Auth_controller extends Home_Core_Controller
      * @return void
      * @author Herlandro T <herlandrotri@gmail.com>
      */
-    public function register_supplier_post(string $role)
+    public function register_supplier_post()
     {
         $this->load->helper('file');
-        // dd($this->input->post());
-        // if ($this->auth_check) {
-        //     redirect(lang_base_url());
-        // }
 
-        if (!in_array($role, [ROLE_ADMIN, ROLE_SATDIK, ROLE_SUPPLIER, ROLE_INSPECTOR])) {
-            $this->session->set_flashdata('error', trans("msg_email_unique_error"));
-            // $this->session->keep_flashdata("error");
-            $this->register_seller();
-        }
-        // dd(, $_FILES);
-
-        $this->form_validation->set_rules("business_type", trans("business_type"), "required|in_list[pkp,individual,non_pkp]");
+        $this->form_validation->set_rules("business_format", "Format Bisnis", "required|in_list[business_entity,individual]");
+        $this->form_validation->set_rules("legal_status", "Status Wajib Pajak", "required|in_list[pkp,individual,non_pkp]");
+        $this->form_validation->set_rules("business_type", "Tipe Bisnis", "required|in_list[micro,small,medium,non_umkm]");
         $this->form_validation->set_rules("business_name", trans("business_name"), "required|is_unique[supplier_profiles.supplier_name]|max_length[254]");
-        $this->form_validation->set_rules("npwp", "NPWP", "required|exact_length[15]|is_unique[supplier_profiles.npwp]");
-        $this->form_validation->set_rules("umkm", trans("tax_status"), "required|in_list[umkm,non_umkm]");
+        $this->form_validation->set_rules("npwp", "NPWP", "required|numeric|exact_length[15]|is_unique[supplier_profiles.npwp]");
+        $this->form_validation->set_rules('npwp_document', 'Dokumen NPWP', 'required|callback_file_check[npwp_document]');
+        $this->form_validation->set_rules("nib", "NIB", "required|numeric|exact_length[13]|max_length[254]");
+        $this->form_validation->set_rules('nib_document', 'Dokumen NIB', 'required|callback_file_check[nib_document]');
+        // $this->form_validation->set_rules("umkm", trans("tax_status"), "required|in_list[umkm,non_umkm]");
         $this->form_validation->set_rules("address", trans("address"), "required|max_length[254]");
         $this->form_validation->set_rules("province", trans("province"), ["required", ["callback_valid_province", [$this->location_model, "valid_province"]]]);
         $this->form_validation->set_rules("city", trans("city"), ["required", ["callback_valid_city", [$this->location_model, "valid_city"]]]);
         $this->form_validation->set_rules("district", trans("district"), "required|max_length[254]");
         $this->form_validation->set_rules("village", trans("village"), "required|max_length[254]");
         $this->form_validation->set_rules("postal_code", trans("postal_code"), "required|max_length[254]");
-        $this->form_validation->set_rules("nib", "NIB", "required|exact_length[13]|max_length[254]");
         $this->form_validation->set_rules("bank", "Bank", ["required", ["callback_valid_bank", [$this->bank_model, "valid_bank"]]]);
-        $this->form_validation->set_rules("account_number", trans("account_number"), "required|max_length[25]|numeric");
+        $this->form_validation->set_rules("account_number", trans("account_number"), "required|numeric|max_length[25]|numeric");
         $this->form_validation->set_rules("bank_account_holder", trans("bank_account_holder"), "required|max_length[254]");
+        $this->form_validation->set_rules('cover_book', 'Dokumen Buku Tabungan', 'required|callback_file_check[cover_book]');
         // $this->form_validation->set_rules("full_name", trans("full_name"), "required|max_length[254]");
         // $this->form_validation->set_rules("position", trans("position"), "required|max_length[254]");
         $this->form_validation->set_rules("email_address", trans("email_address"), "required|is_unique[users.email]|valid_email");
         $this->form_validation->set_rules("password", trans("password"), "required|min_length[8]|max_length[60]");
         $this->form_validation->set_rules("confirm_password", "Konfirmasi Password", "required|min_length[8]max_length[60]|matches[password]");
         $this->form_validation->set_rules("phone_number", trans("phone_number"), ["required", "min_length[8]", "max_length[20]" . "numeric", ["callback_valid_phone_number", [$this->auth_model, "valid_phone_number"]]]);
-        $this->form_validation->set_rules('npwp_document', 'Dokumen NPWP', 'callback_file_check[npwp_document]');
-        $this->form_validation->set_rules('nib_document', 'Dokumen NIB', 'callback_file_check[nib_document]');
         if ($this->input->post("business_type") == "individual") {
             $this->form_validation->set_rules("nik", "NIK", "required|exact_length[16]");
         } else {
-            $this->form_validation->set_rules("responsible_person_name", trans("full_name") . "Penanggung Jawab", "required|max_length[254]");
-            $this->form_validation->set_rules("responsible_person_position", trans("position"), "required|max_length[254]");
+            $this->form_validation->set_rules("responsible_person_name", trans("full_name") . " Penanggung Jawab", "required|max_length[254]");
+            $this->form_validation->set_rules("responsible_person_position", trans("position") . " Penanggung Jawab", "required|max_length[254]");
             if (!empty($_FILES["siup_document"])) {
                 $this->form_validation->set_rules('siup_document', 'Dokumen SIUP', 'callback_file_check[siup_document]');
             }
         }
         $this->form_validation->set_error_delimiters("<small class='text-danger'>", "</small>");
-        $legal_status = ["individual" => 1, "pkp" => 2, "non_pkp" => 3];
-
         if ($this->form_validation->run() == FALSE) {
             $this->session->set_flashdata("status_message", "<div class='alert alert-danger' role='alert'>Gagal Registrasi! Silahkan mengecek kembali form data yang masih kurang lengkap.</div>");
             // $this->session->set_flashdata("")
             // $this->session->keep_flashdata("status_message");
             // dd($_SESSION,$this->form_validation->error_array());                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 or_array());
+            // dd($this->form_validation->error_array());
             $this->register_seller();
         } else {
             $user_data = [
@@ -615,7 +538,9 @@ class Auth_controller extends Home_Core_Controller
                     "npwp" => $this->input->post("npwp"),
                     "nib" => $this->input->post("nib"),
                     "phone_number" => $this->input->post("phone_number"),
-                    "legal_status_id" => $legal_status[$this->input->post("business_type")],
+                    "is_business_entity" => $this->input->post("business_format") == "business_entity" ? 1 : 0,
+                    "business_type_id" => $this->input->post("business_type"),
+                    "legal_status_id" => $this->input->post("legal_status"),
                     "bank_id" => $this->input->post("bank"),
                     "bank_account" => $this->input->post("account_number"),
                     "bank_account_owner_name" => $this->input->post("bank_account_holder"),
@@ -636,6 +561,7 @@ class Auth_controller extends Home_Core_Controller
                 "npwp" => $_FILES["npwp_document"],
                 "nib" => $_FILES["nib_document"],
                 "siup" => $_FILES["siup_document"] ?? null,
+                "cover_book" => $_FILES["cover_book"] ?? null,
             ];
             $transact = $this->auth_model->register_supplier($user_data, $file_data) ? "TRUE" : "FALSE";
 

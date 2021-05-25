@@ -1922,6 +1922,7 @@ if (!function_exists('dd')) {
     }
 }
 
+
 //print date
 if (!function_exists('formatted_date')) {
     function formatted_date($timestamp)

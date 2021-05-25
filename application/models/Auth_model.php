@@ -6,6 +6,9 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class Auth_model extends CI_Model
 {
+    private $legal_status = ["individual" => 1, "pkp" => 2, "non_pkp" => 3];
+    private $business_type = ["micro" => 1, "small" => 2, "medium" => 3, "non_umkm" => 4];
+
     //input values
     public function input_values()
     {
@@ -29,6 +32,10 @@ class Auth_model extends CI_Model
 
         if (!empty($user)) {
             //check password
+            if ($role == "vendor" && $user->is_active_shop_request != 0) {
+                $this->session->set_flashdata('error', trans("login_error"));
+                return false;
+            }
             if (!$this->bcrypt->check_password($data['password'], $user->password)) {
                 $this->session->set_flashdata('error', trans("login_error"));
                 return false;
@@ -301,6 +308,8 @@ class Auth_model extends CI_Model
         $file_info = $this->upload_model->upload_document_supplier($file, $user_id);
         // dd($file_info);
         $data["profile"]["user_id"] = $user_id;
+        $data["profile"]["legal_status_id"] = $this->legal_status[$data["profile"]["legal_status_id"]];
+        $data["profile"]["business_type_id"] = $this->business_type[$data["profile"]["business_type_id"]];
         foreach ($file_info as $key => $value) {
             $data["profile"]["{$key}_path"] = $value;
         }
@@ -683,7 +692,7 @@ class Auth_model extends CI_Model
     public function get_shop($id)
     {
         $column = $this->get_columns("supplier_profiles", "supplier_profiles", ["id" => "supplier_id"]);
-        $column = array_merge($column, $this->get_columns("users", "users", ["phone_number" => "number","city_id"=>"unknown_city","zip_code"=>"unknown_zip_code","address"=>"unksa"]));
+        $column = array_merge($column, $this->get_columns("users", "users", ["phone_number" => "number", "city_id" => "unknown_city", "zip_code" => "unknown_zip_code", "address" => "unksa"]));
         // dd($column,$this->get_columns("users", "users"));
 
         $this->db->select($column)->join("supplier_profiles", "supplier_profiles.user_id = users.id");
@@ -996,7 +1005,6 @@ class Shop
         }
         if ($name === "city_id") {
             $this->$name = $value;
-
         }
         if (in_array($name, ["nib_ext", "npwp_ext", "siup_ext"])) {
             $file = explode("_", $name)[0] . "_path";

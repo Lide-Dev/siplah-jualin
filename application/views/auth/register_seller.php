@@ -16,7 +16,7 @@
 						<?php
 						// if ($recaptcha_status) {
 
-						echo form_open_multipart('register-seller', [
+						echo form_open_multipart('register_seller', [
 							'id' => 'form_validate', 'class' => 'validate_terms',
 							// 'onsubmit' => "var serializedData = $(this).serializeArray();var recaptcha = ''; $.each(serializedData, function (i, field) { if (field.name == 'g-recaptcha-response') {recaptcha = field.value;}});if (recaptcha.length < 5) { $('.g-recaptcha>div').addClass('is-invalid');return false;} else { $('.g-recaptcha>div').removeClass('is-invalid');}"
 						]);
@@ -42,88 +42,57 @@
 						<h4 class="title-auth">1. <?php echo trans("profile_business"); ?></h4>
 						<div class="row">
 							<div class="col-12">
-
-							<div class="form-group mt-2">
-								<label class="radiobut">Badan Usaha (PT/CV)
-									<input type="radio" checked="checked" name="profile_bussines">
-									<span class="radiomark"></span>
-								</label>
-								<label class="radiobut">Individu / Perorangan
-									<input type="radio" name="profile_bussines">
-									<span class="radiomark"></span>
-								</label>
-							</div>
-							<!-- Jenis Usaha -->
-							<div class="form-group">
-							<label class="control-label font-600 col-sm-6 mt-3" for="form_business_type">Jenis Usaha</label>
-								<label class="radiobut">Individu
-									<input type="radio" checked="checked" name="business_type">
-									<span class="radiomark"></span>
-								</label>
-								<label class="radiobut">PKP
-									<input type="radio" name="business_type">
-									<span class="radiomark"></span>
-								</label>
-								<label class="radiobut">Non PKP
-									<input type="radio" name="business_type">
-									<span class="radiomark"></span>
-								</label>
-							</div>
-							<!-- End of jenis usaha -->
-							<!-- Tipe Usaha -->
-							<div class="form-group">
-							<label class="control-label font-600 col-sm-6 mt-3" for="form_business_type">Tipe Usaha</label>
-								<label class="radiobut">Mikro <p class="small_reg"> (Kekayaan bersih maksimal 50 juta — tidak termasuk tanah & bangunan tempat usaha — , atau penghasilan maksimal 300 juta/ tahun)</p>
-									<input type="radio" checked="checked" name="umkm">
-									<span class="radiomark"></span>
-								</label>
-								<label class="radiobut">Kecil <p class="small_reg"> (Kekayaan bersih 50 juta - 500 juta—tidak termasuk tanah & bangunan tempat usaha — , atau penghasilan 300 juta - 2,5 miliar/ tahun)</p>
-									<input type="radio" name="umkm">
-									<span class="radiomark"></span>
-								</label>
-								<label class="radiobut">Menengah <p class="small_reg"> (Kekayaan bersih 500 juta - 10 miliar —tidak termasuk tanah & bangunan tempat usaha — , atau penghasilan 2,5 miliar- 50 miliar/ tahun)</p>
-									<input type="radio" name="umkm">
-									<span class="radiomark"></span>
-								</label>
-								<label class="radiobut">Non UMKM
-									<input type="radio" name="umkm">
-									<span class="radiomark"></span>
-								</label>
-							</div>
-							<!-- End of Tipe usaha -->
+								<div class="form-group mt-2">
+									<label class="radiobut" for="pb_radio_badan_usaha"> Badan Usaha (PT/CV)
+										<input value="business_entity" id="pb_radio_badan_usaha" type="radio" <?= (empty(set_value("business_format")) || set_value("business_format") == "business_entity") ? "checked" : "" ?> name="business_format">
+										<span class="radiomark"></span>
+									</label>
+									<label for="pb_radio_individu" class="radiobut">Individu / Perorangan
+										<input value="individual" id="pb_radio_individu" type="radio" <?= (set_value("business_format") == "individual") ? "checked" : "" ?> name="business_format">
+										<span class="radiomark"></span>
+									</label>
+									<?php echo form_error('business_format'); ?>
+								</div>
+								<!-- Status Legal -->
 								<div class="form-group">
-									<label class="control-label font-600 col-sm-6 mt-3" for="form_business_type"><?= trans("business_type") ?></label>
-									<ul class="nav nav-pills">
-										<li class="nav-item col-sm-4">
-											<label class="nav-link border border-muted text-center font-weight-bold <?= set_value("business_type") == "individual" ? "active" : "" ?> " for="form_individual_business_type" id="label_individual_business_type" data-toggle="tab" aria-selected="">Individu</label>
-											<input type="radio" name="business_type" id="form_individual_business_type" value="individual" style="display:none" <?= set_value("business_type") == "individual" ? "checked" : "" ?>>
-										</li>
-										<li class="nav-item col-sm-4">
-											<label class="nav-link border border-muted text-center font-weight-bold  <?= set_value("business_type") == "non_pkp" ? "active" : "" ?> <?= empty(set_value("business_type")) ? "active" : "" ?>" for="form_nonpkp_business_type" id="label_nonpkp_business_type" data-toggle="tab" aria-selected=""> Non PKP</label>
-											<input type="radio" name="business_type" id="form_nonpkp_business_type" value="non_pkp" style="display:none" <?= set_value("business_type") == "non_pkp" ? "checked" : "" ?> <?= empty(set_value("business_type")) ? "checked" : "" ?>>
-										</li>
-										<li class="nav-item col-sm-4">
-											<label class="nav-link border border-muted text-center font-weight-bold <?= set_value("business_type") == "pkp" ? "active" : "" ?>" for="form_pkp_business_type" id="label_pkp_business_type" data-toggle="tab" aria-selected="">PKP</label>
-											<input type="radio" name="business_type" id="form_pkp_business_type" value="pkp" style="display:none" <?= set_value("business_type") == "pkp" ? "checked" : "" ?>>
-										</li>
-									</ul>
+									<label class="control-label font-600 col-sm-6 mt-3" for="form_legal_status">Jenis Usaha</label>
+									<label for="ju_radio_individu" class="radiobut">Individu
+										<input id="ju_radio_individu" type="radio" <?= (empty(set_value("legal_status")) || set_value("legal_status") == "individual") ? "checked" : "" ?> name="legal_status" value="individual">
+										<span class="radiomark"></span>
+									</label>
+									<label for="ju_radio_pkp" class="radiobut">PKP
+										<input id="ju_radio_pkp" type="radio" <?= (set_value("legal_status") == "pkp") ? "checked" : "" ?> name="legal_status" value="pkp">
+										<span class="radiomark"></span>
+									</label>
+									<label for="ju_radio_non_pkp" class="radiobut">Non PKP
+										<input id="ju_radio_non_pkp" type="radio" <?= (set_value("legal_status") == "non_pkp") ? "checked" : "" ?> name="legal_status" value="non_pkp">
+										<span class="radiomark"></span>
+									</label>
+									<?php echo form_error('legal_status'); ?>
+								</div>
+								<!-- End of Status Legal -->
+								<!-- Tipe Usaha -->
+								<div class="form-group">
+									<label class="control-label font-600 col-sm-6 mt-3" for="form_business_type">Tipe Usaha</label>
+									<label for="tu_radio_mikro" class="radiobut">Mikro <p class="small_reg"> (Kekayaan bersih maksimal 50 juta — tidak termasuk tanah & bangunan tempat usaha — , atau penghasilan maksimal 300 juta/ tahun)</p>
+										<input id="tu_radio_mikro" type="radio" <?= (empty(set_value("business_type")) || set_value("business_type") == "micro") ? "checked" : "" ?> name="business_type" value="micro">
+										<span class="radiomark"></span>
+									</label>
+									<label for="tu_radio_kecil" class="radiobut">Kecil <p class="small_reg"> (Kekayaan bersih 50 juta - 500 juta—tidak termasuk tanah & bangunan tempat usaha — , atau penghasilan 300 juta - 2,5 miliar/ tahun)</p>
+										<input id="tu_radio_kecil" type="radio" <?= (empty(set_value("business_type")) || set_value("business_type") == "small") ? "checked" : "" ?> name="business_type" value="small">
+										<span class="radiomark"></span>
+									</label>
+									<label for="tu_radio_menengah" class="radiobut">Menengah <p class="small_reg"> (Kekayaan bersih 500 juta - 10 miliar —tidak termasuk tanah & bangunan tempat usaha — , atau penghasilan 2,5 miliar- 50 miliar/ tahun)</p>
+										<input id="tu_radio_menengah" type="radio" <?= (empty(set_value("business_type")) || set_value("business_type") == "medium") ? "checked" : "" ?> name="business_type" value="medium">
+										<span class="radiomark"></span>
+									</label>
+									<label for="tu_radio_non_umkm" class="radiobut">Non UMKM
+										<input id="tu_radio_non_umkm" type="radio" <?= (empty(set_value("business_type")) || set_value("business_type") == "non_umkm") ? "checked" : "" ?> name="business_type" value="non_umkm">
+										<span class="radiomark"></span>
+									</label>
 									<?php echo form_error('business_type'); ?>
 								</div>
-
-								<div class="form-group">
-									<label class="control-label font-600 col-sm-6 mt-3" for="form_umkm_type">Tipe Usaha</label>
-									<ul class="nav nav-pills">
-										<li class="nav-item col-sm-6">
-											<label class="nav-link border border-muted text-center font-weight-bold <?= set_value("umkm")  == "umkm" || empty(set_value("umkm")) ? "active" : "" ?>" for="form_umkm_business_type" id="label_umkm_business_type" data-toggle="tab" aria-selected="">UMKM</label>
-											<input type="radio" name="umkm" id="form_umkm_business_type" value="umkm" style="display:none" <?= set_value("umkm") == "umkm" ? "checked" : "" ?> <?= empty(set_value("umkm")) ? "checked" : "" ?>>
-										</li>
-										<li class="nav-item col-sm-6">
-											<label class="nav-link border border-muted text-center font-weight-bold <?= set_value("umkm") == "non_umkm" ? "active" : "" ?>" for="form_nonumkm_business_type" <?= set_value("umkm") == "non_umkm" ? "active" : "" ?> id="label_nonumkm_business_type" data-toggle="tab" aria-selected=""> Non UMKM</label>
-											<input type="radio" name="umkm" id="form_nonumkm_business_type" value="non_umkm" style="display:none" <?= set_value("umkm") == "non_umkm" ? "checked" : "" ?>>
-										</li>
-									</ul>
-									<?php echo form_error('umkm'); ?>
-								</div>
+								<!-- End of Tipe usaha -->
 
 								<div class="form-group">
 									<input type="text" name="business_name" class="form-control auth-form-input" placeholder="<?php echo trans("business_name"); ?>" value="<?php echo set_value("business_name"); ?>" maxlength="<?php echo $this->username_maxlength; ?>" required>
@@ -232,14 +201,14 @@
 							<?= form_error('bank_account_holder'); ?>
 						</div>
 						<div class="m-b-30 form_group pb-3">
-									<label class="control-label font-600">Upload Foto Buku Tabungan</label>
-									<input type="file" class="form-control auth-form-input" name="cover_book" id="form_cover_book">
-									<?php echo form_error('npwp_document'); ?>
-									<p class="small_reg"> Format file .png, .jpg, .jpeg atau .pdf, maksimum ukuran 1 MB</p>
-								</div>
+							<label class="control-label font-600">Upload Foto Buku Tabungan</label>
+							<input type="file" class="form-control auth-form-input" name="cover_book" id="form_cover_book">
+							<?php echo form_error('cover_book'); ?>
+							<p class="small_reg"> Format file .png, .jpg, .jpeg atau .pdf, maksimum ukuran 1 MB</p>
+						</div>
 						<!-- END OF BANK ACCOUNT -->
 						<!-- RESPONSIBLE PERSON -->
-						<?php if (set_value("business_type") != "individual" || empty(set_value("business_type"))) : ?>
+						<?php if (set_value("business_format") == "business_entity" || empty(set_value("business_format"))) : ?>
 							<h4 class="title-auth">3. <?php echo trans("responsible_title"); ?></h4>
 							<div id="form_container_responsible_person">
 								<div class="form-group">
@@ -266,7 +235,7 @@
 						<h4 class="title-auth">4. <?php echo trans("create_user"); ?></h4>
 						<div class="form-group">
 							<input type="email" name="email_address" class="form-control auth-form-input" placeholder="<?php echo trans("email_address"); ?>" value="<?php echo set_value("email_address"); ?>" required>
-							<?php echo form_error('email'); ?>
+							<?php echo form_error('email_address'); ?>
 						</div>
 						<div class="form-group">
 							<input type="number" name="phone_number" class="form-control auth-form-input" placeholder="<?php echo trans("phone_number"); ?>" value="<?php echo set_value("phone_number"); ?>" required>
@@ -277,7 +246,7 @@
 							<input type="password" name="password" class="form-control auth-form-input" placeholder="<?php echo trans("password"); ?>" required>
 							<?php echo form_error('password'); ?>
 						</div>
-						
+
 						<div class="form-group">
 							<input type="password" name="confirm_password" class="form-control auth-form-input" placeholder="<?php echo trans("password_confirm"); ?>" required>
 							<?php echo form_error('confirm_password'); ?>
@@ -370,18 +339,18 @@
 		$("#form_individual_business_type").prop("checked", true);
 	});
 
-	$("#label_nonpkp_business_type").click(function() {
-		$("#form_nonpkp_business_type").prop("checked", true);
-	});
-	$("#label_pkp_business_type").click(function() {
-		$("#form_pkp_business_type").prop("checked", true);
-	});
+	// $("#label_nonpkp_business_type").click(function() {
+	// 	$("#form_nonpkp_business_type").prop("checked", true);
+	// });
+	// $("#label_pkp_business_type").click(function() {
+	// 	$("#form_pkp_business_type").prop("checked", true);
+	// });
 
-	$("#label_umkm_business_type").click(function() {
-		$("#form_umkm_business_type").prop("checked", true);
-	});
-	$("#label_nonumkm_business_type").click(function() {
-		$("#form_nonumkm_business_type").prop("checked", true);
-	});
+	// $("#label_umkm_business_type").click(function() {
+	// 	$("#form_umkm_business_type").prop("checked", true);
+	// });
+	// $("#label_nonumkm_business_type").click(function() {
+	// 	$("#form_nonumkm_business_type").prop("checked", true);
+	// });
 </script>
 <!-- Wrapper End-->
