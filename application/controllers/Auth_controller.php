@@ -90,42 +90,47 @@ class Auth_controller extends Home_Core_Controller
      */
     public function redirect_login_satdik()
     {
-        $this->config->load("dapodik_config");
+
+
+        // $this->config->load("dapodik_config");
         $code = $this->input->get("code");
-        $dapodik_config = $this->config->item('dapodik_config');
+
         // WE USING TRY & CATCH FOR TESTING PURPOSE ONLY. IF WE GOT A ERROR IT WiLL NOT RUINING ALL FUNCTION.
         try {
             // GET TOKEN FROM DAPODIK BY CODE FROM URL REDIRECT
             $client = new Client([
-                "base_uri" => $dapodik_config("dapodik_sso_base_url"),
+                "base_uri" => $this->config->item("dapodik_sso_base_url"),
             ]);
-            $response = $client->post("token", ["json" => [
+            $response = $client->post("token", ["form_params" => [
                 "code" => $code,
-                "app_id" => $dapodik_config["dapodik_app_id"],
-                "client_secret" => $dapodik_config["dapodik_client_secret"],
+                "app_id" => $this->config->item("dapodik_app_id"),
+                "client_secret" => $this->config->item("dapodik_client_secret"),
             ]]);
+
             switch ($response->getStatusCode()) {
                 case 200:
-                    $token = $response->getBody();
+                    $token = $response->getBody()->getContents();
+                    break;
                 case 500:
-                    $this->session->set_flashdata("errors", "Kesalahan dari server Dapodik. Silahkan menunggu beberapa menit atau jika pernah terdaftar di Jualin maka masuk dengan emergency login.");
+                    $this->session->set_tempdata("errors", "Kesalahan dari server Dapodik. Silahkan menunggu beberapa menit atau jika pernah terdaftar di Jualin maka masuk dengan emergency login.");
                     redirect(base_url("login/member"));
                     break;
                 default:
-                    $this->session->set_flashdata("errors", "Laporkan ke Admin Jualin untuk lebih lanjut. Error code: 201.");
+                    $this->session->set_tempdata("errors", "Laporkan ke Admin Jualin untuk lebih lanjut. Error code: 201.");
                     redirect(base_url("login/member"));
                     break;
             }
-            $response = $client->post("profile", ["json" => [
+            // dd($token->getContents());
+            $response = $client->post("profile", ["form_params" => [
                 "token" => $token,
             ]]);
-
+            // dd($response,$response->getStatusCode(),"ss");
             // GET USER PROFILE SATDIK
             $user_profile = [];
             $auth_data = [];
             switch ($response->getStatusCode()) {
                 case 200:
-                    $json = json_decode($response->getBody());
+                    $json = (array) json_decode($response->getBody()->getContents());
                     $auth_data["id"] = $json["pengguna_id"];
                     $auth_data["email"] = $json["username"];
                     $user_profile["user_id"] = $json["pengguna_id"];
@@ -134,30 +139,31 @@ class Auth_controller extends Home_Core_Controller
                     $user_profile["nip"] = $json["nip"];
                     // $user_profile["nuptk"] = $json["ptk_id"];
                     $user_profile["role_id"] = $json["peran_id"];
-                    $user_profile["role"] = $json["peran"];
+                    $user_profile["role_name"] = $json["peran"];
                     $user_profile["satdik_id"] = $json["sekolah_id"];
                     $user_profile["position"] = $json["jabatan"];
                     $user_profile["phone_number"] = $json["no_hp"] ?? $json["no_telepon"];
-
+                    break;
                 case 500:
-                    $this->session->set_flashdata("errors", "Kesalahan dari server Dapodik. Silahkan menunggu beberapa menit atau jika pernah terdaftar di Jualin maka masuk dengan emergency login.");
+                    $this->session->set_tempdata("errors", "Kesalahan dari server Dapodik. Silahkan menunggu beberapa menit atau jika pernah terdaftar di Jualin maka masuk dengan emergency login.");
                     redirect(base_url("login/member"));
                     break;
                 default:
-                    $this->session->set_flashdata("errors", "Laporkan ke Admin Jualin untuk lebih lanjut. Error code: 201.");
+                    $this->session->set_tempdata("errors", "Laporkan ke Admin Jualin untuk lebih lanjut. Error code: 201.");
                     redirect(base_url("login/member"));
                     break;
             }
 
 
             // GET PROFILE SCHOOL FROM DAPODIK BY TOKEN
-            $response = $client->post("infosp", ["json" => [
+            $response = $client->post("infosp", ["form_params" => [
                 "token" => $token,
             ]]);
             $school_profile = [];
             switch ($response->getStatusCode()) {
                 case 200:
-                    $json = json_decode($response->getBody());
+                    $json = (array)json_decode($response->getBody()->getContents());
+                    // dd($json);
                     $school_profile["id"] = $json["sekolah_id"];
                     $school_profile["school_name"] = $json["nama_sekolah"];
                     $school_profile["npsn"] = $json["npsn"];
@@ -167,18 +173,19 @@ class Auth_controller extends Home_Core_Controller
                     $school_profile["address"] = $json["alamat"];
                     $school_profile["village"] = $json["desa"];
                     $school_profile["district"] = $json["kec"];
-                    $school_profile["province"] = $json["prov"];
+                    // $school_profile["province"] = $json["prov"];
                     $school_profile["zip_code"] = $json["kode_pos"];
                     $school_profile["latitude"] = $json["lintang"];
                     $school_profile["longitude"] = $json["bujur"];
                     $school_profile["email"] = $json["email"];
-                    $school_profile["phone_number"] = $json["phone_number"];
+                    $school_profile["phone_number"] = $json["nomor_telepon"];
+                    break;
                 case 500:
-                    $this->session->set_flashdata("errors", "Kesalahan dari server Dapodik. Silahkan menunggu beberapa menit atau jika pernah terdaftar di Jualin maka masuk dengan emergency login.");
+                    $this->session->set_tempdata("errors", "Kesalahan dari server Dapodik. Silahkan menunggu beberapa menit atau jika pernah terdaftar di Jualin maka masuk dengan emergency login.");
                     redirect(base_url("login/member"));
                     break;
                 default:
-                    $this->session->set_flashdata("errors", "Laporkan ke Admin Jualin untuk lebih lanjut. Error code: 201.");
+                    $this->session->set_tempdata("errors", "Laporkan ke Admin Jualin untuk lebih lanjut. Error code: 201.");
                     redirect(base_url("login/member"));
                     break;
             }
@@ -186,16 +193,18 @@ class Auth_controller extends Home_Core_Controller
             $this->satdik_model->set_satdik($school_profile);
             $this->satdik_model->set_satdik_user($user_profile, $auth_data);
             $user_data = array(
-                'modesy_sess_user_id' => $user_profile["id"],
+                'modesy_sess_user_id' => $auth_data["id"],
                 'modesy_sess_user_email' => $auth_data["email"],
                 'modesy_sess_user_role' => "member",
                 'modesy_sess_logged_in' => true,
                 'modesy_sess_app_key' => $this->config->item('app_key'),
             );
             $this->session->set_userdata($user_data);
-            redirect(base_url());
+            // dd($user_data,$this->session->userdata());
+            redirect(lang_base_url());
+            reset_flash_data();
         } catch (\Throwable $th) {
-            $this->session->set_flashdata("errors", "Laporkan ke Admin Jualin untuk lebih lanjut. Error code: 202.");
+            $this->session->set_tempdata("errors", "Laporkan ke Admin Jualin untuk lebih lanjut. Error code: 202.");
             redirect(base_url("login/member"));
         }
     }
@@ -434,6 +443,7 @@ class Auth_controller extends Home_Core_Controller
         $data['description'] = trans("register_seller") . " - " . $this->app_name;
         $data['keywords'] = trans("register_seller") . "," . $this->app_name;
         $data["provinces"] = $this->location_model->get_province();
+        $data["cities"] = empty(set_value("city")) ? [] : $this->location_model->get_city(set_value("province"));
         $data["banks"] = $this->bank_model->get_bank();
         // dd($data);
         $this->load->view('partials/_header', $data);
@@ -529,7 +539,7 @@ class Auth_controller extends Home_Core_Controller
     // }
 
     /**
-     * Register the user by role. Requirement data different by role.
+     * Register the user with role supplier.
      *
      * @param mixed $data
      * Prefer to be array.
@@ -538,14 +548,8 @@ class Auth_controller extends Home_Core_Controller
      * @return void
      * @author Herlandro T <herlandrotri@gmail.com>
      */
-    public function register_post(string $role)
+    public function register_supplier_post(string $role)
     {
-
-        $data['title'] = trans("register_seller");
-        $data['description'] = trans("register_seller") . " - " . $this->app_name;
-        $data['keywords'] = trans("register_seller") . "," . $this->app_name;
-        $data["provinces"] = $this->location_model->get_province();
-        $data["banks"] = $this->bank_model->get_bank();
         $this->load->helper('file');
         // dd($this->input->post());
         // if ($this->auth_check) {
@@ -554,15 +558,14 @@ class Auth_controller extends Home_Core_Controller
 
         if (!in_array($role, [ROLE_ADMIN, ROLE_SATDIK, ROLE_SUPPLIER, ROLE_INSPECTOR])) {
             $this->session->set_flashdata('error', trans("msg_email_unique_error"));
-            $this->load->view('partials/_header', $data);
-            $this->load->view('auth/register_seller', $data);
-            $this->load->view('partials/_footer');
+            // $this->session->keep_flashdata("error");
+            $this->register_seller();
         }
         // dd(, $_FILES);
 
         $this->form_validation->set_rules("business_type", trans("business_type"), "required|in_list[pkp,individual,non_pkp]");
         $this->form_validation->set_rules("business_name", trans("business_name"), "required|is_unique[supplier_profiles.supplier_name]|max_length[254]");
-        $this->form_validation->set_rules("npwp", "NPWP", "required|is_unique[supplier_profiles.npwp]");
+        $this->form_validation->set_rules("npwp", "NPWP", "required|exact_length[15]|is_unique[supplier_profiles.npwp]");
         $this->form_validation->set_rules("umkm", trans("tax_status"), "required|in_list[umkm,non_umkm]");
         $this->form_validation->set_rules("address", trans("address"), "required|max_length[254]");
         $this->form_validation->set_rules("province", trans("province"), ["required", ["callback_valid_province", [$this->location_model, "valid_province"]]]);
@@ -570,20 +573,20 @@ class Auth_controller extends Home_Core_Controller
         $this->form_validation->set_rules("district", trans("district"), "required|max_length[254]");
         $this->form_validation->set_rules("village", trans("village"), "required|max_length[254]");
         $this->form_validation->set_rules("postal_code", trans("postal_code"), "required|max_length[254]");
-        $this->form_validation->set_rules("nib", "NIB", "required|max_length[254]");
+        $this->form_validation->set_rules("nib", "NIB", "required|exact_length[13]|max_length[254]");
         $this->form_validation->set_rules("bank", "Bank", ["required", ["callback_valid_bank", [$this->bank_model, "valid_bank"]]]);
-        $this->form_validation->set_rules("account_number", trans("account_number"), "required|max_length[20]|numeric");
+        $this->form_validation->set_rules("account_number", trans("account_number"), "required|max_length[25]|numeric");
         $this->form_validation->set_rules("bank_account_holder", trans("bank_account_holder"), "required|max_length[254]");
         // $this->form_validation->set_rules("full_name", trans("full_name"), "required|max_length[254]");
         // $this->form_validation->set_rules("position", trans("position"), "required|max_length[254]");
         $this->form_validation->set_rules("email_address", trans("email_address"), "required|is_unique[users.email]|valid_email");
-        $this->form_validation->set_rules("password", trans("password"), "required|min_length[8]");
-        $this->form_validation->set_rules("confirm_password", "Konfirmasi Password", "required|min_length[8]|matches[password]");
+        $this->form_validation->set_rules("password", trans("password"), "required|min_length[8]|max_length[60]");
+        $this->form_validation->set_rules("confirm_password", "Konfirmasi Password", "required|min_length[8]max_length[60]|matches[password]");
         $this->form_validation->set_rules("phone_number", trans("phone_number"), ["required", "min_length[8]", "max_length[20]" . "numeric", ["callback_valid_phone_number", [$this->auth_model, "valid_phone_number"]]]);
         $this->form_validation->set_rules('npwp_document', 'Dokumen NPWP', 'callback_file_check[npwp_document]');
         $this->form_validation->set_rules('nib_document', 'Dokumen NIB', 'callback_file_check[nib_document]');
         if ($this->input->post("business_type") == "individual") {
-            $this->form_validation->set_rules("nik", "nik" . " Penanggung Jawab", "required|max_length[254]");
+            $this->form_validation->set_rules("nik", "NIK", "required|exact_length[16]");
         } else {
             $this->form_validation->set_rules("responsible_person_name", trans("full_name") . "Penanggung Jawab", "required|max_length[254]");
             $this->form_validation->set_rules("responsible_person_position", trans("position"), "required|max_length[254]");
@@ -596,11 +599,11 @@ class Auth_controller extends Home_Core_Controller
 
         if ($this->form_validation->run() == FALSE) {
             $this->session->set_flashdata("status_message", "<div class='alert alert-danger' role='alert'>Gagal Registrasi! Silahkan mengecek kembali form data yang masih kurang lengkap.</div>");
-            $this->load->view('partials/_header', $data);
-            $this->load->view('auth/register_seller', $data);
-            $this->load->view('partials/_footer');
+            // $this->session->set_flashdata("")
+            // $this->session->keep_flashdata("status_message");
+            // dd($_SESSION,$this->form_validation->error_array());                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 or_array());
+            $this->register_seller();
         } else {
-
             $user_data = [
                 "user" => [
                     "email" => $this->input->post("email_address"),
@@ -644,8 +647,10 @@ class Auth_controller extends Home_Core_Controller
 
             // dd("Validation_complete, Transact complete");
 
-            $this->session->set_tempdata("status_message", "<div class='alert alert-primary' role='alert'>Berhasil Registrasi! ($transact) Silahkan verifikasi email dan menunggu konfirmasi toko anda telah dibuka.</div>", 10);
-            redirect(base_url("register_seller"));
+            $this->session->set_flashdata("status_message", "<div class='alert alert-primary' role='alert'>Berhasil Registrasi! ($transact) Silahkan verifikasi email dan menunggu konfirmasi toko anda telah dibuka.</div>");
+            // $this->session->keep_flashdata("status_message");
+            $this->register_seller();
+            // redirect(base_url("register_seller"));
         }
     }
 

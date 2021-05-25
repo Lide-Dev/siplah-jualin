@@ -16,7 +16,7 @@
 						<?php
 						// if ($recaptcha_status) {
 
-						echo form_open_multipart('register-post/supplier', [
+						echo form_open_multipart('register-seller', [
 							'id' => 'form_validate', 'class' => 'validate_terms',
 							// 'onsubmit' => "var serializedData = $(this).serializeArray();var recaptcha = ''; $.each(serializedData, function (i, field) { if (field.name == 'g-recaptcha-response') {recaptcha = field.value;}});if (recaptcha.length < 5) { $('.g-recaptcha>div').addClass('is-invalid');return false;} else { $('.g-recaptcha>div').removeClass('is-invalid');}"
 						]);
@@ -132,6 +132,9 @@
 							<?php else : ?>
 								<select id="form_city" name="city" class="form-control auth-form-input" onchange="select_city()" disabled>
 									<option value="0"> Kota dipilih setelah pilih provinsi terlebih dahulu </option>
+									<?php foreach ($cities as $city) : ?>
+										<option value="<?= $city->id ?>" <?= set_value("city") == $city->id ? "selected" : "" ?>> <?= $city->city_name ?></option>
+									<?php endforeach ?>
 								</select>
 								<?php echo form_error('city'); ?>
 							<?php endif ?>
