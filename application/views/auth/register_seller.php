@@ -45,27 +45,27 @@
 
 							<div class="form-group mt-2">
 								<label class="radiobut">Badan Usaha (PT/CV)
-									<input type="radio" checked="checked" name="radio">
+									<input type="radio" checked="checked" name="profile_bussines">
 									<span class="radiomark"></span>
 								</label>
 								<label class="radiobut">Individu / Perorangan
-									<input type="radio" name="radio">
+									<input type="radio" name="profile_bussines">
 									<span class="radiomark"></span>
 								</label>
 							</div>
 							<!-- Jenis Usaha -->
 							<div class="form-group">
-							<label class="control-label font-600 col-sm-6 mt-3" for="form_business_type"><?= trans("business_type") ?></label>
+							<label class="control-label font-600 col-sm-6 mt-3" for="form_business_type">Jenis Usaha</label>
 								<label class="radiobut">Individu
-									<input type="radio" checked="checked" name="radio">
+									<input type="radio" checked="checked" name="type_of_bussiness">
 									<span class="radiomark"></span>
 								</label>
 								<label class="radiobut">PKP
-									<input type="radio" name="radio">
+									<input type="radio" name="type_of_bussiness">
 									<span class="radiomark"></span>
 								</label>
 								<label class="radiobut">Non PKP
-									<input type="radio" name="radio">
+									<input type="radio" name="type_of_bussiness">
 									<span class="radiomark"></span>
 								</label>
 							</div>
@@ -141,6 +141,7 @@
 									<label class="control-label font-600"><?php echo trans("upload_npwp"); ?></label>
 									<input type="file" class="form-control auth-form-input" name="npwp_document" id="form_npwp_document">
 									<?php echo form_error('npwp_document'); ?>
+									<p class="small_reg"> Format file .png, .jpg, .jpeg atau .pdf, maksimum ukuran 1 MB</p>
 								</div>
 							</div>
 						</div>
@@ -155,6 +156,7 @@
 							<label class="control-label font-600"><?php echo "Unggah Dokumen NIB" ?></label>
 							<input type="file" class="form-control auth-form-input" name="nib_document" id="form_selected_document">
 							<?php echo form_error('nib_document'); ?>
+							<p class="small_reg"> Format file .png, .jpg, .jpeg atau .pdf, maksimum ukuran 1 MB</p>
 						</div>
 
 						<!-- END OF NIB -->
@@ -243,6 +245,7 @@
 									<label class="control-label font-600">Upload Surat Ijin Usaha Perdagangan (Opsional)</label>
 									<input type="file" class="form-control auth-form-input" name="siup_document" id="form_selected_document">
 									<?php echo form_error('siup_document'); ?>
+									<p class="small_reg"> Format file .png, .jpg, .jpeg atau .pdf, maksimum ukuran 1 MB</p>
 								</div>
 							</div>
 						<?php else : ?>
