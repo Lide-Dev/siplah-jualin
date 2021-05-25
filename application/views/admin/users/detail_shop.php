@@ -12,6 +12,16 @@
                     <div class="col-sm-12 col-md-12 col-lg-6">
                         <!-- PPROFILE business -->
                         <h4 class="sec-title"><?php echo trans("profile_business"); ?></h4>
+
+                        <div class="row row-details">
+                            <div class="col-xs-12 col-sm-4 col-right">
+                                <strong>Profil Usaha</strong>
+                            </div>
+                            <div class="col-sm-8">
+                                <p> </p>
+                            </div>
+                        </div>
+
                         <div class="row row-details">
                             <div class="col-xs-12 col-sm-4 col-right">
                                 <strong> <?php echo trans("business_type"); ?></strong>
