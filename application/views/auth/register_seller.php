@@ -57,15 +57,15 @@
 							<div class="form-group">
 							<label class="control-label font-600 col-sm-6 mt-3" for="form_business_type">Jenis Usaha</label>
 								<label class="radiobut">Individu
-									<input type="radio" checked="checked" name="type_of_bussiness">
+									<input type="radio" checked="checked" name="business_type">
 									<span class="radiomark"></span>
 								</label>
 								<label class="radiobut">PKP
-									<input type="radio" name="type_of_bussiness">
+									<input type="radio" name="business_type">
 									<span class="radiomark"></span>
 								</label>
 								<label class="radiobut">Non PKP
-									<input type="radio" name="type_of_bussiness">
+									<input type="radio" name="business_type">
 									<span class="radiomark"></span>
 								</label>
 							</div>
@@ -74,19 +74,19 @@
 							<div class="form-group">
 							<label class="control-label font-600 col-sm-6 mt-3" for="form_business_type">Tipe Usaha</label>
 								<label class="radiobut">Mikro <p class="small_reg"> (Kekayaan bersih maksimal 50 juta — tidak termasuk tanah & bangunan tempat usaha — , atau penghasilan maksimal 300 juta/ tahun)</p>
-									<input type="radio" checked="checked" name="radio">
+									<input type="radio" checked="checked" name="umkm">
 									<span class="radiomark"></span>
 								</label>
 								<label class="radiobut">Kecil <p class="small_reg"> (Kekayaan bersih 50 juta - 500 juta—tidak termasuk tanah & bangunan tempat usaha — , atau penghasilan 300 juta - 2,5 miliar/ tahun)</p>
-									<input type="radio" name="radio">
+									<input type="radio" name="umkm">
 									<span class="radiomark"></span>
 								</label>
 								<label class="radiobut">Menengah <p class="small_reg"> (Kekayaan bersih 500 juta - 10 miliar —tidak termasuk tanah & bangunan tempat usaha — , atau penghasilan 2,5 miliar- 50 miliar/ tahun)</p>
-									<input type="radio" name="radio">
+									<input type="radio" name="umkm">
 									<span class="radiomark"></span>
 								</label>
 								<label class="radiobut">Non UMKM
-									<input type="radio" name="radio">
+									<input type="radio" name="umkm">
 									<span class="radiomark"></span>
 								</label>
 							</div>
