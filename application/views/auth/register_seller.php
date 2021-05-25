@@ -263,9 +263,9 @@
 
 						<div id="pesan">
 							<p class="control-label">Kata sandi harus berisi yang berikut ini:</p>
-							<p id="huruf_kecil" class="invalid">A <b>huruf kecil</b></p>
-							<p id="huruf_besar" class="invalid">A <b>huruf besar</b></p>
-							<p id="angka" class="invalid">A <b>angka</b></p>
+							<p id="huruf_kecil" class="invalid"><b>huruf kecil</b></p>
+							<p id="huruf_besar" class="invalid"><b>huruf besar</b></p>
+							<p id="angka" class="invalid"><b>angka</b></p>
 							<p id="panjang" class="invalid">Minimum <b>8 karakter</b></p>
 						</div>
 						<!-- END OF RESPONSIBLE PERSON -->
