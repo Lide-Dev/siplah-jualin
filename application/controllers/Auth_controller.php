@@ -489,9 +489,9 @@ class Auth_controller extends Home_Core_Controller
         $this->form_validation->set_rules("business_type", "Tipe Bisnis", "required|in_list[micro,small,medium,non_umkm]");
         $this->form_validation->set_rules("business_name", trans("business_name"), "required|is_unique[supplier_profiles.supplier_name]|max_length[254]");
         $this->form_validation->set_rules("npwp", "NPWP", "required|numeric|exact_length[15]|is_unique[supplier_profiles.npwp]");
-        $this->form_validation->set_rules('npwp_document', 'Dokumen NPWP', 'required|callback_file_check[npwp_document]');
+        $this->form_validation->set_rules('npwp_document', 'Dokumen NPWP', 'callback_file_check[npwp_document]');
         $this->form_validation->set_rules("nib", "NIB", "required|numeric|exact_length[13]|max_length[254]");
-        $this->form_validation->set_rules('nib_document', 'Dokumen NIB', 'required|callback_file_check[nib_document]');
+        $this->form_validation->set_rules('nib_document', 'Dokumen NIB', 'callback_file_check[nib_document]');
         // $this->form_validation->set_rules("umkm", trans("tax_status"), "required|in_list[umkm,non_umkm]");
         $this->form_validation->set_rules("address", trans("address"), "required|max_length[254]");
         $this->form_validation->set_rules("province", trans("province"), ["required", ["callback_valid_province", [$this->location_model, "valid_province"]]]);
@@ -502,12 +502,12 @@ class Auth_controller extends Home_Core_Controller
         $this->form_validation->set_rules("bank", "Bank", ["required", ["callback_valid_bank", [$this->bank_model, "valid_bank"]]]);
         $this->form_validation->set_rules("account_number", trans("account_number"), "required|numeric|max_length[25]|numeric");
         $this->form_validation->set_rules("bank_account_holder", trans("bank_account_holder"), "required|max_length[254]");
-        $this->form_validation->set_rules('cover_book', 'Dokumen Buku Tabungan', 'required|callback_file_check[cover_book]');
+        $this->form_validation->set_rules('cover_book', 'Dokumen Buku Tabungan', 'callback_file_check[cover_book]');
         // $this->form_validation->set_rules("full_name", trans("full_name"), "required|max_length[254]");
         // $this->form_validation->set_rules("position", trans("position"), "required|max_length[254]");
         $this->form_validation->set_rules("email_address", trans("email_address"), "required|is_unique[users.email]|valid_email");
         $this->form_validation->set_rules("password", trans("password"), "required|min_length[8]|max_length[60]");
-        $this->form_validation->set_rules("confirm_password", "Konfirmasi Password", "required|min_length[8]max_length[60]|matches[password]");
+        $this->form_validation->set_rules("confirm_password", "Konfirmasi Password", "required|min_length[8]|max_length[60]|matches[password]");
         $this->form_validation->set_rules("phone_number", trans("phone_number"), ["required", "min_length[8]", "max_length[20]" . "numeric", ["callback_valid_phone_number", [$this->auth_model, "valid_phone_number"]]]);
         if ($this->input->post("business_type") == "individual") {
             $this->form_validation->set_rules("nik", "NIK", "required|exact_length[16]");
