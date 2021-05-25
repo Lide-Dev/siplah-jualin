@@ -51,6 +51,9 @@
                                                 <?php endif;
                                             endforeach;
                                         endif; ?>
+                                        <li>
+                                        Layanan Pengaduan Konsumen : <br> Direktorat Jenderal Perlindungan Konsumen dan Tertib Niaga Kementerian Perdagangan RI <br> Nomor Whatsapp Ditjen PKTN : <br> 0853-1111-1010
+                                        </li>
                                     </ul>
                                 </div>
                             </div>

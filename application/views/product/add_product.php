@@ -291,26 +291,26 @@
                                             <div class="row">
                                                 <div class="col-md-3 col-4">
                                                     <div class="form-group">
-                                                        <label class="control-label"><?php echo trans("width"); ?></label>
-                                                        <input type="text" name="width" class="form-control form-input" placeholder="<?php echo trans("width"); ?>" required>
+                                                        <label class="control-label"><?php echo trans("width"); ?> ( CM )</label>
+                                                        <input type="number" name="width" class="form-control form-input" placeholder="<?php echo trans("width"); ?>" required>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-3 col-4">
                                                     <div class="form-group">
-                                                        <label class="control-label"><?php echo trans("length") ?></label>
-                                                        <input type="text" name="length" class="form-control form-input" placeholder="<?php echo trans("length")  ?>" required>
+                                                        <label class="control-label"><?php echo trans("length") ?> ( CM )</label>
+                                                        <input type="number" name="length" class="form-control form-input" placeholder="<?php echo trans("length")  ?>" required>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-3 col-4">
                                                     <div class="form-group">
-                                                        <label class="control-label"><?php echo trans("height") ?></label>
-                                                        <input type="text" name="height" class="form-control form-input" placeholder="<?php echo trans("height") ?>" required>
+                                                        <label class="control-label"><?php echo trans("height") ?> ( CM )</label>
+                                                        <input type="number" name="height" class="form-control form-input" placeholder="<?php echo trans("height") ?>" required>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-3 col-4">
                                                     <div class="form-group">
-                                                        <label class="control-label"><?php echo trans("weight") ?></label>
-                                                        <input type="text" name="weight" class="form-control form-input" placeholder="<?php echo trans("weight") ?>" required>
+                                                        <label class="control-label"><?php echo trans("weight") ?> ( KG )</label>
+                                                        <input type="number" name="weight" class="form-control form-input" placeholder="<?php echo trans("weight") ?>" required>
                                                     </div>
                                                 </div>
                                             </div>

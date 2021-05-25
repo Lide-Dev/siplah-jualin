@@ -16,7 +16,7 @@
 						<?php
 						// if ($recaptcha_status) {
 
-						echo form_open_multipart('register-seller', [
+						echo form_open_multipart('register-post/supplier', [
 							'id' => 'form_validate', 'class' => 'validate_terms',
 							// 'onsubmit' => "var serializedData = $(this).serializeArray();var recaptcha = ''; $.each(serializedData, function (i, field) { if (field.name == 'g-recaptcha-response') {recaptcha = field.value;}});if (recaptcha.length < 5) { $('.g-recaptcha>div').addClass('is-invalid');return false;} else { $('.g-recaptcha>div').removeClass('is-invalid');}"
 						]);
@@ -42,55 +42,6 @@
 						<h4 class="title-auth">1. <?php echo trans("profile_business"); ?></h4>
 						<div class="row">
 							<div class="col-12">
-
-							<div class="form-group mt-2">
-								<label class="radiobut">Badan Usaha (PT/CV)
-									<input type="radio" checked="checked" name="profile_bussines">
-									<span class="radiomark"></span>
-								</label>
-								<label class="radiobut">Individu / Perorangan
-									<input type="radio" name="profile_bussines">
-									<span class="radiomark"></span>
-								</label>
-							</div>
-							<!-- Jenis Usaha -->
-							<div class="form-group">
-							<label class="control-label font-600 col-sm-6 mt-3" for="form_business_type">Jenis Usaha</label>
-								<label class="radiobut">Individu
-									<input type="radio" checked="checked" name="business_type">
-									<span class="radiomark"></span>
-								</label>
-								<label class="radiobut">PKP
-									<input type="radio" name="business_type">
-									<span class="radiomark"></span>
-								</label>
-								<label class="radiobut">Non PKP
-									<input type="radio" name="business_type">
-									<span class="radiomark"></span>
-								</label>
-							</div>
-							<!-- End of jenis usaha -->
-							<!-- Tipe Usaha -->
-							<div class="form-group">
-							<label class="control-label font-600 col-sm-6 mt-3" for="form_business_type">Tipe Usaha</label>
-								<label class="radiobut">Mikro <p class="small_reg"> (Kekayaan bersih maksimal 50 juta — tidak termasuk tanah & bangunan tempat usaha — , atau penghasilan maksimal 300 juta/ tahun)</p>
-									<input type="radio" checked="checked" name="umkm">
-									<span class="radiomark"></span>
-								</label>
-								<label class="radiobut">Kecil <p class="small_reg"> (Kekayaan bersih 50 juta - 500 juta—tidak termasuk tanah & bangunan tempat usaha — , atau penghasilan 300 juta - 2,5 miliar/ tahun)</p>
-									<input type="radio" name="umkm">
-									<span class="radiomark"></span>
-								</label>
-								<label class="radiobut">Menengah <p class="small_reg"> (Kekayaan bersih 500 juta - 10 miliar —tidak termasuk tanah & bangunan tempat usaha — , atau penghasilan 2,5 miliar- 50 miliar/ tahun)</p>
-									<input type="radio" name="umkm">
-									<span class="radiomark"></span>
-								</label>
-								<label class="radiobut">Non UMKM
-									<input type="radio" name="umkm">
-									<span class="radiomark"></span>
-								</label>
-							</div>
-							<!-- End of Tipe usaha -->
 								<div class="form-group">
 									<label class="control-label font-600 col-sm-6 mt-3" for="form_business_type"><?= trans("business_type") ?></label>
 									<ul class="nav nav-pills">
@@ -141,7 +92,6 @@
 									<label class="control-label font-600"><?php echo trans("upload_npwp"); ?></label>
 									<input type="file" class="form-control auth-form-input" name="npwp_document" id="form_npwp_document">
 									<?php echo form_error('npwp_document'); ?>
-									<p class="small_reg"> Format file .png, .jpg, .jpeg atau .pdf, maksimum ukuran 1 MB</p>
 								</div>
 							</div>
 						</div>
@@ -156,7 +106,6 @@
 							<label class="control-label font-600"><?php echo "Unggah Dokumen NIB" ?></label>
 							<input type="file" class="form-control auth-form-input" name="nib_document" id="form_selected_document">
 							<?php echo form_error('nib_document'); ?>
-							<p class="small_reg"> Format file .png, .jpg, .jpeg atau .pdf, maksimum ukuran 1 MB</p>
 						</div>
 
 						<!-- END OF NIB -->
@@ -183,9 +132,6 @@
 							<?php else : ?>
 								<select id="form_city" name="city" class="form-control auth-form-input" onchange="select_city()" disabled>
 									<option value="0"> Kota dipilih setelah pilih provinsi terlebih dahulu </option>
-									<?php foreach ($cities as $city) : ?>
-										<option value="<?= $city->id ?>" <?= set_value("city") == $city->id ? "selected" : "" ?>> <?= $city->city_name ?></option>
-									<?php endforeach ?>
 								</select>
 								<?php echo form_error('city'); ?>
 							<?php endif ?>
@@ -231,12 +177,6 @@
 							<input type="text" name="bank_account_holder" class="form-control auth-form-input" placeholder="<?php echo trans("bank_account_holder"); ?>" value="<?php echo set_value("bank_account_holder"); ?>" required>
 							<?= form_error('bank_account_holder'); ?>
 						</div>
-						<div class="m-b-30 form_group pb-3">
-									<label class="control-label font-600">Upload Foto Buku Tabungan</label>
-									<input type="file" class="form-control auth-form-input" name="cover_book" id="form_cover_book">
-									<?php echo form_error('npwp_document'); ?>
-									<p class="small_reg"> Format file .png, .jpg, .jpeg atau .pdf, maksimum ukuran 1 MB</p>
-								</div>
 						<!-- END OF BANK ACCOUNT -->
 						<!-- RESPONSIBLE PERSON -->
 						<?php if (set_value("business_type") != "individual" || empty(set_value("business_type"))) : ?>
@@ -254,7 +194,6 @@
 									<label class="control-label font-600">Upload Surat Ijin Usaha Perdagangan (Opsional)</label>
 									<input type="file" class="form-control auth-form-input" name="siup_document" id="form_selected_document">
 									<?php echo form_error('siup_document'); ?>
-									<p class="small_reg"> Format file .png, .jpg, .jpeg atau .pdf, maksimum ukuran 1 MB</p>
 								</div>
 							</div>
 						<?php else : ?>
@@ -272,12 +211,10 @@
 							<input type="number" name="phone_number" class="form-control auth-form-input" placeholder="<?php echo trans("phone_number"); ?>" value="<?php echo set_value("phone_number"); ?>" required>
 							<?php echo form_error('phone_number'); ?>
 						</div>
-						<p class="small_reg">Buat kata sandi untuk akun</p>
 						<div class="form-group">
 							<input type="password" name="password" class="form-control auth-form-input" placeholder="<?php echo trans("password"); ?>" required>
 							<?php echo form_error('password'); ?>
 						</div>
-						
 						<div class="form-group">
 							<input type="password" name="confirm_password" class="form-control auth-form-input" placeholder="<?php echo trans("password_confirm"); ?>" required>
 							<?php echo form_error('confirm_password'); ?>

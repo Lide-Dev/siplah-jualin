@@ -44,8 +44,13 @@
 					<div class="col-12">
 						<div class="product-description">
 							<ul class="nav nav-tabs" role="tablist">
+								<!-- Tab Spesifikasi -->
 								<li class="nav-item">
-									<a class="nav-link active" id="tab_description" data-toggle="tab" href="#tab_description_content" role="tab" aria-controls="tab_description" aria-selected="true"><?php echo trans("description"); ?></a>
+									<a class="nav-link active" id="tab_specification" data-toggle="tab" href="#tab_specification_content" role="tab" aria-controls="tab_specification" aria-selected="true"><?php echo trans("specification"); ?></a>
+								</li>
+								<!-- End of tab spesifikasi -->
+								<li class="nav-item">
+									<a class="nav-link" id="tab_description" data-toggle="tab" href="#tab_description_content" role="tab" aria-controls="tab_description" aria-selected="true"><?php echo trans("description"); ?></a>
 								</li>
 								<?php if (!empty($custom_fields)) : ?>
 									<li class="nav-item">
@@ -54,7 +59,7 @@
 								<?php endif; ?>
 								<?php if ($product->product_type != "digital") : ?>
 									<li class="nav-item">
-										<a class="nav-link" id="tab_shipping" data-toggle="tab" href="#tab_shipping_content" role="tab" aria-controls="tab_shipping" aria-selected="false"><?php echo trans("shipping_location"); ?></a>
+										<a class="nav-link" id="tab_shipping" data-toggle="tab" href="#tab_shipping_content" role="tab" aria-controls="tab_shipping" aria-selected="false"><?php echo trans("shipping"); ?></a>
 									</li>
 								<?php endif; ?>
 								<?php if ($this->general_settings->reviews == 1) : ?>
@@ -76,7 +81,47 @@
 
 
 							<div id="accordion" class="tab-content">
-								<div class="tab-pane fade show active" id="tab_description_content" role="tabpanel">
+								<!-- content tab specification -->
+								<div class="tab-pane fade show active" id="tab_specification_content" role="tabpanel">
+									<table class="table table-product-shipping">
+										<tbody>
+											<tr>
+												<td class="td-left">SKU</td>
+												<td class="td-right"><span></span></td>
+											</tr>
+											<tr>
+												<td class="td-left">Merek</td>
+												<td class="td-right"><span></span></td>
+											</tr>
+											<tr>
+												<td class="td-left">Kondisi</td>
+												<td class="td-right"><span></span></td>
+											</tr>
+											<tr>
+												<td class="td-left">Garansi</td>
+												<td class="td-right"><span></span></td>
+											</tr>
+											<tr>
+												<td class="td-left">Panjang</td>
+												<td class="td-right"><span></span></td>
+											</tr>
+											<tr>
+												<td class="td-left">Lebar</td>
+												<td class="td-right"><span></span></td>
+											</tr>
+											<tr>
+												<td class="td-left">Tinggi</td>
+												<td class="td-right"><span></span></td>
+											</tr>
+											<tr>
+												<td class="td-left">Berat</td>
+												<td class="td-right"><span></span></td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+								<!-- end of content tab specification -->
+								<div class="tab-pane fade show" id="tab_description_content" role="tabpanel">
 									<div class="card">
 										<div class="card-header">
 											<a class="card-link" data-toggle="collapse" href="#collapse_description_content">
@@ -150,15 +195,6 @@
 														</tbody>
 													</table>
 												<?php endif; ?>
-												<div class="row">
-													<div class="col-12">
-
-														<div class="product-location-map">
-
-														</div>
-
-													</div>
-												</div>
 											</div>
 										</div>
 									</div>
