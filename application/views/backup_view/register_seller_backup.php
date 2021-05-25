@@ -42,55 +42,6 @@
 						<h4 class="title-auth">1. <?php echo trans("profile_business"); ?></h4>
 						<div class="row">
 							<div class="col-12">
-
-							<div class="form-group mt-2">
-								<label class="radiobut">Badan Usaha (PT/CV)
-									<input type="radio" checked="checked" name="radio">
-									<span class="radiomark"></span>
-								</label>
-								<label class="radiobut">Individu / Perorangan
-									<input type="radio" name="radio">
-									<span class="radiomark"></span>
-								</label>
-							</div>
-							<!-- Jenis Usaha -->
-							<div class="form-group">
-							<label class="control-label font-600 col-sm-6 mt-3" for="form_business_type"><?= trans("business_type") ?></label>
-								<label class="radiobut">Individu
-									<input type="radio" checked="checked" name="radio">
-									<span class="radiomark"></span>
-								</label>
-								<label class="radiobut">PKP
-									<input type="radio" name="radio">
-									<span class="radiomark"></span>
-								</label>
-								<label class="radiobut">Non PKP
-									<input type="radio" name="radio">
-									<span class="radiomark"></span>
-								</label>
-							</div>
-							<!-- End of jenis usaha -->
-							<!-- Tipe Usaha -->
-							<div class="form-group">
-							<label class="control-label font-600 col-sm-6 mt-3" for="form_business_type">Tipe Usaha</label>
-								<label class="radiobut">Mikro <p class="small_reg"> (Kekayaan bersih maksimal 50 juta — tidak termasuk tanah & bangunan tempat usaha — , atau penghasilan maksimal 300 juta/ tahun)</p>
-									<input type="radio" checked="checked" name="radio">
-									<span class="radiomark"></span>
-								</label>
-								<label class="radiobut">Kecil <p class="small_reg"> (Kekayaan bersih 50 juta - 500 juta—tidak termasuk tanah & bangunan tempat usaha — , atau penghasilan 300 juta - 2,5 miliar/ tahun)</p>
-									<input type="radio" name="radio">
-									<span class="radiomark"></span>
-								</label>
-								<label class="radiobut">Menengah <p class="small_reg"> (Kekayaan bersih 500 juta - 10 miliar —tidak termasuk tanah & bangunan tempat usaha — , atau penghasilan 2,5 miliar- 50 miliar/ tahun)</p>
-									<input type="radio" name="radio">
-									<span class="radiomark"></span>
-								</label>
-								<label class="radiobut">Non UMKM
-									<input type="radio" name="radio">
-									<span class="radiomark"></span>
-								</label>
-							</div>
-							<!-- End of Tipe usaha -->
 								<div class="form-group">
 									<label class="control-label font-600 col-sm-6 mt-3" for="form_business_type"><?= trans("business_type") ?></label>
 									<ul class="nav nav-pills">

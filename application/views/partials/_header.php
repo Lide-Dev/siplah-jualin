@@ -73,6 +73,7 @@
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/update_jualin/chart_profile.css" />
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/update_jualin/log_activity_profile.css" />
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/update_jualin/label_product.css" />
+    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/update_jualin/register_seller.css" />
     <!-- Plugins CSS -->
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/plugins-1.6.css" />
     <?php if (!empty($this->general_settings->site_color)) : ?>
