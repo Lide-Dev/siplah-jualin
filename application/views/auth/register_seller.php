@@ -228,6 +228,12 @@
 							<input type="text" name="bank_account_holder" class="form-control auth-form-input" placeholder="<?php echo trans("bank_account_holder"); ?>" value="<?php echo set_value("bank_account_holder"); ?>" required>
 							<?= form_error('bank_account_holder'); ?>
 						</div>
+						<div class="m-b-30 form_group pb-3">
+									<label class="control-label font-600">Upload Foto Buku Tabungan</label>
+									<input type="file" class="form-control auth-form-input" name="cover_book" id="form_cover_book">
+									<?php echo form_error('npwp_document'); ?>
+									<p class="small_reg"> Format file .png, .jpg, .jpeg atau .pdf, maksimum ukuran 1 MB</p>
+								</div>
 						<!-- END OF BANK ACCOUNT -->
 						<!-- RESPONSIBLE PERSON -->
 						<?php if (set_value("business_type") != "individual" || empty(set_value("business_type"))) : ?>
@@ -263,10 +269,12 @@
 							<input type="number" name="phone_number" class="form-control auth-form-input" placeholder="<?php echo trans("phone_number"); ?>" value="<?php echo set_value("phone_number"); ?>" required>
 							<?php echo form_error('phone_number'); ?>
 						</div>
+						<p class="small_reg">Buat kata sandi untuk akun</p>
 						<div class="form-group">
 							<input type="password" name="password" class="form-control auth-form-input" placeholder="<?php echo trans("password"); ?>" required>
 							<?php echo form_error('password'); ?>
 						</div>
+						
 						<div class="form-group">
 							<input type="password" name="confirm_password" class="form-control auth-form-input" placeholder="<?php echo trans("password_confirm"); ?>" required>
 							<?php echo form_error('confirm_password'); ?>

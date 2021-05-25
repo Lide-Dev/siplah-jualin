@@ -147,6 +147,12 @@
                                 <p> <?= $shop->bank_account_owner_name ?></p>
                             </div>
                         </div>
+                        <div class="col-sm-8">
+                                <button id="nib_document" type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal_document_viewer">
+                                    Lihat Dokumen
+                                </button>
+
+                            </div>
                         <div class="row row-details">
                             <div class="col-xs-12">
                                 <div class="table-orders-user">
