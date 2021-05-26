@@ -32,55 +32,52 @@
                                     <?php $this->load->view('product/_messages'); ?>
                                 </div>
                             </div>
-                            <!-- CATEGORY PRODUCT -->
-                            <div class="row">
-                                <div class="col-sm-12">
-                                    <div class="form-box">
-                                        <div class="form-box-head">
-                                            <h4 class="title"><?php echo trans('category_add_product'); ?></h4>
-                                        </div>
-                                        <div class="form-box-body">
-                                            <div class="row">
-                                                <div class="col-sm-4 mb-3">
-                                                    <div class="selectdiv">
-                                                        <select id="categories" name="category_id_0" class="form-control" onchange="get_subcategories(this.value, 0);" required>
-                                                            <option value=""><?php echo trans('select_category'); ?></option>
-                                                            <?php if (!empty($this->parent_categories)) :
-                                                                foreach ($this->parent_categories as $item) : ?>
-                                                                    <option value="<?php echo html_escape($item->id); ?>"><?php echo category_name($item); ?></option>
-                                                            <?php endforeach;
-                                                            endif; ?>
-                                                        </select>
-                                                    </div>
-                                                    <div id="subcategories_container"></div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- END OF CATEGORY PRODUCT -->
-                            <!-- UPLOAD PHOTO -->
-                            <div class="row">
-                                <div class="col-12 m-b-30">
-                                    <label class="control-label font-600"><?php echo trans("images"); ?></label>
-                                    <?php $this->load->view("product/_image_upload_box"); ?>
-                                </div>
-                            </div>
 
-                            <div class="row">
-                                <div class="col-12 col-sm-6 m-b-30">
-                                    <label class="control-label font-600"><?php echo trans("video_preview"); ?></label>
-                                    <small>(<?php echo trans("video_preview_exp"); ?>)</small>
-                                    <?php $this->load->view("product/_video_upload_box"); ?>
-                                </div>
-                            </div>
+
+
+
                             <!-- END OFF UPLOAD PHOTO -->
                             <!-- PRODUCT TYPE -->
                             <div class="row">
                                 <div class="col-12">
                                     <?php echo form_open('add-product-post', ['id' => 'form_validate', 'onkeypress' => "return event.keyCode != 13;"]); ?>
 
+                                    <!-- CATEGORY PRODUCT -->
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <div class="form-box">
+                                                <div class="form-box-head">
+                                                    <h4 class="title"><?php echo trans('category_add_product'); ?></h4>
+                                                </div>
+                                                <div class="form-box-body">
+                                                    <div class="row">
+                                                        <div class="col-sm-4 mb-3">
+                                                            <div class="selectdiv">
+                                                                <select id="categories" name="category_id_0" class="form-control" onchange="get_subcategories(this.value, 0);" required>
+                                                                    <option value=""><?php echo trans('select_category'); ?></option>
+                                                                    <?php if (!empty($this->parent_categories)) :
+                                                                        foreach ($this->parent_categories as $item) : ?>
+                                                                            <option value="<?php echo html_escape($item->id); ?>"><?php echo category_name($item); ?></option>
+                                                                    <?php endforeach;
+                                                                    endif; ?>
+                                                                </select>
+                                                            </div>
+                                                            <div id="subcategories_container"></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- UPLOAD PHOTO -->
+                                    <div class="row">
+                                        <div class="col-12 m-b-30">
+                                            <label class="control-label font-600"><?php echo trans("images"); ?></label>
+                                            <?php $this->load->view("product/_image_upload_box"); ?>
+                                        </div>
+                                    </div>
+                                    <!-- END OF CATEGORY PRODUCT -->
                                     <!-- <?php if ($this->general_settings->physical_products_system == 1 && $this->general_settings->digital_products_system == 0) : ?>
                                         <input type="hidden" name="product_type" value="physical">
                                     <?php elseif ($this->general_settings->physical_products_system == 0 && $this->general_settings->digital_products_system == 1) : ?>

@@ -213,7 +213,7 @@ class Category_model extends CI_Model
 
     public function get_submain_categories()
     {
-        $sql = $this->build_query() . " WHERE categories.parent_id = 1 OR categories.parent_id = 2";
+        $sql = $this->build_query() . " WHERE categories.parent_id = 2000 OR categories.parent_id = 2001 OR categories.parent_id = 2";
         $query = $this->db->query($sql);
         // dd($query->result());
         return $query->result();
