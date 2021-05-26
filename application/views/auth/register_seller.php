@@ -55,7 +55,7 @@
 								</div>
 								<!-- Status Legal -->
 								<div class="form-group">
-									<label class="control-label font-600 col-sm-6 mt-3" for="form_legal_status">Jenis Usaha</label>
+									<label class="control-label font-600 mt-3" for="form_legal_status">Jenis Usaha</label>
 									<label for="ju_radio_individu" class="radiobut">Individu
 										<input id="ju_radio_individu" type="radio" <?= (empty(set_value("legal_status")) || set_value("legal_status") == "individual") ? "checked" : "" ?> name="legal_status" value="individual">
 										<span class="radiomark"></span>
@@ -73,7 +73,11 @@
 								<!-- End of Status Legal -->
 								<!-- Tipe Usaha -->
 								<div class="form-group">
-									<label class="control-label font-600 col-sm-6 mt-3" for="form_business_type">Tipe Usaha</label>
+									<label class="control-label font-600 mt-3" for="form_business_type">Tipe Usaha</label>
+									<label for="tu_radio_non_umkm" class="radiobut mb-3">Non UMKM
+										<input id="tu_radio_non_umkm" type="radio" <?= (empty(set_value("business_type")) || set_value("business_type") == "non_umkm") ? "checked" : "" ?> name="business_type" value="non_umkm">
+										<span class="radiomark"></span>
+									</label>
 									<label for="tu_radio_mikro" class="radiobut">Mikro <p class="small_reg"> (Kekayaan bersih maksimal 50 juta — tidak termasuk tanah & bangunan tempat usaha — , atau penghasilan maksimal 300 juta/ tahun)</p>
 										<input id="tu_radio_mikro" type="radio" <?= (empty(set_value("business_type")) || set_value("business_type") == "micro") ? "checked" : "" ?> name="business_type" value="micro">
 										<span class="radiomark"></span>
@@ -86,27 +90,27 @@
 										<input id="tu_radio_menengah" type="radio" <?= (empty(set_value("business_type")) || set_value("business_type") == "medium") ? "checked" : "" ?> name="business_type" value="medium">
 										<span class="radiomark"></span>
 									</label>
-									<label for="tu_radio_non_umkm" class="radiobut">Non UMKM
-										<input id="tu_radio_non_umkm" type="radio" <?= (empty(set_value("business_type")) || set_value("business_type") == "non_umkm") ? "checked" : "" ?> name="business_type" value="non_umkm">
-										<span class="radiomark"></span>
-									</label>
 									<?php echo form_error('business_type'); ?>
 								</div>
 								<!-- End of Tipe usaha -->
 
 								<div class="form-group">
+									<label class="control-label font-600 mt-3" for="form_business_type">Nama Usaha</label>
 									<input type="text" name="business_name" class="form-control auth-form-input" placeholder="<?php echo trans("business_name"); ?>" value="<?php echo set_value("business_name"); ?>" maxlength="<?php echo $this->username_maxlength; ?>" required>
 									<?php echo form_error('business_name'); ?>
 								</div>
+
 								<div class="form-group">
-									<input type="text" name="npwp" class="form-control auth-form-input" placeholder="<?php echo trans("npwp"); ?>" value="<?php echo set_value("npwp"); ?>" required>
+									<label class="control-label font-600 mt-3" for="form_business_type">Nomor NPWP</label>
+									<input type="text" name="npwp" class="form-control auth-form-input" maxlength="15" pattern="\d*" placeholder="<?php echo trans("npwp"); ?>" value="<?php echo set_value("npwp"); ?>" required>
 									<?php echo form_error('npwp'); ?>
+									<p class="small_reg"> Masukan nomor NPWP sejumlah 15 Angka</p>
 								</div>
 								<!-- END OF PROFILE business -->
 
 								<!-- UPLOAD DOC NPWP -->
 
-								<div class="m-b-30 form_group pb-3">
+								<div class="m-b-30 form_group">
 									<label class="control-label font-600"><?php echo trans("upload_npwp"); ?></label>
 									<input type="file" class="form-control auth-form-input" name="npwp_document" id="form_npwp_document">
 									<?php echo form_error('npwp_document'); ?>
@@ -117,11 +121,13 @@
 						<!-- END OF UPLOAD DOC NPWP -->
 						<!-- NIB -->
 						<div class="form-group">
-							<input type="text" name="nib" class="form-control auth-form-input" placeholder="<?php echo trans("nib"); ?>" value="<?php echo set_value("nib"); ?>" required>
+							<label class="control-label font-600" for="form_legal_status">Nomor NIB</label>
+							<input type="text" name="nib" class="form-control auth-form-input" maxlength="13" pattern="\d*" placeholder="<?php echo trans("nib"); ?>" value="<?php echo set_value("nib"); ?>" required>
 							<?php echo form_error('nib'); ?>
+							<p class="small_reg"> Masukan nomor NIB sejumlah 13 Angka</p>
 						</div>
 
-						<div class="m-b-30 form-group">
+						<div class="form-group">
 							<label class="control-label font-600"><?php echo "Unggah Dokumen NIB" ?></label>
 							<input type="file" class="form-control auth-form-input" name="nib_document" id="form_selected_document">
 							<?php echo form_error('nib_document'); ?>
@@ -131,6 +137,7 @@
 						<!-- END OF NIB -->
 						<!-- ADDRESS -->
 						<div class="form-group">
+							<label class="control-label font-600 mt-3" for="form_business_type">Alamat Lengkap</label>
 							<textarea type="text" name="address" class="form-control auth-form-input" placeholder="<?php echo trans("address"); ?>" required><?php echo set_value("address"); ?></textarea>
 							<?php echo form_error('address'); ?>
 						</div>
@@ -171,7 +178,7 @@
 							<input type="text" id="form_postal_code" onchange="change_postal_code()" name="postal_code" class="form-control auth-form-input" minlength="5" maxlength="5" placeholder="<?php echo trans("postal_code"); ?>" value="<?php echo set_value("postal_code"); ?>" required>
 							<?php echo form_error('postal_code'); ?>
 						</div>
-						<div class="form-group">
+						<div class="form-group m-b-30">
 							<label class="control-label font-600"><?php echo "Pilih Titik Lokasi" ?></label>
 							<div id="map-result">
 								<div class="map-container">
@@ -229,7 +236,7 @@
 						<?php else : ?>
 							<h4 class="title-auth">3. <?php echo trans("responsible_title"); ?></h4>
 							<div class="form-group">
-								<input type="text" name="nik" class="form-control auth-form-input" placeholder="<?php echo trans("nik"); ?>" value="<?php echo set_value("nik"); ?>" required>
+								<input type="text" name="nik" class="form-control auth-form-input" maxlength="16" pattern="\d*" placeholder="<?php echo trans("nik"); ?>" value="<?php echo set_value("nik"); ?>" required>
 							</div>
 						<?php endif; ?>
 						<h4 class="title-auth">4. <?php echo trans("create_user"); ?></h4>
@@ -241,15 +248,25 @@
 							<input type="number" name="phone_number" class="form-control auth-form-input" placeholder="<?php echo trans("phone_number"); ?>" value="<?php echo set_value("phone_number"); ?>" required>
 							<?php echo form_error('phone_number'); ?>
 						</div>
-						<p class="small_reg">Buat kata sandi untuk akun</p>
+
+						<label class="control-label font-600 mt-3" for="form_legal_status">Buat Password</label>
+						<p class="small_reg"> Buat password anda dengan atau harus setidaknya 8 sampai 60 panjang karakter</p>
 						<div class="form-group">
-							<input type="password" name="password" class="form-control auth-form-input" placeholder="<?php echo trans("password"); ?>" required>
+							<input type="password" name="password" id="password" class="form-control auth-form-input" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Harus berisi setidaknya satu angka dan satu huruf besar dan kecil, dan setidaknya 8 karakter atau lebih" placeholder="<?php echo trans("password"); ?>" required>
 							<?php echo form_error('password'); ?>
 						</div>
 
 						<div class="form-group">
 							<input type="password" name="confirm_password" class="form-control auth-form-input" placeholder="<?php echo trans("password_confirm"); ?>" required>
 							<?php echo form_error('confirm_password'); ?>
+						</div>
+
+						<div id="pesan">
+							<p class="control-label">Kata sandi harus berisi yang berikut ini:</p>
+							<p id="huruf_kecil" class="invalid"><b>huruf kecil</b></p>
+							<p id="huruf_besar" class="invalid"><b>huruf besar</b></p>
+							<p id="angka" class="invalid"><b>angka</b></p>
+							<p id="panjang" class="invalid">Minimum <b>8 karakter</b></p>
 						</div>
 						<!-- END OF RESPONSIBLE PERSON -->
 						<div class="form-group m-t-30 m-b-20">
@@ -352,5 +369,63 @@
 	// $("#label_nonumkm_business_type").click(function() {
 	// 	$("#form_nonumkm_business_type").prop("checked", true);
 	// });
+
+	var myInput = document.getElementById("password");
+	var huruf_kecil = document.getElementById("huruf_kecil");
+	var huruf_besar = document.getElementById("huruf_besar");
+	var angka = document.getElementById("angka");
+	var panjang = document.getElementById("panjang");
+
+	// When the user clicks on the password field, show the message box
+	myInput.onfocus = function() {
+		document.getElementById("pesan").style.display = "block";
+	}
+
+	// When the user clicks outside of the password field, hide the message box
+	myInput.onblur = function() {
+		document.getElementById("pesan").style.display = "none";
+	}
+
+	// When the user starts to type something inside the password field
+	myInput.onkeyup = function() {
+		// Validate lowercase letters
+		var lowerCaseLetters = /[a-z]/g;
+		if (myInput.value.match(lowerCaseLetters)) {
+			huruf_kecil.classList.remove("tidakbenar");
+			huruf_kecil.classList.add("benar");
+		} else {
+			huruf_kecil.classList.remove("benar");
+			huruf_kecil.classList.add("tidakbenar");
+		}
+
+		// Validate capital letters
+		var upperCaseLetters = /[A-Z]/g;
+		if (myInput.value.match(upperCaseLetters)) {
+			huruf_besar.classList.remove("tidakbenar");
+			huruf_besar.classList.add("benar");
+		} else {
+			huruf_besar.classList.remove("benar");
+			huruf_besar.classList.add("tidakbenar");
+		}
+
+		// Validate numbers
+		var numbers = /[0-9]/g;
+		if (myInput.value.match(numbers)) {
+			angka.classList.remove("tidakbenar");
+			angka.classList.add("benar");
+		} else {
+			angka.classList.remove("benar");
+			angka.classList.add("tidakbenar");
+		}
+
+		// Validate length
+		if (myInput.value.length >= 8) {
+			panjang.classList.remove("tidakbenar");
+			panjang.classList.add("benar");
+		} else {
+			panjang.classList.remove("benar");
+			panjang.classList.add("tidakbenar");
+		}
+	}
 </script>
 <!-- Wrapper End-->
