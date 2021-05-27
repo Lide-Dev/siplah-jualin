@@ -127,26 +127,8 @@
 							<p class="small_reg"> Masukan nomor NIB sejumlah 13 Angka</p>
 						</div>
 
-						<!-- Unggah Document -->
-						<div class="form-group mt-2">
-							<label class="control-label font-600 mt-3" for="form_business_type">Pilih Dokumen Pendukung</label>
-							<label class="radiobut" for="siup_doc">Surat Izin Usaha Perusahaan (SIUP)
-								<input value="siup" id="siup_doc" type="radio" <?= (empty(set_value("business_format")) || set_value("business_format") == "business_entity") ? "checked" : "" ?> name="business_format">
-								<span class="radiomark"></span>
-							</label>
-							<label for="nib_doc" class="radiobut">Nomor Induk Berusaha (NIB)
-								<input value="nib" id="nib_doc" type="radio" <?= (set_value("business_format") == "individual") ? "checked" : "" ?> name="business_format">
-								<span class="radiomark"></span>
-							</label>
-							<label for="tdp_doc" class="radiobut">Tanda Daftar Perusahaan (TDP)
-								<input value="tdp" id="tdp_doc" type="radio" <?= (set_value("business_format") == "individual") ? "checked" : "" ?> name="business_format">
-								<span class="radiomark"></span>
-							</label>
-							<?php echo form_error('business_format'); ?>
-						</div>
-
 						<div class="form-group">
-							<label class="control-label font-600">Unggah Dokumen Pendukung</label>
+							<label class="control-label font-600"><?php echo "Unggah Dokumen NIB" ?></label>
 							<input type="file" class="form-control auth-form-input" name="nib_document" id="form_selected_document">
 							<?php echo form_error('nib_document'); ?>
 							<p class="small_reg"> Format file .png, .jpg, .jpeg atau .pdf, maksimum ukuran 1 MB</p>
