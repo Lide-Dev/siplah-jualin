@@ -561,7 +561,7 @@ class Auth_controller extends Home_Core_Controller
                 "npwp" => $_FILES["npwp_document"],
                 "nib" => $_FILES["nib_document"],
                 "siup" => $_FILES["siup_document"] ?? null,
-                "cover_book" => $_FILES["cover_book"] ?? null,
+                "cover_book" => $_FILES["cover_book_document"] ?? null,
             ];
             $transact = $this->auth_model->register_supplier($user_data, $file_data) ? "TRUE" : "FALSE";
 

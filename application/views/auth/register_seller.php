@@ -209,8 +209,8 @@
 						</div>
 						<div class="m-b-30 form_group pb-3">
 							<label class="control-label font-600">Upload Foto Buku Tabungan</label>
-							<input type="file" class="form-control auth-form-input" name="cover_book" id="form_cover_book">
-							<?php echo form_error('cover_book'); ?>
+							<input type="file" class="form-control auth-form-input" name="cover_book_document" id="form_cover_book">
+							<?php echo form_error('cover_book_document'); ?>
 							<p class="small_reg"> Format file .png, .jpg, .jpeg atau .pdf, maksimum ukuran 1 MB</p>
 						</div>
 						<!-- END OF BANK ACCOUNT -->
