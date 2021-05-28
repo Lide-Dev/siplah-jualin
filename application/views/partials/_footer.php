@@ -166,8 +166,7 @@ $this->session->unset_userdata('mds_send_email_data'); ?>
 
 <!-- <script src="<?php echo base_url(); ?>assets/vendor/bootstrap/js/bootstrap.min.js"></script> -->
 <!-- Plugins JS-->
-<script src="<?php echo base_url(); ?>assets/js/plugins-1.6.js"></script>
-<script src="<?php echo base_url(); ?>assets/js/parsley.min.js"></script>
+<script src="<?php echo base_url(); ?>assets/js/plugins-1.6.js"></script><!-- <script src="<?php echo base_url(); ?>assets/js/parsley.min.js"></script>  -->
 <script src="<?php echo base_url(); ?>assets/js/update_jualin/slider-home-page.js"></script>
 <script src="<?php echo base_url(); ?>assets/js/update_jualin/form-login-as.js"></script>
 <script src="<?php echo base_url(); ?>assets/js/update_jualin/chart_profile.js"></script>

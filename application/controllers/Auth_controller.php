@@ -502,7 +502,7 @@ class Auth_controller extends Home_Core_Controller
         $this->form_validation->set_rules("bank", "Bank", ["required", ["callback_valid_bank", [$this->bank_model, "valid_bank"]]]);
         $this->form_validation->set_rules("account_number", trans("account_number"), "required|numeric|max_length[25]|numeric");
         $this->form_validation->set_rules("bank_account_holder", trans("bank_account_holder"), "required|max_length[254]");
-        $this->form_validation->set_rules('cover_book', 'Dokumen Buku Tabungan', 'callback_file_check[cover_book]');
+        $this->form_validation->set_rules('cover_book_document', 'Dokumen Buku Tabungan', 'callback_file_check[cover_book]');
         // $this->form_validation->set_rules("full_name", trans("full_name"), "required|max_length[254]");
         // $this->form_validation->set_rules("position", trans("position"), "required|max_length[254]");
         $this->form_validation->set_rules("email_address", trans("email_address"), "required|is_unique[users.email]|valid_email");

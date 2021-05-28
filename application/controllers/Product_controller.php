@@ -88,9 +88,13 @@ class Product_controller extends Home_Core_Controller
 	/**
 	 * Add Product
 	 */
-	public function add_product()
+	public function add_product($type = null)
 	{
 		//check auth
+		// dd($type);
+		if (!empty($type) && !in_array($type, ["specified_item", "general_item", "service"])) {
+			redirect(base_url("error-404"));
+		}
 		if (!$this->auth_check) {
 			redirect(lang_base_url());
 		}
@@ -109,8 +113,26 @@ class Product_controller extends Home_Core_Controller
 		$data['modesy_images'] = $this->file_model->get_sess_product_images_array();
 		$data["file_manager_images"] = $this->file_model->get_user_file_manager_images();
 		$data["active_product_system_array"] = $this->get_activated_product_system();
-
-
+		$data["type"] = $type;
+		switch ($type) {
+			case 'specified_item':
+				$category = $this->category_model->get_subcategories_by_parent_id("9998");
+				$data["books"] = $this->book_model->get_text_books();
+				break;
+			case 'general_item':
+				$category = $this->category_model->get_subcategories_by_parent_id("9997");
+				break;
+			case 'service':
+				$category = $this->category_model->get_subcategories_by_parent_id("2");
+				break;
+			default:
+				# code...
+				break;
+		}
+		// dd($parent);
+		if (!empty($type))
+			$data["category"] = $category;
+		// dd($this->parent_categories);
 		$this->load->view('partials/_header', $data);
 		$this->load->view('product/add_product', $data);
 		$this->load->view('partials/_footer');
@@ -557,6 +579,11 @@ class Product_controller extends Home_Core_Controller
 			$array['active_system_value'] = "bidding";
 		}
 		return $array;
+	}
+
+	public function get_catalog_text_books()
+	{
+		echo $this->book_model->get_text_books();
 	}
 
 	/*

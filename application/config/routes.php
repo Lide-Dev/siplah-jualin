@@ -96,6 +96,7 @@ foreach ($languages as $language) {
         /*product*/
         $route[$key . $routes->start_selling]['GET'] = 'product_controller/start_selling';
         $route[$key . $routes->sell_now]['GET'] = 'product_controller/add_product';
+        $route[$key . $routes->sell_now."/(:any)"]['GET'] = 'product_controller/add_product/$1';
         $route[$key . $routes->sell_now . '/(:num)']['GET'] = 'product_controller/edit_draft/$1';
         $route[$key . $routes->sell_now . '/' . $routes->product_details . '/(:num)']['GET'] = 'product_controller/edit_product_details/$1';
         $route[$key . $routes->sell_now . '/' . $routes->edit_product . '/(:num)']['GET'] = 'product_controller/edit_product/$1';
