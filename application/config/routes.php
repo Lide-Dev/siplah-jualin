@@ -160,6 +160,10 @@ foreach ($languages as $language) {
         $route[$key . 'login/supervisor']['GET'] = 'supervisor_controller/index';
         $route[$key . 'login/vendor']['GET'] = 'seller_controller/index';
         $route[$key . 'login/admin']['GET'] = 'partners_controller/index';
+        /*Book*/
+        $route[$key . 'detail-book/(:any)']['GET'] = 'product_controller/get_detail_book/$1';
+        $route[$key . 'select-book/(:any)']['GET'] = 'product_controller/select_book/$1';
+
         /*any*/
         if ($general_settings->site_lang != $language->id) {
             $route[$key . '(:any)/(:any)']['GET'] = 'home_controller/subcategory/$1/$2';

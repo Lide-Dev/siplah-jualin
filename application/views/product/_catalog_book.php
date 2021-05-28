@@ -1,18 +1,40 @@
+<?php
+$book_result = $books["result"];
+// dd($books);
+// dd($book_result[0]->price_collection,$book_result[0]);
+?>
+
 <div class="row">
-    <?php foreach ($books as $key => $book) :  ?>
-        <div class="col-4">
-            <div class="card col-12">
+    <?php foreach ($book_result as $key => $book) :  ?>
+        <div class="col-sm-4">
+            <div class="card col-12 mb-5">
                 <div class="card-body">
                     <h5 class="card-title"><?= $book->title ?></h5>
-                    <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    <a href="#" class="card-link">Card link</a>
-                    <a href="#" class="card-link">Another link</a>
+                    <h6 class="card-subtitle mb-2 text-muted"><?= $book->price_collection ?> </h6>
+                    <p class="card-text">
+                        Deskripsi: <?= $book->description ?? "-" ?> <br>
+                        ISBN: <?= $book->isbn ?? "-" ?> <br>
+                        Penulis: <?= $book->author ?? "-" ?> <br>
+                    </p>
+                    <a href="<?= base_url("detail-book/" . $book->id) ?>" class="btn btn-custom btn-sell-now">Lebih Detail</a>
+                    <a href="" <?= base_url("select-book/" . $book->id) ?>"" class="btn text-white btn-success">Pilih Buku Ini</a>
                 </div>
             </div>
         </div>
     <?php endforeach; ?>
 
+</div>
+<div class="row justify-content-center">
+    <div class="col-auto">
+        <?php for ($i = 1; $i <= ($books["total_page"] > 10 ? 10 : $books["total_page"]); $i++) : ?>
+            <?php if ($books["current_page"] == $i) : ?>
+                <a class="btn btn-disabled" href="javascript:void(0)"><?= $i ?></a>
+            <?php else : ?>
+                <a class="btn btn-custom btn-sell-now" href="<?= (empty($books["url_query"]) ? "?" : $books["url_query"] . "&") . "page={$i}" ?>"><?= $i ?></a>
+
+        <?php endif;
+        endfor; ?>
+    </div>
 </div>
 <script>
     // var tabledata = [{
