@@ -117,7 +117,36 @@ class Product_controller extends Home_Core_Controller
 		switch ($type) {
 			case 'specified_item':
 				$category = $this->category_model->get_subcategories_by_parent_id("9998");
-				$data["books"] = $this->book_model->get_text_books();
+				if (empty($_SESSION["ap_selected_book_id"])) {
+					$query_parameter = ["page" => 1, "filter" => [], "search" => ""];
+					$url_query = "";
+					if (!empty($_GET["page"]) && is_numeric($_GET["page"]) && (int)$_GET["page"] > 0 && (int)$_GET["page"] <= 10) {
+						$query_parameter["page"] = clean_number($_GET["page"]);
+					}
+					if (!empty($_GET["search"])) {
+						$query_parameter["search"] = xss_clean($_GET["search"]);
+						$url_query .= "?search={$query_parameter["search"]}";
+					}
+					$available_filter = [
+						"school_classes.name" => "filter_school_class", "classification_books.name" => "filter_classification",
+						"school_levels.name" => "filter_school_level"
+					];
+					// $available_sort = [""]
+					foreach ($available_filter as $key => $value) {
+						if (!empty($_GET[$value])) {
+							$query_parameter["filter"][$key] = xss_clean($_GET[$value]);
+							$url_query .= (empty($url_query) ? "?" : "&") . "{$value}={$query_parameter["filter"][$key]}";
+						}
+					}
+					$response = $this->book_model->get_paginated_text_books($query_parameter);
+					$response["url_query"] = $url_query;
+					$data["books"] = $response;
+					$data["classification"] = $this->book_model->get_classification();
+					$data["school_class"] = $this->book_model->get_school_class();
+					$data["school_level"] = $this->book_model->get_school_level();
+				} else {
+					$data["book"] = $this->book_model->get_text_books($_SESSION["ap_selected_book_id"]);
+				}
 				break;
 			case 'general_item':
 				$category = $this->category_model->get_subcategories_by_parent_id("9997");
@@ -129,12 +158,53 @@ class Product_controller extends Home_Core_Controller
 				# code...
 				break;
 		}
-		// dd($parent);
+		// dd($data);
 		if (!empty($type))
 			$data["category"] = $category;
 		// dd($this->parent_categories);
 		$this->load->view('partials/_header', $data);
 		$this->load->view('product/add_product', $data);
+		$this->load->view('partials/_footer');
+	}
+
+	public function select_book($id)
+	{
+		if (!$this->auth_check) {
+			redirect(lang_base_url());
+		}
+		if (!is_user_vendor()) {
+			redirect(generate_url("start_selling"));
+		}
+		$data["book"] = $this->book_model->get_text_books($id);
+		// dd($id,$data["book"]);
+		if (empty($data["book"])) {
+			redirect(base_url("error-404"));
+		}
+
+		$this->session->set_tempdata("ap_selected_book_id", $id, 1200);
+		redirect(base_url("sell-now/specified_item"));
+	}
+
+	public function get_detail_book($id)
+	{
+		if (!$this->auth_check) {
+			redirect(lang_base_url());
+		}
+		if (!is_user_vendor()) {
+			redirect(generate_url("start_selling"));
+		}
+		$data["book"] = $this->book_model->get_text_books($id);
+		// dd($id);
+		if (empty($data["book"])) {
+			redirect(base_url("error-404"));
+		}
+		// dd($data["book"]);
+		$data['title'] = "Detail Buku - {$data["book"]->title}";
+		$data['description'] = "Detail Buku {$data["book"]->title}" . " - " . $this->app_name;
+		$data['keywords'] = "Detail Buku {$data["book"]->title}" . "," . $this->app_name;
+
+		$this->load->view('partials/_header', $data);
+		$this->load->view('product/_catalog_book_detail', $data);
 		$this->load->view('partials/_footer');
 	}
 

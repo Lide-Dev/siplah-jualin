@@ -155,11 +155,16 @@ foreach ($languages as $language) {
         $route[$key . 'compare']['GET'] = 'compare_controller/compare';
         $route[$key . 'compare/compared_product']['POST'] = 'compare_controller/compared_product';
         $route[$key . 'compare/add_compared_product']['GET'] = 'compare_controller/add_compared_product';
+        $route[$key . 'compare/delete_compared_product']['GET'] = 'compare_controller/delete_compared_product';
         /*Multi Login*/
         $route[$key . 'login/member']['GET'] = 'buyer_controller/index';
         $route[$key . 'login/supervisor']['GET'] = 'supervisor_controller/index';
         $route[$key . 'login/vendor']['GET'] = 'seller_controller/index';
         $route[$key . 'login/admin']['GET'] = 'partners_controller/index';
+        /*Book*/
+        $route[$key . 'detail-book/(:any)']['GET'] = 'product_controller/get_detail_book/$1';
+        $route[$key . 'select-book/(:any)']['GET'] = 'product_controller/select_book/$1';
+
         /*any*/
         if ($general_settings->site_lang != $language->id) {
             $route[$key . '(:any)/(:any)']['GET'] = 'home_controller/subcategory/$1/$2';

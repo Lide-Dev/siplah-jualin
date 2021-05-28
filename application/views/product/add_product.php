@@ -114,6 +114,9 @@
         if (category_id == 0) {
             return false;
         }
+        else{
+            $('#hidden_category_id').val(category_id);
+        }
         if (subcategories.length > 0) {
             var new_data_select_id = date.getTime();
             var select_tag = '<div class="selectdiv m-t-5"><select class="form-control subcategory-select" data-select-id="' + new_data_select_id + '" name="category_id_' + new_data_select_id + '" required onchange="get_subcategories(this.value,' + new_data_select_id + ');">' +
@@ -122,6 +125,7 @@
                 select_tag += '<option value="' + subcategories[i].id + '">' + subcategories[i].name + '</option>';
             }
             select_tag += '</select></div>';
+
             $('#subcategories_container').append(select_tag);
         }
         //remove empty selectdivs

@@ -328,7 +328,7 @@ if (!function_exists('price_formatted')) {
 	function price_formatted($price, $currency, $format = null)
 	{
 		$ci = &get_instance();
-		$price = $price / 100;
+		// $price = $price / 100;
 		$dec_point = '.';
 		$thousands_sep = ',';
 		if ($ci->thousands_separator != '.') {
