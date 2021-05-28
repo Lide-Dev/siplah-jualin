@@ -186,7 +186,7 @@
                                                     <div class="dropdown search-select">
                                                         <button type="button" class="btn dropdown-toggle" data-toggle="dropdown">
                                                             <?php if (isset($search_type)) : ?>
-                                                                <?php echo trans("member"); ?>
+                                                                <?php echo trans("store"); ?>
                                                             <?php else : ?>
                                                                 <?php echo trans("product"); ?>
                                                             <?php endif; ?>
@@ -197,18 +197,18 @@
                                                         </div>
                                                     </div>
                                                     <?php if (isset($search_type)) : ?>
-                                                        <input type="hidden" class="search_type_input" name="search_type" value="member">
+                                                        <input type="hidden" class="search_type_input" name="search_type" value="store">
                                                     <?php else : ?>
                                                         <input type="hidden" class="search_type_input" name="search_type" value="product">
                                                     <?php endif; ?>
                                                 </div>
                                                 <div class="right">
-                                                    <input type="text" name="search" maxlength="300" pattern=".*\S+.*" id="input_search" class="form-control input-search" value="<?php echo (!empty($filter_search)) ? $filter_search : ''; ?>" placeholder="<?php echo trans("search_exp"); ?>" required autocomplete="off">
+                                                    <input type="text" name="search" maxlength="300" pattern=".*\S+.*" id="input_search" class="form-control input-search" value="<?php echo (!empty($filter_search)) ? $filter_search : ''; ?>" placeholder="<?php echo trans("search_products"); ?>" required autocomplete="off">
                                                     <button class="btn btn-default btn-search"><i class="icon-search"></i></button>
                                                     <div id="response_search_results" class="search-results-ajax"></div>
                                                 </div>
                                             <?php else : ?>
-                                                <input type="text" name="search" maxlength="300" pattern=".*\S+.*" id="input_search" class="form-control input-search" value="<?php echo (!empty($filter_search)) ? $filter_search : ''; ?>" placeholder="<?php echo trans("search_products"); ?>" required autocomplete="off">
+                                                <input type="text" name="search" maxlength="300" pattern=".*\S+.*" id="input_search" class="form-control input-search" value="<?php echo (!empty($filter_search)) ? $filter_search : ''; ?>" placeholder="<?php echo trans("search_store"); ?>" required autocomplete="off">
                                                 <button class="btn btn-default btn-search"><i class="icon-search"></i></button>
                                                 <div id="response_search_results" class="search-results-ajax"></div>
                                             <?php endif; ?>
