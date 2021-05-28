@@ -70,12 +70,14 @@
                                 </li>
                                 <?php endif; ?>
                                 <?php if (is_sale_active() && $this->auth_user->role != "admin") : ?>
+                                    <?php if ($this->auth_user->role != "admin" & "vendor") : ?>
                                     <li>
                                         <a href="<?php echo generate_url("orders"); ?>">
                                             <i class="icon-shopping-basket"></i>
                                             <?php echo trans("orders"); ?>
                                         </a>
                                     </li>
+                                    <?php endif; ?>
                                     <?php if (is_user_vendor()) : ?>
                                         <li>
                                             <a href="<?php echo generate_url("sales"); ?>">

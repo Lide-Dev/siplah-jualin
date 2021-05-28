@@ -28,7 +28,7 @@
 								<th><?php echo trans('shop_name'); ?></th>
 								<th><?php echo "NPWP" ?></th>
 								<th><?php echo "NIB" ?></th>
-								<th><?php echo str_replace(":", "", trans('last_seen')); ?></th>
+								<!-- <th><?php echo str_replace(":", "", trans('last_seen')); ?></th> -->
 								<th class="max-width-120"><?php echo trans('options'); ?></th>
 							</tr>
 						</thead>
@@ -57,7 +57,7 @@
 									<td><?php echo html_escape($user->supplier_name); ?></td>
 									<td><?php echo html_escape($user->npwp); ?></td>
 									<td><?php echo html_escape($user->nib); ?></td>
-									<td><?php echo time_ago($user->last_seen); ?></td>
+									<!-- <td><?php echo time_ago($user->last_seen); ?></td> -->
 									<td>
 										<?php echo form_open('admin_controller/approve_shop_opening_request'); ?>
 										<input type="hidden" name="id" value="<?php echo $user->id; ?>">
