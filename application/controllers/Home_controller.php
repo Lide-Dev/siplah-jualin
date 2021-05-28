@@ -297,9 +297,9 @@ class Home_controller extends Home_Core_Controller
             $data["audio"] = $this->file_model->get_product_audio($data["product"]->id);
 
             $data["digital_sale"] = null;
-            if ($data["product"]->product_type == 'digital' && $this->auth_check) {
-                $data["digital_sale"] = get_digital_sale_by_buyer_id($this->auth_user->id, $data["product"]->id);
-            }
+            // if ($data["product"]->product_type == 'digital' && $this->auth_check) {
+            //     $data["digital_sale"] = get_digital_sale_by_buyer_id($this->auth_user->id, $data["product"]->id);
+            // }
             //og tags
             $data['show_og_tags'] = true;
             $data['og_title'] = $data['product']->title;
