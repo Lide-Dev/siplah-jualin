@@ -3,6 +3,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 //fixed
 $route['cron/update-sitemap'] = 'cron_controller/update_sitemap';
+$route['cron/test'] = 'cron_controller/dapodik_checksums';
 $route['unsubscribe'] = 'home_controller/unsubscribe';
 $route['confirm'] = 'auth_controller/confirm_email';
 $route['connect-with-facebook'] = 'auth_controller/connect_with_facebook';
@@ -26,6 +27,7 @@ $route['accept-quote-post']['POST'] = 'bidding_controller/accept_quote';
 $route['reject-quote-post']['POST'] = 'bidding_controller/reject_quote';
 //ajax
 $route['send-email-post']['POST'] = 'ajax_controller/send_email';
+$route['catalog-text-books']['GET'] = 'product_controller/get_catalog_text_books';
 //cart
 $route['add-to-cart']['POST'] = 'cart_controller/add_to_cart';
 $route['add-to-cart-quote']['POST'] = 'cart_controller/add_to_cart_quote';

@@ -69,6 +69,8 @@
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/style-1.6.css" />
     <!-- <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/update_jualin/slick.css" /> -->
     <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.3.11/slick/slick.css" />
+    <link href="https://unpkg.com/tabulator-tables@4.9.3/dist/css/tabulator.min.css" rel="stylesheet">
+    <script type="text/javascript" src="https://unpkg.com/tabulator-tables@4.9.3/dist/js/tabulator.min.js"></script>
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/update_jualin/form-login-as.css" />
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/update_jualin/chart_profile.css" />
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/update_jualin/log_activity_profile.css" />
