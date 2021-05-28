@@ -44,14 +44,14 @@
 							<div class="col-12">
 								<div class="form-group mt-2">
 									<label class="radiobut" for="pb_radio_badan_usaha"> Badan Usaha (PT/CV)
-										<input value="business_entity" id="pb_radio_badan_usaha" type="radio" <?= (empty(set_value("business_format")) || set_value("business_format") == "business_entity") ? "checked" : "" ?> name="business_format">
+										<input value="business_entity" id="pb_radio_badan_usaha" type="radio" <?= (empty(set_value("business_profile")) || set_value("business_profile") == "business_profile") ? "checked" : "" ?> name="business_profile">
 										<span class="radiomark"></span>
 									</label>
 									<label for="pb_radio_individu" class="radiobut">Individu / Perorangan
-										<input value="individual" id="pb_radio_individu" type="radio" <?= (set_value("business_format") == "individual") ? "checked" : "" ?> name="business_format">
+										<input value="individual" id="pb_radio_individu" type="radio" <?= (set_value("business_profile") == "individual") ? "checked" : "" ?> name="business_profile">
 										<span class="radiomark"></span>
 									</label>
-									<?php echo form_error('business_format'); ?>
+									<?php echo form_error('business_profile'); ?>
 								</div>
 								<!-- Status Legal -->
 								<div class="form-group">
@@ -129,20 +129,20 @@
 
 						<!-- Unggah Document -->
 						<div class="form-group mt-2">
-							<label class="control-label font-600 mt-3" for="form_business_type">Pilih Dokumen Pendukung</label>
+							<label class="control-label font-600 mt-3" for="form_business_support_document">Pilih Dokumen Pendukung</label>
 							<label class="radiobut" for="siup_doc">Surat Izin Usaha Perusahaan (SIUP)
-								<input value="siup" id="siup_doc" type="radio" <?= (empty(set_value("business_format")) || set_value("business_format") == "business_entity") ? "checked" : "" ?> name="business_format">
+								<input value="siup" id="siup_doc" type="radio" <?= (empty(set_value("business_support_document")) || set_value("business_support_document") == "business_entity") ? "checked" : "" ?> name="business_support_document">
 								<span class="radiomark"></span>
 							</label>
 							<label for="nib_doc" class="radiobut">Nomor Induk Berusaha (NIB)
-								<input value="nib" id="nib_doc" type="radio" <?= (set_value("business_format") == "individual") ? "checked" : "" ?> name="business_format">
+								<input value="nib" id="nib_doc" type="radio" <?= (set_value("business_support_document") == "individual") ? "checked" : "" ?> name="business_support_document">
 								<span class="radiomark"></span>
 							</label>
 							<label for="tdp_doc" class="radiobut">Tanda Daftar Perusahaan (TDP)
-								<input value="tdp" id="tdp_doc" type="radio" <?= (set_value("business_format") == "individual") ? "checked" : "" ?> name="business_format">
+								<input value="tdp" id="tdp_doc" type="radio" <?= (set_value("business_support_document") == "individual") ? "checked" : "" ?> name="business_support_document">
 								<span class="radiomark"></span>
 							</label>
-							<?php echo form_error('business_format'); ?>
+							<?php echo form_error('business_support_document'); ?>
 						</div>
 
 						<div class="form-group">

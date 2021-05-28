@@ -484,13 +484,14 @@ class Auth_controller extends Home_Core_Controller
     {
         $this->load->helper('file');
 
-        $this->form_validation->set_rules("business_format", "Format Bisnis", "required|in_list[business_entity,individual]");
+        $this->form_validation->set_rules("business_profile", "Profil Bisnis", "required|in_list[business_entity,individual]");
         $this->form_validation->set_rules("legal_status", "Status Wajib Pajak", "required|in_list[pkp,individual,non_pkp]");
         $this->form_validation->set_rules("business_type", "Tipe Bisnis", "required|in_list[micro,small,medium,non_umkm]");
         $this->form_validation->set_rules("business_name", trans("business_name"), "required|is_unique[supplier_profiles.supplier_name]|max_length[254]");
         $this->form_validation->set_rules("npwp", "NPWP", "required|numeric|exact_length[15]|is_unique[supplier_profiles.npwp]");
         $this->form_validation->set_rules('npwp_document', 'Dokumen NPWP', 'callback_file_check[npwp_document]');
         $this->form_validation->set_rules("nib", "NIB", "required|numeric|exact_length[13]|max_length[254]");
+        $this->form_validation->set_rules('business_support_document', 'Dokumen Pendukung', 'required|in_list[siup,nib,tdp]');
         $this->form_validation->set_rules('nib_document', 'Dokumen NIB', 'callback_file_check[nib_document]');
         // $this->form_validation->set_rules("umkm", trans("tax_status"), "required|in_list[umkm,non_umkm]");
         $this->form_validation->set_rules("address", trans("address"), "required|max_length[254]");
@@ -509,7 +510,7 @@ class Auth_controller extends Home_Core_Controller
         $this->form_validation->set_rules("password", trans("password"), "required|min_length[8]|max_length[60]");
         $this->form_validation->set_rules("confirm_password", "Konfirmasi Password", "required|min_length[8]|max_length[60]|matches[password]");
         $this->form_validation->set_rules("phone_number", trans("phone_number"), ["required", "min_length[8]", "max_length[20]" . "numeric", ["callback_valid_phone_number", [$this->auth_model, "valid_phone_number"]]]);
-        if ($this->input->post("business_type") == "individual") {
+        if ($this->input->post("business_profile") == "individual") {
             $this->form_validation->set_rules("nik", "NIK", "required|exact_length[16]");
         } else {
             $this->form_validation->set_rules("responsible_person_name", trans("full_name") . " Penanggung Jawab", "required|max_length[254]");
@@ -538,7 +539,7 @@ class Auth_controller extends Home_Core_Controller
                     "npwp" => $this->input->post("npwp"),
                     "nib" => $this->input->post("nib"),
                     "phone_number" => $this->input->post("phone_number"),
-                    "is_business_entity" => $this->input->post("business_format") == "business_entity" ? 1 : 0,
+                    "is_business_entity" => $this->input->post("business_profile") == "business_entity" ? 1 : 0,
                     "business_type_id" => $this->input->post("business_type"),
                     "legal_status_id" => $this->input->post("legal_status"),
                     "bank_id" => $this->input->post("bank"),
