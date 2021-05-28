@@ -77,6 +77,7 @@
 
 <!-- Search -->
 <!--product filters-->
+<?php if ($this->auth_user->role != "member") : ?>
 <div class="">
     <div id="collapseFilters" class="product-filters">
         <?php if (!empty($category)):
@@ -261,5 +262,6 @@
         <?php endif; ?>
     </div>
 </div>
+<?php endif; ?>
 
 </div>
