@@ -24,10 +24,10 @@ class Compare_model extends CI_Model
 		return $product;
 	}
 
-	public function get_compared_products_by_id($arr_products, $quantity)
+	public function get_compared_products_by_id($arr_products_id, $quantity)
 	{
 		$products = array();
-		foreach ($arr_products as $product_id) {
+		foreach ($arr_products_id as $product_id) {
 			$products[] = $this->remap_product($product_id, $quantity);
 		}
 		return $products;
@@ -38,9 +38,19 @@ class Compare_model extends CI_Model
 		return ($base_price * $quantity) - ($ppn * $quantity);
 	}
 
-	public function get_similar_product($product_id)
+	public function get_all_vendors()
 	{
-		$category_id = get_product($product_id)->category_id;
-		return $this->product_model->get_similar_product_by_category($category_id);
+		$sql = "SELECT * FROM users WHERE role = 'vendor'";
+		$db = $this->db->query($sql);
+		return $db->result();
+	}
+
+	public function delete_product($arr_products_id, $value)
+	{
+		$key = array_search($value, $arr_products_id);
+		if ($key !== false) {
+			unset($arr_products_id[$key]);
+		}
+		return $arr_products_id;
 	}
 }

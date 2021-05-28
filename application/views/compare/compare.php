@@ -29,13 +29,13 @@
 												<div class="container">
 													<div class="row">
 														<?php if ($products[$product_index] == null) : ?>
-															<div class="dropdown m-auto">
-																<button class="btn btn-light dropdown-toggle" type="button" id="select_compared_product" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-																	Pilih Produk
-																</button>
-																<div class="dropdown-menu" aria-labelledby="select_compared_product">
-																	<?php foreach ($related_products as $product) : ?>
-																		<a class="dropdown-item" href="<?= base_url('compare/add_compared_product?product_id=' . $product->id) ?>"><?= $product->title ?></a>
+															<div class="container">
+																<div class="row col">
+																	<input type="text" id="search-input" class="form-control search-input" placeholder="Cari Penjual">
+																</div>
+																<div class="list-vendors" id="list-vendors">
+																	<?php foreach ($list_vendors as $vendor) : ?>
+																		<a href="#" class="border p-1"><?= $vendor->username ?></a>
 																	<?php endforeach ?>
 																</div>
 															</div>
@@ -57,12 +57,14 @@
 														</div>
 														<div class="row my-4">
 															<div class="col-md-6" align="left">
-																<h6 class="font-weight-bold">Total Sebelum PPN</h6>
+																<h6 class="font-weight-bold">Banyaknya</h6>
+																<h6 class="font-weight-bold">Harga Satuan Sebelum PPN</h6>
 																<h6 class="font-weight-bold">PPN</h6>
 																<h6 class="font-weight-bold">Biaya Kirim</h6>
 																<h6 class="font-weight-bold">Total</h6>
 															</div>
 															<div class="col-md-6" align="right">
+																<h6 class="font-weight-bold"><?= $product_quantity ?></h6>
 																<h6 class="font-weight-bold"><?= $products[$product_index]->price_formatted ?></h6>
 																<h6 class="font-weight-bold"><?= $products[$product_index]->ppn_formatted ?></h6>
 																<h6 class="font-weight-bold">Buat penawaran dulu</h6>
@@ -72,12 +74,9 @@
 													<?php endif ?>
 													<?php if ($products[$product_index] != null) : ?>
 														<div class="row">
-															<div class="<?= $products[$product_index]->title = $products[0]->title ? "col-md-12" : "col-md-6" ?>" align="center">
-																<a class="btn btn-success btn-lg" style="color: white;" href="<?= base_url('cart/negotiation?product_id=' . $product[$product_index]->id) ?>"><?= trans("make_an_offer") ?></a>
-															</div>
 															<?php if (($products[$product_index]->title != $products[0]->title)) : ?>
-																<div class="col-md-6" align="center">
-																	<a class="btn btn-danger btn-lg" style="color: white;"><?= trans("remove") ?></a>
+																<div class="col" align="end">
+																	<a href="<?= base_url('compare/') . "delete_compared_product?compared_product_id=" . $products[$product_index]->id ?>" class="btn btn-danger btn-lg" style="color: white;"><?= trans("remove") ?></a>
 																</div>
 															<?php endif ?>
 														</div>
@@ -102,15 +101,12 @@
 							<!-- End Pagination Loop -->
 							<!--.item-->
 						</div>
+						<div class="col-md-12 mt-4" align="center">
+							<a class="btn btn-success btn-lg" style="color: white;" href=""><?= trans('make_an_offer') ?></a>
+						</div>
 						<!--.carousel-inner-->
-						<a class="carousel-control-prev" href="#compare_carousel" role="button" data-slide="prev">
-							<span class="carousel-control-prev-icon" aria-hidden="true"></span>
-							<span class="sr-only">Previous</span>
-						</a>
-						<a class="carousel-control-next" href="#compare_carousel" role="button" data-slide="next">
-							<span class="carousel-control-next-icon" aria-hidden="true"></span>
-							<span class="sr-only">Next</span>
-						</a>
+						<a class="" href="#compare_carousel" role="button" data-slide="prev"></a>
+						<a class="" href="#compare_carousel" role="button" data-slide="next"></a>
 					</div>
 					<!--.Carousel-->
 				</div>
@@ -120,8 +116,36 @@
 	</div>
 	<!--.row-->
 </div>
-<script>
-	$("#product_related_opt").click(function() {
+<style>
+	.list-vendors {
+		position: absolute;
+		z-index: 1;
+		background-color: white;
+		min-width: 50vmin;
+		max-height: 20vmax;
+		display: none;
+	}
 
-	})
+	.list-vendors a {
+		display: block;
+	}
+
+	.list-vendors a:hover {
+		background-color: blue;
+		color: white;
+	}
+</style>
+<script>
+	$(document).ready(function() {
+		$("#search-input").on("keyup", function() {
+			var value = $(this).val().toLowerCase();
+			$("#list-vendors a").filter(function() {
+				$(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+			});
+		});
+
+		$("#search-input").click(function() {
+			$("#list-vendors").toggle("hide");
+		})
+	});
 </script>

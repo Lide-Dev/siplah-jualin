@@ -75,6 +75,7 @@
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/update_jualin/label_product.css" />
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/update_jualin/register_seller.css" />
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/update_jualin/password_reg.css" />
+    <link rel="stylesheet" href="<?php echo base_url() ?>assets/css/update_jualin/search_with_dropdown.min.css" />
     <!-- Plugins CSS -->
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/plugins-1.6.css" />
     <?php if (!empty($this->general_settings->site_color)) : ?>
@@ -152,6 +153,7 @@
     </style>
     <?php echo $this->general_settings->custom_css_codes; ?>
     <script src="<?php echo base_url(); ?>assets/js/jquery-3.3.1.min.js"></script>
+    <script src="<?php echo base_url(); ?>assets/js/search_with_dropdown.min.js"></script>
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
