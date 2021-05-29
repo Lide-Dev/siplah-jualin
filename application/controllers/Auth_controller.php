@@ -12,7 +12,6 @@ class Auth_controller extends Home_Core_Controller
     {
         parent::__construct();
     }
-
     /**
      * Login Post
      */

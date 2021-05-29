@@ -152,6 +152,7 @@
 							<p class="small_reg"> Format file .png, .jpg, .jpeg atau .pdf, maksimum ukuran 1 MB</p>
 						</div>
 
+
 						<!-- END OF NIB -->
 						<!-- ADDRESS -->
 						<div class="form-group">
