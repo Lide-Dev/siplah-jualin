@@ -1144,6 +1144,7 @@ $lang = [
     "choose_source" => "Pilih Sumber",
     "compare" => "Bandingkan",
     "specification" => "Spesifikasi",
+    "search_store" => "Cari Toko",
 ];
 
 $validation = include(BASEPATH . "../application/language/id_validation.php");

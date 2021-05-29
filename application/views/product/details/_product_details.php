@@ -95,6 +95,21 @@
 					</div>
 				</div>
 			<?php endif; ?>
+			<!-- Produsen -->
+			<?php if (!empty($product->product_condition)) : ?>
+				<div class="item-details">
+					<div class="left">
+						<label>Produsen</label>
+					</div>
+					<div class="right">
+						<?php $product_condition = get_product_condition_by_key($product->product_condition, $this->selected_lang->id);
+						if (!empty($product_condition)) : ?>
+							<span>Non-UMKM</span>
+						<?php endif; ?>
+					</div>
+				</div>
+			<?php endif; ?>
+			<!-- end of produsen -->
 			<?php if (!empty($product->sku)) : ?>
 				<div class="item-details">
 					<div class="left">

@@ -526,6 +526,7 @@ class Auth_controller extends Home_Core_Controller
             // dd($_SESSION,$this->form_validation->error_array());                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 or_array());
             // dd($this->form_validation->error_array());
             $this->register_seller();
+            // redirect(base_url("register_seller"));
         } else {
             $user_data = [
                 "user" => [
@@ -551,7 +552,7 @@ class Auth_controller extends Home_Core_Controller
                     "zip_code" => $this->input->post("postal_code"),
                 ]
             ];
-            if ($this->input->post("business_type") == "individual") {
+            if ($this->input->post("business_profile") == "individual") {
                 $user_data["profile"]["nik"] = $this->input->post("nik");
             } else {
                 $user_data["profile"]["responsible_person_name"] = $this->input->post("responsible_person_name");
@@ -588,6 +589,7 @@ class Auth_controller extends Home_Core_Controller
      */
     public function file_check($str, $field)
     {
+        $this->load->helper('number');
         $allowed_max_byte = 2097152;
         $allowed_mime_type_arr = array('application/pdf', 'image/jpeg', 'image/jpg', 'image/png');
         $mime = get_mime_by_extension($_FILES[$field]['name']);
