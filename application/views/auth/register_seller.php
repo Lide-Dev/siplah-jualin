@@ -119,15 +119,8 @@
 							</div>
 						</div>
 						<!-- END OF UPLOAD DOC NPWP -->
-						<!-- NIB -->
-						<div class="form-group">
-							<label class="control-label font-600" for="form_legal_status">Nomor NIB</label>
-							<input type="text" name="nib" class="form-control auth-form-input" maxlength="13" pattern="\d*" placeholder="<?php echo trans("nib"); ?>" value="<?php echo set_value("nib"); ?>" required>
-							<?php echo form_error('nib'); ?>
-							<p class="small_reg"> Masukan nomor NIB sejumlah 13 Angka</p>
-						</div>
 
-						<!-- Unggah Document -->
+						<!-- Support Document -->
 						<div class="form-group mt-2">
 							<label class="control-label font-600 mt-3" for="form_business_support_document">Pilih Dokumen Pendukung</label>
 							<label class="radiobut" for="siup_doc">Surat Izin Usaha Perusahaan (SIUP)
@@ -142,14 +135,37 @@
 								<input value="tdp" id="tdp_doc" type="radio" <?= (set_value("business_support_document") == "individual") ? "checked" : "" ?> name="business_support_document">
 								<span class="radiomark"></span>
 							</label>
-							<?php echo form_error('business_support_document'); ?>
 						</div>
-
-						<div class="form-group">
-							<label class="control-label font-600">Unggah Dokumen Pendukung</label>
-							<input type="file" class="form-control auth-form-input" name="nib_document" id="form_selected_document">
-							<?php echo form_error('nib_document'); ?>
-							<p class="small_reg"> Format file .png, .jpg, .jpeg atau .pdf, maksimum ukuran 1 MB</p>
+						<div id="form_support_document">
+							<div id="form_siup">
+								<div class="form-group">
+									<label class="control-label font-600">Unggah Dokumen Pendukung</label>
+									<input type="file" class="form-control auth-form-input" name="siup_document" id="form_selected_document">
+									<?php echo form_error('business_support_document'); ?>
+									<p class="small_reg"> Format file .png, .jpg, .jpeg atau .pdf, maksimum ukuran 1 MB</p>
+								</div>
+							</div>
+							<div id="form_nib" style="display: none;">
+								<div class="form-group" id="form_support_document_number">
+									<label class="control-label font-600" for="form_support_document_number">Nomor Induk Berusaha</label>
+									<input type="text" id="support_document_number" name="nib" class="form-control auth-form-input" maxlength="13" pattern="/d*" placeholder="<?php echo trans("support_document_number"); ?>" value="<?php echo set_value("support_document_number"); ?>" required>
+									<?php echo form_error('support_document_number'); ?>
+								</div>
+								<div class="form-group">
+									<label class="control-label font-600">Unggah Dokumen Pendukung</label>
+									<input type="file" class="form-control auth-form-input" name="nib_document" id="form_selected_document">
+									<?php echo form_error('business_support_document'); ?>
+									<p class="small_reg"> Format file .png, .jpg, .jpeg atau .pdf, maksimum ukuran 1 MB</p>
+								</div>
+							</div>
+							<div id="form_tdp" style="display: none;">
+								<div class="form-group">
+									<label class="control-label font-600">Unggah Dokumen Pendukung</label>
+									<input type="file" class="form-control auth-form-input" name="tdp_document" id="form_selected_document">
+									<?php echo form_error('business_support_document'); ?>
+									<p class="small_reg"> Format file .png, .jpg, .jpeg atau .pdf, maksimum ukuran 1 MB</p>
+								</div>
+							</div>
 						</div>
 
 						<!-- END OF NIB -->
@@ -233,30 +249,29 @@
 						</div>
 						<!-- END OF BANK ACCOUNT -->
 						<!-- RESPONSIBLE PERSON -->
-						<?php if (set_value("business_format") == "business_entity" || empty(set_value("business_format"))) : ?>
-							<h4 class="title-auth">3. <?php echo trans("responsible_title"); ?></h4>
-							<div id="form_container_responsible_person">
-								<div class="form-group">
-									<input type="text" name="responsible_person_name" class="form-control auth-form-input" placeholder="<?php echo trans("full_name"); ?>" value="<?php echo set_value("responsible_person_name"); ?>" maxlength="<?php echo $this->username_maxlength; ?>" required>
-									<?php echo form_error('responsible_person_name'); ?>
-								</div>
-								<div class="form-group">
-									<input type="text" name="responsible_person_position" class="form-control auth-form-input" placeholder="<?php echo trans("user_position"); ?>" value="<?php echo set_value("responsible_person_position"); ?>" maxlength="<?php echo $this->username_maxlength; ?>" required>
-									<?php echo form_error('responsible_person_position'); ?>
-								</div>
-								<div class="m-b-30 form-group">
-									<label class="control-label font-600">Upload Surat Ijin Usaha Perdagangan (Opsional)</label>
-									<input type="file" class="form-control auth-form-input" name="siup_document" id="form_selected_document">
-									<?php echo form_error('siup_document'); ?>
-									<p class="small_reg"> Format file .png, .jpg, .jpeg atau .pdf, maksimum ukuran 1 MB</p>
-								</div>
+						<h4 class="title-auth">3. <?php echo trans("responsible_title"); ?></h4>
+						<div id="form_container_responsible_business_entity">
+							<div class="form-group">
+								<input type="text" name="responsible_person_name" class="form-control auth-form-input" placeholder="<?php echo trans("full_name"); ?>" value="<?php echo set_value("responsible_person_name"); ?>" maxlength="<?php echo $this->username_maxlength; ?>" required>
+								<?php echo form_error('responsible_person_name'); ?>
 							</div>
-						<?php else : ?>
-							<h4 class="title-auth">3. <?php echo trans("responsible_title"); ?></h4>
+							<div class="form-group">
+								<input type="text" name="responsible_person_position" class="form-control auth-form-input" placeholder="<?php echo trans("user_position"); ?>" value="<?php echo set_value("responsible_person_position"); ?>" maxlength="<?php echo $this->username_maxlength; ?>" required>
+								<?php echo form_error('responsible_person_position'); ?>
+							</div>
+						</div>
+						<div id="form_container_responsible_individual" style="display: none;">
+							<label class="control-label font-600" for="nik">Nomor Induk Kependudukan</label>
 							<div class="form-group">
 								<input type="text" name="nik" class="form-control auth-form-input" maxlength="16" pattern="\d*" placeholder="<?php echo trans("nik"); ?>" value="<?php echo set_value("nik"); ?>" required>
 							</div>
-						<?php endif; ?>
+							<div class="m-b-30 form_group pb-3">
+								<label class="control-label font-600">Upload Foto KTP</label>
+								<input type="file" class="form-control auth-form-input" name="ktp_document" id="form_kt_document">
+								<?php echo form_error('ktp_document'); ?>
+								<p class="small_reg"> Format file .png, .jpg, .jpeg atau .pdf, maksimum ukuran 1 MB</p>
+							</div>
+						</div>
 						<h4 class="title-auth">4. <?php echo trans("create_user"); ?></h4>
 						<div class="form-group">
 							<input type="email" name="email_address" class="form-control auth-form-input" placeholder="<?php echo trans("email_address"); ?>" value="<?php echo set_value("email_address"); ?>" required>
@@ -365,13 +380,32 @@
 			</div>
 			`);
 	});
-	$("#label_individual_business_type").click(function() {
-		$("#form_container_responsible_person").html(
-			`<div class="form-group">
-				<input type="text" name="nik" class="form-control auth-form-input" placeholder="<?php echo trans("nik"); ?>" value="<?php echo set_value("nik"); ?>" required>
-			</div>`
-		);
+	$("#pb_radio_individu").click(function() {
+		$("#form_container_responsible_individual").show();
+		$("#form_container_responsible_business_entity").hide();
 		$("#form_individual_business_type").prop("checked", true);
+	});
+	$("#pb_radio_badan_usaha").click(function() {
+		$("#form_container_responsible_individual").hide();
+		$("#form_container_responsible_business_entity").show();
+		$("#form_individual_business_type").prop("checked", true);
+	});
+
+
+	$("#siup_doc").click(function() {
+		$("#form_siup").show();
+		$("#form_nib").hide();
+		$("#form_tdp").hide();
+	});
+	$("#nib_doc").click(function() {
+		$("#form_siup").hide();
+		$("#form_nib").show();
+		$("#form_tdp").hide();
+	});
+	$("#tdp_doc").click(function() {
+		$("#form_siup").hide();
+		$("#form_nib").hide();
+		$("#form_tdp").show();
 	});
 
 	// $("#label_nonpkp_business_type").click(function() {
