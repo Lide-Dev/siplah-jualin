@@ -1144,7 +1144,11 @@ $lang = [
     "choose_source" => "Pilih Sumber",
     "compare" => "Bandingkan",
     "specification" => "Spesifikasi",
+<<<<<<< HEAD
     "support_document_number" => "Nomor Dokumen Pendukung",
+=======
+    "search_store" => "Cari Toko",
+>>>>>>> 20df8d2881a45dcf2aa9e8a1ecc5ee0079ea9bea
 ];
 
 $validation = include(BASEPATH . "../application/language/id_validation.php");

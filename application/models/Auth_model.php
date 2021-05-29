@@ -288,7 +288,7 @@ class Auth_model extends CI_Model
     public function register_supplier($data, $file)
     {
         $this->load->model("upload_model");
-
+        //udah install composer install di proyek ka?
         $this->db->trans_begin();
         $this->load->library('bcrypt');
         $id = Uuid::uuid4()->toString();
@@ -298,7 +298,7 @@ class Auth_model extends CI_Model
             "password" => $this->bcrypt->hash_password($data["user"]['password']),
             "is_active_shop_request" => 1,
             "role" => "vendor",
-            "email_status" => 1,
+            // "email_status" => 1,
             "username" => $this->generate_uniqe_username($data["profile"]["supplier_name"]),
             "slug" => $this->generate_uniqe_slug($data["profile"]["supplier_name"]),
             'token' => generate_token()
@@ -895,6 +895,8 @@ class Auth_model extends CI_Model
         }
         return $result;
     }
+
+
 }
 
 

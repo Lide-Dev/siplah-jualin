@@ -86,36 +86,36 @@
 									<table class="table table-product-shipping">
 										<tbody>
 											<tr>
-												<td class="td-left">SKU</td>
-												<td class="td-right"><span></span></td>
-											</tr>
-											<tr>
-												<td class="td-left">Merek</td>
-												<td class="td-right"><span></span></td>
-											</tr>
-											<tr>
-												<td class="td-left">Kondisi</td>
-												<td class="td-right"><span></span></td>
+												<td class="td-left">Merek / Penerbit</td>
+												<td class="td-right"><span>Asus</span></td>
 											</tr>
 											<tr>
 												<td class="td-left">Garansi</td>
-												<td class="td-right"><span></span></td>
+												<td class="td-right"><span>1 Bulan</span></td>
 											</tr>
 											<tr>
 												<td class="td-left">Panjang</td>
-												<td class="td-right"><span></span></td>
+												<td class="td-right"><span>35 CM</span></td>
 											</tr>
 											<tr>
 												<td class="td-left">Lebar</td>
-												<td class="td-right"><span></span></td>
+												<td class="td-right"><span>17 CM</span></td>
 											</tr>
 											<tr>
 												<td class="td-left">Tinggi</td>
-												<td class="td-right"><span></span></td>
+												<td class="td-right"><span>5 CM</span></td>
 											</tr>
 											<tr>
 												<td class="td-left">Berat</td>
-												<td class="td-right"><span></span></td>
+												<td class="td-right"><span>1 KG</span></td>
+											</tr>
+											<tr>
+												<td class="td-left">Estimasi Pengiriman</td>
+												<td class="td-right"><span>5 Hari</span></td>
+											</tr>
+											<tr>
+												<td class="td-left">Jasa Pengiriman Tersedia</td>
+												<td class="td-right"><span>Buat Penawaran Terlrbih Dahulu</span></td>
 											</tr>
 										</tbody>
 									</table>

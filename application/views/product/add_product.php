@@ -46,11 +46,14 @@
                                                     <div class="dropdown">
                                                         <button class="btn col-12 btn-outline-gray dropdown-toggle" type="button" id="dropdownMenuType" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                             <?php switch (xss_clean($type)) {
-                                                                case 'general_item':
+                                                                case 'general-item':
                                                                     echo "Barang Umum";
                                                                     break;
-                                                                case 'specified_item':
-                                                                    echo "Barang Spesifik";
+                                                                case 'specified-item-text':
+                                                                    echo "Barang Spesifik - Buku Teks";
+                                                                    break;
+                                                                case 'specified-item-non-text':
+                                                                    echo "Barang Spesifik - Buku Non Teks";
                                                                     break;
                                                                 case 'service':
                                                                     echo "Jasa";
@@ -61,8 +64,9 @@
                                                             } ?>
                                                         </button>
                                                         <div class="dropdown-menu col-12" aria-labelledby="dropdownMenuType">
-                                                            <a class="dropdown-item" href="<?= base_url("sell-now/general_item") ?>">Barang Umum</a>
-                                                            <a class="dropdown-item" href="<?= base_url("sell-now/specified_item") ?>">Barang Spesifik</a>
+                                                            <a class="dropdown-item" href="<?= base_url("sell-now/general-item") ?>">Barang Umum</a>
+                                                            <a class="dropdown-item" href="<?= base_url("sell-now/specified-item/text-book") ?>">Barang Spesifik - Buku Teks</a>
+                                                            <a class="dropdown-item" href="<?= base_url("sell-now/specified-item/non-text-book") ?>">Barang Spesifik - Buku Non Teks</a>
                                                             <a class="dropdown-item" href="<?= base_url("sell-now/service") ?>">Jasa</a>
                                                         </div>
                                                     </div>
@@ -71,10 +75,13 @@
                                         </div>
                                     </div>
                                     <?php switch (xss_clean($type)) {
-                                        case "general_item":
+                                        case "general-item":
                                             $this->load->view("product/_add_product_general_item");
                                             break;
-                                        case "specified_item":
+                                        case "specified-item-text":
+                                            $this->load->view("product/_add_product_specified_item");
+                                            break;
+                                        case "specified-item-non-text":
                                             $this->load->view("product/_add_product_specified_item");
                                             break;
                                         case "service":
@@ -113,8 +120,7 @@
         });
         if (category_id == 0) {
             return false;
-        }
-        else{
+        } else {
             $('#hidden_category_id').val(category_id);
         }
         if (subcategories.length > 0) {

@@ -20,13 +20,12 @@
                                     <p> <?= $book->title ?></p>
                                 </div>
                             </div>
-
                             <div class="row row-details">
                                 <div class="col-xs-12 col-sm-4 col-right">
-                                    <strong>ISBN</strong>
+                                    <strong>Harga</strong>
                                 </div>
                                 <div class="col-sm-8 col-right">
-                                    <p> <?= $book->isbn ?? "-" ?></p>
+                                    <p> <?= $book->prices ?></p>
                                 </div>
                             </div>
                             <div class="row row-details">
@@ -39,14 +38,6 @@
                             </div>
                             <div class="row row-details">
                                 <div class="col-xs-12 col-sm-4 col-right">
-                                    <strong>Penulis</strong>
-                                </div>
-                                <div class="col-sm-8 col-right">
-                                    <p> <?= $book->author ?? "-" ?></p>
-                                </div>
-                            </div>
-                            <div class="row row-details">
-                                <div class="col-xs-12 col-sm-4 col-right">
                                     <strong>Tahun Publikasi</strong>
                                 </div>
                                 <div class="col-sm-8 col-right">
@@ -55,26 +46,10 @@
                             </div>
                             <div class="row row-details">
                                 <div class="col-xs-12 col-sm-4 col-right">
-                                    <strong>Mata Pelajaran</strong>
-                                </div>
-                                <div class="col-sm-8 col-right">
-                                    <p> <?= $book->subject_name ?? "-" ?></p>
-                                </div>
-                            </div>
-                            <div class="row row-details">
-                                <div class="col-xs-12 col-sm-4 col-right">
                                     <strong>Klasifikasi</strong>
                                 </div>
                                 <div class="col-sm-8 col-right">
                                     <p> <?= $book->classification_name ?? "-" ?></p>
-                                </div>
-                            </div>
-                            <div class="row row-details">
-                                <div class="col-xs-12 col-sm-4 col-right">
-                                    <strong>Kelas</strong>
-                                </div>
-                                <div class="col-sm-8 col-right">
-                                    <p> <?= $book->class_name ?? "-" ?></p>
                                 </div>
                             </div>
                             <div class="row row-details">
@@ -93,20 +68,6 @@
                                     <p> <?= $book->description ?? "-" ?></p>
                                 </div>
                             </div>
-                        </div>
-
-                        <div class="col-sm-12 col-md-12 col-lg-6 mb-3">
-                            <h4 class="sec-title">Harga</h4>
-                            <?php foreach ($book->prices_json as $key => $price_book) : ?>
-                                <div class="row row-details">
-                                    <div class="col-xs-12 col-sm-4 col-right">
-                                        <strong>Zona <?= trim($price_book->zone) ?></strong>
-                                    </div>
-                                    <div class="col-sm-8">
-                                        <p> <?= (!empty($price_book->price) && $price_book->price != 0) ? price_formatted($price_book->price, "IDR") : "-" ?> </p>
-                                    </div>
-                                </div>
-                            <?php endforeach; ?>
                         </div>
 
                         <div class="col-sm-12 col-md-12 col-lg-6 mb-3">
@@ -199,11 +160,11 @@
             </div>
         </div>
         <div class="col-sm-12 col-left">
-            <?php if (!empty($cancel_option) && $cancel_option) : ƒ ?>
-                <a href="<?= base_url("select-book/" . $book->id) ?>" class="btn text-white btn-success">Pilih Buku Ini</a>
-                <button class="btn btn-custom btn-sell-now" type="button" onclick="javascript:history.back()">Kembali</button>
+            <?php if (!empty($cancel_option) && $cancel_option) :  ?>
+                <a href="<?= base_url("cancel-book") ?>" class="btn text-white btn-danger">Batalkan Pilihan</a>
             <?php else : ?>
-                <a href="<?= base_url("cancel-book") ?>" class="btn text-white btn-success">Pilih Buku Ini</a>
+                <a href="<?= base_url("non-text-book/select-book/" . $book->id) ?>" class="btn text-white btn-success">Pilih Buku Ini</a>
+                <button class="btn btn-custom btn-sell-now" type="button" onclick="javascript:history.back()">Kembali</button>
 
             <?php endif; ?>
         </div>
