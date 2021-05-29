@@ -4,10 +4,37 @@
             <h4 class="title">Buku Yang Dipilih</h4>
         </div> -->
         <div class="form-box-body">
-            <?php $this->load->view("product/_catalog_book_detail", ["book" => $book, 'cancel_option' => true]) ?>
+            <?php
+            // dd($type);
+            if ($type == "specified-item-text")
+                $this->load->view("product/_catalog_text_book_detail", ["book" => $book, 'cancel_option' => true]);
+            else
+                $this->load->view("product/_catalog_non_text_book_detail", ["book" => $book, 'cancel_option' => true]);
+            ?>
         </div>
     </div>
-
+    <div class="form-box">
+        <div class="form-box-head">
+            <h4 class="title">Kategori</h4>
+        </div>
+        <div class="form-box-body">
+            <div class="row">
+                <div class="col-sm-12 mb-3">
+                    <div class="selectdiv">
+                        <select id="categories" name="category_id_0" class="form-control" onchange="get_subcategories(this.value, 0);" required>
+                            <option value=""><?php echo trans('select_category'); ?></option>
+                            <?php if (!empty($category)) :
+                                foreach ($category as $item) : ?>
+                                    <option value="<?php echo html_escape($item->id); ?>"><?php echo category_name($item); ?></option>
+                            <?php endforeach;
+                            endif; ?>
+                        </select>
+                    </div>
+                    <div id="subcategories_container"></div>
+                </div>
+            </div>
+        </div>
+    </div>
     <!-- UPLOAD PHOTO -->
     <div class="row">
         <div class="col-12 m-b-30">
@@ -22,6 +49,8 @@
             <h4 class="title"><?php echo trans('detail_product'); ?></h4>
         </div>
         <div class="form-box-body">
+            <input type="hidden" id="hidden_category_id" value="" name="filter_category">
+
             <div class="row">
                 <div class="col-md-6 col-12">
                     <div class="form-group">
@@ -210,20 +239,7 @@
                 <div class="form-box-body">
                     <div class="row">
                         <div class="col-sm-12 mb-3">
-                            <div class="selectdiv">
-                                <select id="categories" name="category_id_0" class="form-control" onchange="get_subcategories(this.value, 0);" required>
-                                    <option value=""><?php echo trans('select_category'); ?></option>
-                                    <?php if (!empty($category)) :
-                                        foreach ($category as $item) : ?>
-                                            <option value="<?php echo html_escape($item->id); ?>"><?php echo category_name($item); ?></option>
-                                    <?php endforeach;
-                                    endif; ?>
-                                </select>
-                            </div>
-                            <div id="subcategories_container"></div>
-                        </div>
-                        <div class="col-sm-12 mb-3">
-                            <?= form_open(base_url("sell-now/specified_item"), ["method" => "GET"]) ?>
+                            <?= form_open(base_url("sell-now/specified-item/" . ($type == "specified-item-text" ? "text-book" : "non-text-book")), ["method" => "GET"]) ?>
 
                             <div class="row form-inline">
                                 <div class="container form-group">
@@ -232,7 +248,6 @@
                                     <button class="ml-2 btn btn-custom btn-sell-now">Cari</button>
                                 </div>
                             </div>
-                            <input type="hidden" id="hidden_category_id" value="" name="filter_category">
                             <div class="row">
                                 <div class="form-group col-4">
                                     <label class="control-label">Klasifikasi</label>
@@ -252,23 +267,31 @@
                                         <?php endforeach ?>
                                     </select>
                                 </div>
-                                <div class="form-group col-4">
-                                    <label class="control-label">Kelas</label>
-                                    <select name="filter_school_class" class="form-control">
-                                        <option value="">Semua</option>
-                                        <?php foreach ($school_class as $value) : ?>
-                                            <option value="<?= $value->name ?>" <?= $value->name == xss_clean($_GET["filter_school_class"]) ? "selected" : "" ?>><?= $value->name ?></option>
-                                        <?php endforeach ?>
-                                    </select>
-                                </div>
+                                <?php if ($type == "specified-item-text") : ?>
+                                    <div class="form-group col-4">
+                                        <label class="control-label">Kelas</label>
+                                        <select name="filter_school_class" class="form-control">
+                                            <option value="">Semua</option>
+                                            <?php foreach ($school_class as $value) : ?>
+                                                <option value="<?= $value->name ?>" <?= $value->name == xss_clean($_GET["filter_school_class"]) ? "selected" : "" ?>><?= $value->name ?></option>
+                                            <?php endforeach ?>
+                                        </select>
+                                    </div>
+                                <?php endif; ?>
                             </div>
+
                             <?php form_close() ?>
                         </div>
 
                     </div>
                     <div class="row">
                         <div class="col-12">
-                            <?php $this->load->view("product/_catalog_book") ?>
+                            <?php if ($type = "specified-item-text") {
+                                $this->load->view("product/_catalog_text_book");
+                            } else {
+                                $this->load->view("product/_catalog_non_text_book");
+                            }
+                            ?>
                         </div>
                     </div>
                 </div>

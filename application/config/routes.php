@@ -62,12 +62,13 @@ $general_settings = $this->config->item('general_settings');
 $languages = $this->config->item('languages');
 foreach ($languages as $language) {
     if ($language->status == 1) {
-        $key = "";
-        if ($general_settings->site_lang != $language->id) {
+        $key = ""; // ambil ini dia
+        if ($general_settings->site_lang != $language->id) { // gak jalanin ini kan kita language ID
             $key = $language->short_form . '/';
             $route[$language->short_form] = 'home_controller/index';
             $route[$key . '/error-404'] = 'home_controller/error_404';
         }
+
         //auth
         $route[$key . $routes->register_buyer]['GET'] = 'auth_controller/register_buyer';
         $route[$key . $routes->register_seller]['GET'] = 'auth_controller/register_seller';
@@ -96,7 +97,8 @@ foreach ($languages as $language) {
         /*product*/
         $route[$key . $routes->start_selling]['GET'] = 'product_controller/start_selling';
         $route[$key . $routes->sell_now]['GET'] = 'product_controller/add_product';
-        $route[$key . $routes->sell_now."/(:any)"]['GET'] = 'product_controller/add_product/$1';
+        $route[$key . $routes->sell_now . "/(:any)"]['GET'] = 'product_controller/add_product/$1';
+        $route[$key . $routes->sell_now . "/(:any)/(:any)"]['GET'] = 'product_controller/add_product/$1/$2';
         $route[$key . $routes->sell_now . '/(:num)']['GET'] = 'product_controller/edit_draft/$1';
         $route[$key . $routes->sell_now . '/' . $routes->product_details . '/(:num)']['GET'] = 'product_controller/edit_product_details/$1';
         $route[$key . $routes->sell_now . '/' . $routes->edit_product . '/(:num)']['GET'] = 'product_controller/edit_product/$1';
@@ -162,8 +164,9 @@ foreach ($languages as $language) {
         $route[$key . 'login/vendor']['GET'] = 'seller_controller/index';
         $route[$key . 'login/admin']['GET'] = 'partners_controller/index';
         /*Book*/
-        $route[$key . 'detail-book/(:any)']['GET'] = 'product_controller/get_detail_book/$1';
-        $route[$key . 'select-book/(:any)']['GET'] = 'product_controller/select_book/$1';
+        $route[$key . '(:any)/detail-book/(:any)']['GET'] = 'product_controller/get_detail_book/$1/$2';
+        $route[$key . 'cancel-book']['GET'] = 'product_controller/cancel_selected_book';
+        $route[$key . '(:any)/select-book/(:any)']['GET'] = 'product_controller/select_book/$1/$2';
 
         /*any*/
         if ($general_settings->site_lang != $language->id) {

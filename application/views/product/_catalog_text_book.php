@@ -16,8 +16,8 @@ $book_result = $books["result"];
                         ISBN: <?= $book->isbn ?? "-" ?> <br>
                         Penulis: <?= $book->author ?? "-" ?> <br>
                     </p>
-                    <a href="<?= base_url("detail-book/" . $book->id) ?>" class="btn btn-custom btn-sell-now">Lebih Detail</a>
-                    <a href="" <?= base_url("select-book/" . $book->id) ?>"" class="btn text-white btn-success">Pilih Buku Ini</a>
+                    <a href="<?= base_url("text_book/detail-book/" . $book->id) ?>" class="btn btn-custom btn-sell-now">Lebih Detail</a>
+                    <a href=" <?= base_url("text_book/select-book/" . $book->id) ?>" class="btn text-white btn-success">Pilih Buku Ini</a>
                 </div>
             </div>
         </div>
