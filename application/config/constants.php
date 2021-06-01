@@ -91,6 +91,9 @@ defined("ROLE_ADMIN") or define("ROLE_ADMIN", "admin");
 defined("ROLE_SUPPLIER") or define("ROLE_SUPPLIER", "supplier");
 defined("ROLE_SATDIK") or define("ROLE_SATDIK", "satdik");
 defined("LIMIT_PAGINATION") or define("LIMIT_PAGINATION", 10);
+defined("FORM_RANDOM_ACTIVATE") or define("FORM_RANDOM_ACTIVATE", ENVIRONMENT == "development");
+// If you want to permanently deactive form random.
+// defined("FORM_RANDOM_ACTIVATE") or define("FORM_RANDOM_ACTIVATE", false);
 
 
 defined('IMG_BASE64_1x1')      		or define('IMG_BASE64_1x1', 'data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==');
