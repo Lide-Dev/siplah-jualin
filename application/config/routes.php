@@ -160,6 +160,7 @@ foreach ($languages as $language) {
         $route[$key . 'compare/compared_product']['POST'] = 'compare_controller/compared_product';
         $route[$key . 'compare/add_compared_product']['GET'] = 'compare_controller/add_compared_product';
         $route[$key . 'compare/delete_compared_product']['GET'] = 'compare_controller/delete_compared_product';
+        $route[$key . 'compare/add_compared_vendor']['GET'] = 'compare_controller/add_compared_vendor';
         /*Multi Login*/
         $route[$key . 'login/member']['GET'] = 'buyer_controller/index';
         $route[$key . 'login/supervisor']['GET'] = 'supervisor_controller/index';

@@ -1144,6 +1144,7 @@ $lang = [
     "choose_source" => "Pilih Sumber",
     "compare" => "Bandingkan",
     "specification" => "Spesifikasi",
+    "support_document_number" => "Nomor Dokumen Pendukung",
     "search_store" => "Cari Toko",
 ];
 

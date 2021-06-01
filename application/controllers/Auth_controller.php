@@ -489,9 +489,7 @@ class Auth_controller extends Home_Core_Controller
         $this->form_validation->set_rules("business_name", trans("business_name"), "required|is_unique[supplier_profiles.supplier_name]|max_length[254]");
         $this->form_validation->set_rules("npwp", "NPWP", "required|numeric|exact_length[15]|is_unique[supplier_profiles.npwp]");
         $this->form_validation->set_rules('npwp_document', 'Dokumen NPWP', 'callback_file_check[npwp_document]');
-        $this->form_validation->set_rules("nib", "NIB", "required|numeric|exact_length[13]|max_length[254]");
         $this->form_validation->set_rules('business_support_document', 'Dokumen Pendukung', 'required|in_list[siup,nib,tdp]');
-        $this->form_validation->set_rules('nib_document', 'Dokumen NIB', 'callback_file_check[nib_document]');
         // $this->form_validation->set_rules("umkm", trans("tax_status"), "required|in_list[umkm,non_umkm]");
         $this->form_validation->set_rules("address", trans("address"), "required|max_length[254]");
         $this->form_validation->set_rules("province", trans("province"), ["required", ["callback_valid_province", [$this->location_model, "valid_province"]]]);
@@ -514,8 +512,21 @@ class Auth_controller extends Home_Core_Controller
         } else {
             $this->form_validation->set_rules("responsible_person_name", trans("full_name") . " Penanggung Jawab", "required|max_length[254]");
             $this->form_validation->set_rules("responsible_person_position", trans("position") . " Penanggung Jawab", "required|max_length[254]");
-            if (!empty($_FILES["siup_document"])) {
-                $this->form_validation->set_rules('siup_document', 'Dokumen SIUP', 'callback_file_check[siup_document]');
+            if ($this->input->post("business_support_document") == "siup") {
+                if (!empty($_FILES["siup_document"])) {
+                    $this->form_validation->set_rules('siup_document', 'Dokumen SIUP', 'callback_file_check[siup_document]');
+                }
+            } elseif ($this->input->post("business_support_document") == "nib") {
+                if (!empty($_FILES["nib_document"])) {
+                    $this->form_validation->set_rules('nib_document', 'Dokumen NIB', 'callback_file_check[nib_document]');
+                }
+                if (empty($this->input->post("nib"))) {
+                    $this->form_validation->set_rules('nib', 'NIB', 'required|max_length[13]');
+                }
+            } elseif ($this->input->post("business_support_document") == "tdp") {
+                if (!empty($_FILES["tdp_document"])) {
+                    $this->form_validation->set_rules('tdp_document', 'Dokumen TDP', 'callback_file_check[tdp_document]');
+                }
             }
         }
         $this->form_validation->set_error_delimiters("<small class='text-danger'>", "</small>");
@@ -560,9 +571,11 @@ class Auth_controller extends Home_Core_Controller
             }
             $file_data = [
                 "npwp" => $_FILES["npwp_document"],
-                "nib" => $_FILES["nib_document"],
                 "siup" => $_FILES["siup_document"] ?? null,
-                "cover_book" => $_FILES["cover_book_document"] ?? null,
+                "nib" => $_FILES["nib_document"] ?? null,
+                "tdp" => $_FILES["tdp_document"] ?? null,
+                "cover_book" => $_FILES["cover_book_document"],
+                "ktp" => $_FILES["ktp_document"] ?? null
             ];
             $transact = $this->auth_model->register_supplier($user_data, $file_data) ? "TRUE" : "FALSE";
 

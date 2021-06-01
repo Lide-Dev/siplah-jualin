@@ -27,11 +27,10 @@ class Upload_model extends CI_Model
         $result = [];
         $this->load->library('upload');
         foreach ($file as $key => $value) {
-            if ($key == "siup" && empty($value["name"])) {
+            if (empty($value["name"])) {
                 continue;
             }
             $extension = pathinfo($_FILES["{$key}_document"]["name"], PATHINFO_EXTENSION);
-
 
             $config["upload_path"] = "./uploads/supplier_document/";
             $config["allowed_types"] = "jpg|jpeg|png|pdf";
