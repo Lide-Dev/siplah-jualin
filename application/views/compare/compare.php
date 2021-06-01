@@ -152,6 +152,7 @@
 		width: 50%;
 		height: 100%;
 		min-height: 100vmin;
+		display: inline-block;
 	}
 
 	.compared-container {
