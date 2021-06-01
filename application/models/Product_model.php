@@ -29,7 +29,7 @@ class Product_model extends Core_Model
         $data["created_at"] = date("Y-m-d H:i:s");
         $data["slug"] = str_slug($data["title"]);
         //set category id
-        $data['category_id'] = 0;
+        // $data['category_id'] = 0;
         // $post_inputs = $this->input->post();
         // foreach ($post_inputs as $key => $value) {
         //     if (strpos($key, 'category_id_') !== false) {
@@ -39,8 +39,8 @@ class Product_model extends Core_Model
         // if (empty($data["country_id"])) {
         //     $data["country_id"] = 0;
         // }
-
-        return $this->db->insert('products', $data);
+        $this->db->insert('products', $data);
+        return $data["id"];
     }
     //add product
     // public function add_product()

@@ -462,13 +462,13 @@ class Product_controller extends Home_Core_Controller
 				]);
 				$data["is_price_zone"] = 1;
 			}
-			$this->product_model->add_product($data);
+			$id = $this->product_model->add_product($data);
 			//last id
-			$last_id = $this->db->insert_id();
+			// $last_id = $this->db->insert_id();
 			//update slug
-			$this->product_model->update_slug($last_id);
+			$this->product_model->update_slug($id);
 			//add product images
-			$this->file_model->add_product_images($last_id);
+			$this->file_model->add_product_images($id);
 			$this->db->trans_complete();
 			return true;
 		}
@@ -516,13 +516,13 @@ class Product_controller extends Home_Core_Controller
 				"availability_status" => $this->input->post("availability_status")
 			];
 			$data["price"] = clean_number($this->input->post("price"));
-			$this->product_model->add_product($data);
+			$id = $this->product_model->add_product($data);
 			//last id
-			$last_id = $this->db->insert_id();
+			// $last_id = $this->db->insert_id();
 			//update slug
-			$this->product_model->update_slug($last_id);
+			$this->product_model->update_slug($id);
 			//add product images
-			$this->file_model->add_product_images($last_id);
+			$this->file_model->add_product_images($id);
 			$this->db->trans_complete();
 			return true;
 		}
@@ -538,6 +538,7 @@ class Product_controller extends Home_Core_Controller
 			return false;
 		} else {
 			$this->db->trans_begin();
+			dd($_POST);
 			$data = [
 				"category_id" => $this->input->post("category_product"),
 				"title" => $this->input->post("title"),
@@ -570,13 +571,13 @@ class Product_controller extends Home_Core_Controller
 				"availability_status" => null
 			];
 			$data["price"] = clean_number($this->input->post("price"));
-			$this->product_model->add_product($data);
+			$id = $this->product_model->add_product($data);
 			//last id
-			$last_id = $this->db->insert_id();
+			// $last_id = $this->db->insert_id();
 			//update slug
-			$this->product_model->update_slug($last_id);
+			$this->product_model->update_slug($id);
 			//add product images
-			$this->file_model->add_product_images($last_id);
+			$this->file_model->add_product_images($id);
 			$this->db->trans_complete();
 			return true;
 		}

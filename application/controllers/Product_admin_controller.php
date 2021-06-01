@@ -181,8 +181,10 @@ class Product_admin_controller extends Admin_Core_Controller
      */
     public function product_details($id)
     {
+        // dd($id);
         $data['title'] = trans("product_details");
         $data['product'] = $this->product_admin_model->get_product($id,true);
+        // dd($data["product"]);
         if (empty($data['product'])) {
             redirect($this->agent->referrer());
         }

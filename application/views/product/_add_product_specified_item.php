@@ -14,6 +14,7 @@
             ?>
         </div>
     </div>
+    
     <div class="form-box">
         <div class="form-box-head">
             <h4 class="title">Kategori</h4>

@@ -271,7 +271,7 @@ class Product_admin_model extends CI_Model
 		$query = $this->db->get('products');
 		// dd($query->row($with_custom_object?"Product":""),$with_custom_object);
 		if ($with_custom_object) {
-			return $query->custom_row_object(0,"Product");
+			return $query->first_row("Product");
 		} else {
 			return $query->row($with_custom_object ? "Product" : "");
 		}
