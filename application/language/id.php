@@ -1145,6 +1145,8 @@ $lang = [
     "specification" => "Spesifikasi",
     "support_document_number" => "Nomor Dokumen Pendukung",
     "search_store" => "Cari Toko",
+    "nego_shipping" => "Tawar Biaya Pengiriman",
+    "nego_price" => "Tawar Harga",
 ];
 
 $validation = include(BASEPATH . "../application/language/id_validation.php");

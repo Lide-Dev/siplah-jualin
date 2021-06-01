@@ -104,6 +104,7 @@ class Cart_controller extends Home_Core_Controller
         redirect(generate_url("cart"));
       }
     }
+    dd($product);
     redirect($this->agent->referrer());
   }
 
