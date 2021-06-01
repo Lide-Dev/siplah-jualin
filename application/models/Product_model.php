@@ -797,11 +797,11 @@ class Product_model extends Core_Model
     }
 
     //get product by id
-    public function get_product_by_id($id, $with_custom_object =false)
+    public function get_product_by_id($id)
     {
         $sql = "SELECT * FROM products WHERE id = ?";
         $query = $this->db->query($sql, array(clean_number($id)));
-        return $query->row($with_custom_object?"Product":"");
+        return $query->row();
     }
 
     //get available product

@@ -74,6 +74,7 @@
 												</div>
 												<div class="change-conversation col-1">
 													<a href="<?= base_url('negotiation/change_conversation' . "?product_id=" . $product->id) ?>" class="btn btn-dark text-white">Pilih produk</a>
+													<button type="button" class="btn btn-success mt-1 text-white" data-toggle="modal" data-target="#modal-negotiation-<?= $product->id ?>">Kirim Penawaran</button>
 												</div>
 											</div>
 									<?php endforeach;
@@ -159,7 +160,6 @@
 							</div>
 						</div>
 					</div>
-
 			</div>
 		<?php else : ?>
 		<?php endif; ?>
@@ -167,4 +167,45 @@
 	</div>
 </div>
 </div>
+<?php foreach ($products as $product) : ?>
+	<div class="modal fade" id="modal-negotiation-<?= $product->id ?>" tabindex="-1" role="dialog" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered" role="document">
+			<div class="modal-content modal-custom">
+				<div class="modal-header">
+					<h5 class="modal-title"><?= trans("submit_a_quote"); ?></h5>
+					<button type="button" class="close" data-dismiss="modal">
+						<span aria-hidden="true"><i class="icon-close"></i> </span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<input type="hidden" name="product_id" class="form-control" value="<?= $product->id ?>">
+					<div class="form-group">
+						<label class="control-label"><?= trans('price'); ?></label>
+						<div class="input-group">
+							<div class="input-group-prepend">
+								<span class="input-group-text input-group-text-currency" id="basic-addon1"><?= get_currency($this->payment_settings->default_product_currency); ?></span>
+							</div>
+							<input type="text" name="nego_price" aria-describedby="basic-addon1" class="form-control form-input price-input validate-price-input" placeholder="<?= $this->input_initial_price; ?>" required>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label"><?= trans('shipping_cost'); ?></label>
+						<div class="input-group">
+							<div class="input-group-prepend">
+								<span class="input-group-text input-group-text-currency" id="basic-addon1"><?= get_currency($this->payment_settings->default_product_currency); ?></span>
+							</div>
+							<input type="text" name="shipping_cost" aria-describedby="basic-addon1" class="form-control form-input price-input validate-price-input" placeholder="<?= $this->input_initial_price; ?>" required>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-md btn-red" data-dismiss="modal"><?= trans("close"); ?></button>
+					<button type="submit" class="btn btn-md btn-custom"><?= trans("submit"); ?></button>
+				</div>
+				<?= form_close(); ?>
+				<!-- form end -->
+			</div>
+		</div>
+	</div>
+<?php endforeach ?>
 <!-- Wrapper End-->

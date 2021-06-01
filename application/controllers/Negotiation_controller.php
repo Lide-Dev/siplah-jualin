@@ -15,11 +15,11 @@ class Negotiation_controller extends Home_Core_Controller
     $data['description'] = trans("negotiation") . " - " . $this->app_name;
     $data['keywords'] = trans("negotiation") . "," . $this->app_name;
 
-    // $products_id = array("00b1ac82-ffce-4c31-9161-6ed51c3b1de6");
-    // $products_quantity = array(1);
+    $products_id = array("00b1ac82-ffce-4c31-9161-6ed51c3b1de6");
+    $products_quantity = array(1);
 
-    $products_id = $this->session->userdata('nego_products_id');
-    $products_quantity = $this->session->userdata('nego_products_quantity');
+    // $products_id = $this->session->userdata('nego_products_id');
+    // $products_quantity = $this->session->userdata('nego_products_quantity');
     $conversation_id = $this->input->get('conv_id');
 
     $data['products'] = $this->negotiation_model->get_nego_products_by_id($products_id, $products_quantity);
@@ -35,8 +35,7 @@ class Negotiation_controller extends Home_Core_Controller
 
   public function change_conversation()
   {
-    // $user_id = $this->session->userdata('modesy_sess_user_id');
-    $user_id = "e22ff369-5a3a-47c5-ba63-0683e872bd11";
+    $user_id = $this->session->userdata('modesy_sess_user_id');
     $product_id = $this->input->get('product_id');
     $conversation_id = $this->negotiation_model->get_nego_conversation_by_user_and_product_id($user_id, $product_id)->id;
     redirect("negotiation?conv_id=" . $conversation_id);
@@ -47,11 +46,9 @@ class Negotiation_controller extends Home_Core_Controller
     $nego_products = $this->session->userdata('nego_products_id');
     $nego_quantities = $this->session->userdata('nego_products_quantity');
 
-    // $quantity = $this->input->get('product_quantity');
+    $quantity = $this->input->get('product_quantity');
     $product_id = $this->input->get('product_id');
-    // $user_id = $this->session->userdata('modesy_sess_user_id');
-    $user_id = "e22ff369-5a3a-47c5-ba63-0683e872bd11";
-    $quantity = 1;
+    $user_id = $this->session->userdata('modesy_sess_user_id');
 
     if (!empty($nego_products)) {
       if (!in_array($product_id, $nego_products)) {
@@ -101,8 +98,8 @@ class Negotiation_controller extends Home_Core_Controller
   public function send_message()
   {
     $message = $this->input->post('message');
-    // $user_id = $this->session->userdata('modesy_sess_user_id');
-    $user_id = "e22ff369-5a3a-47c5-ba63-0683e872bd11";
+    $user_id = $this->session->userdata('modesy_sess_user_id');
+    // $user_id = "e22ff369-5a3a-47c5-ba63-0683e872bd11";
     $vendor_id = $this->input->post('vendor_id');
     $conversation_id = $this->input->post('conversation_id');
   }
