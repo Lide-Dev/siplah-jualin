@@ -490,4 +490,11 @@ class Category_model extends CI_Model
         }
         return false;
     }
+
+    public function valid_category($id)
+    {
+        $sql = $this->build_query() . "WHERE categories.id = ?";
+        $query = $this->db->query($sql, array(clean_number($id)));
+        return !empty($query->row());
+    }
 }

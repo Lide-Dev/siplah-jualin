@@ -1,4 +1,7 @@
 <?php
+
+use phpDocumentor\Reflection\Types\Null_;
+
 defined('BASEPATH') or exit('No direct script access allowed');
 
 class Product_controller extends Home_Core_Controller
@@ -87,6 +90,10 @@ class Product_controller extends Home_Core_Controller
 
 	public function init_specified_item($type, &$data)
 	{
+		if (!empty($_SESSION["ap_selected_book_type"]) && $_SESSION["ap_selected_book_type"] != $type) {
+			unset($_SESSION["ap_selected_book_id"]);
+			unset($_SESSION["ap_selected_book_type"]);
+		}
 		if (empty($_SESSION["ap_selected_book_id"])) {
 			$query_parameter = ["page" => 1, "filter" => [], "search" => ""];
 			$url_query = "";
@@ -121,9 +128,9 @@ class Product_controller extends Home_Core_Controller
 			$response = $this->book_model->get_paginated_books($query_parameter,  $type == "non_text_book");
 			$response["url_query"] = $url_query;
 			$data["books"] = $response;
-			$data["classification"] = $this->book_model->get_classification($type == "non_text_book");
+			$data["classification"] = $this->book_model->get_classification(null, $type == "non_text_book");
 			$data["school_class"] = $this->book_model->get_school_class();
-			$data["school_level"] = $this->book_model->get_school_level($type == "non_text_book");
+			$data["school_level"] = $this->book_model->get_school_level(null, $type == "non_text_book");
 		} else {
 			$data["book"] = $this->book_model->get_books($_SESSION["ap_selected_book_id"], $type == "non_text_book");
 		}
@@ -153,7 +160,7 @@ class Product_controller extends Home_Core_Controller
 		$data['title'] = trans("sell_now");
 		$data['description'] = trans("sell_now") . " - " . $this->app_name;
 		$data['keywords'] = trans("sell_now") . "," . $this->app_name;
-
+		$data["couriers"] = $this->product_model->get_couriers();
 		$data['modesy_images'] = $this->file_model->get_sess_product_images_array();
 		$data["file_manager_images"] = $this->file_model->get_user_file_manager_images();
 		$data["active_product_system_array"] = $this->get_activated_product_system();
@@ -205,17 +212,18 @@ class Product_controller extends Home_Core_Controller
 		if (!is_user_vendor()) {
 			redirect(generate_url("start_selling"));
 		}
-		if (!in_array($type, ["text_book", "non_text_book"]))
+		if (!in_array($type, ["text-book", "non-text-book"]))
 			redirect(base_url("error-404"));
 
-		$data["book"] = $this->book_model->get_books($id, $type == "non_text_book");
+		$data["book"] = $this->book_model->get_books($id, $type == "non-text-book");
 		// dd($id,$data["book"]);
 		if (empty($data["book"])) {
 			redirect(base_url("error-404"));
 		}
 
 		$this->session->set_tempdata("ap_selected_book_id", $id, 1800);
-		if ($type == "non_text_book")
+		$this->session->set_tempdata("ap_selected_book_type", $type == "non-text-book" ? "non_text_book" : "text_book", 1800);
+		if ($type == "non-text-book")
 			redirect(base_url("sell-now/specified-item/non-text-book"));
 		else
 			redirect(base_url("sell-now/specified-item/text-book"));
@@ -234,6 +242,8 @@ class Product_controller extends Home_Core_Controller
 		// if (empty($data["book"])) {
 		// 	redirect(base_url("error-404"));
 		// }
+		$type = $_SESSION["ap_selected_book_type"];
+		unset($_SESSION["ap_selected_book_type"]);
 		unset($_SESSION["ap_selected_book_id"]);
 		// dd('s');
 		if ($type == "non_text_book")
@@ -250,10 +260,11 @@ class Product_controller extends Home_Core_Controller
 		if (!is_user_vendor()) {
 			redirect(generate_url("start_selling"));
 		}
-		if (!in_array($type, ["text_book", "non_text_book"]))
+		if (!in_array($type, ["text-book", "non-text-book"]))
 			redirect(base_url("error-404"));
 
-		$data["book"] = $this->book_model->get_books($id, $type == "non_text_book");
+		$data["book"] = $this->book_model->get_books($id, $type == "non-text-book");
+		// dd($data["book"]);
 		// dd($id);
 		if (empty($data["book"])) {
 			redirect(base_url("error-404"));
@@ -264,7 +275,7 @@ class Product_controller extends Home_Core_Controller
 		$data['keywords'] = "Detail Buku {$data["book"]->title}" . "," . $this->app_name;
 
 		$this->load->view('partials/_header', $data);
-		if ($type == "non_text_book") {
+		if ($type == "non-text-book") {
 			$this->load->view('product/_catalog_non_text_book_detail', $data);
 		} else {
 			$this->load->view('product/_catalog_text_book_detail', $data);
@@ -273,36 +284,302 @@ class Product_controller extends Home_Core_Controller
 	}
 
 	/**
-	 * Add Product Post
+	 * Add product according to type of product
+	 *
+	 * @return void
 	 */
-	public function add_product_post()
+	public function add_product_post($type, $subtype = null)
 	{
-		//check auth
-		if (!$this->auth_check) {
-			redirect(lang_base_url());
+		if (!empty($type) && !in_array($type, ["specified-item", "general-item", "service"])) {
+			redirect(base_url("error-404"));
 		}
-		if (!is_user_vendor()) {
+		if (!empty($subtype) && !in_array($subtype, ["text-book", "non-text-book"])) {
+			redirect(base_url("error-404"));
+		} else {
+			if ($subtype == "text-book") {
+				$type .= "-text";
+				if ($_SESSION["ap_selected_book_type"] != "text_book") {
+					$this->session->set_flashdata('error', "Terjadi kesalahan pada tipe form.");
+					redirect("", "refresh");
+				}
+			} else if ($subtype == "non-text-book") {
+				$type .= "-non-text";
+				if ($_SESSION["ap_selected_book_type"] != "non_text_book") {
+					$this->session->set_flashdata('error', "Terjadi kesalahan pada tipe form.");
+					redirect("", "refresh");
+				}
+			}
+		}		//check auth
+
+		if (!$this->auth_check || !is_user_vendor()) {
 			redirect(lang_base_url());
 		}
 		if ($this->general_settings->email_verification == 1 && $this->auth_user->email_status != 1) {
 			$this->session->set_flashdata('error', trans("msg_confirmed_required"));
 			redirect(generate_url("settings", "update_profile"));
 		}
-		//add product
-		if ($this->product_model->add_product()) {
+		switch ($type) {
+			case 'specified-item-text':
+				$type = $_SESSION["ap_selected_book_type"] == "text_book" ? "text-book" : "non-text-book";
+				if ($this->add_specified_product_post()) {
+					$this->session->set_flashdata('success', "Berhasil memasukkan produk baru!");
+					redirect(base_url("sell-now/specified-item/$type"));
+				} else {
+					// $this->session->set_flashdata('error', "Terdapat kesalahan di form!");
+					$this->add_product("specified-item", $type);
+				} // $this->init_specified_item("text_book", $data);
+
+				break;
+			case 'specified-item-non-text':
+				$type = $_SESSION["ap_selected_book_type"] == "text_book" ? "text-book" : "non-text-book";
+				if ($this->add_specified_product_post()) {
+					$this->session->set_flashdata('success', "Berhasil memasukkan produk baru!");
+					redirect(base_url("sell-now/specified-item/$type"));
+				} else {
+					$this->add_product("specified-item", $type);
+				}
+				break;
+			case 'general-item':
+				if ($this->add_general_product_post()) {
+					$this->session->set_flashdata('success', "Berhasil memasukkan produk baru!");
+					redirect(base_url("sell-now/general-item"));
+				} else {
+					$this->add_product("general-item");
+				}
+
+				break;
+			case 'service':
+				if ($this->add_service_product_post()) {
+					$this->session->set_flashdata('success', "Berhasil memasukkan produk baru!");
+					redirect(base_url("sell-now/service"));
+				} else {
+					$this->add_product("service");
+				}
+				break;
+			default:
+				redirect(base_url("error-404"));
+				break;
+		}
+	}
+
+	public function default_add_product_validation($is_service = false)
+	{
+		// $this->form_validation->set_rules("category_product", "Kategori Produk", ["required", ["callback_category", [$this->category_model, "valid_category"]]]);
+		$this->form_validation->set_rules("title", "Nama Produk", "required|max_length[500]");
+		$this->form_validation->set_rules("minimum_order", "Minimal Pemesanan", "required|less_than_equal_to[999]|greater_than_equal_to[1]");
+		$this->form_validation->set_rules("custom_category", "Kategori Buatana", "max_length[500]");
+		$this->form_validation->set_rules("kbki", "Kode KBKI", "numeric");
+		$this->form_validation->set_rules("description", "Kategori Buatan", "required|max_length[1000]");
+
+		$this->form_validation->set_rules("category_homemade", "Kategori Buatan Indonesia", "callback_valid_checkbox");
+		$this->form_validation->set_rules("category_umkm", "Kategori Barang UMKM", "callback_valid_checkbox");
+		$this->form_validation->set_rules("visibility", "Produk Dimunculkan", "callback_valid_checkbox");
+		$this->form_validation->set_rules("category_kemendikbud", "Kategori Barang Kemendikbud", "callback_valid_checkbox");
+		$this->form_validation->set_rules("warranty", "Garansi", "required|max_length[254]");
+		$this->form_validation->set_rules("sku", "Nomor SKU", "required|max_length[254]|is_unique[products.sku]");
+		//----------
+		if ($is_service) {
+			$this->form_validation->set_rules("guarantee", "Jaminan Pelaksanaan Jasa", "required|max_length[254]");
+		} else {
+			$this->form_validation->set_rules("publisher", "Merek/Penerbit", "max_length[254]");
+			$this->form_validation->set_rules("stock", "Minimal Pemesanan", "required|less_than_equal_to[999]|greater_than_equal_to[1]");
+			$this->form_validation->set_rules("condition", "Kondisi Barang", "required|max_length[100]");
+			$this->form_validation->set_rules("width", "Lebar", "required|numeric|less_than_equal_to[99999999]|greater_than_equal_to[1]");
+			$this->form_validation->set_rules("length", "Panjang", "required|numeric|less_than_equal_to[99999999]|greater_than_equal_to[1]");
+			$this->form_validation->set_rules("height", "Tinggi", "required|numeric|less_than_equal_to[99999999]|greater_than_equal_to[1]");
+			$this->form_validation->set_rules("weight", "Berat", "required|numeric|less_than_equal_to[99999999]|greater_than_equal_to[1]");
+			$this->form_validation->set_rules('availability_status', 'Status Ketersediaan', 'required|in_list[ready_stock,preorder]');
+			$this->form_validation->set_rules("delivery_method", "Metode Pengiriman", "required|max_length[254]");
+			$this->form_validation->set_rules("delivery_time", "Waktu Pengiriman", "required|max_length[254]");
+			$this->form_validation->set_rules('delivery_assurance', 'Asuransi Pengiriman', 'max_length[254]');
+		}
+		// $this->form_validation->set_rules("courier", "Kurir Pengiriman", ["required", ["callback_courier", [$this->product_model, "valid_courier"]]]);
+
+	}
+	/**
+	 * Add Product with type specified item Post
+	 */
+	public function add_specified_product_post()
+	{
+		$this->default_add_product_validation();
+		if ($_SESSION["ap_selected_book_type"] == "non_text_book") {
+			$this->form_validation->set_rules("price", "Harga", "required|numeric|greater_than_equal_to[1]");
+		} else {
+			$this->form_validation->set_rules("price_1", "Harga Zona 1", "required|numeric|greater_than_equal_to[1]");
+			$this->form_validation->set_rules("price_2", "Harga Zona 2", "required|numeric|greater_than_equal_to[1]");
+			$this->form_validation->set_rules("price_3", "Harga Zona 3", "required|numeric|greater_than_equal_to[1]");
+			$this->form_validation->set_rules("price_4", "Harga Zona 4", "required|numeric|greater_than_equal_to[1]");
+			$this->form_validation->set_rules("price_5", "Harga Zona 5", "required|numeric|greater_than_equal_to[1]");
+		}
+
+		if ($this->form_validation->run() == false) {
+			$this->session->set_flashdata('error', trans("msg_error"));
+			// dd($this->form_validation->error_array());
+			return false;
+		} else {
+			$this->db->trans_begin();
+			$data = [
+				"category_id" => $this->input->post("category_product"),
+				"title" => $this->input->post("title"),
+				"minimum_order" => $this->input->post("minimum_order"),
+				"stock" => clean_number($this->input->post("stock")),
+				"custom_category" => $this->input->post("custom_category"),
+				"kbki" => clean_number($this->input->post("kbki")),
+				"description" => html_escape($this->input->post("description")),
+				"is_homemade" => filter_var($this->input->post("category_homemade"), FILTER_VALIDATE_BOOLEAN) ? 1 : 0,
+				"is_umkm_product" => filter_var($this->input->post("category_umkm"), FILTER_VALIDATE_BOOLEAN) ? 1 : 0,
+				"is_kemendikbud_product" => filter_var($this->input->post("category_kemendikbud"), FILTER_VALIDATE_BOOLEAN) ? 1 : 0,
+				"visibility" => filter_var($this->input->post("visibility"), FILTER_VALIDATE_BOOLEAN) ? 1 : 0,
+				"publisher" => $this->input->post("publisher") ?? "",
+				"warranty" => $this->input->post("warranty"),
+				"guarantee" => $this->input->post("delivery_assurance") ?? "", //https://lifepal.co.id/media/asuransi-pengiriman-barang/
+				"product_condition" => $this->input->post("condition"),
+				"width" => $this->input->post("width") ?? 0,
+				"length" => $this->input->post("length") ?? 0,
+				"height" => $this->input->post("height") ?? 0,
+				"weight" => $this->input->post("weight") ?? 0,
+				"shipping_courier_id" => $this->input->post("courier"),
+				"shipping_method" => $this->input->post("delivery_method"),
+				"shipping_time" => $this->input->post("delivery_time"),
+				"catalog_id" => $_SESSION["ap_selected_book_id"],
+				"catalog_type" => $_SESSION["ap_selected_book_type"],
+				"type_product_id" => 1, //Buku
+				"status_product_id" => filter_var($this->input->post("visibility"), FILTER_VALIDATE_BOOLEAN) ? 1 : 2,
+				"currency" => "IDR",
+				"user_id" => $this->auth_user->id,
+				"availability_status" => $this->input->post("availability_status")
+			];
+			if ($_SESSION["ap_selected_book_type"] == "non_text_book") {
+				$data["price"] = clean_number($this->input->post("price"));
+			} else {
+				$data["price"] = json_encode([
+					"zone_1" => clean_number($this->input->post("price_1")),
+					"zone_2" => clean_number($this->input->post("price_2")),
+					"zone_3" => clean_number($this->input->post("price_3")),
+					"zone_4" => clean_number($this->input->post("price_4")),
+					"zone_5" => clean_number($this->input->post("price_5"))
+				]);
+			}
+			$this->product_model->add_product($data);
 			//last id
 			$last_id = $this->db->insert_id();
 			//update slug
 			$this->product_model->update_slug($last_id);
 			//add product images
 			$this->file_model->add_product_images($last_id);
-
-			redirect(generate_url("sell_now", "product_details") . '/' . $last_id);
-		} else {
-			$this->session->set_flashdata('error', trans("msg_error"));
-			redirect($this->agent->referrer());
+			$this->db->trans_complete();
+			return true;
 		}
 	}
+
+	public function add_general_product_post()
+	{
+		$this->default_add_product_validation();
+		$this->form_validation->set_rules("price", "Harga", "required|numeric|greater_than_equal_to[1]");
+		if ($this->form_validation->run() == false) {
+			$this->session->set_flashdata('error', trans("msg_error"));
+			// dd($this->form_validation->error_array());
+			return false;
+		} else {
+			$this->db->trans_begin();
+			$data = [
+				"category_id" => $this->input->post("category_product"),
+				"title" => $this->input->post("title"),
+				"minimum_order" => $this->input->post("minimum_order"),
+				"stock" => clean_number($this->input->post("stock")),
+				"custom_category" => $this->input->post("custom_category"),
+				"kbki" => clean_number($this->input->post("kbki")),
+				"description" => html_escape($this->input->post("description")),
+				"is_homemade" => filter_var($this->input->post("category_homemade"), FILTER_VALIDATE_BOOLEAN) ? 1 : 0,
+				"is_umkm_product" => filter_var($this->input->post("category_umkm"), FILTER_VALIDATE_BOOLEAN) ? 1 : 0,
+				"is_kemendikbud_product" => filter_var($this->input->post("category_kemendikbud"), FILTER_VALIDATE_BOOLEAN) ? 1 : 0,
+				"visibility" => filter_var($this->input->post("visibility"), FILTER_VALIDATE_BOOLEAN) ? 1 : 0,
+				"publisher" => $this->input->post("publisher") ?? "",
+				"warranty" => $this->input->post("warranty"),
+				"guarantee" => $this->input->post("delivery_assurance") ?? "", //https://lifepal.co.id/media/asuransi-pengiriman-barang/
+				"product_condition" => $this->input->post("condition"),
+				"width" => $this->input->post("width") ?? 0,
+				"length" => $this->input->post("length") ?? 0,
+				"height" => $this->input->post("height") ?? 0,
+				"weight" => $this->input->post("weight") ?? 0,
+				"shipping_courier_id" => $this->input->post("courier"),
+				"shipping_method" => $this->input->post("delivery_method"),
+				"shipping_time" => $this->input->post("delivery_time"),
+				"catalog_id" => null,
+				"catalog_type" => null,
+				"type_product_id" => 2, //Non Buku
+				"status_product_id" => filter_var($this->input->post("visibility"), FILTER_VALIDATE_BOOLEAN) ? 1 : 2,
+				"currency" => "IDR",
+				"user_id" => $this->auth_user->id,
+				"availability_status" => $this->input->post("availability_status")
+			];
+			$data["price"] = clean_number($this->input->post("price"));
+			$this->product_model->add_product($data);
+			//last id
+			$last_id = $this->db->insert_id();
+			//update slug
+			$this->product_model->update_slug($last_id);
+			//add product images
+			$this->file_model->add_product_images($last_id);
+			$this->db->trans_complete();
+			return true;
+		}
+	}
+
+	public function add_service_product_post()
+	{
+		$this->default_add_product_validation(true);
+		$this->form_validation->set_rules("price", "Harga", "required|numeric|greater_than_equal_to[1]");
+		if ($this->form_validation->run() == false) {
+			$this->session->set_flashdata('error', trans("msg_error"));
+			// dd($this->form_validation->error_array());
+			return false;
+		} else {
+			$this->db->trans_begin();
+			$data = [
+				"category_id" => $this->input->post("category_product"),
+				"title" => $this->input->post("title"),
+				"minimum_order" => $this->input->post("minimum_order"),
+				"stock" => 0,
+				"custom_category" => $this->input->post("custom_category"),
+				"kbki" => clean_number($this->input->post("kbki")),
+				"description" => html_escape($this->input->post("description")),
+				"is_homemade" => filter_var($this->input->post("category_homemade"), FILTER_VALIDATE_BOOLEAN) ? 1 : 0,
+				"is_umkm_product" => filter_var($this->input->post("category_umkm"), FILTER_VALIDATE_BOOLEAN) ? 1 : 0,
+				"is_kemendikbud_product" => filter_var($this->input->post("category_kemendikbud"), FILTER_VALIDATE_BOOLEAN) ? 1 : 0,
+				"visibility" => filter_var($this->input->post("visibility"), FILTER_VALIDATE_BOOLEAN) ? 1 : 0,
+				"publisher" => null,
+				"warranty" => $this->input->post("warranty"),
+				"guarantee" => $this->input->post("guarantee") ?? "", //https://lifepal.co.id/media/asuransi-pengiriman-barang/
+				"product_condition" => $this->input->post("condition"),
+				"width" => 0,
+				"length" => 0,
+				"height" => 0,
+				"weight" => 0,
+				"shipping_courier_id" => null,
+				"shipping_method" => null,
+				"shipping_time" => null,
+				"catalog_id" => null,
+				"catalog_type" => null,
+				"type_product_id" => 3, //Jasa
+				"status_product_id" => filter_var($this->input->post("visibility"), FILTER_VALIDATE_BOOLEAN) ? 1 : 2,
+				"currency" => "IDR",
+				"user_id" => $this->auth_user->id,
+				"availability_status" => null
+			];
+			$data["price"] = clean_number($this->input->post("price"));
+			$this->product_model->add_product($data);
+			//last id
+			$last_id = $this->db->insert_id();
+			//update slug
+			$this->product_model->update_slug($last_id);
+			//add product images
+			$this->file_model->add_product_images($last_id);
+			$this->db->trans_complete();
+			return true;
+		}
+	}
+
 
 	/**
 	 * Edit Draft
@@ -713,6 +990,18 @@ class Product_controller extends Home_Core_Controller
 			$array['active_system_value'] = "bidding";
 		}
 		return $array;
+	}
+
+	public function valid_checkbox($str = null)
+	{
+		$this->form_validation->set_message('valid_checkbox', '{field} cek box tidak valid');
+		if ((!empty($str) && $str == "on")) {
+			return true;
+		} else if (empty($str)) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	// public function get_catalog_text_books()

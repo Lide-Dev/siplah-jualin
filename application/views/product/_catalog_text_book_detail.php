@@ -202,7 +202,7 @@
             <?php if (!empty($cancel_option) && $cancel_option) :  ?>
                 <a href="<?= base_url("cancel-book") ?>" class="btn text-white btn-danger">Batalkan Pilihan</a>
             <?php else : ?>
-                <a href="<?= base_url("text_book/select-book/" . $book->id) ?>" class="btn text-white btn-success">Pilih Buku Ini</a>
+                <a href="<?= base_url("text-book/select-book/" . $book->id) ?>" class="btn text-white btn-success">Pilih Buku Ini</a>
                 <button class="btn btn-custom btn-sell-now" type="button" onclick="javascript:history.back()">Kembali</button>
 
             <?php endif; ?>

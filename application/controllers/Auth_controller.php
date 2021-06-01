@@ -598,7 +598,6 @@ class Auth_controller extends Home_Core_Controller
                 $this->form_validation->set_message('file_check', 'Hanya ekstensi pdf/jpg/png file {field} yang diterima.');
                 return false;
             }
-        } else {
             $this->form_validation->set_message('file_check', 'Pilih file {field} untuk di upload.');
             return false;
         }

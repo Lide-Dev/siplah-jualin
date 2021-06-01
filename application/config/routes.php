@@ -99,6 +99,8 @@ foreach ($languages as $language) {
         $route[$key . $routes->sell_now]['GET'] = 'product_controller/add_product';
         $route[$key . $routes->sell_now . "/(:any)"]['GET'] = 'product_controller/add_product/$1';
         $route[$key . $routes->sell_now . "/(:any)/(:any)"]['GET'] = 'product_controller/add_product/$1/$2';
+        $route[$key . $routes->sell_now . "/(:any)"]['POST'] = 'product_controller/add_product_post/$1';
+        $route[$key . $routes->sell_now . "/(:any)/(:any)"]['POST'] = 'product_controller/add_product_post/$1/$2';
         $route[$key . $routes->sell_now . '/(:num)']['GET'] = 'product_controller/edit_draft/$1';
         $route[$key . $routes->sell_now . '/' . $routes->product_details . '/(:num)']['GET'] = 'product_controller/edit_product_details/$1';
         $route[$key . $routes->sell_now . '/' . $routes->edit_product . '/(:num)']['GET'] = 'product_controller/edit_product/$1';

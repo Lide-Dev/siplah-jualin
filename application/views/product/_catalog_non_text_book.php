@@ -12,7 +12,8 @@ $book_result = $books["result"];
                     <h5 class="card-title"><?= $book->title ?></h5>
                     <h6 class="card-subtitle mb-2 text-muted"><?= $book->price_collection ?> </h6>
                     <p class="card-text">
-                        <span class="d-inline-block text-truncate" style="max-height: 40px;">Sinopsis: <?= $book->synopsis ?? "-" ?></span> <br>
+                        <b>Sinopsis:</b> <?= word_limiter($book->synopsis, 15, "...") ?? "-" ?> <br>
+                        <b>Deskripsi:</b> <?= $book->description ?>
                     </p>
                     <a href="<?= base_url("non-text-book/detail-book/" . $book->id) ?>" class="btn btn-custom btn-sell-now">Lebih Detail</a>
                     <a href=" <?= base_url("non-text-book/select-book/" . $book->id) ?>" class="btn text-white btn-success">Pilih Buku Ini</a>
