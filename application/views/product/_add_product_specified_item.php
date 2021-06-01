@@ -38,12 +38,20 @@
         </div>
     </div>
     <!-- UPLOAD PHOTO -->
-    <div class="row">
-        <div class="col-12 m-b-30">
-            <label class="control-label font-600"><?php echo trans("images"); ?></label>
-            <?php $this->load->view("product/_image_upload_box"); ?>
+    <!-- <div class="row"> -->
+    <div class="form-box">
+        <div class="form-box-head">
+            <h4 class="title">Upload Gambar</h4>
         </div>
+        <div class="form-box-body">
+            <div class="col-12 m-b-30">
+                <label class="control-label font-600"><?php echo trans("images"); ?></label>
+                <?php $this->load->view("product/_image_upload_box"); ?>
+            </div>
+        </div>
+
     </div>
+    <!-- </div> -->
     <?php echo form_open("sell-now/specified-item/" . ($type == "specified-item-text" ? "text-book" : "non-text-book")) ?>
 
     <!-- DETAILS PRODUCT -->
@@ -103,10 +111,10 @@
                 </div>
             </div>
 
-
-            <div class="form-group">
-                <label class="control-label"><?php echo trans("description"); ?></label>
-                <!-- <div class="row">
+            <div class="row">
+                <div class="form-group col-12">
+                    <label class="control-label"><?php echo trans("description"); ?></label>
+                    <!-- <div class="row">
                                                     <div class="col-sm-12 m-b-5">
                                                         <button type="button" class="btn btn-sm btn-secondary color-white btn_ck_add_image m-b-5"><i class="icon-image"></i><?php echo trans("add_image"); ?></button>
                                                         <button type="button" class="btn btn-sm btn-info color-white btn_ck_add_video m-b-5"><i class="icon-image"></i><?php echo trans("add_video"); ?></button>
@@ -114,8 +122,9 @@
                                                     </div>
                                                 </div>
                                                 <textarea name="description" id="ckEditor" class="text-editor"></textarea> -->
-                <textarea name="description" class="form-control form-input text-editor" required maxlength="1000"><?= set_form_value("description", true, "text", ["max" => 200, "min" => 50]) ?></textarea>
-                <?php echo form_error('description'); ?>
+                    <textarea name="description" class="form-control form-input text-editor" required maxlength="1000"><?= set_form_value("description", true, "text", ["max" => 200, "min" => 50]) ?></textarea>
+                    <?php echo form_error('description'); ?>
+                </div>
             </div>
 
             <?php if ($type == "specified-item-non-text") : ?>
@@ -338,77 +347,76 @@
 
 <?php else : ?>
 
-    <div class="row">
-        <div class="col-sm-12">
-            <div class="form-box">
-                <div class="form-box-head">
-                    <h4 class="title">Pilih Katalog Buku</h4>
-                </div>
-                <div class="form-box-body">
-                    <div class="row">
-                        <div class="col-sm-12 mb-3">
-                            <!-- <? dd($type); ?> -->
-                            <?= form_open(base_url("sell-now/specified-item/" . ($type == "specified-item-text" ? "text-book" : "non-text-book")), ["method" => "GET"]) ?>
+    <!-- <div class="row"> -->
+    <div class="col-sm-12">
+        <div class="form-box">
+            <div class="form-box-head">
+                <h4 class="title">Pilih Katalog Buku</h4>
+            </div>
+            <div class="form-box-body">
+                <div class="row">
+                    <div class="col-sm-12 mb-3">
+                        <?= form_open(base_url("sell-now/specified-item/" . ($type == "specified-item-text" ? "text-book" : "non-text-book")), ["method" => "GET"]) ?>
 
-                            <div class="row form-inline">
-                                <div class="container form-group">
-                                    <!-- <label class="control-label">Pencarian Katalog Buku</label> -->
-                                    <input type="text" name="search" class="form-control form-input" placeholder="Cari Buku">
-                                    <button class="ml-2 btn btn-custom btn-sell-now">Cari</button>
-                                </div>
+                        <div class="row form-inline">
+                            <div class="container form-group">
+                                <!-- <label class="control-label">Pencarian Katalog Buku</label> -->
+                                <input type="text" name="search" class="form-control form-input" placeholder="Cari Buku">
+                                <button class="ml-2 btn btn-custom btn-sell-now">Cari</button>
                             </div>
-                            <div class="row">
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-4">
+                                <label class="control-label">Klasifikasi</label>
+                                <select name="filter_classification" class="form-control">
+                                    <option value="">Semua</option>
+                                    <?php foreach ($classification as $value) : ?>
+                                        <option value="<?= $value->name ?>" <?= $value->name == xss_clean($_GET["filter_classification"]) ? "selected" : "" ?>><?= $value->name ?></option>
+                                    <?php endforeach ?>
+                                </select>
+                            </div>
+                            <div class="form-group col-4">
+                                <label class="control-label">Tingkat Sekolah</label>
+                                <select name="filter_school_level" class="form-control">
+                                    <option value="">Semua</option>
+                                    <?php foreach ($school_level as $value) : ?>
+                                        <option value="<?= $value->name ?>" <?= $value->name == xss_clean($_GET["filter_school_level"]) ? "selected" : "" ?>><?= $value->name ?></option>
+                                    <?php endforeach ?>
+                                </select>
+                            </div>
+                            <?php if ($type == "specified-item-text") : ?>
                                 <div class="form-group col-4">
-                                    <label class="control-label">Klasifikasi</label>
-                                    <select name="filter_classification" class="form-control">
+                                    <label class="control-label">Kelas</label>
+                                    <select name="filter_school_class" class="form-control">
                                         <option value="">Semua</option>
-                                        <?php foreach ($classification as $value) : ?>
-                                            <option value="<?= $value->name ?>" <?= $value->name == xss_clean($_GET["filter_classification"]) ? "selected" : "" ?>><?= $value->name ?></option>
+                                        <?php foreach ($school_class as $value) : ?>
+                                            <option value="<?= $value->name ?>" <?= $value->name == xss_clean($_GET["filter_school_class"]) ? "selected" : "" ?>><?= $value->name ?></option>
                                         <?php endforeach ?>
                                     </select>
                                 </div>
-                                <div class="form-group col-4">
-                                    <label class="control-label">Tingkat Sekolah</label>
-                                    <select name="filter_school_level" class="form-control">
-                                        <option value="">Semua</option>
-                                        <?php foreach ($school_level as $value) : ?>
-                                            <option value="<?= $value->name ?>" <?= $value->name == xss_clean($_GET["filter_school_level"]) ? "selected" : "" ?>><?= $value->name ?></option>
-                                        <?php endforeach ?>
-                                    </select>
-                                </div>
-                                <?php if ($type == "specified-item-text") : ?>
-                                    <div class="form-group col-4">
-                                        <label class="control-label">Kelas</label>
-                                        <select name="filter_school_class" class="form-control">
-                                            <option value="">Semua</option>
-                                            <?php foreach ($school_class as $value) : ?>
-                                                <option value="<?= $value->name ?>" <?= $value->name == xss_clean($_GET["filter_school_class"]) ? "selected" : "" ?>><?= $value->name ?></option>
-                                            <?php endforeach ?>
-                                        </select>
-                                    </div>
-                                <?php endif; ?>
-                            </div>
-
-                            <?php form_close() ?>
+                            <?php endif; ?>
                         </div>
 
+                        <?php form_close() ?>
                     </div>
-                    <div class="row">
-                        <div class="col-12">
-                            <?php
-                            // dd($type);
-                            if ($type == "specified-item-text") {
-                                $this->load->view("product/_catalog_text_book");
-                            } else {
-                                $this->load->view("product/_catalog_non_text_book");
-                            }
-                            ?>
-                        </div>
+
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <?php
+                        // dd($type);
+                        if ($type == "specified-item-text") {
+                            $this->load->view("product/_catalog_text_book");
+                        } else {
+                            $this->load->view("product/_catalog_non_text_book");
+                        }
+                        ?>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    <!-- </div> -->
     <!-- END OF CATEGORY PRODUCT -->
 
 <?php endif; ?>

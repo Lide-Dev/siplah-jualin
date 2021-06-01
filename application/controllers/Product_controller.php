@@ -459,6 +459,7 @@ class Product_controller extends Home_Core_Controller
 					"zone_4" => clean_number($this->input->post("price_4")),
 					"zone_5" => clean_number($this->input->post("price_5"))
 				]);
+				$data["is_price_zone"] = 1;
 			}
 			$this->product_model->add_product($data);
 			//last id
