@@ -434,6 +434,7 @@ class Product_controller extends Home_Core_Controller
 				"warranty" => $this->input->post("warranty"),
 				"guarantee" => $this->input->post("delivery_assurance") ?? "", //https://lifepal.co.id/media/asuransi-pengiriman-barang/
 				"product_condition" => $this->input->post("condition"),
+				"sku" => $this->input->post("sku") ?? "",
 				"width" => $this->input->post("width") ?? 0,
 				"length" => $this->input->post("length") ?? 0,
 				"height" => $this->input->post("height") ?? 0,

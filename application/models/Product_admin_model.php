@@ -1,6 +1,7 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
+include FCPATH . "application/models/Product.php";
 class Product_admin_model extends CI_Model
 {
 	//get products
@@ -202,7 +203,7 @@ class Product_admin_model extends CI_Model
 		$this->db->where('products.status !=', 1);
 		$this->db->limit($per_page, $offset);
 		$query = $this->db->get('products');
-		return $query->result();
+		return $query->result("Product");
 	}
 
 	//get paginated drafts count
@@ -263,12 +264,17 @@ class Product_admin_model extends CI_Model
 	}
 
 	//get product
-	public function get_product($id)
+	public function get_product($id, $with_custom_object = false)
 	{
 		$id = clean_number($id);
 		$this->db->where('products.id', $id);
 		$query = $this->db->get('products');
-		return $query->row();
+		// dd($query->row($with_custom_object?"Product":""),$with_custom_object);
+		if ($with_custom_object) {
+			return $query->custom_row_object(0,"Product");
+		} else {
+			return $query->row($with_custom_object ? "Product" : "");
+		}
 	}
 
 	//approve product
@@ -386,5 +392,4 @@ class Product_admin_model extends CI_Model
 		}
 		return false;
 	}
-
 }

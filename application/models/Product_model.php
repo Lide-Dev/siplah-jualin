@@ -797,11 +797,11 @@ class Product_model extends Core_Model
     }
 
     //get product by id
-    public function get_product_by_id($id)
+    public function get_product_by_id($id, $with_custom_object =false)
     {
         $sql = "SELECT * FROM products WHERE id = ?";
         $query = $this->db->query($sql, array(clean_number($id)));
-        return $query->row();
+        return $query->row($with_custom_object?"Product":"");
     }
 
     //get available product
@@ -966,7 +966,41 @@ class Product_model extends Core_Model
         if (empty($id)) {
             return $this->db->get()->result();
         } else {
-            $this->db->get()->where("id", $id);
+            $this->db->where("id", $id);
+            return $this->db->get()->first_row();
+        }
+    }
+
+    /**
+     * Get type products data
+     *
+     * @param string $id
+     * @return void
+     */
+    public function get_type_product($id = null)
+    {
+        $this->db->from("type_products");
+        if (empty($id)) {
+            return $this->db->get()->result();
+        } else {
+            $this->db->where("id", $id);
+            return $this->db->get()->first_row();
+        }
+    }
+
+    /**
+     * Get type products data
+     *
+     * @param string $id
+     * @return void
+     */
+    public function get_status_product($id = null)
+    {
+        $this->db->from("status_products");
+        if (empty($id)) {
+            return $this->db->get()->result();
+        } else {
+            $this->db->where("id", $id);
             return $this->db->get()->first_row();
         }
     }
