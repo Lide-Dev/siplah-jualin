@@ -66,7 +66,9 @@
 								<!-- Product Detail -->
 								<div class="row">
 									<?php $image_url = $products[$i]->image != null ? $products[$i]->image : base_url('assets/img/') . "no-image.jpg" ?>
-									<img src="<?= $image_url ?>" alt="Product Image" class="img-thumbnail m-auto img-product">
+									<a href="<?= generate_product_url_by_slug($products[$i]->slug) ?>" class="m-auto">
+										<img src="<?= $image_url ?>" alt="Product Image" class="img-thumbnail img-product">
+									</a>
 								</div>
 								<div class="row mt-3">
 									<h5 class="text-wrap text-center mx-auto"><?= $products[$i]->title ?></h5>

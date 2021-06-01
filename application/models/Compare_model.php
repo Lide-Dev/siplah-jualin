@@ -23,6 +23,7 @@ class Compare_model extends CI_Model
 		$product->image = get_product_image($raw_product->id, "image_default");
 		$product->ppn = $raw_product->vat_rate;
 		$product->vendor = $this->get_vendor($raw_product->user_id);
+		$product->slug = $raw_product->slug;
 		return $product;
 	}
 
