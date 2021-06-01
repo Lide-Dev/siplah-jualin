@@ -1934,6 +1934,53 @@ if (!function_exists('dd')) {
     }
 }
 
+if (!function_exists('set_form_value')) {
+    /**
+     * Setting form and can be randomed to help testing input. Random option will permanently false if environment be production.
+     * Note: This function is not work for input type file, radio, checkbox, and any custom option type.
+     * @var mixed $input_name Name of input.
+     * @var bool $is_random_active Status of Random mode.
+     * @var string $type_input Type of input. Fill this for random mode work.
+     * @var array $option Option for random mode according to the type of input.
+     * - Option for select
+     * @var array $option["values"] Collection of values.
+     * - Option for text/number
+     * @var int $option["max"]
+     * @var int $option["min"]
+     * @var int $option["exact"]
+     * @return mixed
+     * @author Herlandro T. <herlandrotri@gmail.com>
+     */
+    function set_form_value($input_name, $is_random_active = false, $type_input = null, $option = [])
+    {
+        if (empty(set_value($input_name)) && $is_random_active && FORM_RANDOM_ACTIVATE) {
+            switch ($type_input) {
+                case 'select':
+                    return $option["value"][array_rand($option["value"])];
+                    break;
+                case 'text':
+                    $max = $option["max"] ?? 50;
+                    $min = $option["min"] ?? 1;
+                    $exact = $option["exact"] ?? null;
+                    $insert_first = $option["add_first"] ?? "";
+                    // if ($input_name == "description") dd($max,$min,$insert_first);
+                    return $insert_first.random_string("alpha", $exact??random_int($min, $max));
+                    break;
+                case 'number':
+                    $max = $option["max"] ?? 50;
+                    $min = $option["min"] ?? 1;
+                    $exact = $option["exact"] ?? null;
+                    return !empty($exact) ? random_string("numeric", $exact) : random_int($min, $max);
+                    break;
+                default:
+                    # code...
+                    break;
+            }
+        }
+        return set_value($input_name);
+    }
+}
+
 
 //print date
 if (!function_exists('formatted_date')) {

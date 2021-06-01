@@ -41,7 +41,7 @@ class Product_admin_controller extends Admin_Core_Controller
         //get paginated pending products
         $pagination = $this->paginate(admin_url() . 'pending-products', $this->product_admin_model->get_paginated_pending_products_count('pending_products'));
         $data['products'] = $this->product_admin_model->get_paginated_pending_products($pagination['per_page'], $pagination['offset'], 'pending_products');
-        
+        // dd($data['products']);
 
         $this->load->view('admin/includes/_header', $data);
         $this->load->view('admin/product/pending_products', $data);
@@ -182,7 +182,7 @@ class Product_admin_controller extends Admin_Core_Controller
     public function product_details($id)
     {
         $data['title'] = trans("product_details");
-        $data['product'] = $this->product_admin_model->get_product($id);
+        $data['product'] = $this->product_admin_model->get_product($id,true);
         if (empty($data['product'])) {
             redirect($this->agent->referrer());
         }

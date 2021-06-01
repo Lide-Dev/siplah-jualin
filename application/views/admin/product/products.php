@@ -23,7 +23,7 @@
                             <th width="20"><?php echo trans('id'); ?></th>
                             <th><?php echo trans('product'); ?></th>
                             <th><?php echo trans('sku'); ?></th>
-                            <th><?php echo trans('product_type'); ?></th>
+                            <!-- <th><?php echo trans('product_type'); ?></th> -->
                             <th><?php echo trans('category'); ?></th>
                             <th><?php echo trans('user'); ?></th>
                             <th><?php echo trans('stock'); ?></th>
@@ -51,7 +51,7 @@
                                     </a>
                                 </td>
                                 <td><?php echo $item->sku; ?></td>
-                                <td><?php echo trans($item->product_type); ?></td>
+                                <!-- <td><?php echo trans($item->product_type); ?></td> -->
                                 <td>
                                     <?php $categories_array = get_parent_categories_array($item->category_id);
                                     if (!empty($categories_array)) {

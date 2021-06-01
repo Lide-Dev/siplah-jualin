@@ -85,15 +85,12 @@
                                             $this->load->view("product/_add_product_specified_item");
                                             break;
                                         case "service":
-                                            $this->load->view("product/_add_product_service");
+                                            $this->load->view("product/_add_product_service_item");
                                             break;
                                         default:
                                             break;
                                     } ?>
 
-
-
-                                    <?php echo form_close(); ?>
 
                                 </div>
                             </div>

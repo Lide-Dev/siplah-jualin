@@ -99,6 +99,8 @@ foreach ($languages as $language) {
         $route[$key . $routes->sell_now]['GET'] = 'product_controller/add_product';
         $route[$key . $routes->sell_now . "/(:any)"]['GET'] = 'product_controller/add_product/$1';
         $route[$key . $routes->sell_now . "/(:any)/(:any)"]['GET'] = 'product_controller/add_product/$1/$2';
+        $route[$key . $routes->sell_now . "/(:any)"]['POST'] = 'product_controller/add_product_post/$1';
+        $route[$key . $routes->sell_now . "/(:any)/(:any)"]['POST'] = 'product_controller/add_product_post/$1/$2';
         $route[$key . $routes->sell_now . '/(:num)']['GET'] = 'product_controller/edit_draft/$1';
         $route[$key . $routes->sell_now . '/' . $routes->product_details . '/(:num)']['GET'] = 'product_controller/edit_product_details/$1';
         $route[$key . $routes->sell_now . '/' . $routes->edit_product . '/(:num)']['GET'] = 'product_controller/edit_product/$1';
@@ -228,7 +230,7 @@ $route[$routes->admin . '/pending-products'] = 'product_admin_controller/pending
 $route[$routes->admin . '/hidden-products'] = 'product_admin_controller/hidden_products';
 $route[$routes->admin . '/drafts'] = 'product_admin_controller/drafts';
 $route[$routes->admin . '/deleted-products'] = 'product_admin_controller/deleted_products';
-$route[$routes->admin . '/product-details/(:num)'] = 'product_admin_controller/product_details/$1';
+$route[$routes->admin . '/product-details/(:any)'] = 'product_admin_controller/product_details/$1';
 /*featured product routes*/
 $route[$routes->admin . '/featured-products'] = 'product_admin_controller/featured_products';
 $route[$routes->admin . '/featured-products-transactions'] = 'product_admin_controller/featured_products_transactions';

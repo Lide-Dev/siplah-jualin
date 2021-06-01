@@ -1,4 +1,7 @@
 <?php
+
+use Ramsey\Uuid\Uuid;
+
 defined('BASEPATH') or exit('No direct script access allowed');
 
 class Product_model extends Core_Model
@@ -8,8 +11,98 @@ class Product_model extends Core_Model
         parent::__construct();
     }
 
+    public function add_product($data)
+    {
+        $data["id"] = Uuid::uuid4()->toString();
+        $data["rating"] = 0;
+        $data["discount_rate"] = 0;
+        $data["vat_rate"] = 0;
+        // $data["country_id"] = 0;
+        // $data["state_id"] = 0;
+        $data["city_id"] = 0;
+        $data["address"] = "";
+        $data["zip_code"] = "";
+        $data["status"] = 0; //Has been reviewed or not.
+        $data["hit"] = 0;
+        $data["is_draft"] = 0;
+        $data["is_free_product"] = 0;
+        $data["created_at"] = date("Y-m-d H:i:s");
+        $data["slug"] = str_slug($data["title"]);
+        //set category id
+        $data['category_id'] = 0;
+        // $post_inputs = $this->input->post();
+        // foreach ($post_inputs as $key => $value) {
+        //     if (strpos($key, 'category_id_') !== false) {
+        //         $data['category_id'] = $value;
+        //     }
+        // }
+        // if (empty($data["country_id"])) {
+        //     $data["country_id"] = 0;
+        // }
+
+        return $this->db->insert('products', $data);
+    }
     //add product
-    public function add_product()
+    // public function add_product()
+    // {
+    //     $data = array(
+    //         'title' => $this->input->post('title', true),
+    //         'product_type' => $this->input->post('product_type', true),
+    //         'listing_type' => $this->input->post('listing_type', true),
+    //         'sku' => $this->input->post('sku', true),
+    //         'price' => 0,
+    //         'currency' => "",
+    //         'discount_rate' => 0,
+    //         'vat_rate' => 0,
+    //         'description' => $this->input->post('description', false),
+    //         'product_condition' => "",
+    //         'country_id' => 0,
+    //         'state_id' => 0,
+    //         'city_id' => 0,
+    //         'address' => "",
+    //         'zip_code' => "",
+    //         'user_id' => $this->auth_user->id,
+    //         'status' => 0,
+    //         'is_promoted' => 0,
+    //         'promote_start_date' => date('Y-m-d H:i:s'),
+    //         'promote_end_date' => date('Y-m-d H:i:s'),
+    //         'promote_plan' => "none",
+    //         'promote_day' => 0,
+    //         'visibility' => 1,
+    //         'rating' => 0,
+    //         'hit' => 0,
+    //         'demo_url' => "",
+    //         'external_link' => "",
+    //         'files_included' => "",
+    //         'stock' => 1,
+    //         'shipping_time' => "",
+    //         'shipping_cost_type' => "",
+    //         'shipping_cost' => 0,
+    //         'shipping_cost_additional' => 0,
+    //         'is_deleted' => 0,
+    //         'is_draft' => 1,
+    //         'is_free_product' => 0,
+    //         'created_at' => date('Y-m-d H:i:s')
+    //     );
+
+    //     $data["slug"] = str_slug($data["title"]);
+    //     //set category id
+    //     $data['category_id'] = 0;
+    //     $post_inputs = $this->input->post();
+    //     foreach ($post_inputs as $key => $value) {
+    //         if (strpos($key, 'category_id_') !== false) {
+    //             $data['category_id'] = $value;
+    //         }
+    //     }
+
+    //     if (empty($data["country_id"])) {
+    //         $data["country_id"] = 0;
+    //     }
+
+    //     return $this->db->insert('products', $data);
+    // }
+
+    public function add_specified_item_product()
     {
         $data = array(
             'title' => $this->input->post('title', true),
@@ -704,11 +797,11 @@ class Product_model extends Core_Model
     }
 
     //get product by id
-    public function get_product_by_id($id)
+    public function get_product_by_id($id, $with_custom_object =false)
     {
         $sql = "SELECT * FROM products WHERE id = ?";
-        $query = $this->db->query($sql, array($id));
-        return $query->row();
+        $query = $this->db->query($sql, array(clean_number($id)));
+        return $query->row($with_custom_object?"Product":"");
     }
 
     //get available product
@@ -859,6 +952,57 @@ class Product_model extends Core_Model
         $sql .= " ORDER BY products.created_at DESC";
         $query = $this->db->query($sql, array(clean_number($user_id)));
         return $query->result();
+    }
+
+    /**
+     * Get couriers data
+     *
+     * @param string $id
+     * @return void
+     */
+    public function get_couriers($id = null)
+    {
+        $this->db->from("couriers");
+        if (empty($id)) {
+            return $this->db->get()->result();
+        } else {
+            $this->db->where("id", $id);
+            return $this->db->get()->first_row();
+        }
+    }
+
+    /**
+     * Get type products data
+     *
+     * @param string $id
+     * @return void
+     */
+    public function get_type_product($id = null)
+    {
+        $this->db->from("type_products");
+        if (empty($id)) {
+            return $this->db->get()->result();
+        } else {
+            $this->db->where("id", $id);
+            return $this->db->get()->first_row();
+        }
+    }
+
+    /**
+     * Get type products data
+     *
+     * @param string $id
+     * @return void
+     */
+    public function get_status_product($id = null)
+    {
+        $this->db->from("status_products");
+        if (empty($id)) {
+            return $this->db->get()->result();
+        } else {
+            $this->db->where("id", $id);
+            return $this->db->get()->first_row();
+        }
     }
 
     //delete product

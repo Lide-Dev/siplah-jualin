@@ -39,7 +39,7 @@ class Book_model extends CI_Model
     {
         $column = $is_non_text ? "non_text_books" : "text_books";
         $object = $is_non_text ? "NonTextBook" : "TextBook";
-        $this->default_query();
+        $this->default_query(false,[],$is_non_text);
         if (!empty($id)) {
             $this->db->where("{$column}.id", $id);
             $response = $this->db->get("{$column}")->first_row("{$object}");
@@ -87,6 +87,7 @@ class Book_model extends CI_Model
 
     public function get_classification($id = null, $is_non_text = false)
     {
+
         $this->db->where("type", $is_non_text ? "NON_TEXTBOOK" : "TEXTBOOK");
         if (!empty($id)) {
             $this->db->where("id", $id);
@@ -106,6 +107,7 @@ class Book_model extends CI_Model
         } else {
             $response = $this->db->get("school_levels")->result();
         }
+        // dd($response);
         return $response;
     }
 
@@ -218,6 +220,7 @@ class NonTextBook
     // public $physical_description_json;
     public $prices;
     // public $prices_json;
+    public $synopsis;
     public $edition;
 
     public function __construct()
