@@ -11,7 +11,7 @@ class Compare_model extends CI_Model
 	public function remap_product($id, $quantity)
 	{
 		$raw_product = get_product($id);
-		$total_price = $this->calculate_total_compare($raw_product->price, $quantity, $raw_product->price * 0.1);
+		$total_price = calculate_total_compare($raw_product->price, $quantity, $raw_product->price * 0.1);
 		$product = new stdClass();
 		$product->id = $raw_product->id;
 		$product->title = $raw_product->title;
@@ -22,7 +22,7 @@ class Compare_model extends CI_Model
 		$product->total_price_with_ppn = price_formatted($total_price, $raw_product->currency);
 		$product->image = get_product_image($raw_product->id, "image_default");
 		$product->ppn = $raw_product->vat_rate;
-		$product->vendor = $this->get_vendor($raw_product->user_id);
+		$product->vendor = get_vendor($raw_product->user_id);
 		$product->slug = $raw_product->slug;
 		return $product;
 	}
@@ -36,25 +36,11 @@ class Compare_model extends CI_Model
 		return $products;
 	}
 
-	public function calculate_total_compare($base_price, $quantity, $ppn)
-	{
-		return ($base_price * $quantity) + ($ppn * $quantity);
-	}
-
 	public function get_all_vendors()
 	{
 		$sql = "SELECT * FROM users WHERE role = 'vendor'";
 		$db = $this->db->query($sql);
 		return $db->result();
-	}
-
-	public function get_vendor($id)
-	{
-		$raw_vendor = get_user($id);
-		$vendor = new stdClass();
-		$vendor->username = $raw_vendor->username;
-		$vendor->image = get_user_avatar_by_id($id);
-		return $vendor;
 	}
 
 	public function delete_product($arr_products_id, $value)

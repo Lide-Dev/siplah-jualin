@@ -117,13 +117,13 @@
 														<!-- BUTTON NEGOTIATION -->
 														<?php if (empty($cart_item->is_stock_available)) : ?>
 															<a href="javascript:void(0)" class="btn btn-md btn-success text-center text-white mt-3 col-12"><?php echo trans("negotiation"); ?></a>
-															<?php else :
-															if (empty($this->auth_check) && $this->general_settings->guest_checkout != 1) : ?>
+														<?php else : ?>
+															<?php if (!empty($this->auth_check) && $this->general_settings->guest_checkout != 1) : ?>
 																<a href="#" class="btn btn-md btn-success text-center text-white mt-3 col-12" data-toggle="modal" data-target="#loginModal"><?php echo trans("negotiation"); ?></a>
 															<?php else : ?>
-																<a href="<?php echo generate_url("cart/negotiation"); ?>" class="btn btn-md btn-success text-center text-white mt-3 col-12"><?php echo trans("negotiation"); ?></a>
-														<?php endif;
-														endif; ?>
+																<a href="<?= base_url("negotiation/add_negotiation") . "?product_id=" . $cart_item->product_id . "&product_quantity=" . 1 ?>" class="btn btn-md btn-success text-center text-white mt-3 col-12"><?php echo trans("negotiation"); ?></a>
+															<?php endif; ?>
+														<?php endif; ?>
 														<!-- END OF BUTTON NEGOTIATION-->
 														<!-- BUTTON COMPARE -->
 														<?php if ($cart_item->total_price > FIFTY_MILLION) : ?>
@@ -160,7 +160,7 @@
 										<?php if (empty($cart_item->is_stock_available)) : ?>
 											<a href="javascript:void(0)" class="btn btn-block <?= $cart_item->total_price > FIFTY_MILLION ? "disabled" : "" ?>"><?php echo trans("make_an_order"); ?></a>
 											<?php else :
-											if (empty($this->auth_check) && $this->general_settings->guest_checkout != 1) : ?>
+											if (!empty($this->auth_check) && $this->general_settings->guest_checkout != 1) : ?>
 												<a href="#" class="btn btn-block <?= $cart_item->total_price > FIFTY_MILLION ? "disabled" : "" ?>" data-toggle="modal" data-target="#loginModal"><?php echo trans("make_an_order"); ?></a>
 												<?php else :
 												if ($cart_has_physical_product == true && $this->form_settings->shipping == 1) : ?>

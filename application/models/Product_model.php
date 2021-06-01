@@ -707,7 +707,7 @@ class Product_model extends Core_Model
     public function get_product_by_id($id)
     {
         $sql = "SELECT * FROM products WHERE id = ?";
-        $query = $this->db->query($sql, array(clean_number($id)));
+        $query = $this->db->query($sql, array($id));
         return $query->row();
     }
 

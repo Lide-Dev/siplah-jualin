@@ -6,16 +6,13 @@ class Compare_controller extends Home_Core_Controller
 	public function __construct()
 	{
 		parent::__construct();
-		$this->load->model('compare_model');
 	}
 
 	public function compare()
 	{
 		$arr_product_id = $this->session->userdata("compared_products_id");
 		$product_quantity = $this->session->userdata("compared_products_quantity");
-		// $arr_id = [17];
 		$product_quantity = 2;
-		// $this->session->set_userdata("compared_products_id", array(19));
 
 		$data['title'] = "Perbandingan Produk";
 		$data['description'] = "Membandingkan produk" . " - " . $this->app_name;

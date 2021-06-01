@@ -92,6 +92,18 @@ if (!function_exists('get_user')) {
     }
 }
 
+if (!function_exists('get_vendor')) {
+    function get_vendor($id)
+    {
+        $raw_vendor = get_user($id);
+        $vendor = new stdClass();
+        $vendor->username = $raw_vendor->username;
+        $vendor->image = get_user_avatar_by_id($id);
+        $vendor->slug = $raw_vendor->slug;
+        return $vendor;
+    }
+}
+
 //get shop name
 if (!function_exists('get_shop_name')) {
     function get_shop_name($user)
@@ -2029,5 +2041,12 @@ if (!function_exists('iyzico_create_submerchant')) {
             $data["merchant_key"] = $subMerchant->getsubMerchantKey();
         }
         return $data;
+    }
+
+    if (!function_exists('calculate_total_compare')) {
+        function calculate_total_compare($base_price, $quantity, $ppn = 0)
+        {
+            return ($base_price * $quantity) + ($ppn * $quantity);
+        }
     }
 }

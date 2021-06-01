@@ -131,7 +131,6 @@ foreach ($languages as $language) {
         $route[$key . $routes->cart . '/' . $routes->payment]['GET'] = 'cart_controller/payment';
         $route[$key . $routes->cart . '/' . $routes->token_midtrans]['GET'] = 'cart_controller/token_midtrans';
         $route[$key . $routes->cart . '/' . $routes->token_midtrans]['POST'] = 'cart_controller/token_midtrans';
-        $route[$key . $routes->cart . '/' . $routes->negotiation]['GET'] = 'cart_controller/negotiation';
         $route[$key . $routes->cart . '/' . $routes->make_an_offer]['GET'] = 'cart_controller/make_an_offer';
         $route[$key . 'cart/compare']['GET'] = 'cart_controller/compare';
         /*orders*/
@@ -159,6 +158,13 @@ foreach ($languages as $language) {
         $route[$key . 'compare/add_compared_product']['GET'] = 'compare_controller/add_compared_product';
         $route[$key . 'compare/delete_compared_product']['GET'] = 'compare_controller/delete_compared_product';
         $route[$key . 'compare/add_compared_vendor']['GET'] = 'compare_controller/add_compared_vendor';
+        /* Negotiation */
+        $route[$key . 'negotiation']['GET'] = 'negotiation_controller/negotiation';
+        $route[$key . 'negotiation']['POST'] = 'negotiation_controller/negotiation';
+        $route[$key . 'negotiation/add_negotiation']['GET'] = 'negotiation_controller/add_negotiation';
+        $route[$key . 'negotiation/delete_negotiation']['GET'] = 'negotiation_controller/delete_negotiation';
+        $route[$key . 'negotiation/change_conversation']['GET'] = 'negotiation_controller/change_conversation';
+        $route[$key . 'negotiation/send_message']['GET'] = 'negotiation_controller/send_message';
         /*Multi Login*/
         $route[$key . 'login/member']['GET'] = 'buyer_controller/index';
         $route[$key . 'login/supervisor']['GET'] = 'supervisor_controller/index';
