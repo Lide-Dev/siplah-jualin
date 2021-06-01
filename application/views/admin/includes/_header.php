@@ -160,9 +160,9 @@
                     </a>
                     <ul class="treeview-menu">
                         <!-- <li><a href="<?php echo generate_url("sell_now"); ?>" target="_blank"> <?php echo trans("add_product"); ?></a></li> -->
-                        <li><a href="<?php echo admin_url(); ?>products"> <?php echo trans("product_submitted"); ?></a></li>
+                        <li><a href="<?php echo admin_url(); ?>products">Produk Diterima</a></li>
                         <li><a href="<?php echo admin_url(); ?>products"> <?php echo trans("products"); ?></a></li>
-                        <li><a href="<?php echo admin_url(); ?>pending-products"> <?php echo trans("pending_products"); ?></a></li>
+                        <li><a href="<?php echo admin_url(); ?>pending-products">Produk Diajukan</a></li>
                         <li><a href="<?php echo admin_url(); ?>hidden-products"> <?php echo trans("hidden_products"); ?></a></li>
                         <li><a href="<?php echo admin_url(); ?>drafts"> <?php echo trans("drafts"); ?></a></li>
                         <li><a href="<?php echo admin_url(); ?>deleted-products"> <?php echo trans("deleted_products"); ?></a></li>

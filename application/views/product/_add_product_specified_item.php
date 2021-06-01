@@ -19,7 +19,7 @@
             <h4 class="title">Kategori</h4>
         </div>
         <div class="form-box-body">
-            <div class="row">
+            <div class="">
                 <div class="col-sm-12 mb-3">
                     <div class="selectdiv">
                         <select id="categories" name="category_id_0" class="form-control" onchange="get_subcategories(this.value, 0);" required>
