@@ -224,7 +224,7 @@ $route[$routes->admin . '/pending-products'] = 'product_admin_controller/pending
 $route[$routes->admin . '/hidden-products'] = 'product_admin_controller/hidden_products';
 $route[$routes->admin . '/drafts'] = 'product_admin_controller/drafts';
 $route[$routes->admin . '/deleted-products'] = 'product_admin_controller/deleted_products';
-$route[$routes->admin . '/product-details/(:num)'] = 'product_admin_controller/product_details/$1';
+$route[$routes->admin . '/product-details/(:any)'] = 'product_admin_controller/product_details/$1';
 /*featured product routes*/
 $route[$routes->admin . '/featured-products'] = 'product_admin_controller/featured_products';
 $route[$routes->admin . '/featured-products-transactions'] = 'product_admin_controller/featured_products_transactions';
