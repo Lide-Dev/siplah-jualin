@@ -24,7 +24,7 @@
     </div>
 </div>
 <!-- UPLOAD PHOTO -->
-<div class="row">
+<div class="">
     <div class="col-12 m-b-30">
         <label class="control-label font-600"><?php echo trans("images"); ?></label>
         <?php $this->load->view("product/_image_upload_box"); ?>
@@ -103,7 +103,7 @@
             <?php echo form_error('description'); ?>
         </div>
 
-        <div class="row">
+        <div class="">
             <div class="form-group col-6">
                 <label class="control-label">Harga</label>
                 <input type="number" name="price" class="form-control form-input" placeholder="Harga" value="<?= empty(set_value("price")) ? $book->prices : set_value("price") ?>" required min="1">
@@ -111,7 +111,7 @@
             </div>
         </div>
 
-        <div class="row">
+        <div class="">
             <div class="form-group col-md-6">
                 <label for="form_category_homemade" class="control-label"><?php echo trans("category_homemade"); ?></label>
                 <label for="form_category_homemade" class="toggle-control">
@@ -136,9 +136,8 @@
                 </label>
                 <?php echo form_error('category_kemendikbud'); ?>
             </div>
-
         </div>
-        <div class="row">
+        <div class="">
             <div class="form-group col-md-6">
                 <label for="form_visibility" class="control-label">Tampilkan di Market?</label>
                 <label for="form_visibility" class="toggle-control">
@@ -147,6 +146,16 @@
                 </label>
             </div>
             <?php echo form_error('visibility'); ?>
+        </div>
+        <div class="">
+            <div class="form-group col-md-6">
+                <label for="form_vat" class="control-label">Barang Kena PPN</label>
+                <label for="form_vat" class="toggle-control">
+                    <input id="form_vat" name="vat" type="checkbox">
+                    <span class="control"></span>
+                </label>
+            </div>
+            <!-- <?php echo form_error('visibility'); ?> -->
         </div>
 
 
