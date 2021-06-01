@@ -273,7 +273,7 @@ class Product_admin_model extends CI_Model
 		if ($with_custom_object) {
 			return $query->first_row("Product");
 		} else {
-			return $query->row($with_custom_object ? "Product" : "");
+			return $query->row();
 		}
 	}
 
