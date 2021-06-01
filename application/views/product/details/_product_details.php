@@ -193,6 +193,11 @@
 					<?php echo $buttton; ?>
 				</div>
 			<?php endif; ?>
+			<?php if ($product->price - ($product->discount_rate / 100 * $product->price) > 50000000) : ?>
+				<div class="compare-container">
+					<a href="<?= base_url("compare/add_compared_product") . "?product_id=" . $product->id ?>" class="btn btn-dark text-white">Bandingkan</a>
+				</div>
+			<?php endif ?>
 			<div class="button-container button-container-wishlist">
 				<?php
 				$whislist_button_class = "";

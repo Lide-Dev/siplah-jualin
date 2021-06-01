@@ -11,112 +11,125 @@
 			<?php endforeach ?>
 		<?php endif ?>
 	</select>
-	<div class="row mx-auto my-3 card py-3 px-0">
-		<div class="container">
-			<div class="row">
-				<div class="col-md-12">
-					<div id="compare_carousel" class="carousel slide" data-ride="carousel" data-interval="false">
-						<!-- Carousel items -->
-						<div class="carousel-inner">
-							<!-- Pagination Loop -->
-							<?php $product_index = 0 ?>
-							<?php for ($i = 0; $i < 3; $i++) : ?>
-								<div class="carousel-item <?= $i == 0 ? "active" : "" ?>  min-vh-100">
-									<div class="row">
-										<!-- Compared Product Loop -->
-										<?php for ($j = 0; $j < 2; $j++) : ?>
-											<div class="col-md-6 border p-2">
-												<div class="container">
+	<div class="compared-container row card">
+		<div class="container py-3">
+			<?php for ($i = 0; $i < (count($products) + 1); $i++) : ?>
+				<div class="item-compared border">
+					<div class="container">
+						<!-- Compared Product Loop -->
+						<?php if ($products[$i] == null && $temp_vendor == null) : ?>
+							<!-- Search Vendor -->
+							<div class="row">
+								<div class="container">
+									<input type="text" id="search-input" class="form-control search-input" placeholder="Cari Penjual">
+									<div class="list-vendors" id="list-vendors">
+										<?php foreach ($list_vendors as $vendor) : ?>
+											<a href="<?= base_url("compare/add_compared_vendor") . "?vendor_id=" . $vendor->id ?>" class="border p-1 wrap-text"><?= $vendor->username ?></a>
+										<?php endforeach ?>
+									</div>
+								</div>
+							</div>
+							<!-- End Search Vendor -->
+
+						<?php else : ?>
+							<?php if ($temp_vendor != null || $products[$i] != null) : ?>
+								<?php $vendor = $temp_vendor != null ? $temp_vendor : $products[$i]->vendor ?>
+								<!-- Vendor Detail -->
+								<div class="row m-2 pb-2 border-bottom">
+									<div class="container">
+										<div class="row">
+											<div class="col-2">
+												<img src="<?= base_url("assets/img/") . "user.png" ?>" alt="thumbnail_vendor" height="50px" width="50px">
+											</div>
+											<div class="col-7">
+												<div class="vendor-name font-weight-bold text-wrap"><?= $vendor->username ?></div>
+												<div class="vendor-location font-weight-bold text-wrap">Vendor's Location</div>
+											</div>
+											<?php if ($i != 0) : ?>
+												<div class="col-3" style="display: block;">
 													<div class="row">
-														<?php if ($products[$product_index] == null) : ?>
-															<div class="container">
-																<div class="row col">
-																	<input type="text" id="search-input" class="form-control search-input" placeholder="Cari Penjual">
-																</div>
-																<div class="list-vendors" id="list-vendors">
-																	<?php foreach ($list_vendors as $vendor) : ?>
-																		<a href="#" class="border p-1"><?= $vendor->username ?></a>
-																	<?php endforeach ?>
-																</div>
-															</div>
-														<?php endif ?>
+														<a href="<?= generate_profile_url($vendor->slug) ?>" class="btn btn-sm btn-success text-white">Cari barang</a>
 													</div>
-													<?php if ($products[$product_index] != null) : ?>
+													<?php if ($products[$i] == null) : ?>
 														<div class="row">
-															<?php $image_url = $products[$product_index]->image != null ? $products[$product_index]->image : base_url('assets/img/') . "no-image.jpg" ?>
-															<img src="<?= $image_url ?>" alt="Product Image" class="img-thumbnail m-auto" height="300px" width="300px">
-														</div>
-														<div class="row mt-3">
-															<h4 class="m-auto"><?= $products[$product_index]->title ?></h4>
-														</div>
-														<div class="row">
-															<p class="m-auto"><?= $products[$product_index]->category ?></p>
-														</div>
-														<div class="row">
-															<p class="m-auto">Barang Kena PPN</p>
-														</div>
-														<div class="row my-4">
-															<div class="col-md-6" align="left">
-																<h6 class="font-weight-bold">Banyaknya</h6>
-																<h6 class="font-weight-bold">Harga Satuan Sebelum PPN</h6>
-																<h6 class="font-weight-bold">PPN</h6>
-																<h6 class="font-weight-bold">Biaya Kirim</h6>
-																<h6 class="font-weight-bold">Total</h6>
-															</div>
-															<div class="col-md-6" align="right">
-																<h6 class="font-weight-bold"><?= $product_quantity ?></h6>
-																<h6 class="font-weight-bold"><?= $products[$product_index]->price_formatted ?></h6>
-																<h6 class="font-weight-bold"><?= $products[$product_index]->ppn_formatted ?></h6>
-																<h6 class="font-weight-bold">Buat penawaran dulu</h6>
-																<h6 class="font-weight-bold"><?= $products[$product_index]->total_price_with_ppn ?></h6>
-															</div>
-														</div>
-													<?php endif ?>
-													<?php if ($products[$product_index] != null) : ?>
-														<div class="row">
-															<?php if (($products[$product_index]->title != $products[0]->title)) : ?>
-																<div class="col" align="end">
-																	<a href="<?= base_url('compare/') . "delete_compared_product?compared_product_id=" . $products[$product_index]->id ?>" class="btn btn-danger btn-lg" style="color: white;"><?= trans("remove") ?></a>
-																</div>
-															<?php endif ?>
+															<a href="<?= base_url("compare/delete_compared_product") ?>" class="btn btn-sm btn-danger text-white mt-1">Ganti Penjual</a>
 														</div>
 													<?php endif ?>
 												</div>
-											</div>
-											<?php if ($products[0]->price > $fifty_mil && $j == 0 && $i == 2) {
-												break;
-											} elseif (($product_price > $fifty_mil && $product_price < $two_hundred_mil) && $j == 0 && $i == 1) {
-												break;
-											} ?>
-											<?php $product_index++ ?>
-										<?php endfor ?>
-										<!-- End Compared Product Loop -->
+											<?php endif ?>
+										</div>
 									</div>
-									<!--.row-->
 								</div>
-								<?php if (($product_price > $fifty_mil && $product_price < $two_hundred_mil) && $i == 1) {
-									break;
-								} ?>
-							<?php endfor ?>
-							<!-- End Pagination Loop -->
-							<!--.item-->
-						</div>
-						<div class="col-md-12 mt-4" align="center">
-							<a class="btn btn-success btn-lg" style="color: white;" href=""><?= trans('make_an_offer') ?></a>
-						</div>
-						<!--.carousel-inner-->
-						<a class="" href="#compare_carousel" role="button" data-slide="prev"></a>
-						<a class="" href="#compare_carousel" role="button" data-slide="next"></a>
+								<!-- End Vendor Detail -->
+							<?php endif ?>
+							<?php if ($products[$i] != null) : ?>
+								<!-- Product Detail -->
+								<div class="row">
+									<?php $image_url = $products[$i]->image != null ? $products[$i]->image : base_url('assets/img/') . "no-image.jpg" ?>
+									<img src="<?= $image_url ?>" alt="Product Image" class="img-thumbnail m-auto img-product">
+								</div>
+								<div class="row mt-3">
+									<h5 class="text-wrap text-center mx-auto"><?= $products[$i]->title ?></h5>
+								</div>
+								<div class="row">
+									<p class="text-wrap mx-auto text-center"><?= $products[$i]->category ?></p>
+								</div>
+								<div class="row">
+									<p class="text-wrap mx-auto"><?= $product[$i] != 0 ? "Barang Kena PPN" : "" ?></p>
+								</div>
+								<!-- End Product Detail -->
+
+								<!-- Price Detail -->
+								<div class="row my-4">
+									<div class="col-md-6" align="left">
+										<h6 class="font-weight-bold">Banyaknya</h6>
+										<h6 class="font-weight-bold">Harga Satuan Sebelum PPN</h6>
+										<h6 class="font-weight-bold">PPN</h6>
+										<h6 class="font-weight-bold">Biaya Kirim</h6>
+										<h6 class="font-weight-bold">Total</h6>
+									</div>
+									<div class="col-md-6" align="right">
+										<h6 class="font-weight-bold"><?= $product_quantity ?></h6>
+										<h6 class="font-weight-bold"><?= $products[$i]->price_formatted ?></h6>
+										<h6 class="font-weight-bold"><?= $products[$i]->ppn_formatted ?></h6>
+										<h6 class="font-weight-bold">Buat penawaran dulu</h6>
+										<h6 class="font-weight-bold"><?= $products[$i]->total_price_with_ppn ?></h6>
+									</div>
+								</div>
+								<!-- End Price Detail -->
+
+								<!-- Delete Button -->
+								<?php if ($products[$i] != null) : ?>
+									<div class="row">
+										<?php if ($products[$i]->title != $products[0]->title) : ?>
+											<div class="col" align="end">
+												<a href="<?= base_url('compare/delete_compared_product') . "?compared_product_id=" . $products[$i]->id ?>" class="btn btn-danger btn-lg" style="color: white;"><?= trans("remove") ?></a>
+											</div>
+										<?php endif ?>
+									</div>
+								<?php endif ?>
+							<?php endif ?>
+							<!-- End Delete Button -->
+						<?php endif ?>
+						<!-- End Compared Product Loop -->
 					</div>
-					<!--.Carousel-->
 				</div>
-			</div>
+			<?php endfor ?>
 		</div>
-		<!--.container-->
 	</div>
-	<!--.row-->
+	<!-- Make an Offer Button-->
+	<div class="col-md-12 mt-4" align="center">
+		<a class="btn btn-success btn-lg" style="color: white;" href=""><?= trans('make_an_offer') ?></a>
+	</div>
+	<!-- End Make an Offer Button -->
 </div>
 <style>
+	.img-product {
+		height: 300px;
+		width: 300px;
+		object-fit: fill;
+	}
+
 	.list-vendors {
 		position: absolute;
 		z-index: 1;
@@ -134,6 +147,17 @@
 		background-color: blue;
 		color: white;
 	}
+
+	.item-compared {
+		width: 50%;
+		height: 100%;
+		min-height: 100vmin;
+	}
+
+	.compared-container {
+		overflow: auto;
+		white-space: nowrap;
+	}
 </style>
 <script>
 	$(document).ready(function() {
@@ -144,8 +168,12 @@
 			});
 		});
 
-		$("#search-input").click(function() {
-			$("#list-vendors").toggle("hide");
-		})
+		$("#search-input").on("focusout", function() {
+			$("#list-vendors").hide("hide");
+		});
+
+		$("#search-input").on("focusin", function() {
+			$("#list-vendors").show("show");
+		});
 	});
 </script>
