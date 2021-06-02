@@ -12,8 +12,8 @@
 					</ol>
 				</nav>
 			</div>
+			<!-- END OF BREADCRUMB -->
 		</div>
-		<!-- END OF BREADCRUMB -->
 		<div class="row">
 			<div class="col-sm-12">
 				<?php if ($products != null) : ?>
@@ -22,59 +22,56 @@
 							<div class="col-sm-12 col-lg-8">
 								<div class="left">
 									<h1 class="cart-section-title"><?= trans("negotiation"); ?> (<?= count($products) ?>)</h1>
-									<?php if (!empty($products)) :
-										foreach ($products as $product) : ?>
+									<?php if (!empty($products)) : ?>
+										<?php foreach ($products as $product) : ?>
 											<div class="item">
-												<div class="cart-item-image col-2">
-													<div class="img-cart-product">
-														<a href="<?= generate_product_url($product); ?>">
-															<img src="<?= base_url() . IMG_BG_PRODUCT_SMALL; ?>" data-src="<?= get_product_image($product->id, 'image_small'); ?>" alt="<?= html_escape($product->product_title); ?>" class="lazyload img-fluid img-product" onerror="this.src='<?= base_url() . IMG_BG_PRODUCT_SMALL; ?>'">
-														</a>
-													</div>
-												</div>
-												<div class="cart-item-details col-9">
-													<?php if ($product->product_type == 'digital') : ?>
-														<div class="list-item">
-															<label class="label-instant-download label-instant-download-sm"><i class="icon-download-solid"></i><?= trans("instant_download"); ?></label>
+												<div class="row">
+													<div class="cart-item-image">
+														<div class="img-cart-product">
+															<a href="<?= generate_product_url($product); ?>">
+																<img src="<?= base_url() . IMG_BG_PRODUCT_SMALL; ?>" data-src="<?= get_product_image($product->id, 'image_small'); ?>" alt="<?= html_escape($product->product_title); ?>" class="lazyload img-fluid img-product" onerror="this.src='<?= base_url() . IMG_BG_PRODUCT_SMALL; ?>'">
+															</a>
 														</div>
-													<?php endif; ?>
-													<div class="list-item text-wrap">
-														<a href="<?= generate_product_url($product); ?>">
-															<?= html_escape($product->title); ?>
-														</a>
-														<?php if ($product->stock == 0) : ?>
-															<div class="lbl-enough-quantity"><?= trans("out_of_stock"); ?></div>
+													</div>
+													<div class="cart-item-details">
+														<?php if ($product->product_type == 'digital') : ?>
+															<div class="list-item">
+																<label class="label-instant-download label-instant-download-sm"><i class="icon-download-solid"></i><?= trans("instant_download"); ?></label>
+															</div>
+														<?php endif; ?>
+														<div class="list-item text-wrap">
+															<a href="<?= generate_product_url($product); ?>">
+																<?= html_escape($product->title); ?>
+															</a>
+															<?php if ($product->stock == 0) : ?>
+																<div class="lbl-enough-quantity"><?= trans("out_of_stock"); ?></div>
+															<?php endif; ?>
+														</div>
+														<div class="list-item seller">
+															<?= trans("by"); ?>&nbsp;<a href="<?= generate_profile_url($product->vendor->slug) ?>"><?= $product->vendor->username ?></a>
+														</div>
+														<div class="list-item m-t-15">
+															<label><?= trans("unit_price"); ?>:</label>
+															<strong class="lbl-price">
+																<?= $product->unit_price_formatted; ?>
+															</strong>
+														</div>
+														<div class="list-item">
+															<label><?= trans("total"); ?>:</label>
+															<strong class="lbl-price"><?= $product->total_price_with_ppn ?></strong>
+														</div>
+														<?php if (!empty($product->vat_rate)) : ?>
+															<div class="list-item">
+																<label><?= trans("vat"); ?>&nbsp;(<?= $product->vat_rate; ?>%):</label>
+																<strong class="lbl-price"><?= $product->ppn_formatted ?></strong>
+															</div>
 														<?php endif; ?>
 													</div>
-													<div class="list-item seller">
-														<?= trans("by"); ?>&nbsp;<a href="<?= generate_profile_url($product->vendor->slug) ?>"><?= $product->vendor->username ?></a>
-													</div>
-													<div class="list-item m-t-15">
-														<label><?= trans("unit_price"); ?>:</label>
-														<strong class="lbl-price">
-															<?= $product->unit_price_formatted; ?>
-														</strong>
-													</div>
-													<div class="list-item">
-														<label><?= trans("total"); ?>:</label>
-														<strong class="lbl-price"><?= $product->total_price_with_ppn ?></strong>
-													</div>
-													<?php if (!empty($product->vat_rate)) : ?>
-														<div class="list-item">
-															<label><?= trans("vat"); ?>&nbsp;(<?= $product->vat_rate; ?>%):</label>
-															<strong class="lbl-price"><?= $product->ppn_formatted ?></strong>
-														</div>
-													<?php endif; ?>
-													<!-- <?php if ($product->product_type != 'digital' && $this->form_settings->shipping == 1) : ?>
-														<div class="list-item">
-															<label><?= trans("shipping"); ?>:</label>
-															<strong><?= price_formatted($product->shipping_cost, $product->currency); ?></strong>
-														</div>
-													<?php endif; ?> -->
 												</div>
-												<div class="change-conversation col-1">
-													<a href="<?= base_url('negotiation/change_conversation' . "?product_id=" . $product->id) ?>" class="btn btn-dark text-white">Pilih produk</a>
-													<button type="button" class="btn btn-success mt-1 text-white" data-toggle="modal" data-target="#modal-negotiation-<?= $product->id ?>">Kirim Penawaran</button>
+												<div class="row my-2 justify-content-end">
+													<a href="<?= base_url('negotiation/change_conversation' . "?product_id=" . $product->id) ?>" class="btn btn-sm btn-dark text-white h-100">Pilih produk</a>
+													<a class="btn btn-sm btn-success mx-1 text-white h-100" data-toggle="modal" data-target="#modal-negotiation-<?= $product->id ?>">Kirim Penawaran</a>
+													<a href="<?= base_url('negotiation/delete_negotiation') ?>"></a>
 												</div>
 											</div>
 									<?php endforeach;
@@ -89,11 +86,11 @@
 											<div class="row-custom messages-head">
 												<div class="sender-head">
 													<div class="left">
-														<img src="<?= $conversation->vendor_image ?>" alt="<?= html_escape($conversation->vendor_username); ?>" class="img-profile">
+														<img src="<?= $conversation->seller_img ?>" alt="<?= html_escape($conversation->seller_username); ?>" class="img-profile">
 													</div>
 													<div class="right">
-														<strong class="username"><?= html_escape($conversation->vendor_username); ?>
-															<?php if ($conversation->is_vendor_verified) : ?>
+														<strong class="username"><?= html_escape($conversation->seller_username); ?>
+															<?php if ($conversation->is_seller_verified) : ?>
 																<i class="icon-verified icon-verified-member">
 																</i>
 															<?php endif ?>
@@ -110,7 +107,7 @@
 														<div class="message-list-item-row-received">
 															<div class="user-avatar">
 																<div class="message-user">
-																	<img src="<?= $conversation->user_image ?>" alt="<?= $conversation->user_username ?>" class="img-profile">
+																	<img src="<?= $conversation->user_img ?>" alt="<?= $conversation->user_username ?>" class="img-profile">
 																</div>
 															</div>
 															<div class="user-message">

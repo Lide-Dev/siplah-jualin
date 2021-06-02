@@ -106,7 +106,7 @@
 																		<span class="input-group-btn">
 																			<button type="button" class="btn btn-default btn-spinner-minus" data-cart-item-id="<?php echo $cart_item->cart_item_id; ?>" data-dir="dwn">-</button>
 																		</span>
-																		<input type="text" id="q-<?php echo $cart_item->cart_item_id; ?>" class="form-control text-center" value="<?php echo $cart_item->quantity; ?>" data-product-id="<?php echo $cart_item->product_id; ?>" data-cart-item-id="<?php echo $cart_item->cart_item_id; ?>">
+																		<input type="text" id="q-<?php echo $cart_item->cart_item_id; ?>" name="q-<?php echo $cart_item->cart_item_id; ?>" class="form-control text-center" value="<?php echo $cart_item->quantity; ?>" data-product-id="<?php echo $cart_item->product_id; ?>" data-cart-item-id="<?php echo $cart_item->cart_item_id; ?>">
 																		<span class="input-group-btn">
 																			<button type="button" class="btn btn-default btn-spinner-plus" data-cart-item-id="<?php echo $cart_item->cart_item_id; ?>" data-dir="up">+</button>
 																		</span>
@@ -118,7 +118,7 @@
 														<?php if (empty($cart_item->is_stock_available)) : ?>
 															<a href="javascript:void(0)" class="btn btn-md btn-success text-center text-white mt-3 col-12"><?php echo trans("negotiation"); ?></a>
 														<?php else : ?>
-															<?php if (empty($this->auth_check) && $this->general_settings->guest_checkout != 1) : ?>
+															<?php if (!empty($this->auth_check) && $this->general_settings->guest_checkout != 1) : ?>
 																<a href="#" class="btn btn-md btn-success text-center text-white mt-3 col-12" data-toggle="modal" data-target="#loginModal"><?php echo trans("negotiation"); ?></a>
 															<?php else : ?>
 																<a href="<?= base_url("negotiation/add_negotiation") . "?product_id=" . $cart_item->product_id . "&product_quantity=" . 1 ?>" class="btn btn-md btn-success text-center text-white mt-3 col-12"><?php echo trans("negotiation"); ?></a>

@@ -160,6 +160,7 @@ foreach ($languages as $language) {
         $route[$key . 'compare/add_compared_product']['GET'] = 'compare_controller/add_compared_product';
         $route[$key . 'compare/delete_compared_product']['GET'] = 'compare_controller/delete_compared_product';
         $route[$key . 'compare/add_compared_vendor']['GET'] = 'compare_controller/add_compared_vendor';
+        $route[$key . 'compare/do_negotiation']['GET'] = 'compare_controller/do_negotiation';
         /* Negotiation */
         $route[$key . 'negotiation']['GET'] = 'negotiation_controller/negotiation';
         $route[$key . 'negotiation']['POST'] = 'negotiation_controller/negotiation';

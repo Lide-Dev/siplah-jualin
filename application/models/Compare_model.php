@@ -1,6 +1,7 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
+require_once FCPATH . "application/models/Negotiation.php";
 class Compare_model extends CI_Model
 {
 	public function __construct()
@@ -12,6 +13,7 @@ class Compare_model extends CI_Model
 	{
 		$raw_product = get_product($id);
 		$total_price = calculate_total_compare($raw_product->price, $quantity, $raw_product->price * 0.1);
+
 		$product = new stdClass();
 		$product->id = $raw_product->id;
 		$product->title = $raw_product->title;
@@ -57,5 +59,35 @@ class Compare_model extends CI_Model
 		$products = $arr_products_id;
 		$products[] = 0;
 		return $products;
+	}
+
+	public function insert_all_negotiation($arr_products_id, $user_id, $quantity)
+	{
+		foreach ($arr_products_id as $product_id) {
+			$negotiation = $this->negotiation_model->db_get_negotiation_by_user_id_and_product_id($user_id, $product_id);
+			$product = get_product($product_id);
+			if (empty($negotiation)) {
+				$m_negotiation = new Negotiation(
+					$user_id,
+					$product->user_id,
+					$product_id,
+					$product->price,
+					$product->shipping_cost,
+					$quantity
+				);
+				$this->negotiation_model->db_insert_negotiation($m_negotiation);
+			}
+			dd($product->id);
+			$conversation = $this->negotiation_model->db_get_nego_conversation_by_user_and_product_id($user_id, $product_id);
+			if (empty($conversation)) {
+				$m_conversation = new Conversation(
+					$user_id,
+					$product->user_id,
+					$product_id,
+					$product->title
+				);
+				$this->negotiation_model->db_insert_conversation($m_conversation);
+			}
+		}
 	}
 }

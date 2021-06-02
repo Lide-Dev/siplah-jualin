@@ -3,7 +3,7 @@
 		<div class="text-capitalize font-weight-bold col-md-2" style="font-size: medium;"><?= trans('payment_source') ?></div>
 	</div>
 	<select name="input_payment_source" id="input_payment_source" class="custom-select my-3 col-md-4">
-		<option selected><?= trans('choose_source') ?></option>
+		<option value="0" selected><?= trans('choose_source') ?></option>
 		<?php if (!empty($arr_payment_source)) :  ?>
 			<!-- payment source list -->
 			<?php foreach ($arr_payment_source as $payment_source) : ?>
@@ -11,7 +11,10 @@
 			<?php endforeach ?>
 		<?php endif ?>
 	</select>
+	<?= form_error('payment_source') ?>
 	<div class="compared-container row card">
+		<?= form_error('payment_source') ?>
+		<?= $this->session->flashdata("compare_status") ?>
 		<div class="container py-3">
 			<?php for ($i = 0; $i < (count($products) + 1); $i++) : ?>
 				<div class="item-compared border">
@@ -121,7 +124,7 @@
 	</div>
 	<!-- Make an Offer Button-->
 	<div class="col-md-12 mt-4" align="center">
-		<a class="btn btn-success btn-lg" style="color: white;" href=""><?= trans('make_an_offer') ?></a>
+		<a class="btn btn-success btn-lg" style="color: white;" href="<?= base_url('compare/do_negotiation') ?>"><?= trans('make_an_offer') ?></a>
 	</div>
 	<!-- End Make an Offer Button -->
 </div>
