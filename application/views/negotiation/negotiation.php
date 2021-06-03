@@ -165,6 +165,7 @@
 </div>
 </div>
 <?php foreach ($products as $product) : ?>
+	<?= form_open() ?>
 	<div class="modal fade" id="modal-negotiation-<?= $product->id ?>" tabindex="-1" role="dialog" aria-hidden="true">
 		<div class="modal-dialog modal-dialog-centered" role="document">
 			<div class="modal-content modal-custom">
@@ -199,10 +200,9 @@
 					<button type="button" class="btn btn-md btn-red" data-dismiss="modal"><?= trans("close"); ?></button>
 					<button type="submit" class="btn btn-md btn-custom"><?= trans("submit"); ?></button>
 				</div>
-				<?= form_close(); ?>
-				<!-- form end -->
 			</div>
 		</div>
 	</div>
+	<?= form_close() ?>
 <?php endforeach ?>
 <!-- Wrapper End-->

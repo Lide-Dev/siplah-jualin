@@ -161,13 +161,12 @@ foreach ($languages as $language) {
         $route[$key . 'compare/delete_compared_product']['GET'] = 'compare_controller/delete_compared_product';
         $route[$key . 'compare/add_compared_vendor']['GET'] = 'compare_controller/add_compared_vendor';
         $route[$key . 'compare/do_negotiation']['GET'] = 'compare_controller/do_negotiation';
-        /* Negotiation */
+        /* Buyer Negotiation */
         $route[$key . 'negotiation']['GET'] = 'negotiation_controller/negotiation';
         $route[$key . 'negotiation']['POST'] = 'negotiation_controller/negotiation';
         $route[$key . 'negotiation/add_negotiation']['GET'] = 'negotiation_controller/add_negotiation';
         $route[$key . 'negotiation/delete_negotiation']['GET'] = 'negotiation_controller/delete_negotiation';
         $route[$key . 'negotiation/change_conversation']['GET'] = 'negotiation_controller/change_conversation';
-        $route[$key . 'negotiation/send_message']['GET'] = 'negotiation_controller/send_message';
         /*Multi Login*/
         $route[$key . 'login/member']['GET'] = 'buyer_controller/index';
         $route[$key . 'login/supervisor']['GET'] = 'supervisor_controller/index';

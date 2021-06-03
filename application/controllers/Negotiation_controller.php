@@ -11,6 +11,21 @@ class Negotiation_controller extends Home_Core_Controller
 
   public function negotiation()
   {
+    $user_id = $this->session->userdata("modesy_sess_user_id");
+    $user = get_user($user_id);
+    if ($user->role == 'member') {
+      redirect('buyer_negotiation');
+    } elseif ($user->role == 'vendor') {
+      redirect('seller_negotiation');
+    }
+  }
+
+  public function seller_negotiation()
+  {
+  }
+
+  public function buyer_negotiation()
+  {
     $data['title'] = trans("negotiation");
     $data['description'] = trans("negotiation") . " - " . $this->app_name;
     $data['keywords'] = trans("negotiation") . "," . $this->app_name;
@@ -19,16 +34,16 @@ class Negotiation_controller extends Home_Core_Controller
     // $products_quantity = array(1);
 
     // $user_id = $this->session->userdata("modesy_sess_user_id");
-    $products_id = $this->session->userdata('nego_products_id');
-    $products_quantity = $this->session->userdata('nego_products_quantity');
     $conversation_id = $this->input->get('conv_id');
 
     $user_id = "0622b923-1ada-499f-8b6f-ca893a3d6094";
 
-    $data['products'] = $this->negotiation_model->get_products($user_id);
+    $data['products'] = $this->negotiation_model->get_nego_products($user_id);
     if (!empty($conversation_id)) {
-      $data['conversation'] = $this->negotiation_model->get_conversation($conversation_id);
+      $conversation = $this->negotiation_model->get_conversation($conversation_id);
+      $data['conversation'] = $conversation;
       $data['messages'] = $this->negotiation_model->db_get_messages_by_conversation_id($conversation_id);
+      $data['negotiations'] = $this->negotiation_model->db_get_negotiation_by_buyer_id_and_product_id($user_id, $conversation->product_id);
     }
 
     $this->load->view('partials/_header', $data);
@@ -42,7 +57,6 @@ class Negotiation_controller extends Home_Core_Controller
     $user_id = "0622b923-1ada-499f-8b6f-ca893a3d6094";
     $product_id = $this->input->get('product_id');
     $conversation = $this->negotiation_model->db_get_nego_conversation_by_user_and_product_id($user_id, $product_id);
-    dd($conversation);
     redirect("negotiation?conv_id=" . $conversation->id);
   }
 
@@ -54,7 +68,7 @@ class Negotiation_controller extends Home_Core_Controller
     // $user_id = $this->session->userdata('modesy_sess_user_id');
     $user_id = "0622b923-1ada-499f-8b6f-ca893a3d6094";
 
-    $this->negotiation_model->add_negotiation($user_id, $product_id, $quantity);
+    $this->negotiation_model->add_new_negotiation($user_id, $product_id, $quantity);
 
     $conversation = $this->negotiation_model->check_conversation($user_id, $product_id);
 
@@ -78,12 +92,17 @@ class Negotiation_controller extends Home_Core_Controller
     redirect('negotiation');
   }
 
-  public function send_message()
+  public function send_negotiation()
   {
-    $message = $this->input->post('message');
-    $user_id = $this->session->userdata('modesy_sess_user_id');
-    // $user_id = "e22ff369-5a3a-47c5-ba63-0683e872bd11";
-    $vendor_id = $this->input->post('vendor_id');
-    $conversation_id = $this->input->post('conversation_id');
+    // $user_id = $this->session->userdata("modesy_sess_user_id");
+    $user_id = "0622b923-1ada-499f-8b6f-ca893a3d6094";
+
+    $product_id = $this->input->post("product_id");
+    $nego_price = $this->input->post("nego_price");
+    $shipping_cost = $this->input->post("shipping_cost");
+    $quantity = $this->input->post("quantity");
+
+    $this->negotiation_model->make_negotiation($user_id, $product_id, $nego_price, $shipping_cost, $quantity);
+    redirect("negotiation");
   }
 }

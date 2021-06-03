@@ -11,7 +11,7 @@ class Negotiation_model extends CI_Model
     parent::__construct();
   }
 
-  public function add_negotiation($user_id, $product_id, $quantity)
+  public function add_new_negotiation($user_id, $product_id, $quantity)
   {
     $product = get_product($product_id);
     $negotiation = $this->db_get_latest_negotiation($user_id, $product_id);
@@ -25,6 +25,25 @@ class Negotiation_model extends CI_Model
         $quantity
       );
       $this->db_insert_negotiation($m_negotiation);
+    }
+  }
+
+  public function make_negotiation($user_id, $product_id, $nego_price, $shipping_cost, $quantity)
+  {
+    $user = get_user($user_id);
+    $product = get_product($product_id);
+
+    if ($user->role == 'member') {
+      $m_negotiation = new Negotiation(
+        $user_id,
+        $product->user_id,
+        $product_id,
+        $nego_price,
+        $shipping_cost,
+        $quantity
+      );
+      $this->db_insert_negotiation($m_negotiation);
+    } else {
     }
   }
 
@@ -47,12 +66,12 @@ class Negotiation_model extends CI_Model
     return $conversation;
   }
 
-  public function get_products($user_id)
+  public function get_nego_products($user_id)
   {
-    $negotiations = $this->db_get_negotiation_by_user_id($user_id);
+    $negotiations = $this->db_get_negotiation_by_buyer_id($user_id);
     $arr_product = array();
     foreach ($negotiations as $negotiation) {
-      $m_product = $this->remap_negotiation_product($negotiation->product_id, $negotiation->quantity);
+      $m_product = $this->remap_negotiation_product($negotiation->product_id, $negotiation->quantity, $negotiation->id);
 
       array_push($arr_product, $m_product);
     }
@@ -60,7 +79,7 @@ class Negotiation_model extends CI_Model
     return $arr_product;
   }
 
-  public function remap_negotiation_product($id, $quantity)
+  public function remap_negotiation_product($id, $quantity, $negotiation_id)
   {
     $raw_product = get_product($id);
     $total_price_with_ppn = calculate_total_compare($raw_product->price, $quantity, $raw_product->price * ($raw_product->vat_rate / 100));
@@ -68,6 +87,7 @@ class Negotiation_model extends CI_Model
 
     $product = new stdClass();
     $product->id = $raw_product->id;
+    $product->negotiation_id = $negotiation_id;
     $product->title = $raw_product->title;
     $product->category = get_category_by_id($raw_product->category_id)->description;
     $product->category_id = $raw_product->category_id;
@@ -109,16 +129,16 @@ class Negotiation_model extends CI_Model
     return $m_conversation;
   }
 
-  public function db_get_negotiation_by_user_id($user_id)
+  public function db_get_negotiation_by_buyer_id($user_id)
   {
-    $sql = "SELECT * FROM negotiations WHERE user_id = ?";
+    $sql = "SELECT * FROM negotiations WHERE buyer_id = ?";
     $query = $this->db->query($sql, array($user_id));
     return $query->result();
   }
 
-  public function db_get_negotiation_by_user_id_and_product_id($user_id, $product_id)
+  public function db_get_negotiation_by_buyer_id_and_product_id($user_id, $product_id)
   {
-    $sql = "SELECT * FROM negotiations WHERE user_id = ? AND product_id = ?";
+    $sql = "SELECT * FROM negotiations WHERE buyer_id = ? AND product_id = ?";
     $query = $this->db->query($sql, array($user_id, $product_id));
     return $query->result();
   }
