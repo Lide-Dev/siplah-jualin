@@ -72,6 +72,40 @@ class Negotiation_model extends CI_Model
     return $arr_conversation;
   }
 
+  public function get_seller_conversations($seller_id)
+  {
+    $conversations = $this->db_get_negotiation_conversations_by_buyer_id($seller_id);
+    $arr_conversation = array();
+
+    foreach ($conversations as $conversation) {
+      $seller = get_user($conversation->seller_id);
+      $buyer = get_user($conversation->buyer_id);
+      $product = get_product($conversation->product_id);
+      $last_nego = $this->db_get_latest_negotiation_by_conversation($conversation->id);
+      $messages = $this->db_get_messages_by_conversation_id($conversation->id);
+
+      $m_conversation = new Conversation(
+        $conversation->buyer_id,
+        $conversation->seller_id,
+        $conversation->product_id,
+        $conversation->subject,
+        $buyer->username,
+        get_user_avatar($buyer),
+        $seller->username,
+        get_user_avatar($seller),
+        $seller->email_status,
+        $product,
+        $seller,
+        $messages,
+        $last_nego,
+        $conversation->id
+      );
+
+      $arr_conversation[] = $m_conversation;
+    }
+    return $arr_conversation;
+  }
+
   public function add_new_negotiation_conversation($buyer_id, $product_id, $quantity)
   {
     $conversation = $this->db_get_negotiation_conversation_by_buyer_id_and_product_id($buyer_id, $product_id);

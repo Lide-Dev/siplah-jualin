@@ -26,8 +26,11 @@ class Negotiation_controller extends Home_Core_Controller
     $data['description'] = trans("negotiation") . " - " . $this->app_name;
     $data['keywords'] = trans("negotiation") . "," . $this->app_name;
 
-    // $user_id = $this->session->userdata('modesy_sess_user_id');
-    $user_id = "e22ff369-5a3a-47c5-ba63-0683e872bd11";
+    $user_id = $this->session->userdata('modesy_sess_user_id');
+    if (empty($user_id)) {
+      $user_id = "e22ff369-5a3a-47c5-ba63-0683e872bd11";
+    }
+
     $data['conversations'] = $this->negotiation_model->get_buyer_conversations($user_id);
     $data['user_id'] = $user_id;
 
@@ -81,8 +84,10 @@ class Negotiation_controller extends Home_Core_Controller
 
   public function send_message()
   {
-    // $user_role = $this->session->userdata('modesy_sess_user_role');
-    $user_role = 'member';
+    $user_role = $this->session->userdata('modesy_sess_user_role');
+    if (empty($user_role)) {
+      $user_role = 'member';
+    }
     $message = $this->input->post('message');
     $conversation_id = $this->input->post('conversation_id');
 
