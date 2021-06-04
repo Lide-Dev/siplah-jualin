@@ -495,7 +495,6 @@ class Auth_controller extends Home_Core_Controller
 		$this->form_validation->set_rules("business_name", trans("business_name"), "required|is_unique[supplier_profiles.supplier_name]|max_length[254]");
 		$this->form_validation->set_rules("npwp", "NPWP", "required|numeric|exact_length[15]|is_unique[supplier_profiles.npwp]");
 		$this->form_validation->set_rules('npwp_document', 'Dokumen NPWP', 'callback_file_check[npwp_document]');
-		$this->form_validation->set_rules('business_support_document', 'Dokumen Pendukung', 'required|in_list[siup,nib,tdp]');
 		// $this->form_validation->set_rules("umkm", trans("tax_status"), "required|in_list[umkm,non_umkm]");
 		$this->form_validation->set_rules("address", trans("address"), "required|max_length[254]");
 		$this->form_validation->set_rules("province", trans("province"), ["required", ["callback_valid_province", [$this->location_model, "valid_province"]]]);
@@ -518,22 +517,29 @@ class Auth_controller extends Home_Core_Controller
 		} else {
 			$this->form_validation->set_rules("responsible_person_name", trans("full_name") . " Penanggung Jawab", "required|max_length[254]");
 			$this->form_validation->set_rules("responsible_person_position", trans("position") . " Penanggung Jawab", "required|max_length[254]");
-			if ($this->input->post("business_support_document") == "siup") {
-				if (!empty($_FILES["siup_document"])) {
-					$this->form_validation->set_rules('siup_document', 'Dokumen SIUP', 'callback_file_check[siup_document]');
-				}
-			} elseif ($this->input->post("business_support_document") == "nib") {
-				if (!empty($_FILES["nib_document"])) {
-					$this->form_validation->set_rules('nib_document', 'Dokumen NIB', 'callback_file_check[nib_document]');
-				}
-				if (empty($this->input->post("nib"))) {
-					$this->form_validation->set_rules('nib', 'NIB', 'required|max_length[13]');
-				}
-			} elseif ($this->input->post("business_support_document") == "tdp") {
-				if (!empty($_FILES["tdp_document"])) {
-					$this->form_validation->set_rules('tdp_document', 'Dokumen TDP', 'callback_file_check[tdp_document]');
+
+			// Start Support Document checker
+			if (empty($this->input->post("siup_box")) && empty($this->input->post("nib_box")) && empty($this->input->post("tdp_box"))) {
+				$this->form_validation->set_rules('support_document', 'Dokumen Pendukung', 'required');
+			} else {
+				if (!empty($this->input->post("siup_box"))) {
+					if (!empty($_FILES["siup_document"])) {
+						$this->form_validation->set_rules('siup_document', 'Dokumen SIUP', 'callback_file_check[siup_document]');
+					}
+				} elseif (!empty($this->input->post("nib_box"))) {
+					if (empty($this->input->post("nib"))) {
+						$this->form_validation->set_rules('nib', 'NIB', 'required|max_length[13]');
+					}
+					if (!empty($_FILES["nib_document"])) {
+						$this->form_validation->set_rules('nib_document', 'Dokumen NIB', 'callback_file_check[nib_document]');
+					}
+				} elseif (!empty($this->input->post("tdp_box"))) {
+					if (!empty($_FILES["tdp_document"])) {
+						$this->form_validation->set_rules('tdp_document', 'Dokumen TDP', 'callback_file_check[tdp_document]');
+					}
 				}
 			}
+			// End SUpport Document Checker
 		}
 		$this->form_validation->set_error_delimiters("<small class='text-danger'>", "</small>");
 		if ($this->form_validation->run() == FALSE) {
@@ -571,6 +577,7 @@ class Auth_controller extends Home_Core_Controller
 			];
 			if ($this->input->post("business_profile") == "individual") {
 				$user_data["profile"]["nik"] = $this->input->post("nik");
+				$user_data["profile"]["nik_fullname"] = $this->input->post("nik_fullname");
 			} else {
 				$user_data["profile"]["responsible_person_name"] = $this->input->post("responsible_person_name");
 				$user_data["profile"]["responsible_person_position"] = $this->input->post("responsible_person_position");
@@ -612,7 +619,7 @@ class Auth_controller extends Home_Core_Controller
 		$allowed_max_byte = 2097152;
 		$allowed_mime_type_arr = array('application/pdf', 'image/jpeg', 'image/jpg', 'image/png');
 		$mime = get_mime_by_extension($_FILES[$field]['name']);
-		if (isset($_FILES[$field]['name']) && $_FILES[$field]['name'] != "") {
+		if (!isset($_FILES[$field]['name']) && $_FILES[$field]['name'] == "") {
 			if (!in_array($mime, $allowed_mime_type_arr)) {
 				$this->form_validation->set_message('file_check', 'Hanya ekstensi pdf/jpg/png file {field} yang diterima.');
 				return false;

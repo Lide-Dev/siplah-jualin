@@ -264,8 +264,12 @@
 							</div>
 						</div>
 						<div id="form_container_responsible_individual" style="display: none;">
-							<label class="control-label font-600" for="nik">Nomor Induk Kependudukan</label>
 							<div class="form-group">
+								<label class="control-label font-600" for="nik_fullname">Nama Lengkap Penanggung Jawab</label>
+								<input type="text" name="nik_fullname" class="form-control auth-form-input" maxlength="16" pattern="\d*" placeholder="<?= trans("full_name"); ?>" value="<?= set_value("nik"); ?>" required>
+							</div>
+							<div class="form-group">
+								<label class="control-label font-600" for="nik">Nomor Induk Kependudukan</label>
 								<input type="text" name="nik" class="form-control auth-form-input" maxlength="16" pattern="\d*" placeholder="<?= trans("nik"); ?>" value="<?= set_value("nik"); ?>" required>
 							</div>
 							<div class="m-b-30 form_group pb-3">
