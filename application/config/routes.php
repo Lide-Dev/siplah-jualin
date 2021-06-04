@@ -167,6 +167,8 @@ foreach ($languages as $language) {
         $route[$key . 'negotiation/add_negotiation_conversation']['GET'] = 'negotiation_controller/add_negotiation_conversation';
         $route[$key . 'negotiation/make_offer']['POST'] = 'negotiation_controller/make_offer';
         $route[$key . 'negotiation/send_message']['POST'] = 'negotiation_controller/send_message';
+        $route[$key . 'negotiation/accepted']['GET'] = 'negotiation_controller/offer_accept';
+        $route[$key . 'negotiation/declined']['GET'] = 'negotiation_controller/offer_decline';
         /*Multi Login*/
         $route[$key . 'login/member']['GET'] = 'buyer_controller/index';
         $route[$key . 'login/supervisor']['GET'] = 'supervisor_controller/index';

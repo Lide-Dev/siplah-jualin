@@ -85,12 +85,18 @@
 														</strong>
 													</div>
 												</div>
-												<?php if ($user_id != $negotiation->negotiator_id) : ?>
-													<div class="col-md-3 align-self-end">
-														<a href="" class="btn btn-sm btn-danger text-white">Tolak</a>
-														<a href="" class="btn btn-sm mx-1 btn-success text-white">Terima</a>
-													</div>
-												<?php endif ?>
+												<div class="col-md-3 align-self-end">
+													<?php if ($user_id != $negotiation->negotiator_id && $negotiation->status == NEGO_PENDING) : ?>
+														<a href="<?= base_url('negotiation/declined') . "?conversation_id=" . $conversation->id ?>" class="btn btn-sm btn-danger text-white">Tolak</a>
+														<a href="<?= base_url('negotiation/accepted') . "?conversation_id=" . $conversation->id ?>" class="btn btn-sm mx-1 btn-success text-white">Terima</a>
+													<?php elseif ($negotiation->status == NEGO_ACCEPT) : ?>
+														<div class="badge badge-success p-2">Tawaran Diterima</div>
+													<?php elseif ($negotiation->status == NEGO_DECLINE) : ?>
+														<div class="badge badge-danger p-2">Tawaran Ditolak</div>
+													<?php else : ?>
+														<div class="badge badge-dark p-2">Tawaran Pending</div>
+													<?php endif ?>
+												</div>
 											</div>
 										<?php endif ?>
 									</div>

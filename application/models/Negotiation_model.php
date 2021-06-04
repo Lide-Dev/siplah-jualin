@@ -122,8 +122,16 @@ class Negotiation_model extends CI_Model
         $seller->email_status
       );
       $this->db_insert_negotiation_conversation($m_conversation);
-
       $conversation = $this->db_get_negotiation_conversation_by_buyer_id_and_product_id($user_id, $product_id);
+
+      $m_negotiation = new Negotiation(
+        $conversation->id,
+        $product->price,
+        $product->shipping_cost,
+        $quantity
+      );
+
+      $this->db_insert_active_negotiation($m_negotiation, $user_id);
     }
     return $conversation;
   }
@@ -176,6 +184,20 @@ class Negotiation_model extends CI_Model
     return $this->db_get_messages_by_conversation_id($conversation_id);
   }
 
+  public function accept_offer($conversation_id)
+  {
+    $negotiation = $this->db_get_latest_negotiation_by_conversation($conversation_id);
+
+    $this->db_update_negotiation_status_accepted($negotiation);
+  }
+
+  public function decline_offer($conversation_id)
+  {
+    $negotiation = $this->db_get_latest_negotiation_by_conversation($conversation_id);
+
+    $this->db_update_negotiation_status_declined($negotiation);
+  }
+
   /* Start DB Negotiations */
   private function db_get_negotiation_by_buyer_and_product($buyer_id, $product_id)
   {
@@ -202,7 +224,10 @@ class Negotiation_model extends CI_Model
   {
     $this->db->update(
       'negotiations',
-      ["is_active" => 0],
+      [
+        "is_active" => 0,
+        "status" => NEGO_REPLACE
+      ],
       ['conversation_id' => $negotiation->conversation_id]
     );
   }
@@ -211,10 +236,7 @@ class Negotiation_model extends CI_Model
   {
     $this->db->update(
       'negotiations',
-      [
-        "status" => NEGO_ACCEPT,
-        "is_active" => 0
-      ],
+      ["status" => NEGO_ACCEPT],
       ["conversation_id" => $negotiation->conversation_id]
     );
   }
@@ -223,10 +245,7 @@ class Negotiation_model extends CI_Model
   {
     $this->db->update(
       'negotiations',
-      [
-        "status" => NEGO_DECLINE,
-        "is_active" => 0
-      ],
+      ["status" => NEGO_DECLINE],
       ["conversation_id" => $negotiation->conversation_id]
     );
   }

@@ -2,6 +2,7 @@
 define('NEGO_PENDING', 'pending');
 define('NEGO_ACCEPT', 'accepted');
 define('NEGO_DECLINE', 'declined');
+define('NEGO_REPLACE', 'replaced');
 class Negotiation
 {
   public $id,
