@@ -924,12 +924,24 @@ class Shop
     public $user_id;
     public $email;
     public $username;
+    //new
+    public $is_business_entity;
+    public $nik_fullname;
+    public $ktp_path;
+    public $business_type_id;
+    public $cover_book_path;
     //Custom
+
     public function legal_status()
     {
-
         $arr = ["1" => "Individu", "2" => "PKP", "3" => "Non PKP"];
         return $arr["{$this->legal_status_id}"];
+    }
+
+    public function business_type()
+    {
+        $arr = ["1" => "Micro", "2" => "Kecil", "3" => "Menengah", "4" => "Non Umkm"];
+        return $arr["{$this->business_type_id}"];
     }
 
     public function bank_name()
@@ -970,28 +982,34 @@ class Shop
 
     public function nib_ext()
     {
-        if (empty($this->nib_path)) {
-            return "";
-        }
-        $arr = explode(".", $this->nib_path);
-        return end($arr);
+        return $this->extension($this->nib_path);
     }
 
     public function npwp_ext()
     {
-        if (empty($this->npwp_path)) {
-            return "";
-        }
-        $arr = explode(".", $this->npwp_path);
-        return end($arr);
+        return $this->extension($this->npwp_path);
     }
     public function siup_ext()
     {
-        if (empty($this->siup_path)) {
+        return $this->extension($this->siup_path);
+    }
+    public function ktp_ext()
+    {
+        return $this->extension($this->ktp_path);
+    }
+
+    public function extension($path)
+    {
+        if (empty($path)) {
             return "";
         }
-        $arr = explode(".", $this->siup_path);
+        $arr = explode(".", $path);
         return end($arr);
+    }
+
+    public function check_file($name)
+    {
+        return file_exists(FCPATH . "uploads/supplier_document/{$this->$name}");
     }
 
 

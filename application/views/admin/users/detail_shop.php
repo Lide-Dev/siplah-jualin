@@ -18,7 +18,7 @@
                                 <strong>Profil Usaha</strong>
                             </div>
                             <div class="col-sm-8">
-                                <p> </p>
+                                <p> <?= $shop->is_business_entity == 1 ? "Badan Usaha" : "Individu" ?></p>
                             </div>
                         </div>
 
@@ -36,7 +36,7 @@
                                 <strong>Tipe Usaha</strong>
                             </div>
                             <div class="col-sm-8">
-                                <p> <?= $shop->is_umkm ? "UMKM" : "Non UMKM" ?></p>
+                                <p> <?= $shop->business_type ?></p>
                             </div>
                         </div>
                         <div class="row row-details">
@@ -52,8 +52,8 @@
                                 <strong>Dokumen NPWP</strong>
                             </div>
                             <div class="col-sm-8">
-                                <button id="npwp_document" type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal_document_viewer">
-                                    Lihat Dokumen
+                                <button <?= $shop->check_file("npwp_path") ? "" : "disabled" ?> id="npwp_document" type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal_document_viewer">
+                                    <?= $shop->check_file("npwp_path") ? "Lihat Dokumen" : "Dokumen Terhapus" ?>
                                 </button>
 
                             </div>
@@ -63,8 +63,8 @@
                                 <strong>Dokumen NIB</strong>
                             </div>
                             <div class="col-sm-8">
-                                <button id="nib_document" type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal_document_viewer">
-                                    Lihat Dokumen
+                                <button <?= $shop->check_file("nib_path") ? "" : "disabled" ?> id="nib_document" type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal_document_viewer">
+                                    <?= $shop->check_file("nib_path") ? "Lihat Dokumen" : "Dokumen Terhapus" ?>
                                 </button>
 
                             </div>
@@ -147,12 +147,16 @@
                                 <p> <?= $shop->bank_account_owner_name ?></p>
                             </div>
                         </div>
-                        <div class="col-sm-8">
-                                <button id="nib_document" type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal_document_viewer">
-                                    Lihat Dokumen
-                                </button>
-
+                        <div class="row row-details">
+                            <div class="col-xs-12 col-sm-4 col-right">
+                                <strong>Dokumen Buku Rekening</strong>
                             </div>
+                            <div class="col-sm-8">
+                                <button <?= $shop->check_file("cover_book_path") ? "" : "disabled" ?> id="cover_book_document" type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal_document_viewer">
+                                    <?= $shop->check_file("cover_book_path") ? "Lihat Dokumen" : "Dokumen Terhapus" ?>
+                                </button>
+                            </div>
+                        </div>
                         <div class="row row-details">
                             <div class="col-xs-12">
                                 <div class="table-orders-user">
@@ -168,13 +172,23 @@
                 <div class="row">
                     <div class="col-sm-12 col-md-12 col-lg-6">
                         <h4 class="sec-title">Penanggung Jawab</h4>
-                        <?php if ($shop->legal_status == "Individu") : ?>
+                        <?php if ($shop->is_business_entity == 0) : ?>
                             <div class="row row-details">
                                 <div class="col-xs-12 col-sm-4 col-right">
                                     <strong>NIK</strong>
                                 </div>
                                 <div class="col-sm-8">
                                     <p> <?= $shop->nik ?></p>
+                                </div>
+                            </div>
+                            <div class="row row-details">
+                                <div class="col-xs-12 col-sm-4 col-right">
+                                    <strong>Dokumen NIK</strong>
+                                </div>
+                                <div class="col-sm-8">
+                                    <button <?= $shop->check_file("ktp_path") ? "" : "disabled" ?> id="ktp_document" type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal_document_viewer">
+                                        <?= $shop->check_file("ktp_path") ? "Lihat Dokumen" : "Dokumen Terhapus" ?>
+                                    </button>
                                 </div>
                             </div>
 
@@ -197,11 +211,11 @@
                             </div>
                             <div class="row row-details">
                                 <div class="col-xs-12 col-sm-4 col-right">
-                                    <strong>Jabatan</strong>
+                                    <strong>Dokumen SIUP</strong>
                                 </div>
                                 <div class="col-sm-8">
-                                    <button id="siup_document" type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal_document_viewer">
-                                        Lihat Dokumen
+                                    <button <?= $shop->check_file("siup_path") ? "" : "disabled" ?> id="siup_document" type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal_document_viewer">
+                                        <?= $shop->check_file("siup_path") ? "Lihat Dokumen" : "Dokumen Terhapus" ?>
                                     </button>
                                 </div>
                             </div>
@@ -261,19 +275,24 @@
 <script>
     var files = {
         npwp_document: {
-            ext: "<?= $shop->npwp_ext ?>",
+            ext: "<?= $shop->npwp_ext ?? "" ?>",
             url: "<?= base_url("uploads/supplier_document/{$shop->npwp_path}") ?>",
             alt: "NPWP Dokumen"
         },
         nib_document: {
-            ext: "<?= $shop->nib_ext ?>",
+            ext: "<?= $shop->nib_ext ?? "" ?>",
             url: "<?= base_url("uploads/supplier_document/{$shop->nib_path}") ?>",
             alt: "NIB Dokumen"
         },
         siup_document: {
-            ext: "<?= $shop->siup_ext ?>",
+            ext: "<?= $shop->siup_ext ?? "" ?>",
             url: "<?= base_url("uploads/supplier_document/{$shop->siup_path}") ?>",
             alt: "SIUP Dokumen"
+        },
+        ktp_document: {
+            ext: "<?= $shop->ktp_ext ?? "" ?>",
+            url: "<?= base_url("uploads/supplier_document/{$shop->ktp_path}") ?>",
+            alt: "KTP Dokumen"
         }
     }
 
@@ -288,6 +307,10 @@
     $("#siup_document").click(function() {
         console.log("t3");
         document_viewer("siup_document")
+    });
+    $("#ktp_document").click(function() {
+        console.log("t4");
+        document_viewer("ktp_document")
     });
 
     function document_viewer(type) {
