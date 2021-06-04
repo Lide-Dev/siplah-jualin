@@ -67,6 +67,20 @@ if (!function_exists('is_admin')) {
     }
 }
 
+//is supervisor
+if (!function_exists('is_supervisor')) {
+    function is_supervisor()
+    {
+        $ci = &get_instance();
+        if ($ci->auth_check) {
+            if ($ci->auth_user->role == "supervisor") {
+                return true;
+            }
+        }
+        return false;
+    }
+}
+
 //get logged user
 if (!function_exists('user')) {
     function user()
@@ -279,6 +293,14 @@ if (!function_exists('admin_url')) {
     {
         $ci = &get_instance();
         return base_url() . $ci->routes->admin . '/';
+    }
+}
+
+if (!function_exists('supervisor_url')) {
+    function supervisor_url()
+    {
+        // $ci = &get_instance();
+        return base_url() . "supervisor" . '/';
     }
 }
 //get route

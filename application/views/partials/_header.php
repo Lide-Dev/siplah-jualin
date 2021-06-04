@@ -396,7 +396,7 @@
                             </div>
                             <div class="row mb-2">
                                 <div class="col-sm-12">
-                                    <a href="<?= base_url('admin/login_supervisor') ?>" class="text-dark">
+                                    <a href="<?= base_url('supervisor/login') ?>" class="text-dark">
                                         <div class="card shadow">
                                             <div class="card-body">
                                                 <div class="row">
