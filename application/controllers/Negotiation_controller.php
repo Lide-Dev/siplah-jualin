@@ -58,13 +58,23 @@ class Negotiation_controller extends Home_Core_Controller
   public function open_conversation()
   {
     $user_role = $this->session->userdata('modesy_sess_user_role');
-    $product_id = $this->input->get('product_id');
+    $conversation_id = $this->input->post('conversation_id');
 
     if ($user_role == 'member') {
       $user_id = $this->session->userdata('modesy_sess_user_id');
-      $conversation = $this->negotiation_model->open_conversation($user_id, $product_id);
+      $conversation = $this->negotiation_model->open_conversation($conversation_id);
     } elseif ($user_role == 'vendor') {
       // Later
     }
+  }
+
+  public function make_offer()
+  {
+    $conversation_id = $this->input->post('conversation_id');
+    $offer_price = $this->input->post('offer_price');
+    $offer_shipping = $this->input->post('offer_shipping');
+
+    $this->negotiation_model->make_offer($offer_price, $offer_shipping, $conversation_id);
+    redirect('negotiation');
   }
 }

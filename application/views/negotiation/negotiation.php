@@ -24,6 +24,7 @@
 								<?php if (!empty($conversations)) : ?>
 									<?php foreach ($conversations as $conversation) : ?>
 										<?php $product = $conversation->product ?>
+										<?php $negotiation = $conversation->last_nego ?>
 										<div class="item">
 											<div class="row">
 												<div class="cart-item-image">
@@ -51,6 +52,12 @@
 															<?= price_formatted($product->price, $product->currency) ?>
 														</strong>
 													</div>
+													<div class="list-item m-t-15">
+														<label><?= trans("last_nego_price"); ?>:</label>
+														<strong class="lbl-price">
+															<?= price_formatted($negotiation->product_last_price, $product->currency) ?>
+														</strong>
+													</div>
 													<?php if (!empty($product->vat_rate)) : ?>
 														<div class="list-item">
 															<label><?= trans("vat"); ?>&nbsp;(<?= $product->vat_rate; ?>%):</label>
@@ -60,7 +67,7 @@
 												</div>
 											</div>
 											<div class="row my-2 justify-content-end">
-												<a href="<?= base_url('negotiation' . "?conversation_id" . $conversation->id) ?>" class="btn btn-sm btn-dark text-white h-100">Pilih produk</a>
+												<a href="<?= base_url('negotiation' . "?conversation_id=" . $conversation->id) ?>" class="btn btn-sm btn-dark text-white h-100">Pilih produk</a>
 												<a class="btn btn-sm btn-success mx-1 text-white h-100" data-toggle="modal" data-target="#modal-negotiation-<?= $conversation->id ?>">Kirim Penawaran</a>
 												<a href="<?= base_url('negotiation/delete_negotiation') ?>"></a>
 											</div>
@@ -155,7 +162,7 @@
 </div>
 <?php foreach ($conversations as $conversation) : ?>
 	<?php $product = $conversation->product ?>
-	<?= form_open() ?>
+	<?= form_open(base_url('negotiation/make_offer')) ?>
 	<div class="modal fade" id="modal-negotiation-<?= $conversation->id ?>" tabindex="-1" role="dialog" aria-hidden="true">
 		<div class="modal-dialog modal-dialog-centered" role="document">
 			<div class="modal-content modal-custom">
@@ -166,14 +173,14 @@
 					</button>
 				</div>
 				<div class="modal-body">
-					<input type="hidden" name="product_id" class="form-control" value="<?= $product->id ?>">
 					<div class="form-group">
+						<input type="hidden" name="conversation_id" value="<?= $conversation->id ?>">
 						<label class="control-label"><?= trans('price'); ?></label>
 						<div class="input-group">
 							<div class="input-group-prepend">
 								<span class="input-group-text input-group-text-currency" id="basic-addon1"><?= get_currency($this->payment_settings->default_product_currency); ?></span>
 							</div>
-							<input type="text" name="nego_price" aria-describedby="basic-addon1" class="form-control form-input price-input validate-price-input" placeholder="<?= $this->input_initial_price; ?>" required>
+							<input type="text" name="offer_price" class="form-control form-input price-input validate-price-input" placeholder="<?= $this->input_initial_price; ?>" required>
 						</div>
 					</div>
 					<div class="form-group">
@@ -182,7 +189,7 @@
 							<div class="input-group-prepend">
 								<span class="input-group-text input-group-text-currency" id="basic-addon1"><?= get_currency($this->payment_settings->default_product_currency); ?></span>
 							</div>
-							<input type="text" name="shipping_cost" aria-describedby="basic-addon1" class="form-control form-input price-input validate-price-input" placeholder="<?= $this->input_initial_price; ?>" required>
+							<input type="text" name="offer_shipping" class="form-control form-input price-input validate-price-input" placeholder="<?= $this->input_initial_price; ?>" required>
 						</div>
 					</div>
 				</div>

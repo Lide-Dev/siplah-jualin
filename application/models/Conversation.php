@@ -13,6 +13,7 @@ class Conversation
     $product,
     $seller,
     $messages,
+    $last_nego,
     $subject;
 
   public function __construct(
@@ -28,6 +29,7 @@ class Conversation
     $product = "",
     $seller = "",
     $messages = array(),
+    $last_nego = "",
     $id = 0
   ) {
     $this->id = $id;
@@ -43,6 +45,7 @@ class Conversation
     $this->product = $product;
     $this->messages = $messages;
     $this->seller = $seller;
+    $this->last_nego = $last_nego;
   }
 
   function get_negotiation_insert_data()

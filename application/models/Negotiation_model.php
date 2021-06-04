@@ -40,13 +40,15 @@ class Negotiation_model extends CI_Model
 
   public function get_buyer_conversations($buyer_id)
   {
-    $conversations = $this->db_get_conversations_by_buyer_id($buyer_id);
+    $conversations = $this->db_get_negotiation_conversations_by_buyer_id($buyer_id);
     $arr_conversation = array();
 
     foreach ($conversations as $conversation) {
       $seller = get_user($conversation->seller_id);
       $buyer = get_user($conversation->buyer_id);
       $product = get_product($conversation->product_id);
+      $last_nego = $this->db_get_latest_negotiation_by_conversation($conversation->id);
+      $messages = $this->db_get_messages_by_conversation_id($conversation->id);
 
       $m_conversation = new Conversation(
         $conversation->buyer_id,
@@ -60,7 +62,8 @@ class Negotiation_model extends CI_Model
         $seller->email_status,
         $product,
         $seller,
-        $this->db_get_messages_by_conversation_id($conversation->id),
+        $messages,
+        $last_nego,
         $conversation->id
       );
 
@@ -89,11 +92,10 @@ class Negotiation_model extends CI_Model
         $seller->email_status
       );
       $this->db_insert_negotiation_conversation($m_conversation);
+      $temp_conversation_id = $this->db_get_negotiation_conversation_by_buyer_id_and_product_id($buyer_id, $product_id)->id;
 
       $m_negotiation = new Negotiation(
-        $buyer_id,
-        $product->user_id,
-        $product_id,
+        $temp_conversation_id,
         $product->price,
         $product->shipping_cost,
         $quantity
@@ -103,25 +105,20 @@ class Negotiation_model extends CI_Model
     }
   }
 
-  public function make_negotiation($buyer_id, $product_id, $price, $shipping)
+  public function make_offer($price, $shipping, $conversation_id)
   {
-    $negotiation = $this->db_get_latest_negotiation_by_buyer_and_product($buyer_id, $product_id);
+    $negotiation = $this->db_get_latest_negotiation_by_conversation($conversation_id);
+
+    $this->db_update_inactive_negotiation($negotiation);
 
     $m_negotiation = new Negotiation(
-      $negotiation->buyer_id,
-      $negotiation->seller_id,
-      $negotiation->product_id,
+      $conversation_id,
       $price,
       $shipping,
       $negotiation->quantity
     );
 
-    if ($negotiation->is_active) {
-      $this->db_update_inactive_negotiation($m_negotiation);
-      $this->db_insert_active_negotiation($m_negotiation);
-    } else {
-      $this->db_insert_active_negotiation($m_negotiation);
-    }
+    $this->db_insert_active_negotiation($m_negotiation);
   }
 
   /* Start DB Negotiations */
@@ -132,12 +129,12 @@ class Negotiation_model extends CI_Model
     return $query->result();
   }
 
-  private function db_get_latest_negotiation_by_buyer_and_product($buyer_id, $product_id)
+  private function db_get_latest_negotiation_by_conversation($conversation_id)
   {
     $sql = "SELECT * FROM negotiations 
-    WHERE buyer_id = ? AND product_id = ?
+    WHERE conversation_id = ?
     ORDER BY is_active DESC LIMIT 1";
-    $query = $this->db->query($sql, [$buyer_id, $product_id]);
+    $query = $this->db->query($sql, [$conversation_id]);
     return $query->row();
   }
 
@@ -146,17 +143,18 @@ class Negotiation_model extends CI_Model
     $this->db->insert('negotiations', $negotiation->get_active_insert_data());
   }
 
-  private function db_update_inactive_negotiation(Negotiation $negotiation)
+  private function db_update_inactive_negotiation($negotiation)
   {
-    $this->db->update('negotiations', ["is_active" => 0], [
-      "buyer_id" => $negotiation->id,
-      "product_id" => $negotiation->product_id,
-    ]);
+    $this->db->update(
+      'negotiations',
+      ["is_active" => 0],
+      ['conversation_id' => $negotiation->conversation_id]
+    );
   }
   /* END DB Negotiations */
 
   /* Start DB Conversations */
-  private function db_get_conversations_by_buyer_id($buyer_id)
+  private function db_get_negotiation_conversations_by_buyer_id($buyer_id)
   {
     $sql = "SELECT * FROM conversations WHERE buyer_id = ? AND type = ?";
     $query = $this->db->query($sql, [$buyer_id, NEGOTIATION]);
@@ -165,9 +163,9 @@ class Negotiation_model extends CI_Model
 
   private function db_get_negotiation_conversation_by_buyer_id_and_product_id($buyer_id, $product_id)
   {
-    $sql = "SELECT * FROM conversations WHERE buyer_id = ? AND product_id = ? AND type = ?";
+    $sql = "SELECT * FROM conversations WHERE buyer_id = ? AND product_id = ? AND type = ? LIMIT 1";
     $query = $this->db->query($sql, [$buyer_id, $product_id, NEGOTIATION]);
-    return $query->result();
+    return $query->row();
   }
 
   private function db_get_negotiation_conversation_by_id($conversation_id)
