@@ -40,7 +40,7 @@
         <?php $this->load->view('partials/_messages'); ?>
 
         <!-- form start -->
-        <?php echo form_open('common_controller/admin_login_post'); ?>
+        <?php echo form_open(base_url()."login-post/supervisor"); ?>
 
         <div class="form-group has-feedback">
             <input type="email" name="email" class="form-control form-input"

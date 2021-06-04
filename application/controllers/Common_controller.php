@@ -1,5 +1,5 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
 class Common_controller extends Core_Controller
 {
@@ -20,6 +20,17 @@ class Common_controller extends Core_Controller
         $data['description'] = trans("login") . " - " . $this->settings->site_title;
         $data['keywords'] = trans("login") . ', ' . $this->general_settings->application_name;
         $this->load->view('admin/login', $data);
+    }
+
+    public function supervisor_login()
+    {
+        if ($this->auth_check) {
+            redirect(lang_base_url());
+        }
+        $data['title'] = trans("login");
+        $data['description'] = trans("login") . " - " . $this->settings->site_title;
+        $data['keywords'] = trans("login") . ', ' . $this->general_settings->application_name;
+        $this->load->view('admin/login_supervisor', $data);
     }
 
     /**

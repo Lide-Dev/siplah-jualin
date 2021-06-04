@@ -200,10 +200,10 @@ include_once "routes_static.php";
  */
 $route[$routes->admin] = 'admin_controller/index';
 //login
-$route[$routes->admin . '/login'] = 'common_controller/admin_login';
-$route[$routes->admin . '/login_supervisor'] = 'common_controller/admin_login';
+// $route[$routes->admin . '/login'] = 'common_controller/admin_login';..........................................................
+
 /*navigation routes*/
-$route[$routes->admin . '/navigation'] = 'admin_controller/navigation';
+$route[$routes->admin . './navigation'] = 'admin_controller/navigation';
 /*slider routes*/
 $route[$routes->admin . '/slider'] = 'admin_controller/slider';
 $route[$routes->admin . '/update-slider-item/(:num)'] = 'admin_controller/update_slider_item/$1';
@@ -341,6 +341,24 @@ $route[$routes->admin . '/supervisor'] = 'admin_supervisor_controller/index';
 
 //Partners
 $route[$routes->admin . '/partners'] = 'admin_partners_controller/index';
+
+
+
+/*
+*
+*  Supervisor Routes
+*
+*/
+
+$route['supervisor/login'] = 'common_controller/supervisor_login';
+$route['supervisor'] = 'supervisor_controller/index';
+
+/*
+*
+*   Any Routes (Product, category)
+*
+*
+*/
 
 
 $route['(:any)/(:any)']['GET'] = 'home_controller/subcategory/$1/$2';

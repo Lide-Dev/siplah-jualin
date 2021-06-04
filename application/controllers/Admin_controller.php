@@ -8,7 +8,7 @@ class Admin_controller extends Admin_Core_Controller
         parent::__construct();
         //check user
         if (!is_admin()) {
-            redirect(admin_url() . 'login');
+            redirect(base_url());
         }
     }
 

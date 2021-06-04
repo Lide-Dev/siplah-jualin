@@ -67,6 +67,20 @@ if (!function_exists('is_admin')) {
     }
 }
 
+//is supervisor
+if (!function_exists('is_supervisor')) {
+    function is_supervisor()
+    {
+        $ci = &get_instance();
+        if ($ci->auth_check) {
+            if ($ci->auth_user->role == "supervisor") {
+                return true;
+            }
+        }
+        return false;
+    }
+}
+
 //get logged user
 if (!function_exists('user')) {
     function user()
@@ -279,6 +293,14 @@ if (!function_exists('admin_url')) {
     {
         $ci = &get_instance();
         return base_url() . $ci->routes->admin . '/';
+    }
+}
+
+if (!function_exists('supervisor_url')) {
+    function supervisor_url()
+    {
+        // $ci = &get_instance();
+        return base_url() . "supervisor" . '/';
     }
 }
 //get route
@@ -1964,7 +1986,7 @@ if (!function_exists('set_form_value')) {
                     $exact = $option["exact"] ?? null;
                     $insert_first = $option["add_first"] ?? "";
                     // if ($input_name == "description") dd($max,$min,$insert_first);
-                    return $insert_first.random_string("alpha", $exact??random_int($min, $max));
+                    return $insert_first . random_string("alpha", $exact ?? random_int($min, $max));
                     break;
                 case 'number':
                     $max = $option["max"] ?? 50;

@@ -63,19 +63,24 @@ class Auth_controller extends Home_Core_Controller
         if ($this->form_validation->run() == false) {
             $this->session->set_flashdata('errors', validation_errors());
             $this->session->set_flashdata('form_data', $this->auth_model->input_values());
-            redirect(base_url("login/$role"));
+            if ($role == "supervisor")
+                redirect(supervisor_url() . "login");
+            else
+                redirect(base_url("login/$role"));
+            // dd($role);
         } else {
             if ($this->auth_model->login($role)) {
-                switch ($role) {
-                    case 'admin':
-                        redirect(admin_url());
-                        break;
-                    default:
-                        redirect(lang_base_url());
-                        break;
-                }
+                if ($role == "admin")
+                    redirect(admin_url());
+                else if ($role == "supervisor")
+                    redirect(supervisor_url());
+                else
+                    redirect(lang_base_url());
             } else {
-                redirect(base_url("login/$role"));
+                if ($role == "supervisor")
+                    redirect(supervisor_url() . "login");
+                else
+                    redirect(base_url("login/$role"));
             }
             reset_flash_data();
         }
