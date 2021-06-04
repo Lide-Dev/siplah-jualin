@@ -27,9 +27,7 @@ class Negotiation_controller extends Home_Core_Controller
     $data['keywords'] = trans("negotiation") . "," . $this->app_name;
 
     $user_id = $this->session->userdata('modesy_sess_user_id');
-    if (empty($user_id)) {
-      $user_id = "e22ff369-5a3a-47c5-ba63-0683e872bd11";
-    }
+
     $data['user_id'] = $user_id;
 
     $data['conversations'] = $this->negotiation_model->get_buyer_conversations($user_id);
@@ -49,9 +47,7 @@ class Negotiation_controller extends Home_Core_Controller
     $data['keywords'] = trans("negotiation") . "," . $this->app_name;
 
     $user_id = $this->session->userdata('modesy_sess_user_id');
-    if (empty($user_id)) {
-      $user_id = "e22ff369-5a3a-47c5-ba63-0683e872bd11";
-    }
+
     $data['user_id'] = $user_id;
 
     $data['conversations'] = $this->negotiation_model->get_seller_conversations($user_id);
@@ -67,9 +63,7 @@ class Negotiation_controller extends Home_Core_Controller
   public function add_negotiation_conversation()
   {
     $user_id = $this->session->userdata('modesy_sess_user_id');
-    if (empty($user_id)) {
-      $user_id = "e22ff369-5a3a-47c5-ba63-0683e872bd11";
-    }
+
     $product_id = $this->input->get("product_id");
     $quantity = $this->input->get('product_quantity');
     $conversation = $this->negotiation_model->add_new_negotiation_conversation($user_id, $product_id, $quantity);
@@ -79,9 +73,6 @@ class Negotiation_controller extends Home_Core_Controller
   public function make_offer()
   {
     $user_id = $this->session->userdata('modesy_sess_user_id');
-    if (empty($user_id)) {
-      $user_id = "e22ff369-5a3a-47c5-ba63-0683e872bd11";
-    }
 
     $conversation_id = $this->input->post('conversation_id');
     $offer_price = $this->input->post('offer_price');
@@ -94,9 +85,7 @@ class Negotiation_controller extends Home_Core_Controller
   public function send_message()
   {
     $user_role = $this->session->userdata('modesy_sess_user_role');
-    if (empty($user_role)) {
-      $user_role = 'member';
-    }
+
     $message = $this->input->post('message');
     $conversation_id = $this->input->post('conversation_id');
 
