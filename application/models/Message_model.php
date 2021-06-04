@@ -84,8 +84,8 @@ class Message_model extends CI_Model
         $this->db->select('conversations.*, conversation_messages.is_read as is_read');
         $this->db->where('deleted_user_id != ', $this->auth_user->id);
         $this->db->group_start();
-        $this->db->where('conversations.sender_id', $user_id);
-        $this->db->or_where('conversations.receiver_id', $user_id);
+        $this->db->where('conversations.buyer_id', $user_id); // Update from sender_id
+        $this->db->or_where('conversations.seller_id', $user_id); // Update from receiver_id
         $this->db->group_end();
         $this->db->order_by('conversations.created_at', 'DESC');
         $query = $this->db->get('conversations');
