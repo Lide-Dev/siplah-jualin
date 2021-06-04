@@ -121,6 +121,27 @@ class Negotiation_model extends CI_Model
     $this->db_insert_active_negotiation($m_negotiation);
   }
 
+  public function send_message($conversation_id, $message, $user_role)
+  {
+    $conversation = $this->db_get_negotiation_conversation_by_id($conversation_id);
+
+    if ($user_role == 'member') {
+      $this->db_insert_message(
+        $message,
+        $conversation->buyer_id,
+        $conversation->seller_id,
+        $conversation_id
+      );
+    } elseif ($user_role == 'vendor') {
+      $this->db_insert_message(
+        $message,
+        $conversation->seller_id,
+        $conversation->buyer_id,
+        $conversation_id
+      );
+    }
+  }
+
   /* Start DB Negotiations */
   private function db_get_negotiation_by_buyer_and_product($buyer_id, $product_id)
   {
@@ -172,7 +193,7 @@ class Negotiation_model extends CI_Model
   {
     $sql = "SELECT * FROM conversations WHERE id = ? AND type = ?";
     $query = $this->db->query($sql, [$conversation_id, NEGOTIATION]);
-    return $query->result();
+    return $query->row();
   }
 
   private function db_insert_negotiation_conversation(Conversation $conversation)
@@ -184,9 +205,20 @@ class Negotiation_model extends CI_Model
   /* Start DB Conversation Messages */
   private function db_get_messages_by_conversation_id($conversation_id)
   {
-    $sql = "SELECT * FROM conversation_messages WHERE conversation_id = ?";
+    $sql = "SELECT * FROM conversation_messages WHERE conversation_id = ? ORDER BY created_at DESC";
     $query = $this->db->query($sql, [$conversation_id]);
     return $query->result();
+  }
+
+  private function db_insert_message($message, $sender_id, $receiver_id, $conversation_id)
+  {
+    $data = [
+      "conversation_id" => $conversation_id,
+      "sender_id" => $sender_id,
+      "receiver_id" => $receiver_id,
+      "message" => $message
+    ];
+    $this->db->insert('conversation_messages', $data);
   }
   /* END DB Conversation Messages */
 }

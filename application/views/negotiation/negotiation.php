@@ -100,52 +100,58 @@
 									<?php endif; ?>
 									<div class="row-custom messages-content">
 										<div id="message-custom-scrollbar" class="messages-list">
-											<?php foreach ($messages as $message) : ?>
-												<div class="message-list-item">
-													<div class="message-list-item-row-received">
-														<div class="user-avatar">
-															<div class="message-user">
-																<img src="<?= $conversation->user_img ?>" alt="<?= $conversation->user_username ?>" class="img-profile">
+											<?php foreach ($conversation->messages as $message) : ?>
+												<!-- Start Sender -->
+												<?php if ($user_id == $message->sender_id) : ?>
+													<div class="message-list-item">
+														<div class="message-list-item-row-sent">
+															<div class="user-message">
+																<div class="message-text">
+																	<?= html_escape($message->message); ?>
+																</div>
+																<span class="time"><?= time_ago($message->created_at); ?></span>
 															</div>
-														</div>
-														<div class="user-message">
-															<div class="message-text">
-																<?= html_escape($message->message); ?>
-															</div>
-															<span class="time"><?= time_ago($message->created_at); ?></span>
-														</div>
-													</div>
-												</div>
-												<div class="message-list-item">
-													<div class="message-list-item-row-sent">
-														<div class="user-message">
-															<div class="message-text">
-																<?= html_escape($message->message); ?>
-															</div>
-															<span class="time"><?= time_ago($message->created_at); ?></span>
-														</div>
-														<div class="user-avatar">
-															<div class="message-user">
-																<img src="<?= $conversation->user_image ?>" alt="<?= $conversation->user_username ?>" class="img-profile">
+															<div class="user-avatar">
+																<div class="message-user">
+																	<img src="<?= get_user_avatar_by_id($message->sender_id) ?>" alt="<?= $conversation->user_username ?>" class="img-profile">
+																</div>
 															</div>
 														</div>
 													</div>
-												</div>
+													<!-- End Sender -->
+												<?php else : ?>
+													<!-- Start Receiver -->
+													<div class="message-list-item">
+														<div class="message-list-item-row-received">
+															<div class="user-avatar">
+																<div class="message-user">
+																	<img src="<?= get_user_avatar_by_id($message->receiver_id) ?>" alt="<?= $conversation->user_username ?>" class="img-profile">
+																</div>
+															</div>
+															<div class="user-message">
+																<div class="message-text">
+																	<?= html_escape($message->message); ?>
+																</div>
+																<span class="time"><?= time_ago($message->created_at); ?></span>
+															</div>
+														</div>
+													</div>
+													<!-- End Receiver -->
+												<?php endif ?>
 											<?php endforeach; ?>
 										</div>
 
 										<div class="message-reply">
 											<!-- form start -->
-											<form action="<?= base_url('negotiation') ?>" method="POST">
-												<input type="hidden" name="conversation_id" value="<?= $conversation->id; ?>">
-												<input type="hidden" name="vendor_id" value="<?= $conversation->vendor_id; ?>">
-												<div class="form-group m-b-10">
-													<textarea class="form-control form-textarea" name="message" placeholder="<?= trans('write_a_message'); ?>" required></textarea>
-												</div>
-												<div class="form-group">
-													<button type="submit" class="btn btn-md btn-custom float-right"><i class="icon-send"></i> <?= trans("send"); ?></button>
-												</div>
-											</form>
+											<?= form_open(base_url('negotiation/send_message')) ?>
+											<input type="hidden" name="conversation_id" value="<?= $conversation->id; ?>">
+											<div class="form-group m-b-10">
+												<textarea class="form-control form-textarea" name="message" placeholder="<?= trans('write_a_message'); ?>" required></textarea>
+											</div>
+											<div class="form-group">
+												<button type="submit" class="btn btn-md btn-custom float-right"><i class="icon-send"></i> <?= trans("send"); ?></button>
+											</div>
+											<?= form_close() ?>
 											<!-- form end -->
 										</div>
 									</div>

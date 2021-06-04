@@ -29,6 +29,7 @@ class Negotiation_controller extends Home_Core_Controller
     // $user_id = $this->session->userdata('modesy_sess_user_id');
     $user_id = "e22ff369-5a3a-47c5-ba63-0683e872bd11";
     $data['conversations'] = $this->negotiation_model->get_buyer_conversations($user_id);
+    $data['user_id'] = $user_id;
 
     $this->load->view('partials/_header', $data);
     $this->load->view('negotiation/negotiation');
@@ -75,6 +76,17 @@ class Negotiation_controller extends Home_Core_Controller
     $offer_shipping = $this->input->post('offer_shipping');
 
     $this->negotiation_model->make_offer($offer_price, $offer_shipping, $conversation_id);
+    redirect('negotiation');
+  }
+
+  public function send_message()
+  {
+    // $user_role = $this->session->userdata('modesy_sess_user_role');
+    $user_role = 'member';
+    $message = $this->input->post('message');
+    $conversation_id = $this->input->post('conversation_id');
+
+    $this->negotiation_model->send_message($conversation_id, $message, $user_role);
     redirect('negotiation');
   }
 }
