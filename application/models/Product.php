@@ -34,7 +34,7 @@ class Product
     public $novelty;
     public $guarantee;
     public $shipping_courier_id;
-   
+
     public $catalog_id;
     public $catalog_type;
     public $user_id;
@@ -92,15 +92,20 @@ class Product
         return $ci->auth_model->get_shop($this->user_id)->supplier_name;
     }
 
-    public function courier_name(){
+    public function courier_name()
+    {
         // dd()
         $ci = get_instance();
         return $ci->product_model->get_couriers($this->shipping_courier_id)->name;
-
     }
 
     public function __set($name, $value)
     {
+        if (isset($this->$name)) {
+            $this->$name = $value;
+        } else if (method_exists($this, $name)) {
+            $this->$name();
+        }
     }
 
     public function __get($name)
