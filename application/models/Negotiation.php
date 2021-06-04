@@ -1,4 +1,7 @@
 <?php
+define('NEGO_PENDING', 'pending');
+define('NEGO_ACCEPT', 'accepted');
+define('NEGO_DECLINE', 'declined');
 class Negotiation
 {
   public $id,
@@ -27,13 +30,14 @@ class Negotiation
     $this->$created_at = $created_at;
   }
 
-  public function get_active_insert_data()
+  public function get_active_insert_data($negotiator_id)
   {
     $data = [
       "conversation_id" => $this->conversation_id,
       "product_last_price" => $this->product_last_price,
       "shipping_last_price" => $this->shipping_last_price,
       "quantity" => $this->quantity,
+      "negotiator_id" => $negotiator_id,
       "is_active" => true
     ];
     return $data;

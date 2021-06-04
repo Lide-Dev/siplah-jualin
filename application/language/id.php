@@ -1147,6 +1147,8 @@ $lang = [
     "search_store" => "Cari Toko",
     "nego_shipping" => "Tawar Biaya Pengiriman",
     "nego_price" => "Tawar Harga",
+    "last_nego_price" => "Harga Tawaran Terakhir",
+    "last_nego_shipping" => "Harga Tawaran Ongkos Kirim Terakhir"
 ];
 
 $validation = include(BASEPATH . "../application/language/id_validation.php");

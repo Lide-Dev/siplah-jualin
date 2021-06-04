@@ -48,7 +48,6 @@ class Negotiation_model extends CI_Model
       $buyer = get_user($conversation->buyer_id);
       $product = get_product($conversation->product_id);
       $last_nego = $this->db_get_latest_negotiation_by_conversation($conversation->id);
-      $messages = $this->db_get_messages_by_conversation_id($conversation->id);
 
       $m_conversation = new Conversation(
         $conversation->buyer_id,
@@ -62,7 +61,6 @@ class Negotiation_model extends CI_Model
         $seller->email_status,
         $product,
         $seller,
-        $messages,
         $last_nego,
         $conversation->id
       );
@@ -82,7 +80,6 @@ class Negotiation_model extends CI_Model
       $buyer = get_user($conversation->buyer_id);
       $product = get_product($conversation->product_id);
       $last_nego = $this->db_get_latest_negotiation_by_conversation($conversation->id);
-      $messages = $this->db_get_messages_by_conversation_id($conversation->id);
 
       $m_conversation = new Conversation(
         $conversation->buyer_id,
@@ -96,7 +93,6 @@ class Negotiation_model extends CI_Model
         $seller->email_status,
         $product,
         $seller,
-        $messages,
         $last_nego,
         $conversation->id
       );
@@ -106,16 +102,16 @@ class Negotiation_model extends CI_Model
     return $arr_conversation;
   }
 
-  public function add_new_negotiation_conversation($buyer_id, $product_id, $quantity)
+  public function add_new_negotiation_conversation($user_id, $product_id, $quantity)
   {
-    $conversation = $this->db_get_negotiation_conversation_by_buyer_id_and_product_id($buyer_id, $product_id);
+    $conversation = $this->db_get_negotiation_conversation_by_buyer_id_and_product_id($user_id, $product_id);
     $product = get_product($product_id);
-    $buyer = get_user($buyer_id);
+    $buyer = get_user($user_id);
     $seller = get_user($product->user_id);
 
     if (empty($conversation)) {
       $m_conversation = new Conversation(
-        $buyer_id,
+        $user_id,
         $product->user_id,
         $product_id,
         $product->title,
@@ -126,22 +122,18 @@ class Negotiation_model extends CI_Model
         $seller->email_status
       );
       $this->db_insert_negotiation_conversation($m_conversation);
-      $temp_conversation_id = $this->db_get_negotiation_conversation_by_buyer_id_and_product_id($buyer_id, $product_id)->id;
 
-      $m_negotiation = new Negotiation(
-        $temp_conversation_id,
-        $product->price,
-        $product->shipping_cost,
-        $quantity
-      );
-
-      $this->db_insert_active_negotiation($m_negotiation);
+      $conversation = $this->db_get_negotiation_conversation_by_buyer_id_and_product_id($user_id, $product_id);
     }
+    return $conversation;
   }
 
-  public function make_offer($price, $shipping, $conversation_id)
+  public function make_offer($price, $shipping, $conversation_id, $user_id)
   {
     $negotiation = $this->db_get_latest_negotiation_by_conversation($conversation_id);
+    $conversation = $this->db_get_negotiation_conversation_by_id($conversation_id);
+    $product = get_product($conversation->product_id);
+    $user = get_user($user_id);
 
     $this->db_update_inactive_negotiation($negotiation);
 
@@ -152,7 +144,10 @@ class Negotiation_model extends CI_Model
       $negotiation->quantity
     );
 
-    $this->db_insert_active_negotiation($m_negotiation);
+    $message = "Anda menawar " . $product->title . " dengan harga :" . price_formatted($price, $product->currency);
+    $this->send_message($conversation_id, $message, $user->role);
+
+    $this->db_insert_active_negotiation($m_negotiation, $user_id);
   }
 
   public function send_message($conversation_id, $message, $user_role)
@@ -176,6 +171,11 @@ class Negotiation_model extends CI_Model
     }
   }
 
+  public function get_messages($conversation_id)
+  {
+    return $this->db_get_messages_by_conversation_id($conversation_id);
+  }
+
   /* Start DB Negotiations */
   private function db_get_negotiation_by_buyer_and_product($buyer_id, $product_id)
   {
@@ -193,9 +193,9 @@ class Negotiation_model extends CI_Model
     return $query->row();
   }
 
-  private function db_insert_active_negotiation(Negotiation $negotiation)
+  private function db_insert_active_negotiation(Negotiation $negotiation, $user_id)
   {
-    $this->db->insert('negotiations', $negotiation->get_active_insert_data());
+    $this->db->insert('negotiations', $negotiation->get_active_insert_data($user_id));
   }
 
   private function db_update_inactive_negotiation($negotiation)
@@ -204,6 +204,30 @@ class Negotiation_model extends CI_Model
       'negotiations',
       ["is_active" => 0],
       ['conversation_id' => $negotiation->conversation_id]
+    );
+  }
+
+  private function db_update_negotiation_status_accepted($negotiation)
+  {
+    $this->db->update(
+      'negotiations',
+      [
+        "status" => NEGO_ACCEPT,
+        "is_active" => 0
+      ],
+      ["conversation_id" => $negotiation->conversation_id]
+    );
+  }
+
+  private function db_update_negotiation_status_declined($negotiation)
+  {
+    $this->db->update(
+      'negotiations',
+      [
+        "status" => NEGO_DECLINE,
+        "is_active" => 0
+      ],
+      ["conversation_id" => $negotiation->conversation_id]
     );
   }
   /* END DB Negotiations */
@@ -239,7 +263,7 @@ class Negotiation_model extends CI_Model
   /* Start DB Conversation Messages */
   private function db_get_messages_by_conversation_id($conversation_id)
   {
-    $sql = "SELECT * FROM conversation_messages WHERE conversation_id = ? ORDER BY created_at DESC";
+    $sql = "SELECT * FROM conversation_messages WHERE conversation_id = ? ORDER BY created_at ASC";
     $query = $this->db->query($sql, [$conversation_id]);
     return $query->result();
   }
