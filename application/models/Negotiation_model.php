@@ -1,8 +1,10 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
+define('NEGOTIATION', 'negotiation');
 
 require_once FCPATH . "application/models/Negotiation.php";
 require_once FCPATH . "application/models/Conversation.php";
+
 
 class Negotiation_model extends CI_Model
 {
@@ -11,203 +13,182 @@ class Negotiation_model extends CI_Model
     parent::__construct();
   }
 
-  public function add_new_negotiation($user_id, $product_id, $quantity)
+  public function open_conversation($conversation_id)
   {
+    $conversation = $this->db_get_negotiation_conversation_by_id($conversation_id);
+    $seller = get_user($conversation->seller_id);
+    $buyer = get_user($conversation->buyer_id);
+    $product = get_product($conversation->product_id);
+
+    $m_conversation = new Conversation(
+      $conversation->buyer_id,
+      $conversation->seller_id,
+      $conversation->product_id,
+      $conversation->subject,
+      $buyer->username,
+      get_user_avatar($buyer),
+      $seller->username,
+      get_user_avatar($seller),
+      $seller->email_status,
+      $product,
+      $this->db_get_messages_by_conversation_id($conversation_id),
+      $conversation_id
+    );
+
+    return $m_conversation;
+  }
+
+  public function get_buyer_conversations($buyer_id)
+  {
+    $conversations = $this->db_get_conversations_by_buyer_id($buyer_id);
+    $arr_conversation = array();
+
+    foreach ($conversations as $conversation) {
+      $seller = get_user($conversation->seller_id);
+      $buyer = get_user($conversation->buyer_id);
+      $product = get_product($conversation->product_id);
+
+      $m_conversation = new Conversation(
+        $conversation->buyer_id,
+        $conversation->seller_id,
+        $conversation->product_id,
+        $conversation->subject,
+        $buyer->username,
+        get_user_avatar($buyer),
+        $seller->username,
+        get_user_avatar($seller),
+        $seller->email_status,
+        $product,
+        $seller,
+        $this->db_get_messages_by_conversation_id($conversation->id),
+        $conversation->id
+      );
+
+      $arr_conversation[] = $m_conversation;
+    }
+    return $arr_conversation;
+  }
+
+  public function add_new_negotiation_conversation($buyer_id, $product_id, $quantity)
+  {
+    $conversation = $this->db_get_negotiation_conversation_by_buyer_id_and_product_id($buyer_id, $product_id);
     $product = get_product($product_id);
-    $negotiation = $this->db_get_latest_negotiation($user_id, $product_id);
-    if (empty($negotiation)) {
+    $buyer = get_user($buyer_id);
+    $seller = get_user($product->user_id);
+
+    if (empty($conversation)) {
+      $m_conversation = new Conversation(
+        $buyer_id,
+        $product->user_id,
+        $product_id,
+        $product->title,
+        $buyer->username,
+        get_user_avatar($buyer),
+        $seller->username,
+        get_user_avatar($seller),
+        $seller->email_status
+      );
+      $this->db_insert_negotiation_conversation($m_conversation);
+
       $m_negotiation = new Negotiation(
-        $user_id,
+        $buyer_id,
         $product->user_id,
         $product_id,
         $product->price,
         $product->shipping_cost,
         $quantity
       );
-      $this->db_insert_negotiation($m_negotiation);
+
+      $this->db_insert_active_negotiation($m_negotiation);
     }
   }
 
-  public function make_negotiation($user_id, $product_id, $nego_price, $shipping_cost, $quantity)
+  public function make_negotiation($buyer_id, $product_id, $price, $shipping)
   {
-    $user = get_user($user_id);
-    $product = get_product($product_id);
+    $negotiation = $this->db_get_latest_negotiation_by_buyer_and_product($buyer_id, $product_id);
 
-    if ($user->role == 'member') {
-      $m_negotiation = new Negotiation(
-        $user_id,
-        $product->user_id,
-        $product_id,
-        $nego_price,
-        $shipping_cost,
-        $quantity
-      );
-      $this->db_insert_negotiation($m_negotiation);
-    } else {
-    }
-  }
-
-  public function check_conversation($user_id, $product_id)
-  {
-    $conversation = $this->db_get_nego_conversation_by_user_and_product_id($user_id, $product_id);
-    if (empty($conversation)) {
-      $product = get_product($product_id);
-
-      $m_conversation = new Conversation(
-        $user_id,
-        $product->user_id,
-        $product->id,
-        $product->title
-      );
-      $this->db_insert_conversation($m_conversation);
-
-      $conversation = $this->db_get_nego_conversation_by_user_and_product_id($user_id, $product_id);
-    }
-    return $conversation;
-  }
-
-  public function get_nego_products($user_id)
-  {
-    $negotiations = $this->db_get_negotiation_by_buyer_id($user_id);
-    $arr_product = array();
-    foreach ($negotiations as $negotiation) {
-      $m_product = $this->remap_negotiation_product($negotiation->product_id, $negotiation->quantity, $negotiation->id);
-
-      array_push($arr_product, $m_product);
-    }
-
-    return $arr_product;
-  }
-
-  public function remap_negotiation_product($id, $quantity, $negotiation_id)
-  {
-    $raw_product = get_product($id);
-    $total_price_with_ppn = calculate_total_compare($raw_product->price, $quantity, $raw_product->price * ($raw_product->vat_rate / 100));
-    $total_price_without_ppn = calculate_total_compare($raw_product->price, $quantity);
-
-    $product = new stdClass();
-    $product->id = $raw_product->id;
-    $product->negotiation_id = $negotiation_id;
-    $product->title = $raw_product->title;
-    $product->category = get_category_by_id($raw_product->category_id)->description;
-    $product->category_id = $raw_product->category_id;
-    $product->unit_price_formatted = price_formatted($raw_product->price, $raw_product->currency);
-    $product->ppn_formatted = price_formatted($raw_product->price * ($raw_product->vat_rate / 100), $raw_product->currency);
-    $product->total_price_with_ppn = price_formatted($total_price_with_ppn, $raw_product->currency);
-    $product->total_price_without_ppn = price_formatted($total_price_without_ppn, $raw_product->currency);
-    $product->image = get_product_image($raw_product->id, "image_default");
-    $product->ppn = $raw_product->vat_rate;
-    $product->user_id = $raw_product->user_id;
-    $product->vendor = get_vendor($raw_product->user_id);
-    $product->slug = $raw_product->slug;
-    $product->quantity = $quantity;
-    $product->stock = $raw_product->stock;
-    $product->vat_rate = $raw_product->vat_rate;
-    return $product;
-  }
-
-
-  public function get_conversation($conversation_id)
-  {
-    $conversation = $this->db_get_nego_conversation_by_id($conversation_id);
-    $user = get_user($conversation->sender_id);
-    $seller = get_user($conversation->receiver_id);
-
-    $m_conversation = new Conversation(
-      $conversation->sender_id,
-      $conversation->receiver_id,
-      $conversation->product_id,
-      $conversation->subject,
-      $user->username,
-      get_user_avatar($user),
-      $seller->username,
-      get_user_avatar($seller),
-      $seller->email_status,
-      $conversation->id
+    $m_negotiation = new Negotiation(
+      $negotiation->buyer_id,
+      $negotiation->seller_id,
+      $negotiation->product_id,
+      $price,
+      $shipping,
+      $negotiation->quantity
     );
 
-    return $m_conversation;
+    if ($negotiation->is_active) {
+      $this->db_update_inactive_negotiation($m_negotiation);
+      $this->db_insert_active_negotiation($m_negotiation);
+    } else {
+      $this->db_insert_active_negotiation($m_negotiation);
+    }
   }
 
-  public function db_get_negotiation_by_buyer_id($user_id)
-  {
-    $sql = "SELECT * FROM negotiations WHERE buyer_id = ?";
-    $query = $this->db->query($sql, array($user_id));
-    return $query->result();
-  }
-
-  public function db_get_negotiation_by_buyer_id_and_product_id($user_id, $product_id)
+  /* Start DB Negotiations */
+  private function db_get_negotiation_by_buyer_and_product($buyer_id, $product_id)
   {
     $sql = "SELECT * FROM negotiations WHERE buyer_id = ? AND product_id = ?";
-    $query = $this->db->query($sql, array($user_id, $product_id));
+    $query = $this->db->query($sql, array($buyer_id, $product_id));
     return $query->result();
   }
 
-  public function db_get_all_nego_conversation_by_user($user_id)
+  private function db_get_latest_negotiation_by_buyer_and_product($buyer_id, $product_id)
   {
-    $sql = "SELECT * FROM conversations WHERE sender_id = ?";
-    $query = $this->db->query($sql, array($user_id));
-    return $query->result();
-  }
-
-  public function db_get_nego_conversation_by_id($id)
-  {
-    $sql = "SELECT * FROM conversations WHERE id = ? LIMIT 1";
-    $query = $this->db->query($sql, array($id));
+    $sql = "SELECT * FROM negotiations 
+    WHERE buyer_id = ? AND product_id = ?
+    ORDER BY is_active DESC LIMIT 1";
+    $query = $this->db->query($sql, [$buyer_id, $product_id]);
     return $query->row();
   }
 
-  public function db_get_nego_conversation_by_user_and_product_id($user_id, $product_id)
+  private function db_insert_active_negotiation(Negotiation $negotiation)
   {
-    $sql = "SELECT * FROM conversations WHERE sender_id = ? AND product_id = ? LIMIT 1";
-    $query = $this->db->query($sql, array($user_id, $product_id));
-    return $query->row();
+    $this->db->insert('negotiations', $negotiation->get_active_insert_data());
   }
 
-  public function db_insert_conversation(Conversation $data)
+  private function db_update_inactive_negotiation(Negotiation $negotiation)
   {
-    $this->db->insert('conversations', $data->get_insert_data());
+    $this->db->update('negotiations', ["is_active" => 0], [
+      "buyer_id" => $negotiation->id,
+      "product_id" => $negotiation->product_id,
+    ]);
   }
+  /* END DB Negotiations */
 
-  public function db_get_messages_by_conversation_id($id)
+  /* Start DB Conversations */
+  private function db_get_conversations_by_buyer_id($buyer_id)
   {
-    $sql = "SELECT * FROM conversation_messages WHERE conversation_id = ? ORDER BY created_at DESC";
-    $query = $this->db->query($sql, array(clean_number($id)));
+    $sql = "SELECT * FROM conversations WHERE buyer_id = ? AND type = ?";
+    $query = $this->db->query($sql, [$buyer_id, NEGOTIATION]);
     return $query->result();
   }
 
-  public function db_get_all_negotiation($user_id, $product_id)
+  private function db_get_negotiation_conversation_by_buyer_id_and_product_id($buyer_id, $product_id)
   {
-    $sql = "SELECT * FROM negotiations WHERE user_id = ? AND product_id = ?";
-    $query = $this->db->query($sql, array($user_id, $product_id));
+    $sql = "SELECT * FROM conversations WHERE buyer_id = ? AND product_id = ? AND type = ?";
+    $query = $this->db->query($sql, [$buyer_id, $product_id, NEGOTIATION]);
     return $query->result();
   }
 
-  public function db_get_latest_negotiation($user_id, $product_id)
+  private function db_get_negotiation_conversation_by_id($conversation_id)
   {
-    $sql = "SELECT * FROM negotiations WHERE user_id = ? AND product_id = ? ORDER BY created_at DESC LIMIT 1";
-    $query = $this->db->query($sql, array($user_id, $product_id));
-    return $query->row();
+    $sql = "SELECT * FROM conversations WHERE id = ? AND type = ?";
+    $query = $this->db->query($sql, [$conversation_id, NEGOTIATION]);
+    return $query->result();
   }
 
-  public function db_insert_negotiation(Negotiation $data)
+  private function db_insert_negotiation_conversation(Conversation $conversation)
   {
-    $this->db->insert('negotiations', $data->get_insert_data());
+    $this->db->insert('conversations', $conversation->get_negotiation_insert_data());
   }
+  /* END DB Conversations */
 
-  public function db_delete_negotiation($id)
+  /* Start DB Conversation Messages */
+  private function db_get_messages_by_conversation_id($conversation_id)
   {
-    $this->db->delete('negotiations', array("id" => $id));
+    $sql = "SELECT * FROM conversation_messages WHERE conversation_id = ?";
+    $query = $this->db->query($sql, [$conversation_id]);
+    return $query->result();
   }
-
-  public function db_insert_message($user_id, $vendor_id, $conversation_id, $message)
-  {
-    $data = [
-      "conversation_id" => $conversation_id,
-      "sender_id" => $user_id,
-      "receiver_id" => $vendor_id,
-      "message" => $message
-    ];
-    $this->db->insert('conversation_messages', $data);
-  }
+  /* END DB Conversation Messages */
 }

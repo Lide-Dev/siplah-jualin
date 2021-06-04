@@ -6,7 +6,7 @@
 			<div class="auth-box">
 				<div class="row">
 					<div class="col-12">
-						<h1 class="title"><?php echo trans("register_seller"); ?></h1>
+						<h1 class="title"><?= trans("register_seller"); ?></h1>
 
 						<?= $_SESSION["status_message"] ?? "" ?>
 
@@ -39,7 +39,7 @@
 							<div class="bounce3"></div>
 						</div>
 						<!-- PPROFILE business -->
-						<h4 class="title-auth">1. <?php echo trans("profile_business"); ?></h4>
+						<h4 class="title-auth">1. <?= trans("profile_business"); ?></h4>
 						<div class="row">
 							<div class="col-12">
 								<div class="form-group mt-2">
@@ -51,7 +51,7 @@
 										<input value="individual" id="pb_radio_individu" type="radio" <?= (set_value("business_profile") == "individual") ? "checked" : "" ?> name="business_profile">
 										<span class="radiomark"></span>
 									</label>
-									<?php echo form_error('business_profile'); ?>
+									<?= form_error('business_profile'); ?>
 								</div>
 								<!-- Status Legal -->
 								<div class="form-group">
@@ -68,7 +68,7 @@
 										<input id="ju_radio_non_pkp" type="radio" <?= (set_value("legal_status") == "non_pkp") ? "checked" : "" ?> name="legal_status" value="non_pkp">
 										<span class="radiomark"></span>
 									</label>
-									<?php echo form_error('legal_status'); ?>
+									<?= form_error('legal_status'); ?>
 								</div>
 								<!-- End of Status Legal -->
 								<!-- Tipe Usaha -->
@@ -90,20 +90,20 @@
 										<input id="tu_radio_menengah" type="radio" <?= (empty(set_value("business_type")) || set_value("business_type") == "medium") ? "checked" : "" ?> name="business_type" value="medium">
 										<span class="radiomark"></span>
 									</label>
-									<?php echo form_error('business_type'); ?>
+									<?= form_error('business_type'); ?>
 								</div>
 								<!-- End of Tipe usaha -->
 
 								<div class="form-group">
 									<label class="control-label font-600 mt-3" for="form_business_type">Nama Usaha</label>
-									<input type="text" name="business_name" class="form-control auth-form-input" placeholder="<?php echo trans("business_name"); ?>" value="<?php echo set_value("business_name"); ?>" maxlength="<?php echo $this->username_maxlength; ?>" required>
-									<?php echo form_error('business_name'); ?>
+									<input type="text" name="business_name" class="form-control auth-form-input" placeholder="<?= trans("business_name"); ?>" value="<?= set_value("business_name"); ?>" maxlength="<?= $this->username_maxlength; ?>" required>
+									<?= form_error('business_name'); ?>
 								</div>
 
 								<div class="form-group">
 									<label class="control-label font-600 mt-3" for="form_business_type">Nomor NPWP</label>
-									<input type="text" name="npwp" class="form-control auth-form-input" maxlength="15" pattern="\d*" placeholder="<?php echo trans("npwp"); ?>" value="<?php echo set_value("npwp"); ?>" required>
-									<?php echo form_error('npwp'); ?>
+									<input type="text" name="npwp" class="form-control auth-form-input" maxlength="15" pattern="\d*" placeholder="<?= trans("npwp"); ?>" value="<?= set_value("npwp"); ?>" required>
+									<?= form_error('npwp'); ?>
 									<p class="small_reg"> Masukan nomor NPWP sejumlah 15 Angka</p>
 								</div>
 								<!-- END OF PROFILE business -->
@@ -111,9 +111,9 @@
 								<!-- UPLOAD DOC NPWP -->
 
 								<div class="m-b-30 form_group">
-									<label class="control-label font-600"><?php echo trans("upload_npwp"); ?></label>
+									<label class="control-label font-600"><?= trans("upload_npwp"); ?></label>
 									<input type="file" class="form-control auth-form-input" name="npwp_document" id="form_npwp_document">
-									<?php echo form_error('npwp_document'); ?>
+									<?= form_error('npwp_document'); ?>
 									<p class="small_reg"> Format file .png, .jpg, .jpeg atau .pdf, maksimum ukuran 1 MB</p>
 								</div>
 							</div>
@@ -123,46 +123,48 @@
 						<!-- Support Document -->
 						<div class="form-group mt-2">
 							<label class="control-label font-600 mt-3" for="form_business_support_document">Pilih Dokumen Pendukung</label>
-							<label class="radiobut" for="siup_doc">Surat Izin Usaha Perusahaan (SIUP)
-								<input value="siup" id="siup_doc" type="radio" <?= (empty(set_value("business_support_document")) || set_value("business_support_document") == "business_entity") ? "checked" : "" ?> name="business_support_document">
+							<label class="radiobut" for="siup_box">Surat Izin Usaha Perusahaan (SIUP)
+								<input value="siup" id="siup_box" type="checkbox" name="siup_box" <?= !empty(set_value('siup_box')) ? "checked" : "" ?>>
 								<span class="radiomark"></span>
 							</label>
-							<label for="nib_doc" class="radiobut">Nomor Induk Berusaha (NIB)
-								<input value="nib" id="nib_doc" type="radio" <?= (set_value("business_support_document") == "individual") ? "checked" : "" ?> name="business_support_document">
+							<label for="nib_box" class="radiobut">Nomor Induk Berusaha (NIB)
+								<input value="nib" id="nib_box" type="checkbox" name="nib_box" <?= !empty(set_value('nib_box')) ? "checked" : "" ?>>
 								<span class="radiomark"></span>
 							</label>
-							<label for="tdp_doc" class="radiobut">Tanda Daftar Perusahaan (TDP)
-								<input value="tdp" id="tdp_doc" type="radio" <?= (set_value("business_support_document") == "individual") ? "checked" : "" ?> name="business_support_document">
+							<label for="tdp_box" class="radiobut">Tanda Daftar Perusahaan (TDP)
+								<input value="tdp" id="tdp_box" type="checkbox" name="tdp_box" <?= !empty(set_value('tdp_box')) ? "checked" : "" ?>>
 								<span class="radiomark"></span>
 							</label>
 						</div>
 						<div id="form_support_document">
-							<div id="form_siup">
-								<div class="form-group">
-									<label class="control-label font-600">Unggah Dokumen Pendukung</label>
-									<input type="file" class="form-control auth-form-input" name="siup_document" id="form_selected_document">
-									<?php echo form_error('business_support_document'); ?>
+							<div id="form_siup" style="display: <?= empty(set_value('siup_box')) ? "none" : "initial" ?>;">
+								<div class="mt-3">
+									<label class="control-label font-600">Unggah File Surat Izin Usaha Perusahaan</label>
+									<input type="file" class="form-control auth-form-input" name="siup_document" id="form_selected_document" value="<?= set_value('siup_document') ?>" required>
+									<?= form_error('business_support_document'); ?>
 									<p class="small_reg"> Format file .png, .jpg, .jpeg atau .pdf, maksimum ukuran 1 MB</p>
 								</div>
 							</div>
-							<div id="form_nib" style="display: none;">
-								<div class="form-group" id="form_support_document_number">
-									<label class="control-label font-600" for="form_support_document_number">Nomor Induk Berusaha</label>
-									<input type="text" id="support_document_number" name="nib" class="form-control auth-form-input" maxlength="13" pattern="/d*" placeholder="<?php echo trans("support_document_number"); ?>" value="<?php echo set_value("support_document_number"); ?>" required>
-									<?php echo form_error('support_document_number'); ?>
-								</div>
-								<div class="form-group">
-									<label class="control-label font-600">Unggah Dokumen Pendukung</label>
-									<input type="file" class="form-control auth-form-input" name="nib_document" id="form_selected_document">
-									<?php echo form_error('business_support_document'); ?>
-									<p class="small_reg"> Format file .png, .jpg, .jpeg atau .pdf, maksimum ukuran 1 MB</p>
+							<div id="form_nib" style="display: <?= empty(set_value('nib_box')) ? "none" : "initial" ?>;">
+								<div class="mt-3">
+									<div class="form-group" id="form_support_document_number">
+										<label class="control-label font-600" for="form_support_document_number">Nomor Induk Berusaha</label>
+										<input type="text" id="support_document_number" name="nib" class="form-control auth-form-input" maxlength="13" pattern="/d*" placeholder="<?= trans("support_document_number"); ?>" value="<?= set_value("support_document_number"); ?>" required>
+										<?= form_error('support_document_number'); ?>
+									</div>
+									<div class="form-group">
+										<label class="control-label font-600">Unggah File Nomor Induk Berusaha</label>
+										<input type="file" class="form-control auth-form-input" name="nib_document" id="form_selected_document" value="<?= set_value('siup_document') ?>" required>
+										<?= form_error('business_support_document'); ?>
+										<p class="small_reg"> Format file .png, .jpg, .jpeg atau .pdf, maksimum ukuran 1 MB</p>
+									</div>
 								</div>
 							</div>
-							<div id="form_tdp" style="display: none;">
-								<div class="form-group">
-									<label class="control-label font-600">Unggah Dokumen Pendukung</label>
-									<input type="file" class="form-control auth-form-input" name="tdp_document" id="form_selected_document">
-									<?php echo form_error('business_support_document'); ?>
+							<div id="form_tdp" style="display: <?= empty(set_value('tdp_box')) ? "none" : "initial" ?>;">
+								<div class="mt-3">
+									<label class="control-label font-600">Unggah File Tanda Daftar Perusahaan</label>
+									<input type="file" class="form-control auth-form-input" name="tdp_document" id="form_selected_document" value="<?= set_value('siup_document') ?>" required>
+									<?= form_error('business_support_document'); ?>
 									<p class="small_reg"> Format file .png, .jpg, .jpeg atau .pdf, maksimum ukuran 1 MB</p>
 								</div>
 							</div>
@@ -173,8 +175,8 @@
 						<!-- ADDRESS -->
 						<div class="form-group">
 							<label class="control-label font-600 mt-3" for="form_business_type">Alamat Lengkap</label>
-							<textarea type="text" name="address" class="form-control auth-form-input" placeholder="<?php echo trans("address"); ?>" required><?php echo set_value("address"); ?></textarea>
-							<?php echo form_error('address'); ?>
+							<textarea type="text" name="address" class="form-control auth-form-input" placeholder="<?= trans("address"); ?>" required><?= set_value("address"); ?></textarea>
+							<?= form_error('address'); ?>
 						</div>
 						<div class="form-group">
 							<select id="form_province" name="province" class="form-control auth-form-input" onchange="select_province()">
@@ -183,14 +185,14 @@
 									<option value="<?= $province->id ?>" <?= set_value("province") == $province->id ? "selected" : "" ?>> <?= $province->province_name ?></option>
 								<?php endforeach ?>
 							</select>
-							<?php echo form_error('province'); ?>
+							<?= form_error('province'); ?>
 						</div>
 						<div class="form-group">
 							<?php if (!empty(set_value("province"))) : ?>
 								<select id="form_city" name="city" class="form-control auth-form-input" onchange="select_city()" disabled>
 									<option value="0"> Kota dipilih setelah pilih provinsi terlebih dahulu </option>
 								</select>
-								<?php echo form_error('city'); ?>
+								<?= form_error('city'); ?>
 							<?php else : ?>
 								<select id="form_city" name="city" class="form-control auth-form-input" onchange="select_city()" disabled>
 									<option value="0"> Kota dipilih setelah pilih provinsi terlebih dahulu </option>
@@ -198,23 +200,23 @@
 										<option value="<?= $city->id ?>" <?= set_value("city") == $city->id ? "selected" : "" ?>> <?= $city->city_name ?></option>
 									<?php endforeach ?>
 								</select>
-								<?php echo form_error('city'); ?>
+								<?= form_error('city'); ?>
 							<?php endif ?>
 						</div>
 						<div class="form-group">
-							<input type="text" id="form_district" onchange="change_district()" name="district" class="form-control auth-form-input" placeholder="<?php echo trans("district"); ?>" value="<?php echo set_value("district"); ?>" required>
-							<?php echo form_error('district'); ?>
+							<input type="text" id="form_district" onchange="change_district()" name="district" class="form-control auth-form-input" placeholder="<?= trans("district"); ?>" value="<?= set_value("district"); ?>" required>
+							<?= form_error('district'); ?>
 						</div>
 						<div class="form-group">
-							<input type="text" name="village" class="form-control auth-form-input" placeholder="<?php echo trans("village"); ?>" value="<?php echo set_value("village"); ?>" required>
-							<?php echo form_error('village'); ?>
+							<input type="text" name="village" class="form-control auth-form-input" placeholder="<?= trans("village"); ?>" value="<?= set_value("village"); ?>" required>
+							<?= form_error('village'); ?>
 						</div>
 						<div class="form-group">
-							<input type="text" id="form_postal_code" onchange="change_postal_code()" name="postal_code" class="form-control auth-form-input" minlength="5" maxlength="5" placeholder="<?php echo trans("postal_code"); ?>" value="<?php echo set_value("postal_code"); ?>" required>
-							<?php echo form_error('postal_code'); ?>
+							<input type="text" id="form_postal_code" onchange="change_postal_code()" name="postal_code" class="form-control auth-form-input" minlength="5" maxlength="5" placeholder="<?= trans("postal_code"); ?>" value="<?= set_value("postal_code"); ?>" required>
+							<?= form_error('postal_code'); ?>
 						</div>
 						<div class="form-group m-b-30">
-							<label class="control-label font-600"><?php echo "Pilih Titik Lokasi" ?></label>
+							<label class="control-label font-600"><?= "Pilih Titik Lokasi" ?></label>
 							<div id="map-result">
 								<div class="map-container">
 									<iframe src="https://maps.google.com/maps?width=100%&height=600&hl=en&q=&ie=UTF8&t=&z=8&iwloc=B&output=embed&disableDefaultUI=true" id="IframeMap" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe>
@@ -224,7 +226,7 @@
 						<!-- END OF COMPLETE ADDRESS -->
 
 						<!-- BANK ACCOUNT -->
-						<h4 class="title-auth">2. <?php echo trans("bank_title"); ?></h4>
+						<h4 class="title-auth">2. <?= trans("bank_title"); ?></h4>
 						<div class="form-group">
 							<select id="form_bank" name="bank" class="form-control auth-form-input">
 								<option value="0"> Pilih salah satu bank</option>
@@ -232,67 +234,67 @@
 									<option value="<?= $bank->id ?>" <?= set_value("bank") == $bank->id ? "selected" : "" ?>> <?= $bank->bank_name ?></option>
 								<?php endforeach ?>
 							</select>
-							<?php echo form_error('bank'); ?>
+							<?= form_error('bank'); ?>
 						</div>
 						<div class="form-group">
-							<input type="text" name="account_number" class="form-control auth-form-input" placeholder="<?php echo trans("account_number"); ?>" value="<?php echo set_value("account_number"); ?>" required>
-							<?php echo form_error('account_number'); ?>
+							<input type="text" name="account_number" class="form-control auth-form-input" placeholder="<?= trans("account_number"); ?>" value="<?= set_value("account_number"); ?>" required>
+							<?= form_error('account_number'); ?>
 						</div>
 						<div class="form-group">
-							<input type="text" name="bank_account_holder" class="form-control auth-form-input" placeholder="<?php echo trans("bank_account_holder"); ?>" value="<?php echo set_value("bank_account_holder"); ?>" required>
+							<input type="text" name="bank_account_holder" class="form-control auth-form-input" placeholder="<?= trans("bank_account_holder"); ?>" value="<?= set_value("bank_account_holder"); ?>" required>
 							<?= form_error('bank_account_holder'); ?>
 						</div>
 						<div class="m-b-30 form_group pb-3">
 							<label class="control-label font-600">Upload Foto Buku Tabungan</label>
 							<input type="file" class="form-control auth-form-input" name="cover_book_document" id="form_cover_book">
-							<?php echo form_error('cover_book_document'); ?>
+							<?= form_error('cover_book_document'); ?>
 							<p class="small_reg"> Format file .png, .jpg, .jpeg atau .pdf, maksimum ukuran 1 MB</p>
 						</div>
 						<!-- END OF BANK ACCOUNT -->
 						<!-- RESPONSIBLE PERSON -->
-						<h4 class="title-auth">3. <?php echo trans("responsible_title"); ?></h4>
+						<h4 class="title-auth">3. <?= trans("responsible_title"); ?></h4>
 						<div id="form_container_responsible_business_entity">
 							<div class="form-group">
-								<input type="text" name="responsible_person_name" class="form-control auth-form-input" placeholder="<?php echo trans("full_name"); ?>" value="<?php echo set_value("responsible_person_name"); ?>" maxlength="<?php echo $this->username_maxlength; ?>" required>
-								<?php echo form_error('responsible_person_name'); ?>
+								<input type="text" name="responsible_person_name" class="form-control auth-form-input" placeholder="<?= trans("full_name"); ?>" value="<?= set_value("responsible_person_name"); ?>" maxlength="<?= $this->username_maxlength; ?>" required>
+								<?= form_error('responsible_person_name'); ?>
 							</div>
 							<div class="form-group">
-								<input type="text" name="responsible_person_position" class="form-control auth-form-input" placeholder="<?php echo trans("user_position"); ?>" value="<?php echo set_value("responsible_person_position"); ?>" maxlength="<?php echo $this->username_maxlength; ?>" required>
-								<?php echo form_error('responsible_person_position'); ?>
+								<input type="text" name="responsible_person_position" class="form-control auth-form-input" placeholder="<?= trans("user_position"); ?>" value="<?= set_value("responsible_person_position"); ?>" maxlength="<?= $this->username_maxlength; ?>" required>
+								<?= form_error('responsible_person_position'); ?>
 							</div>
 						</div>
 						<div id="form_container_responsible_individual" style="display: none;">
 							<label class="control-label font-600" for="nik">Nomor Induk Kependudukan</label>
 							<div class="form-group">
-								<input type="text" name="nik" class="form-control auth-form-input" maxlength="16" pattern="\d*" placeholder="<?php echo trans("nik"); ?>" value="<?php echo set_value("nik"); ?>" required>
+								<input type="text" name="nik" class="form-control auth-form-input" maxlength="16" pattern="\d*" placeholder="<?= trans("nik"); ?>" value="<?= set_value("nik"); ?>" required>
 							</div>
 							<div class="m-b-30 form_group pb-3">
 								<label class="control-label font-600">Upload Foto KTP</label>
 								<input type="file" class="form-control auth-form-input" name="ktp_document" id="form_kt_document">
-								<?php echo form_error('ktp_document'); ?>
+								<?= form_error('ktp_document'); ?>
 								<p class="small_reg"> Format file .png, .jpg, .jpeg atau .pdf, maksimum ukuran 1 MB</p>
 							</div>
 						</div>
-						<h4 class="title-auth">4. <?php echo trans("create_user"); ?></h4>
+						<h4 class="title-auth">4. <?= trans("create_user"); ?></h4>
 						<div class="form-group">
-							<input type="email" name="email_address" class="form-control auth-form-input" placeholder="<?php echo trans("email_address"); ?>" value="<?php echo set_value("email_address"); ?>" required>
-							<?php echo form_error('email_address'); ?>
+							<input type="email" name="email_address" class="form-control auth-form-input" placeholder="<?= trans("email_address"); ?>" value="<?= set_value("email_address"); ?>" required>
+							<?= form_error('email_address'); ?>
 						</div>
 						<div class="form-group">
-							<input type="number" name="phone_number" class="form-control auth-form-input" placeholder="<?php echo trans("phone_number"); ?>" value="<?php echo set_value("phone_number"); ?>" required>
-							<?php echo form_error('phone_number'); ?>
+							<input type="number" name="phone_number" class="form-control auth-form-input" placeholder="<?= trans("phone_number"); ?>" value="<?= set_value("phone_number"); ?>" required>
+							<?= form_error('phone_number'); ?>
 						</div>
 
 						<label class="control-label font-600 mt-3" for="form_legal_status">Buat Password</label>
 						<p class="small_reg"> Buat password anda dengan atau harus setidaknya 8 sampai 60 panjang karakter</p>
 						<div class="form-group">
-							<input type="password" name="password" id="password" class="form-control auth-form-input" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Harus berisi setidaknya satu angka dan satu huruf besar dan kecil, dan setidaknya 8 karakter atau lebih" placeholder="<?php echo trans("password"); ?>" required>
-							<?php echo form_error('password'); ?>
+							<input type="password" name="password" id="password" class="form-control auth-form-input" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Harus berisi setidaknya satu angka dan satu huruf besar dan kecil, dan setidaknya 8 karakter atau lebih" placeholder="<?= trans("password"); ?>" required>
+							<?= form_error('password'); ?>
 						</div>
 
 						<div class="form-group">
-							<input type="password" name="confirm_password" class="form-control auth-form-input" placeholder="<?php echo trans("password_confirm"); ?>" required>
-							<?php echo form_error('confirm_password'); ?>
+							<input type="password" name="confirm_password" class="form-control auth-form-input" placeholder="<?= trans("password_confirm"); ?>" required>
+							<?= form_error('confirm_password'); ?>
 						</div>
 
 						<div id="pesan">
@@ -307,16 +309,16 @@
 							<div class="custom-control custom-checkbox custom-control-validate-input">
 								<input type="checkbox" class="custom-control-input" name="terms" id="checkbox_terms" required>
 								<?php $page_terms_condition = get_page_by_default_name("terms_conditions", $this->selected_lang->id); ?>
-								<label for="checkbox_terms" class="custom-control-label"><?php echo trans("terms_conditions_exp"); ?>&nbsp;<a href="<?php echo lang_base_url() . $page_terms_condition->slug; ?>" class="link-terms" target="_blank"><strong><?php echo html_escape($page_terms_condition->title); ?></strong></a></label>
+								<label for="checkbox_terms" class="custom-control-label"><?= trans("terms_conditions_exp"); ?>&nbsp;<a href="<?= lang_base_url() . $page_terms_condition->slug; ?>" class="link-terms" target="_blank"><strong><?= html_escape($page_terms_condition->title); ?></strong></a></label>
 							</div>
 						</div>
 
 						<div class="form-group">
-							<button type="submit" class="btn btn-md btn-custom btn-block"><?php echo trans("register"); ?></button>
+							<button type="submit" class="btn btn-md btn-custom btn-block"><?= trans("register"); ?></button>
 						</div>
-						<p class="p-social-media m-0 m-t-15"><?php echo trans("have_account"); ?>&nbsp;<a href="javascript:void(0)" class="link" data-toggle="modal" data-target="#loginModal"><?php echo trans("login"); ?></a></p>
+						<p class="p-social-media m-0 m-t-15"><?= trans("have_account"); ?>&nbsp;<a href="javascript:void(0)" class="link" data-toggle="modal" data-target="#loginModal"><?= trans("login"); ?></a></p>
 
-						<?php echo form_close(); ?>
+						<?= form_close(); ?>
 						<!-- form end -->
 					</div>
 				</div>
@@ -370,10 +372,10 @@
 	$("#label_nonpkp_business_type, #label_pkp_business_type").click(function() {
 		$("#form_container_responsible_person").html(
 			`<div class="form-group">
-				<input type="text" name="responsible_person_name" class="form-control auth-form-input" placeholder="<?php echo trans("full_name"); ?>" value="<?php echo set_value("full_name"); ?>" maxlength="<?php echo $this->username_maxlength; ?>" required>
+				<input type="text" name="responsible_person_name" class="form-control auth-form-input" placeholder="<?= trans("full_name"); ?>" value="<?= set_value("full_name"); ?>" maxlength="<?= $this->username_maxlength; ?>" required>
 			</div>
 			<div class="form-group">
-				<input type="text" name="responsible_person_position" class="form-control auth-form-input" placeholder="<?php echo trans("user_position"); ?>" value="<?php echo set_value("full_name"); ?>" maxlength="<?php echo $this->username_maxlength; ?>" required>
+				<input type="text" name="responsible_person_position" class="form-control auth-form-input" placeholder="<?= trans("user_position"); ?>" value="<?= set_value("full_name"); ?>" maxlength="<?= $this->username_maxlength; ?>" required>
 			</div>
 			<div class="m-b-30 form-group">
 				<label class="control-label font-600">Upload Surat Ijin Usaha Perdagangan (Opsional)</label>
@@ -393,20 +395,14 @@
 	});
 
 
-	$("#siup_doc").click(function() {
-		$("#form_siup").show();
-		$("#form_nib").hide();
-		$("#form_tdp").hide();
+	$("#siup_box").click(function() {
+		$("#form_siup").toggle('hide');
 	});
-	$("#nib_doc").click(function() {
-		$("#form_siup").hide();
-		$("#form_nib").show();
-		$("#form_tdp").hide();
+	$("#nib_box").click(function() {
+		$("#form_nib").toggle('hide');
 	});
-	$("#tdp_doc").click(function() {
-		$("#form_siup").hide();
-		$("#form_nib").hide();
-		$("#form_tdp").show();
+	$("#tdp_box").click(function() {
+		$("#form_tdp").toggle('hide');
 	});
 
 	// $("#label_nonpkp_business_type").click(function() {

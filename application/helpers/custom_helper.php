@@ -1964,7 +1964,7 @@ if (!function_exists('set_form_value')) {
                     $exact = $option["exact"] ?? null;
                     $insert_first = $option["add_first"] ?? "";
                     // if ($input_name == "description") dd($max,$min,$insert_first);
-                    return $insert_first.random_string("alpha", $exact??random_int($min, $max));
+                    return $insert_first . random_string("alpha", $exact ?? random_int($min, $max));
                     break;
                 case 'number':
                     $max = $option["max"] ?? 50;

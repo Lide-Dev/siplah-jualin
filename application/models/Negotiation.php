@@ -33,7 +33,7 @@ class Negotiation
     $this->$created_at = $created_at;
   }
 
-  public function get_insert_data()
+  public function get_active_insert_data()
   {
     $data = [
       "buyer_id" => $this->buyer_id,
@@ -42,7 +42,7 @@ class Negotiation
       "product_last_price" => $this->product_last_price,
       "shipping_last_price" => $this->shipping_last_price,
       "quantity" => $this->quantity,
-      "is_active" => 1
+      "is_active" => true
     ];
     return $data;
   }

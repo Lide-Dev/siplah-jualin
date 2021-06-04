@@ -10,6 +10,9 @@ class Conversation
     $seller_img,
     $seller_is_verified,
     $product_id,
+    $product,
+    $seller,
+    $messages,
     $subject;
 
   public function __construct(
@@ -22,6 +25,9 @@ class Conversation
     $seller_username = "",
     $seller_img = "",
     $seller_is_verified = false,
+    $product = "",
+    $seller = "",
+    $messages = array(),
     $id = 0
   ) {
     $this->id = $id;
@@ -34,15 +40,19 @@ class Conversation
     $this->seller_is_verified = $seller_is_verified;
     $this->product_id = $product_id;
     $this->subject = $subject;
+    $this->product = $product;
+    $this->messages = $messages;
+    $this->seller = $seller;
   }
 
-  function get_insert_data()
+  function get_negotiation_insert_data()
   {
     $data = [
       "subject" => $this->subject,
       "product_id" => $this->product_id,
-      "sender_id" => $this->user_id,
-      "receiver_id" => $this->seller_id
+      "buyer_id" => $this->user_id,
+      "seller_id" => $this->seller_id,
+      "type" => "negotiation"
     ];
     return $data;
   }
