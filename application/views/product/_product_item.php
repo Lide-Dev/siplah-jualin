@@ -13,23 +13,39 @@
             <!-- LABEL PRODUCT-->
             <div class="wp-block-info-over left">
                 <h2>
-                    <span class="pull-left">
-                        <a href="#">Produk Dalam Negeri</a>
-                    </span>
+                    <?php if ($product->is_homemade == 1) : ?>
+                        <span class="pull-left">
+                            <a href="#">Produk Dalam Negeri</a>
+                        </span>
+                    <?php else : ?>
+                        <span class="pull-left">
+                            <a href="#">Produk Luar Negeri</a>
+                        </span>
+                    <?php endif; ?>
+                    <?php if ($product->is_umkm_product == 1) : ?>
+                        <span class="pull-left">
+                            <a href="#">Produk UMKM</a>
+                        </span>
+                    <?php endif; ?>
+                    <?php if ($product->is_kemendikbud_product == 1) : ?>
+                        <span class="pull-left">
+                            <a href="#">Produk Kemendikbud</a>
+                        </span>
+                    <?php endif; ?>
                 </h2>
             </div>
             <!-- END OF LABEL PRODUCT -->
 
             <?php if (is_multi_vendor_active() && ($this->auth_user->role == "member" || !$this->auth_check)) : ?>
-            <div class="product-item-options">
-                <a href="javascript:void(0)" class="item-option btn-add-remove-wishlist" data-toggle="tooltip" data-placement="left" data-product-id="<?php echo $product->id; ?>" data-reload="0" title="<?php echo trans("wishlist"); ?>">
-                    <?php if (is_product_in_wishlist($product) == 1) : ?>
-                        <i class="icon-heart"></i>
-                    <?php else : ?>
-                        <i class="icon-heart-o"></i>
-                    <?php endif; ?>
-                </a>
-            </div>
+                <div class="product-item-options">
+                    <a href="javascript:void(0)" class="item-option btn-add-remove-wishlist" data-toggle="tooltip" data-placement="left" data-product-id="<?php echo $product->id; ?>" data-reload="0" title="<?php echo trans("wishlist"); ?>">
+                        <?php if (is_product_in_wishlist($product) == 1) : ?>
+                            <i class="icon-heart"></i>
+                        <?php else : ?>
+                            <i class="icon-heart-o"></i>
+                        <?php endif; ?>
+                    </a>
+                </div>
             <?php endif; ?>
         </div>
         <?php if ($product->is_promoted && $this->general_settings->promoted_products == 1 && isset($promoted_badge) && $promoted_badge == true) : ?>
@@ -47,14 +63,14 @@
         </p>
 
         <?php if (is_multi_vendor_active() && ($this->auth_user->role == "member" || !$this->auth_check)) : ?>
-        <div class="product-item-rating">
-            <?php if ($this->general_settings->reviews == 1) {
-                $this->load->view('partials/_review_stars', ['review' => $product->rating]);
-            } ?>
-            <span class="item-wishlist"><i class="icon-heart-o"></i><?php echo $product->wishlist_count; ?></span>
-        </div>
+            <div class="product-item-rating">
+                <?php if ($this->general_settings->reviews == 1) {
+                    $this->load->view('partials/_review_stars', ['review' => $product->rating]);
+                } ?>
+                <span class="item-wishlist"><i class="icon-heart-o"></i><?php echo $product->wishlist_count; ?></span>
+            </div>
         <?php endif; ?>
-        
+
         <div class="item-meta">
             <?php $this->load->view('product/_price_product_item', ['product' => $product]); ?>
         </div>

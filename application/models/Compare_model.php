@@ -77,7 +77,7 @@ class Compare_model extends CI_Model
 				);
 				$this->negotiation_model->db_insert_negotiation($m_negotiation);
 			}
-			dd($product->id);
+			// dd($product->id);
 			$conversation = $this->negotiation_model->db_get_nego_conversation_by_user_and_product_id($user_id, $product_id);
 			if (empty($conversation)) {
 				$m_conversation = new Conversation(

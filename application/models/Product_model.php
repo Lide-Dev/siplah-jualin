@@ -365,8 +365,13 @@ class Product_model extends Core_Model
         if ($return_count == true) {
             $select = "COUNT(products.id) AS count";
         } else {
-            $select = "products.id, products.title, products.slug, products.listing_type, products.category_id,  products.price, products.currency, products.discount_rate,
-            products.user_id, products.is_promoted, products.rating, products.hit, products.is_free_product, products.promote_end_date, products.description, products.product_condition, products.created_at,
+            // $select = "products.id, products.title, products.slug, products.listing_type, products.category_id,  products.price, products.currency, products.discount_rate,
+            // products.user_id, products.is_promoted, products.rating, products.hit, products.is_free_product, products.promote_end_date, products.description, products.product_condition, products.created_at,
+            // users.username AS user_username, users.shop_name AS shop_name, users.role AS user_role, users.slug AS user_slug,
+            // (SELECT CONCAT(storage, '::', image_small) FROM images WHERE products.id = images.product_id ORDER BY is_main DESC LIMIT 1) AS image,
+            // (SELECT CONCAT(storage, '::', image_small) FROM images WHERE products.id = images.product_id ORDER BY is_main DESC LIMIT 1, 1) AS image_second,
+            // (SELECT COUNT(wishlist.id) FROM wishlist WHERE products.id = wishlist.product_id) AS wishlist_count";
+            $select = "products.*, couriers.name as courier_name,
             users.username AS user_username, users.shop_name AS shop_name, users.role AS user_role, users.slug AS user_slug,
             (SELECT CONCAT(storage, '::', image_small) FROM images WHERE products.id = images.product_id ORDER BY is_main DESC LIMIT 1) AS image,
             (SELECT CONCAT(storage, '::', image_small) FROM images WHERE products.id = images.product_id ORDER BY is_main DESC LIMIT 1, 1) AS image_second,
@@ -377,6 +382,7 @@ class Product_model extends Core_Model
                 $select .= ", 0 AS is_in_wishlist";
             }
         }
+        // dd();
 
         $status = ($type == 'draft' || $type == 'pending') ? 0 : 1;
         $visibility = ($type == 'hidden') ? 0 : 1;
@@ -385,6 +391,7 @@ class Product_model extends Core_Model
         $this->db->select($select);
         $this->db->from('products');
         $this->db->join('users', 'products.user_id = users.id');
+        $this->db->join('couriers', 'products.shipping_courier_id = couriers.id',"LEFT");
         if ($type == 'wishlist') {
             $this->db->join('wishlist', 'products.id = wishlist.product_id');
         }
@@ -501,7 +508,6 @@ class Product_model extends Core_Model
         } else {
             $this->db->order_by('products.created_at', 'DESC');
         }
-
         return $this->db->get_compiled_select();
     }
 
@@ -528,6 +534,7 @@ class Product_model extends Core_Model
         // echo "test". $limit;
         $sql = $this->query_string() . "ORDER BY products.created_at DESC LIMIT ?";
         $query = $this->db->query($sql, array(clean_number($limit)));
+        // dd($sql,  $query->result());
         return $query->result();
     }
 
@@ -807,7 +814,8 @@ class Product_model extends Core_Model
     //get available product
     public function get_available_product($id)
     {
-        $sql = "SELECT products.*, users.username as user_username, users.shop_name as shop_name, users.role as user_role, users.slug as user_slug FROM products 
+        $sql = "SELECT products.*, couriers.name as courier_name, users.username as user_username, users.shop_name as shop_name, users.role as user_role, users.slug as user_slug FROM products
+                INNER JOIN couriers ON products.shipping_courier_id = couriers.id
                 INNER JOIN users ON products.user_id = users.id AND users.banned = 0
                 WHERE products.status = 1 AND products.visibility = 1 AND products.is_draft = 0 AND products.stock > 0 AND products.is_deleted = 0 AND products.id = ?";
         if ($this->general_settings->vendor_verification_system == 1) {
@@ -820,8 +828,9 @@ class Product_model extends Core_Model
     //get product by slug
     public function get_product_by_slug($slug)
     {
-        $sql = "SELECT products.*, users.username as user_username, users.shop_name as shop_name, users.role as user_role, users.slug as user_slug FROM products 
+        $sql = "SELECT products.*, couriers.name as courier_name, users.username as user_username, users.shop_name as shop_name, users.role as user_role, users.slug as user_slug FROM products
                 INNER JOIN users ON products.user_id = users.id AND users.banned = 0
+                INNER JOIN couriers ON products.shipping_courier_id = couriers.id
                 WHERE products.is_draft = 0 AND products.is_deleted = 0 AND products.slug = ?";
         if ($this->general_settings->vendor_verification_system == 1) {
             $sql .= " AND users.role != 'member'";

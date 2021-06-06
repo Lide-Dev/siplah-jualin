@@ -194,7 +194,7 @@ if (!function_exists('get_latest_products')) {
 		if ($ci->default_location_id != 0) {
 			$key = "latest_products_location_" . $ci->default_location_id;
 		}
-		$latest_products = get_cached_data($key);
+		// $latest_products = get_cached_data($key);
 		if (empty($latest_products)) {
 			$latest_products = $ci->product_model->get_products_limited($limit);
 			set_cache_data($key, $latest_products);

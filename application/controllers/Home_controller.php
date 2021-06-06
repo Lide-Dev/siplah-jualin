@@ -164,14 +164,15 @@ class Home_controller extends Home_Core_Controller
         $data['products'] = $this->product_model->get_paginated_filtered_products(null, $pagination['offset'], $pagination['per_page']);
         $data["categories"] = get_parent_categories($this->categories);
         $data['show_location_filter'] = false;
-        if (!empty($data['products'])) {
-            foreach ($data['products'] as $item) {
-                if ($item->product_type == 'physical') {
-                    $data['show_location_filter'] = true;
-                    break;
-                }
-            }
-        }
+
+        // if (!empty($data['products'])) {
+        //     foreach ($data['products'] as $item) {
+        //         if ($item->product_type == 'physical') {
+        //             $data['show_location_filter'] = true;
+        //             break;
+        //         }
+        //     }
+        // }
 
         $this->load->view('partials/_header', $data);
         $this->load->view('product/products', $data);
@@ -202,14 +203,14 @@ class Home_controller extends Home_Core_Controller
         $data['products'] = $this->product_model->get_paginated_filtered_products($data["category"]->id, $pagination['offset'], $pagination['per_page']);
 
         $data['show_location_filter'] = false;
-        if (!empty($data['products'])) {
-            foreach ($data['products'] as $item) {
-                if ($item->product_type == 'physical') {
-                    $data['show_location_filter'] = true;
-                    break;
-                }
-            }
-        }
+        // if (!empty($data['products'])) {
+        //     foreach ($data['products'] as $item) {
+        //         if ($item->product_type == 'physical') {
+        //             $data['show_location_filter'] = true;
+        //             break;
+        //         }
+        //     }
+        // }
 
         if ($data["category"]->parent_id == 0) {
             $data["parent_category"] = null;

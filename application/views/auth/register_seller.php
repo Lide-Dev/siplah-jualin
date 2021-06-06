@@ -44,7 +44,7 @@
 							<div class="col-12">
 								<div class="form-group mt-2">
 									<label class="radiobut" for="pb_radio_badan_usaha"> Badan Usaha (PT/CV)
-										<input value="business_entity" id="pb_radio_badan_usaha" type="radio" <?= (empty(set_value("business_profile")) || set_value("business_profile") == "business_profile") ? "checked" : "" ?> name="business_profile">
+										<input value="business_entity" id="pb_radio_badan_usaha" type="radio" <?= (empty(set_value("business_profile")) || set_value("business_profile") == "business_entity") ? "checked" : "" ?> name="business_profile">
 										<span class="radiomark"></span>
 									</label>
 									<label for="pb_radio_individu" class="radiobut">Individu / Perorangan
@@ -54,21 +54,19 @@
 									<?= form_error('business_profile'); ?>
 								</div>
 								<!-- Status Legal -->
-								<div class="form-group">
-									<label class="control-label font-600 mt-3" for="form_legal_status">Jenis Usaha</label>
-									<label for="ju_radio_individu" class="radiobut">Individu
-										<input id="ju_radio_individu" type="radio" <?= (empty(set_value("legal_status")) || set_value("legal_status") == "individual") ? "checked" : "" ?> name="legal_status" value="individual">
-										<span class="radiomark"></span>
-									</label>
-									<label for="ju_radio_pkp" class="radiobut">PKP
-										<input id="ju_radio_pkp" type="radio" <?= (set_value("legal_status") == "pkp") ? "checked" : "" ?> name="legal_status" value="pkp">
-										<span class="radiomark"></span>
-									</label>
-									<label for="ju_radio_non_pkp" class="radiobut">Non PKP
-										<input id="ju_radio_non_pkp" type="radio" <?= (set_value("legal_status") == "non_pkp") ? "checked" : "" ?> name="legal_status" value="non_pkp">
-										<span class="radiomark"></span>
-									</label>
-									<?= form_error('legal_status'); ?>
+								<div id="form_legal_status" class="form-group">
+									<?php if (empty(set_value("business_profile")) || set_value("business_profile") == "business_entity") : ?>
+										<label class="control-label font-600 mt-3" for="form_legal_status">Status Wajib Pajak</label>
+										<label for="ju_radio_pkp" class="radiobut">PKP
+											<input id="ju_radio_pkp" type="radio" <?= (empty(set_value("legal_status")) || set_value("legal_status") == "pkp") ? "checked" : "" ?> name="legal_status" value="pkp">
+											<span class="radiomark"></span>
+										</label>
+										<label for="ju_radio_non_pkp" class="radiobut">Non PKP
+											<input id="ju_radio_non_pkp" type="radio" <?= (set_value("legal_status") == "non_pkp") ? "checked" : "" ?> name="legal_status" value="non_pkp">
+											<span class="radiomark"></span>
+										</label>
+										<?= form_error('legal_status'); ?>
+									<?php endif; ?>
 								</div>
 								<!-- End of Status Legal -->
 								<!-- Tipe Usaha -->
@@ -102,7 +100,7 @@
 
 								<div class="form-group">
 									<label class="control-label font-600 mt-3" for="form_business_type">Nomor NPWP</label>
-									<input type="text" name="npwp" class="form-control auth-form-input" maxlength="15" pattern="\d*" placeholder="<?= trans("npwp"); ?>" value="<?= set_value("npwp"); ?>" required>
+									<input type="text" name="npwp" class="form-control auth-form-input" maxlength="15" minlength="15" pattern="\d*" placeholder="<?= trans("npwp"); ?>" value="<?= set_value("npwp"); ?>" required>
 									<?= form_error('npwp'); ?>
 									<p class="small_reg"> Masukan nomor NPWP sejumlah 15 Angka</p>
 								</div>
@@ -112,7 +110,7 @@
 
 								<div class="m-b-30 form_group">
 									<label class="control-label font-600"><?= trans("upload_npwp"); ?></label>
-									<input type="file" class="form-control auth-form-input" name="npwp_document" id="form_npwp_document">
+									<input type="file" accept=".jpg,.jpeg,.png,.gif,.pdf" class="form-control auth-form-input" name="npwp_document" id="form_npwp_document">
 									<?= form_error('npwp_document'); ?>
 									<p class="small_reg"> Format file .png, .jpg, .jpeg atau .pdf, maksimum ukuran 1 MB</p>
 								</div>
@@ -140,7 +138,7 @@
 							<div id="form_siup" style="display: <?= empty(set_value('siup_box')) ? "none" : "initial" ?>;">
 								<div class="mt-3">
 									<label class="control-label font-600">Unggah File Surat Izin Usaha Perusahaan</label>
-									<input type="file" class="form-control auth-form-input" name="siup_document" id="form_selected_document" value="<?= set_value('siup_document') ?>" required>
+									<input type="file" accept=".jpg,.jpeg,.png,.gif,.pdf" class="form-control auth-form-input" name="siup_document" id="form_siup_document" value="<?= set_value('siup_document') ?>" required>
 									<?= form_error('business_support_document'); ?>
 									<p class="small_reg"> Format file .png, .jpg, .jpeg atau .pdf, maksimum ukuran 1 MB</p>
 								</div>
@@ -154,7 +152,7 @@
 									</div>
 									<div class="form-group">
 										<label class="control-label font-600">Unggah File Nomor Induk Berusaha</label>
-										<input type="file" class="form-control auth-form-input" name="nib_document" id="form_selected_document" value="<?= set_value('siup_document') ?>" required>
+										<input type="file" accept=".jpg, .jpeg, .png, .gif, .pdf" accept=".jpg,.jpeg,.png,.gif,.pdf" class="form-control auth-form-input" name="nib_document" id="form_nib_document" value="<?= set_value('siup_document') ?>" required>
 										<?= form_error('business_support_document'); ?>
 										<p class="small_reg"> Format file .png, .jpg, .jpeg atau .pdf, maksimum ukuran 1 MB</p>
 									</div>
@@ -163,7 +161,7 @@
 							<div id="form_tdp" style="display: <?= empty(set_value('tdp_box')) ? "none" : "initial" ?>;">
 								<div class="mt-3">
 									<label class="control-label font-600">Unggah File Tanda Daftar Perusahaan</label>
-									<input type="file" class="form-control auth-form-input" name="tdp_document" id="form_selected_document" value="<?= set_value('siup_document') ?>" required>
+									<input type="file" accept=".jpg, .jpeg, .png, .gif, .pdf" class="form-control auth-form-input" name="tdp_document" id="form_tdp_document" value="<?= set_value('siup_document') ?>" required>
 									<?= form_error('business_support_document'); ?>
 									<p class="small_reg"> Format file .png, .jpg, .jpeg atau .pdf, maksimum ukuran 1 MB</p>
 								</div>
@@ -246,7 +244,7 @@
 						</div>
 						<div class="m-b-30 form_group pb-3">
 							<label class="control-label font-600">Upload Foto Buku Tabungan</label>
-							<input type="file" class="form-control auth-form-input" name="cover_book_document" id="form_cover_book">
+							<input type="file" accept=".jpg, .jpeg, .png, .gif, .pdf" class="form-control auth-form-input" name="cover_book_document" id="form_cover_book_document">
 							<?= form_error('cover_book_document'); ?>
 							<p class="small_reg"> Format file .png, .jpg, .jpeg atau .pdf, maksimum ukuran 1 MB</p>
 						</div>
@@ -266,15 +264,15 @@
 						<div id="form_container_responsible_individual" style="display: none;">
 							<div class="form-group">
 								<label class="control-label font-600" for="nik_fullname">Nama Lengkap Penanggung Jawab</label>
-								<input type="text" name="nik_fullname" class="form-control auth-form-input" maxlength="16" pattern="\d*" placeholder="<?= trans("full_name"); ?>" value="<?= set_value("nik"); ?>" required>
+								<input type="text" name="nik_fullname" class="form-control auth-form-input" maxlength="254" placeholder="<?= trans("full_name"); ?>" value="<?= set_value("nik"); ?>" required>
 							</div>
 							<div class="form-group">
 								<label class="control-label font-600" for="nik">Nomor Induk Kependudukan</label>
-								<input type="text" name="nik" class="form-control auth-form-input" maxlength="16" pattern="\d*" placeholder="<?= trans("nik"); ?>" value="<?= set_value("nik"); ?>" required>
+								<input type="text" name="nik" class="form-control auth-form-input" maxlength="16" minlength="16" pattern="\d*" placeholder="<?= trans("nik"); ?>" value="<?= set_value("nik"); ?>" required>
 							</div>
 							<div class="m-b-30 form_group pb-3">
 								<label class="control-label font-600">Upload Foto KTP</label>
-								<input type="file" class="form-control auth-form-input" name="ktp_document" id="form_kt_document">
+								<input type="file" accept=".jpg, .jpeg, .png, .gif, .pdf" class="form-control auth-form-input" name="ktp_document" id="form_ktp_document">
 								<?= form_error('ktp_document'); ?>
 								<p class="small_reg"> Format file .png, .jpg, .jpeg atau .pdf, maksimum ukuran 1 MB</p>
 							</div>
@@ -408,6 +406,22 @@
 	$("#tdp_box").click(function() {
 		$("#form_tdp").toggle('hide');
 	});
+
+	$("#pb_radio_individu").click(function() {
+		$("#form_legal_status").hide()
+	})
+	$("#pb_radio_badan_usaha").click(function() {
+		$("#form_legal_status").show()
+	})
+
+	//Validation size
+	$('#form_cover_book_document, #form_npwp_document, #form_tdp_document, #form_nib_document, #form_siup_document, #form_ktp_document').change(function(e) {
+		// let idSplit = e.target.id.substring(5);
+		// console.log(idSplit, e.target.files[0].size > 1048576, e.target.files[0].size);
+		if (e.target.files[0].size > 1048576) {
+			$(`#${e.target.id}`).val("");
+		}
+	})
 
 	// $("#label_nonpkp_business_type").click(function() {
 	// 	$("#form_nonpkp_business_type").prop("checked", true);

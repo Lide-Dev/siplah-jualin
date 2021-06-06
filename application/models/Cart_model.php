@@ -13,9 +13,9 @@ class Cart_model extends CI_Model
     {
         $cart = $this->get_sess_cart_items();
         $quantity = $this->input->post('product_quantity', true);
-        if ($product->product_type == "digital") {
-            $quantity = 1;
-        }
+        // if ($product->product_type == "digital") {
+        //     $quantity = 1;
+        // }
         $appended_variations = $this->get_selected_variations($product->id)->str;
         $options_array = $this->get_selected_variations($product->id)->options_array;
         $object = $this->get_product_price_and_stock($product, $options_array, $quantity);
@@ -23,7 +23,7 @@ class Cart_model extends CI_Model
         $item = new stdClass();
         $item->cart_item_id = generate_unique_id();
         $item->product_id = $product->id;
-        $item->product_type = $product->product_type;
+        // $item->product_type = $product->product_type;
         $item->product_title = $product->title . " " . $appended_variations;
         $item->options_array = $options_array;
         $item->quantity = $quantity;
@@ -54,7 +54,7 @@ class Cart_model extends CI_Model
                 $item = new stdClass();
                 $item->cart_item_id = generate_unique_id();
                 $item->product_id = $product->id;
-                $item->product_type = $product->product_type;
+                // $item->product_type = $product->product_type;
                 $item->product_title = $quote_request->product_title;
                 $item->options_array = array();
                 $item->quantity = $quote_request->product_quantity;
@@ -302,7 +302,7 @@ class Cart_model extends CI_Model
                         $item = new stdClass();
                         $item->cart_item_id = $cart_item->cart_item_id;
                         $item->product_id = $product->id;
-                        $item->product_type = $cart_item->product_type;
+                        // $item->product_type = $cart_item->product_type;
                         $item->product_title = $cart_item->product_title;
                         $item->options_array = $cart_item->options_array;
                         $item->quantity = $cart_item->quantity;
@@ -326,7 +326,7 @@ class Cart_model extends CI_Model
                     $item = new stdClass();
                     $item->cart_item_id = $cart_item->cart_item_id;
                     $item->product_id = $product->id;
-                    $item->product_type = $cart_item->product_type;
+                    // $item->product_type = $cart_item->product_type;
                     $item->product_title = $cart_item->product_title;
                     $item->options_array = $cart_item->options_array;
                     $item->quantity = $cart_item->quantity;
@@ -465,32 +465,32 @@ class Cart_model extends CI_Model
     }
 
     //check cart has physical products
-    public function check_cart_has_physical_product()
-    {
-        $cart_items = $this->get_sess_cart_items();
-        if (!empty($cart_items)) {
-            foreach ($cart_items as $cart_item) {
-                if ($cart_item->product_type == 'physical') {
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
+    // public function check_cart_has_physical_product()
+    // {
+    //     $cart_items = $this->get_sess_cart_items();
+    //     if (!empty($cart_items)) {
+    //         foreach ($cart_items as $cart_item) {
+    //             if ($cart_item->product_type == 'physical') {
+    //                 return true;
+    //             }
+    //         }
+    //     }
+    //     return false;
+    // }
 
     //check cart has digital products
-    public function check_cart_has_digital_product()
-    {
-        $cart_items = $this->get_sess_cart_items();
-        if (!empty($cart_items)) {
-            foreach ($cart_items as $cart_item) {
-                if ($cart_item->product_type == 'digital') {
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
+    // public function check_cart_has_digital_product()
+    // {
+    //     $cart_items = $this->get_sess_cart_items();
+    //     if (!empty($cart_items)) {
+    //         foreach ($cart_items as $cart_item) {
+    //             if ($cart_item->product_type == 'digital') {
+    //                 return true;
+    //             }
+    //         }
+    //     }
+    //     return false;
+    // }
 
     //unset cart items session
     public function unset_sess_cart_items()

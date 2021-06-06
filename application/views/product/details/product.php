@@ -57,11 +57,11 @@
 										<a class="nav-link" id="tab_additional_information" data-toggle="tab" href="#tab_additional_information_content" role="tab" aria-controls="tab_additional_information" aria-selected="false"><?php echo trans("additional_information"); ?></a>
 									</li>
 								<?php endif; ?>
-								<?php if ($product->product_type != "digital") : ?>
+								<!-- <?php if ($product->product_type != "digital") : ?>
 									<li class="nav-item">
 										<a class="nav-link" id="tab_shipping" data-toggle="tab" href="#tab_shipping_content" role="tab" aria-controls="tab_shipping" aria-selected="false"><?php echo trans("shipping"); ?></a>
 									</li>
-								<?php endif; ?>
+								<?php endif; ?> -->
 								<?php if ($this->general_settings->reviews == 1) : ?>
 									<li class="nav-item">
 										<a class="nav-link" id="tab_reviews" data-toggle="tab" href="#tab_reviews_content" role="tab" aria-controls="tab_reviews" aria-selected="false"><?php echo trans("reviews"); ?>&nbsp;(<?php echo $review_count; ?>)</a>
@@ -76,7 +76,7 @@
 									<li class="nav-item">
 										<a class="nav-link" id="tab_facebook_comments" data-toggle="tab" href="#tab_facebook_comments_content" role="tab" aria-controls="facebook_comments" aria-selected="false"><?php echo trans("facebook_comments"); ?></a>
 									</li>
-								<?php endif; ?>
+								<?php endif;?>
 							</ul>
 
 
@@ -87,35 +87,35 @@
 										<tbody>
 											<tr>
 												<td class="td-left">Merek / Penerbit</td>
-												<td class="td-right"><span>Asus</span></td>
+												<td class="td-right"><span><?= $product->publisher ?? "-" ?></span></td>
 											</tr>
 											<tr>
 												<td class="td-left">Garansi</td>
-												<td class="td-right"><span>1 Bulan</span></td>
+												<td class="td-right"><span><?= $product->warranty ?? "-" ?></span></td>
 											</tr>
 											<tr>
 												<td class="td-left">Panjang</td>
-												<td class="td-right"><span>35 CM</span></td>
+												<td class="td-right"><span><?= floatval($product->length)." CM" ?? "-" ?> </span></td>
 											</tr>
 											<tr>
 												<td class="td-left">Lebar</td>
-												<td class="td-right"><span>17 CM</span></td>
+												<td class="td-right"><span><?= floatval($product->width)." CM" ?? "-" ?> </span></td>
 											</tr>
 											<tr>
 												<td class="td-left">Tinggi</td>
-												<td class="td-right"><span>5 CM</span></td>
+												<td class="td-right"><span><?= floatval($product->height)." CM" ?? "-" ?> </span></td>
 											</tr>
 											<tr>
 												<td class="td-left">Berat</td>
-												<td class="td-right"><span>1 KG</span></td>
+												<td class="td-right"><span><?= floatval($product->weight)." KG" ?? "-" ?> </span></td>
 											</tr>
 											<tr>
 												<td class="td-left">Estimasi Pengiriman</td>
-												<td class="td-right"><span>5 Hari</span></td>
+												<td class="td-right"><span><?= $product->shipping_time ?? "-" ?> </span></td>
 											</tr>
 											<tr>
 												<td class="td-left">Jasa Pengiriman Tersedia</td>
-												<td class="td-right"><span>Buat Penawaran Terlrbih Dahulu</span></td>
+												<td class="td-right"><span><?= $product->courier_name ?? "-" ?> </span></td>
 											</tr>
 										</tbody>
 									</table>
@@ -160,7 +160,7 @@
 										</div>
 									</div>
 								<?php endif; ?>
-								<?php if ($product->product_type != "digital") : ?>
+								<!-- <?php if ($product->product_type != "digital") : ?>
 									<div class="tab-pane fade" id="tab_shipping_content" role="tabpanel">
 										<div class="card">
 											<div class="card-header">
@@ -198,7 +198,7 @@
 											</div>
 										</div>
 									</div>
-								<?php endif; ?>
+								<?php endif; ?> -->
 								<?php if ($this->general_settings->reviews == 1) : ?>
 									<div class="tab-pane fade" id="tab_reviews_content" role="tabpanel">
 										<div class="card">
