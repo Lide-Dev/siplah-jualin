@@ -149,13 +149,13 @@
         </div>
         <div class="">
             <div class="form-group col-md-6">
-                <label for="form_vat" class="control-label">Barang Kena PPN</label>
+                <label for="form_vat" class="control-label">Barang Termasuk PPN</label>
                 <label for="form_vat" class="toggle-control">
                     <input id="form_vat" name="vat" type="checkbox">
                     <span class="control"></span>
                 </label>
             </div>
-            <!-- <?php echo form_error('visibility'); ?> -->
+            <?php echo form_error('vat'); ?>
         </div>
 
 

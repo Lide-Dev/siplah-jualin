@@ -14,7 +14,7 @@
             ?>
         </div>
     </div>
-    
+
     <div class="form-box">
         <div class="form-box-head">
             <h4 class="title">Kategori</h4>
@@ -211,7 +211,16 @@
                 </div>
                 <?php echo form_error('visibility'); ?>
             </div>
-
+            <div class="row">
+                <div class="form-group col-md-6">
+                    <label for="form_vat" class="control-label">Barang Termasuk PPN</label>
+                    <label for="form_vat" class="toggle-control">
+                        <input id="form_vat" name="vat" type="checkbox">
+                        <span class="control"></span>
+                    </label>
+                </div>
+                <?php echo form_error('vat'); ?>
+            </div>
 
         </div>
     </div>
