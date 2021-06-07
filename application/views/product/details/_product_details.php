@@ -35,6 +35,33 @@
 		<?php elseif ($product->visibility == 0) : ?>
 			<label class="badge badge-danger badge-product-status"><?php echo trans("hidden"); ?></label>
 		<?php endif; ?>
+		<div class="row-custom">
+			<div class="wp-block" style="min-height:50px">
+				<div class="wp-block-info-over left">
+					<h2>
+						<?php if ($product->is_homemade == 1) : ?>
+							<span class="pull-left">
+								<a style="background-color: #3236ff;" href="#">Produk Dalam Negeri</a>
+							</span>
+						<?php else : ?>
+							<span class="pull-left">
+								<a style="background-color: #008080;" href="#">Produk Luar Negeri</a>
+							</span>
+						<?php endif; ?>
+						<?php if ($product->is_umkm_product == 1) : ?>
+							<span class="pull-left">
+								<a style="background-color: #ff7032;" href="#">Produk UMKM</a>
+							</span>
+						<?php endif; ?>
+						<?php if ($product->is_kemendikbud_product == 1) : ?>
+							<span class="pull-left">
+								<a style="background-color: #8436ff;" href="#">Produk Kemendikbud</a>
+							</span>
+						<?php endif; ?>
+					</h2>
+				</div>
+			</div>
+		</div>
 		<div class="row-custom meta">
 			<div class="product-details-user">
 				<?php echo trans("by"); ?>&nbsp;<a href="<?php echo generate_profile_url($product->user_slug); ?>"><?php echo character_limiter(get_shop_name_product($product), 30, '..'); ?></a>
@@ -51,6 +78,7 @@
 			<span><i class="icon-heart"></i><?php echo get_product_wishlist_count($product->id); ?></span>
 			<span><i class="icon-eye"></i><?php echo html_escape($product->hit); ?></span>
 		</div>
+
 		<div class="row-custom price">
 			<div id="product_details_price_container" class="d-inline-block">
 				<?php $this->load->view("product/details/_price", ['product' => $product, 'price' => $product->price, 'discount_rate' => $product->discount_rate]); ?>

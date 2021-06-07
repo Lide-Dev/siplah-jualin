@@ -62,7 +62,7 @@ a:hover {
     font-size: 11px;
     text-transform: capitalize;
     font-weight: 600;
-    background: #006a4e;
+    /* background: #006a4e; */
     color: #fff;
     border-radius: 6px;
 }

@@ -15,21 +15,21 @@
                 <h2>
                     <?php if ($product->is_homemade == 1) : ?>
                         <span class="pull-left">
-                            <a href="#">Produk Dalam Negeri</a>
+                            <a style="background-color: #3236ff;" href="#">Produk Dalam Negeri</a>
                         </span>
                     <?php else : ?>
-                        <span class="pull-left">
-                            <a href="#">Produk Luar Negeri</a>
+                        <span class="pull-left" >
+                            <a style="background-color: #008080;" href="#">Produk Luar Negeri</a>
                         </span>
                     <?php endif; ?>
                     <?php if ($product->is_umkm_product == 1) : ?>
-                        <span class="pull-left">
-                            <a href="#">Produk UMKM</a>
+                        <span class="pull-left" >
+                            <a style="background-color: #ff7032;"  href="#">Produk UMKM</a>
                         </span>
                     <?php endif; ?>
                     <?php if ($product->is_kemendikbud_product == 1) : ?>
                         <span class="pull-left">
-                            <a href="#">Produk Kemendikbud</a>
+                            <a style="background-color: #8436ff;" href="#">Produk Kemendikbud</a>
                         </span>
                     <?php endif; ?>
                 </h2>
