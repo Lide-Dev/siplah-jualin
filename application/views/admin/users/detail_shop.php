@@ -52,10 +52,7 @@
                                 <strong>Dokumen NPWP</strong>
                             </div>
                             <div class="col-sm-8">
-                                <button <?= $shop->check_file("npwp_path") ? "" : "disabled" ?> id="npwp_document" type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal_document_viewer">
-                                    <?= $shop->check_file("npwp_path") ? "Lihat Dokumen" : "Dokumen Terhapus" ?>
-                                </button>
-
+                                <?php $this->load->view("admin/users/_button_detail_shop_document", ["filename" => "npwp"]) ?>
                             </div>
                         </div>
                         <div class="row row-details">
@@ -63,10 +60,7 @@
                                 <strong>Dokumen NIB</strong>
                             </div>
                             <div class="col-sm-8">
-                                <button <?= $shop->check_file("nib_path") ? "" : "disabled" ?> id="nib_document" type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal_document_viewer">
-                                    <?= $shop->check_file("nib_path") ? "Lihat Dokumen" : "Dokumen Terhapus" ?>
-                                </button>
-
+                                <?php $this->load->view("admin/users/_button_detail_shop_document", ["filename" => "nib"]) ?>
                             </div>
                         </div>
                         <div class="row row-details">
@@ -152,9 +146,7 @@
                                 <strong>Dokumen Buku Rekening</strong>
                             </div>
                             <div class="col-sm-8">
-                                <button <?= $shop->check_file("cover_book_path") ? "" : "disabled" ?> id="cover_book_document" type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal_document_viewer">
-                                    <?= $shop->check_file("cover_book_path") ? "Lihat Dokumen" : "Dokumen Terhapus" ?>
-                                </button>
+                                <?php $this->load->view("admin/users/_button_detail_shop_document", ["filename" => "cover_book"]) ?>
                             </div>
                         </div>
                         <div class="row row-details">
@@ -186,9 +178,7 @@
                                     <strong>Dokumen NIK</strong>
                                 </div>
                                 <div class="col-sm-8">
-                                    <button <?= $shop->check_file("ktp_path") ? "" : "disabled" ?> id="ktp_document" type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal_document_viewer">
-                                        <?= $shop->check_file("ktp_path") ? "Lihat Dokumen" : "Dokumen Terhapus" ?>
-                                    </button>
+                                    <?php $this->load->view("admin/users/_button_detail_shop_document", ["filename" => "ktp"]) ?>
                                 </div>
                             </div>
 
@@ -214,9 +204,7 @@
                                     <strong>Dokumen SIUP</strong>
                                 </div>
                                 <div class="col-sm-8">
-                                    <button <?= $shop->check_file("siup_path") ? "" : "disabled" ?> id="siup_document" type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal_document_viewer">
-                                        <?= $shop->check_file("siup_path") ? "Lihat Dokumen" : "Dokumen Terhapus" ?>
-                                    </button>
+                                    <?php $this->load->view("admin/users/_button_detail_shop_document", ["filename" => "siup"]) ?>
                                 </div>
                             </div>
                         <?php endif; ?>

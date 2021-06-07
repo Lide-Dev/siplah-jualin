@@ -577,10 +577,10 @@ class Auth_controller extends Home_Core_Controller
 			];
 			if ($this->input->post("business_profile") == "individual") {
 				$user_data["profile"]["nik"] = $this->input->post("nik");
-				$user_data["legal_status_id"] = "1"; //Automatic individual
+				$user_data["profile"]["legal_status_id"] = "1"; //Automatic individual
 				$user_data["profile"]["nik_fullname"] = $this->input->post("nik_fullname");
 			} else {
-				$user_data["legal_status_id"] = $this->input->post("legal_status");
+				$user_data["profile"]["legal_status_id"] = $this->input->post("legal_status");
 				$user_data["profile"]["responsible_person_name"] = $this->input->post("responsible_person_name");
 				$user_data["profile"]["responsible_person_position"] = $this->input->post("responsible_person_position");
 			}
