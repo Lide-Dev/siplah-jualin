@@ -55,18 +55,18 @@
 								</div>
 								<!-- Status Legal -->
 								<div id="form_legal_status" class="form-group">
-									<?php if (empty(set_value("business_profile")) || set_value("business_profile") == "business_entity") : ?>
-										<label class="control-label font-600 mt-3" for="form_legal_status">Status Wajib Pajak</label>
-										<label for="ju_radio_pkp" class="radiobut">PKP
-											<input id="ju_radio_pkp" type="radio" <?= (empty(set_value("legal_status")) || set_value("legal_status") == "pkp") ? "checked" : "" ?> name="legal_status" value="pkp">
-											<span class="radiomark"></span>
-										</label>
-										<label for="ju_radio_non_pkp" class="radiobut">Non PKP
-											<input id="ju_radio_non_pkp" type="radio" <?= (set_value("legal_status") == "non_pkp") ? "checked" : "" ?> name="legal_status" value="non_pkp">
-											<span class="radiomark"></span>
-										</label>
-										<?= form_error('legal_status'); ?>
-									<?php endif; ?>
+									<!-- <?php if (empty(set_value("business_profile")) || set_value("business_profile") == "business_entity") : ?> -->
+									<label class="control-label font-600 mt-3" for="form_legal_status">Status Wajib Pajak</label>
+									<label for="ju_radio_pkp" class="radiobut">PKP
+										<input id="ju_radio_pkp" type="radio" <?= (empty(set_value("legal_status")) || set_value("legal_status") == "pkp") ? "checked" : "" ?> name="legal_status" value="pkp">
+										<span class="radiomark"></span>
+									</label>
+									<label for="ju_radio_non_pkp" class="radiobut">Non PKP
+										<input id="ju_radio_non_pkp" type="radio" <?= (set_value("legal_status") == "non_pkp") ? "checked" : "" ?> name="legal_status" value="non_pkp">
+										<span class="radiomark"></span>
+									</label>
+									<?= form_error('legal_status'); ?>
+									<!-- <?php endif; ?> -->
 								</div>
 								<!-- End of Status Legal -->
 								<!-- Tipe Usaha -->

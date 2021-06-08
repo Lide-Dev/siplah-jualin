@@ -490,8 +490,8 @@ class Auth_controller extends Home_Core_Controller
 		$this->load->helper('file');
 
 		$this->form_validation->set_rules("business_profile", "Profil Bisnis", "required|in_list[business_entity,individual]");
-		if ($this->input->post("business_profile") == "business_entity")
-			$this->form_validation->set_rules("legal_status", "Status Wajib Pajak", "required|in_list[pkp,non_pkp]");
+		// if ($this->input->post("business_profile") == "business_entity")
+		$this->form_validation->set_rules("legal_status", "Status Wajib Pajak", "required|in_list[pkp,non_pkp]");
 		$this->form_validation->set_rules("business_type", "Tipe Bisnis", "required|in_list[micro,small,medium,non_umkm]");
 		$this->form_validation->set_rules("business_name", trans("business_name"), "required|is_unique[supplier_profiles.supplier_name]|max_length[254]");
 		$this->form_validation->set_rules("npwp", "NPWP", "required|numeric|exact_length[15]|is_unique[supplier_profiles.npwp]");
@@ -575,12 +575,11 @@ class Auth_controller extends Home_Core_Controller
 					"zip_code" => $this->input->post("postal_code"),
 				]
 			];
+			$user_data["profile"]["legal_status_id"] = $this->input->post("legal_status");
 			if ($this->input->post("business_profile") == "individual") {
 				$user_data["profile"]["nik"] = $this->input->post("nik");
-				$user_data["profile"]["legal_status_id"] = "1"; //Automatic individual
 				$user_data["profile"]["nik_fullname"] = $this->input->post("nik_fullname");
 			} else {
-				$user_data["profile"]["legal_status_id"] = $this->input->post("legal_status");
 				$user_data["profile"]["responsible_person_name"] = $this->input->post("responsible_person_name");
 				$user_data["profile"]["responsible_person_position"] = $this->input->post("responsible_person_position");
 			}

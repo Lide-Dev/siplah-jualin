@@ -615,6 +615,7 @@ class Product_model extends Core_Model
     //get related products
     public function get_related_products($product)
     {
+
         $sql = $this->query_string() . "AND products.category_id = ? AND products.id != ? ORDER BY RAND() DESC LIMIT 8";
         $query = $this->db->query($sql, array(clean_number($product->category_id), clean_number($product->id)));
         $rows = $query->result_array();
@@ -631,6 +632,7 @@ class Product_model extends Core_Model
             return $rows;
         }
         $category_ids_array = $this->category_model->get_category_tree_ids_array($category->parent_id);
+        
         if (!empty($category_ids_array)) {
             $sql = $this->query_string() . "AND products.category_id != ? AND products.id != ? AND products.category_id IN ? ORDER BY RAND() DESC LIMIT 8";
             $query = $this->db->query($sql, array(clean_number($product->category_id), clean_number($product->id), $category_ids_array));

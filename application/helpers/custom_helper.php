@@ -1956,6 +1956,44 @@ if (!function_exists('dd')) {
     }
 }
 
+// Store record memory usage
+if (!function_exists('debug_memory')) {
+    /**
+     * Record memory usage.
+     *
+     * @return void
+     */
+    function debug_memory(&$memory_records = [])
+    {
+        array_push($memory_records, memory_get_usage());
+    }
+}
+
+if (!function_exists('remove_memory_records')) {
+    /**
+     * Delete all memory record usage.
+     *
+     * @return void
+     */
+    function remove_memory_records(&$memory_records = [])
+    {
+        $memory_records = [];
+    }
+}
+
+if (!function_exists('output_memory')) {
+    /**
+     * Retrieve all memory record usage. Default output with dd().
+     *
+     * @param bool $return_string
+     * @return void
+     */
+    function output_memory(&$memory_records = [], $return_string = false)
+    {
+        dd($memory_records);
+    }
+}
+
 if (!function_exists('set_form_value')) {
     /**
      * Setting form and can be randomed to help testing input. Random option will permanently false if environment be production.
