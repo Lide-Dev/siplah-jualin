@@ -11,8 +11,7 @@ class Negotiation_controller extends Home_Core_Controller
 
   public function negotiation()
   {
-    // $user_role = $this->session->userdata("modesy_sess_user_role");
-    $user_role = 'member';
+    $user_role = $this->session->userdata("modesy_sess_user_role");
     if ($user_role == 'member') {
       $this->buyer_negotiation();
     } elseif ($user_role == 'vendor') {

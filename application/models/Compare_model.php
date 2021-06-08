@@ -44,9 +44,11 @@ class Compare_model extends CI_Model
 
 	public function get_all_vendors_except($arr_vendor_id)
 	{
-		$sql = "SELECT * FROM users WHERE role = 'vendor' AND id NOT IN ?";
-		$db = $this->db->query($sql, [$arr_vendor_id]);
-		return $db->result();
+		if (!empty($arr_vendor_id)) {
+			$sql = "SELECT * FROM users WHERE role = 'vendor' AND id NOT IN ?";
+			$db = $this->db->query($sql, [$arr_vendor_id]);
+			return $db->result();
+		}
 	}
 
 	public function delete_product($arr_products_id, $value)
@@ -65,33 +67,10 @@ class Compare_model extends CI_Model
 		return $products;
 	}
 
-	public function insert_all_negotiation($arr_products_id, $user_id, $quantity)
+	public function do_negotiation($arr_product_id, $product_quantity, $user_id)
 	{
-		foreach ($arr_products_id as $product_id) {
-			$negotiation = $this->negotiation_model->db_get_negotiation_by_user_id_and_product_id($user_id, $product_id);
-			$product = get_product($product_id);
-			if (empty($negotiation)) {
-				$m_negotiation = new Negotiation(
-					$user_id,
-					$product->user_id,
-					$product_id,
-					$product->price,
-					$product->shipping_cost,
-					$quantity
-				);
-				$this->negotiation_model->db_insert_negotiation($m_negotiation);
-			}
-			// dd($product->id);
-			$conversation = $this->negotiation_model->db_get_nego_conversation_by_user_and_product_id($user_id, $product_id);
-			if (empty($conversation)) {
-				$m_conversation = new Conversation(
-					$user_id,
-					$product->user_id,
-					$product_id,
-					$product->title
-				);
-				$this->negotiation_model->db_insert_conversation($m_conversation);
-			}
+		foreach ($arr_product_id as $product_id) {
+			$this->negotiation_model->add_new_negotiation_conversation($user_id, $product_id, $product_quantity);
 		}
 	}
 }

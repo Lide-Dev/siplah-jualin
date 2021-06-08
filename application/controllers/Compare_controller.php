@@ -16,9 +16,9 @@ class Compare_controller extends Home_Core_Controller
 		$data['keywords'] = "compare-product" . "," . $this->app_name;
 		$data['arr_payment_source'] = array("Dana Bos");
 
-		// $arr_product_id = $this->session->userdata("compared_products_id");
-		$arr_product_id = [17];
+		$arr_product_id = $this->session->userdata("compared_products_id");
 		$product_quantity = $this->session->userdata("compared_products_quantity");
+		$product_quantity = $product_quantity ? $product_quantity : 1;
 
 		// $this->session->unset_userdata("compared_products_id");
 
@@ -72,33 +72,14 @@ class Compare_controller extends Home_Core_Controller
 	public function do_negotiation()
 	{
 		$compared_products_id = $this->session->userdata("compared_products_id");
-		$user_id = "0622b923-1ada-499f-8b6f-ca893a3d6094";
-		$quantity = 1;
 
-		$product = get_product($compared_products_id[0]);
+		$user_id = $this->session->userdata('modesy_sess_user_id');
+		$product_quantity = $this->session->userdata("compared_products_quantity");
+		$product_quantity = $product_quantity ? $product_quantity : 1;
 
-		$this->form_validation->set_rules("payment_source", "Sumber Dana", "required");
+		$this->compare_model->do_negotiation($compared_products_id, $product_quantity, $user_id);
 
-		if ($this->form_validation->run() == TRUE) {
-			if ($product->price < 200000000) {
-				if ($compared_products_id > 3) {
-					$this->compare_model->insert_all_negotiation($compared_products_id, $user_id, $quantity);
-					redirect('negotiation');
-				} else {
-					echo var_dump("else 50jt");
-					$this->session->set_flashdata("compare_status", "<div class='alert alert-danger' role='alert'>Barang Kurang dari 3</div>");
-				}
-			} elseif ($product->price > 200000000) {
-				if ($compared_products_id > 5) {
-					$this->compare_model->insert_all_negotiation($compared_products_id, $user_id, $quantity);
-					redirect('negotiation');
-				} else {
-					echo var_dump("else 200jt");
-					$this->session->set_flashdata("compare_status", "<div class='alert alert-danger' role='alert'>Barang Kurang dari 5</div>");
-				}
-			}
-		} else {
-			redirect('compare');
-		}
+		$this->session->unset_userdata("compared_products_id");
+		redirect('negotiation');
 	}
 }
