@@ -16,14 +16,15 @@ class Compare_controller extends Home_Core_Controller
 		$data['keywords'] = "compare-product" . "," . $this->app_name;
 		$data['arr_payment_source'] = array("Dana Bos");
 
-		$arr_product_id = $this->session->userdata("compared_products_id");
+		// $arr_product_id = $this->session->userdata("compared_products_id");
+		$arr_product_id = [17];
 		$product_quantity = $this->session->userdata("compared_products_quantity");
 
 		// $this->session->unset_userdata("compared_products_id");
 
 		$data['products'] = $this->compare_model->get_compared_products_by_id($arr_product_id, $product_quantity);
 		$data['product_quantity'] = $product_quantity;
-		$data['list_vendors'] = $this->compare_model->get_all_vendors();
+		$data['list_vendors'] = $this->compare_model->get_all_vendors_except($arr_product_id);
 		$data['temp_vendor'] = $this->session->userdata('temp_vendor');
 
 		$this->load->view('partials/_header', $data);

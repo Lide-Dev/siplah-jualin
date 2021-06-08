@@ -11,9 +11,7 @@
 			<?php endforeach ?>
 		<?php endif ?>
 	</select>
-	<?= form_error('payment_source') ?>
 	<div class="compared-container row card">
-		<?= form_error('payment_source') ?>
 		<?= $this->session->flashdata("compare_status") ?>
 		<div class="container py-3">
 			<?php for ($i = 0; $i < (count($products) + 1); $i++) : ?>

@@ -465,32 +465,32 @@ class Cart_model extends CI_Model
     }
 
     //check cart has physical products
-    // public function check_cart_has_physical_product()
-    // {
-    //     $cart_items = $this->get_sess_cart_items();
-    //     if (!empty($cart_items)) {
-    //         foreach ($cart_items as $cart_item) {
-    //             if ($cart_item->product_type == 'physical') {
-    //                 return true;
-    //             }
-    //         }
-    //     }
-    //     return false;
-    // }
+    public function check_cart_has_physical_product()
+    {
+        $cart_items = $this->get_sess_cart_items();
+        if (!empty($cart_items)) {
+            foreach ($cart_items as $cart_item) {
+                if ($cart_item->product_type == 'physical') {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
 
-    //check cart has digital products
-    // public function check_cart_has_digital_product()
-    // {
-    //     $cart_items = $this->get_sess_cart_items();
-    //     if (!empty($cart_items)) {
-    //         foreach ($cart_items as $cart_item) {
-    //             if ($cart_item->product_type == 'digital') {
-    //                 return true;
-    //             }
-    //         }
-    //     }
-    //     return false;
-    // }
+    // check cart has digital products
+    public function check_cart_has_digital_product()
+    {
+        $cart_items = $this->get_sess_cart_items();
+        if (!empty($cart_items)) {
+            foreach ($cart_items as $cart_item) {
+                if ($cart_item->product_type == 'digital') {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
 
     //unset cart items session
     public function unset_sess_cart_items()

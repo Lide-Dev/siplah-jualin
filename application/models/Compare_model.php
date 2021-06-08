@@ -32,16 +32,20 @@ class Compare_model extends CI_Model
 	public function get_compared_products_by_id($arr_products_id, $quantity)
 	{
 		$products = array();
-		foreach ($arr_products_id as $product_id) {
-			$products[] = $this->remap_product($product_id, $quantity);
+
+		if (!empty($arr_products_id)) {
+			foreach ($arr_products_id as $product_id) {
+				$products[] = $this->remap_product($product_id, $quantity);
+			}
 		}
+
 		return $products;
 	}
 
-	public function get_all_vendors()
+	public function get_all_vendors_except($arr_vendor_id)
 	{
-		$sql = "SELECT * FROM users WHERE role = 'vendor'";
-		$db = $this->db->query($sql);
+		$sql = "SELECT * FROM users WHERE role = 'vendor' AND id NOT IN ?";
+		$db = $this->db->query($sql, [$arr_vendor_id]);
 		return $db->result();
 	}
 
