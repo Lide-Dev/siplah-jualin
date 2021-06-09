@@ -24,10 +24,15 @@
     </div>
 </div>
 <!-- UPLOAD PHOTO -->
-<div class="row">
-    <div class="col-12 m-b-30">
-        <label class="control-label font-600"><?php echo trans("images"); ?></label>
-        <?php $this->load->view("product/_image_upload_box"); ?>
+<div class="form-box">
+    <div class="form-box-head">
+        <h4 class="title">Upload Gambar Produk</h4>
+    </div>
+    <div class="form-box-body">
+        <div class="col-12 m-b-30">
+            <label class="control-label font-600"><?php echo trans("images"); ?></label>
+            <?php $this->load->view("product/_image_upload_box"); ?>
+        </div>
     </div>
 </div>
 <?= form_open("sell-now/service") ?>
@@ -72,18 +77,12 @@
         </div>
         <!-- END OF CATEGORY MADE & CODE KBKI -->
 
-        <div class="form-group">
-            <label class="control-label"><?php echo trans("description"); ?></label>
-            <!-- <div class="row">
-                                                    <div class="col-sm-12 m-b-5">
-                                                        <button type="button" class="btn btn-sm btn-secondary color-white btn_ck_add_image m-b-5"><i class="icon-image"></i><?php echo trans("add_image"); ?></button>
-                                                        <button type="button" class="btn btn-sm btn-info color-white btn_ck_add_video m-b-5"><i class="icon-image"></i><?php echo trans("add_video"); ?></button>
-                                                        <button type="button" class="btn btn-sm btn-warning color-white btn_ck_add_iframe m-b-5"><i class="icon-image"></i><?php echo trans("add_iframe"); ?></button>
-                                                    </div>
-                                                </div>
-                                                <textarea name="description" id="ckEditor" class="text-editor"></textarea> -->
-            <textarea name="description" class="form-control form-input text-editor" required maxlength="1000"><?= set_form_value("description", true, "text", ["max" => 200, "min" => 50]) ?></textarea>
-            <?php echo form_error('description'); ?>
+        <div class="container row">
+            <div class="form-group">
+                <label class="control-label"><?php echo trans("description"); ?></label>
+                <textarea name="description" class="form-control form-input text-editor" required maxlength="1000"><?= set_form_value("description", true, "text", ["max" => 200, "min" => 50]) ?></textarea>
+                <?php echo form_error('description'); ?>
+            </div>
         </div>
 
         <div class="row">
