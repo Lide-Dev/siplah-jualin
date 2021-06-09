@@ -335,8 +335,11 @@ if (!function_exists('price_formatted')) {
 			$dec_point = ',';
 			$thousands_sep = '.';
 		}
-
-		if (is_int($price)) {
+		$json = json_decode($price);
+		if ($json && $price != $json){
+			return price_currency_format($json->zone_1, $currency). " - ".price_currency_format($json->zone_2, $currency);
+		}
+		else if (is_int($price)) {
 			$price = number_format($price, 0, $dec_point, $thousands_sep);
 		} else {
 			$price = number_format($price, 2, $dec_point, $thousands_sep);
