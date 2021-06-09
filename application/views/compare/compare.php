@@ -1,8 +1,12 @@
 <div class="container m-auto p-3">
 	<div class="row">
+		<?= $this->session->flashdata('payment_source_error') ?>
+		<?= $this->session->flashdata('total_compared_product') ?>
+	</div>
+	<div class="row">
 		<div class="text-capitalize font-weight-bold col-md-2" style="font-size: medium;"><?= trans('payment_source') ?></div>
 	</div>
-	<select name="input_payment_source" id="input_payment_source" class="custom-select my-3 col-md-4" required>
+	<select name="ps" id="payment_source" class="custom-select my-3 col-md-4">
 		<option selected><?= trans('choose_source') ?></option>
 		<?php if (!empty($arr_payment_source)) :  ?>
 			<!-- payment source list -->
@@ -122,7 +126,7 @@
 	</div>
 	<!-- Make an Offer Button-->
 	<div class="col-md-12 mt-4" align="center">
-		<a class="btn btn-success btn-lg" style="color: white;" href="<?= base_url('compare/do_negotiation') ?>"><?= trans('make_an_offer') ?></a>
+		<a class="btn btn-success btn-lg" style="color: white;" href="<?= base_url('compare/do_negotiation') . '?ps=' ?>"><?= trans('make_an_offer') ?></a>
 	</div>
 	<!-- End Make an Offer Button -->
 </div>
