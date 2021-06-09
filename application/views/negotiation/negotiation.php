@@ -67,11 +67,10 @@
 										</div>
 										<div class="row my-2 justify-content-end">
 											<a href="<?= base_url('negotiation/change_selected' . '?conversation_id=' . $conversation->id) ?>" class="btn btn-sm btn-dark text-white h-100">Pilih produk</a>
-											<a class="btn btn-sm btn-success mx-1 text-white h-100" data-toggle="modal" data-target="#modal-negotiation-<?= $conversation->id ?>">Kirim Penawaran</a>
 										</div>
 										<?php if (!empty($negotiation)) : ?>
 											<div class="row my-2 border p-3">
-												<div class="col-md-9 align-self-start">
+												<div class="col-md-7 align-self-start">
 													<div class="row">
 														<label><?= trans("last_nego_price"); ?>:</label>
 														<strong class="lbl-price">
@@ -85,10 +84,11 @@
 														</strong>
 													</div>
 												</div>
-												<div class="col-md-3 align-self-end">
+												<div class="col-md-5 align-self-end">
 													<?php if ($user_id != $negotiation->negotiator_id && $negotiation->status == NEGO_PENDING) : ?>
 														<a href="<?= base_url('negotiation/declined') . "?conversation_id=" . $conversation->id ?>" class="btn btn-sm btn-danger text-white">Tolak</a>
 														<a href="<?= base_url('negotiation/accepted') . "?conversation_id=" . $conversation->id ?>" class="btn btn-sm mx-1 btn-success text-white">Terima</a>
+														<a class="btn btn-sm mx-1 btn-dark text-white" data-toggle="modal" data-target="#modal-negotiation-<?= $conversation->id ?>">Kirim Penawaran</a>
 													<?php elseif ($negotiation->status == NEGO_ACCEPT) : ?>
 														<div class="badge badge-success p-2">Tawaran Diterima</div>
 													<?php elseif ($negotiation->status == NEGO_DECLINE) : ?>
