@@ -11,12 +11,7 @@ class Negotiation_controller extends Home_Core_Controller
 
   public function negotiation()
   {
-    // $this->session->set_userdata('modesy_sess_user_id', '10a746b1-9d61-4c1e-a6cf-096c2cb359f7');
-    // $this->session->set_userdata('modesy_sess_user_role', 'vendor');
-    $this->session->set_userdata('modesy_sess_user_id', 'C25EF687-2759-4DF5-9D74-3C104CDF9E4E');
-    $this->session->set_userdata('modesy_sess_user_role', 'member');
     $conversation_id = $this->session->flashdata('conversation_id');
-
     $user_role = $this->session->userdata("modesy_sess_user_role");
     if ($user_role == 'member') {
       $this->buyer_negotiation($conversation_id);
