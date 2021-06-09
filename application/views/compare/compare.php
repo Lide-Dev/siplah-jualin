@@ -1,13 +1,12 @@
 <div class="container m-auto p-3">
 	<div class="row">
-		<?= $this->session->flashdata('payment_source_error') ?>
-		<?= $this->session->flashdata('total_compared_product') ?>
+		<?= $this->session->flashdata('compared_error_msg') ?>
 	</div>
 	<div class="row">
 		<div class="text-capitalize font-weight-bold col-md-2" style="font-size: medium;"><?= trans('payment_source') ?></div>
 	</div>
 	<select name="ps" id="payment_source" class="custom-select my-3 col-md-4">
-		<option selected><?= trans('choose_source') ?></option>
+		<option value="default" selected><?= trans('choose_source') ?></option>
 		<?php if (!empty($arr_payment_source)) :  ?>
 			<!-- payment source list -->
 			<?php foreach ($arr_payment_source as $payment_source) : ?>
@@ -125,9 +124,12 @@
 		</div>
 	</div>
 	<!-- Make an Offer Button-->
+	<?= form_open(base_url('compare/do_negotiation'), ['method' => 'GET']) ?>
 	<div class="col-md-12 mt-4" align="center">
-		<a class="btn btn-success btn-lg" style="color: white;" href="<?= base_url('compare/do_negotiation') . '?ps=' ?>"><?= trans('make_an_offer') ?></a>
+		<input type="hidden" name="ps" id="inp_payment_source" value="">
+		<button class="btn btn-success btn-lg" style="color: white;"><?= trans('make_an_offer') ?></button>
 	</div>
+	<?= form_close() ?>
 	<!-- End Make an Offer Button -->
 </div>
 <style>
@@ -164,7 +166,6 @@
 
 	.compared-container {
 		overflow: auto;
-		white-space: nowrap;
 	}
 </style>
 <script>
@@ -182,6 +183,11 @@
 
 		$("#search-input").on("focusin", function() {
 			$("#list-vendors").show("show");
+		});
+
+		$("#payment_source").change(function() {
+			let inp = $("#payment_source").val();
+			$("#inp_payment_source").val(inp);
 		});
 	});
 </script>
