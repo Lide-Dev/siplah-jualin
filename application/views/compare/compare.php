@@ -2,8 +2,8 @@
 	<div class="row">
 		<div class="text-capitalize font-weight-bold col-md-2" style="font-size: medium;"><?= trans('payment_source') ?></div>
 	</div>
-	<select name="input_payment_source" id="input_payment_source" class="custom-select my-3 col-md-4">
-		<option value="0" selected><?= trans('choose_source') ?></option>
+	<select name="input_payment_source" id="input_payment_source" class="custom-select my-3 col-md-4" required>
+		<option selected><?= trans('choose_source') ?></option>
 		<?php if (!empty($arr_payment_source)) :  ?>
 			<!-- payment source list -->
 			<?php foreach ($arr_payment_source as $payment_source) : ?>
@@ -20,7 +20,7 @@
 						<!-- Compared Product Loop -->
 						<?php if ($products[$i] == null && $temp_vendor == null) : ?>
 							<!-- Search Vendor -->
-							<div class="row">
+							<div class="row mt-2">
 								<div class="container">
 									<input type="text" id="search-input" class="form-control search-input" placeholder="Cari Penjual">
 									<div class="list-vendors" id="list-vendors">

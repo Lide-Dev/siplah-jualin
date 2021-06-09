@@ -324,26 +324,27 @@ if (!function_exists('calculate_earned_amount')) {
 }
 
 //price formatted
-if (!function_exists('price_formatted')) {
-	function price_formatted($price, $currency, $format = null)
-	{
-		$ci = &get_instance();
-		// $price = $price / 100;
-		$dec_point = '.';
-		$thousands_sep = ',';
-		if ($ci->thousands_separator != '.') {
-			$dec_point = ',';
-			$thousands_sep = '.';
-		}
-
-		if (is_int($price)) {
-			$price = number_format($price, 0, $dec_point, $thousands_sep);
-		} else {
-			$price = number_format($price, 2, $dec_point, $thousands_sep);
-		}
-		$price = price_currency_format($price, $currency);
-		return $price;
+function price_formatted($price, $currency, $format = null)
+{
+	$ci = &get_instance();
+	// $price = $price / 100;
+	$dec_point = '.';
+	$thousands_sep = ',';
+	if ($ci->thousands_separator != '.') {
+		$dec_point = ',';
+		$thousands_sep = '.';
 	}
+
+	$json = json_decode($price);
+	if ($json && $price != $json) {
+		return price_currency_format($json->zone_1, $currency) . " - " . price_currency_format($json->zone_2, $currency);
+	} else if (is_int($price)) {
+		$price = number_format($price, 0, $dec_point, $thousands_sep);
+	} else {
+		$price = number_format($price, 2, $dec_point, $thousands_sep);
+	}
+	$price = price_currency_format($price, $currency);
+	return $price;
 }
 
 //price currency format

@@ -312,7 +312,7 @@ class Product_model extends Core_Model
                         } else {
                             $data = array(
                                 'field_id' => $custom_field->id,
-                                'product_id' => clean_number($product_id),
+                                'product_id' => $product_id,
                                 'product_filter_key' => $custom_field->product_filter_key,
                             );
                             if ($custom_field->field_type == 'radio_button' || $custom_field->field_type == 'dropdown') {
@@ -391,7 +391,7 @@ class Product_model extends Core_Model
         $this->db->select($select);
         $this->db->from('products');
         $this->db->join('users', 'products.user_id = users.id');
-        $this->db->join('couriers', 'products.shipping_courier_id = couriers.id',"LEFT");
+        $this->db->join('couriers', 'products.shipping_courier_id = couriers.id', "LEFT");
         if ($type == 'wishlist') {
             $this->db->join('wishlist', 'products.id = wishlist.product_id');
         }
@@ -632,7 +632,7 @@ class Product_model extends Core_Model
             return $rows;
         }
         $category_ids_array = $this->category_model->get_category_tree_ids_array($category->parent_id);
-        
+
         if (!empty($category_ids_array)) {
             $sql = $this->query_string() . "AND products.category_id != ? AND products.id != ? AND products.category_id IN ? ORDER BY RAND() DESC LIMIT 8";
             $query = $this->db->query($sql, array(clean_number($product->category_id), clean_number($product->id), $category_ids_array));
@@ -648,7 +648,7 @@ class Product_model extends Core_Model
     public function get_user_other_products($user_id, $limit, $product_id)
     {
         $sql = $this->query_string() . "AND users.id = ? AND products.id != ?  ORDER BY products.created_at DESC LIMIT ?";
-        $query = $this->db->query($sql, array(clean_number($user_id), clean_number($product_id), clean_number($limit)));
+        $query = $this->db->query($sql, array(clean_number($user_id), $product_id, clean_number($limit)));
         return $query->result();
     }
 
@@ -672,7 +672,7 @@ class Product_model extends Core_Model
     public function get_user_products($user_id, $product_id)
     {
         $sql = $this->query_string() . "AND users.id = ? AND products.id != ? ORDER BY products.created_at DESC";
-        $query = $this->db->query($sql, array(clean_number($user_id), clean_number($product_id)));
+        $query = $this->db->query($sql, array(clean_number($user_id), $product_id));
         return $query->result();
     }
 
@@ -793,7 +793,7 @@ class Product_model extends Core_Model
     public function get_digital_sale_by_buyer_id($buyer_id, $product_id)
     {
         $sql = "SELECT * FROM digital_sales WHERE buyer_id = ? AND product_id = ?";
-        $query = $this->db->query($sql, array(clean_number($buyer_id), clean_number($product_id)));
+        $query = $this->db->query($sql, array(clean_number($buyer_id), $product_id));
         return $query->row();
     }
 
@@ -801,7 +801,7 @@ class Product_model extends Core_Model
     public function get_digital_sale_by_order_id($buyer_id, $product_id, $order_id)
     {
         $sql = "SELECT * FROM digital_sales WHERE buyer_id = ? AND product_id = ? AND order_id = ?";
-        $query = $this->db->query($sql, array(clean_number($buyer_id), clean_number($product_id), clean_number($order_id)));
+        $query = $this->db->query($sql, array(clean_number($buyer_id), $product_id, clean_number($order_id)));
         return $query->row();
     }
 
@@ -809,7 +809,7 @@ class Product_model extends Core_Model
     public function get_product_by_id($id)
     {
         $sql = "SELECT * FROM products WHERE id = ?";
-        $query = $this->db->query($sql, array(clean_number($id)));
+        $query = $this->db->query($sql, array($id));
         return $query->row();
     }
 
@@ -817,13 +817,13 @@ class Product_model extends Core_Model
     public function get_available_product($id)
     {
         $sql = "SELECT products.*, couriers.name as courier_name, users.username as user_username, users.shop_name as shop_name, users.role as user_role, users.slug as user_slug FROM products
-                INNER JOIN couriers ON products.shipping_courier_id = couriers.id
+                LEFT JOIN couriers ON products.shipping_courier_id = couriers.id
                 INNER JOIN users ON products.user_id = users.id AND users.banned = 0
                 WHERE products.status = 1 AND products.visibility = 1 AND products.is_draft = 0 AND products.stock > 0 AND products.is_deleted = 0 AND products.id = ?";
         if ($this->general_settings->vendor_verification_system == 1) {
             $sql .= " AND users.role != 'member'";
         }
-        $query = $this->db->query($sql, array(clean_number($id)));
+        $query = $this->db->query($sql, array($id));
         return $query->row();
     }
 
@@ -832,7 +832,7 @@ class Product_model extends Core_Model
     {
         $sql = "SELECT products.*, couriers.name as courier_name, users.username as user_username, users.shop_name as shop_name, users.role as user_role, users.slug as user_slug FROM products
                 INNER JOIN users ON products.user_id = users.id AND users.banned = 0
-                INNER JOIN couriers ON products.shipping_courier_id = couriers.id
+                LEFT JOIN couriers ON products.shipping_courier_id = couriers.id
                 WHERE products.is_draft = 0 AND products.is_deleted = 0 AND products.slug = ?";
         if ($this->general_settings->vendor_verification_system == 1) {
             $sql .= " AND users.role != 'member'";
@@ -846,7 +846,7 @@ class Product_model extends Core_Model
     {
         if ($this->auth_check) {
             $sql = "SELECT * FROM wishlist WHERE user_id = ? AND product_id = ?";
-            $query = $this->db->query($sql, array(clean_number($this->auth_user->id), clean_number($product_id)));
+            $query = $this->db->query($sql, array($this->auth_user->id, $product_id));
             if (!empty($query->row())) {
                 return true;
             }
@@ -865,7 +865,7 @@ class Product_model extends Core_Model
     public function get_product_wishlist_count($product_id)
     {
         $sql = "SELECT COUNT(id) AS count FROM wishlist WHERE product_id = ?";
-        $query = $this->db->query($sql, array(clean_number($product_id)));
+        $query = $this->db->query($sql, array($product_id));
         return $query->row()->count;
     }
 
@@ -875,12 +875,12 @@ class Product_model extends Core_Model
         if ($this->auth_check) {
             if ($this->is_product_in_wishlist($product_id)) {
                 $this->db->where('user_id', $this->auth_user->id);
-                $this->db->where('product_id', clean_number($product_id));
+                $this->db->where('product_id', $product_id);
                 $this->db->delete('wishlist');
             } else {
                 $data = array(
                     'user_id' => $this->auth_user->id,
-                    'product_id' => clean_number($product_id)
+                    'product_id' => $product_id
                 );
                 $this->db->insert('wishlist', $data);
             }
@@ -893,7 +893,7 @@ class Product_model extends Core_Model
                 $new = array();
                 if (!empty($wishlist)) {
                     foreach ($wishlist as $item) {
-                        if ($item != clean_number($product_id)) {
+                        if ($item != $product_id) {
                             array_push($new, $item);
                         }
                     }
@@ -904,7 +904,7 @@ class Product_model extends Core_Model
                 if (!empty($this->session->userdata('mds_guest_wishlist'))) {
                     $wishlist = $this->session->userdata('mds_guest_wishlist');
                 }
-                array_push($wishlist, clean_number($product_id));
+                array_push($wishlist, $product_id);
                 $this->session->set_userdata('mds_guest_wishlist', $wishlist);
             }
         }
@@ -1075,7 +1075,7 @@ class Product_model extends Core_Model
     public function get_license_keys($product_id)
     {
         $sql = "SELECT * FROM product_license_keys WHERE product_id = ?";
-        $query = $this->db->query($sql, array(clean_number($product_id)));
+        $query = $this->db->query($sql, array($product_id));
         return $query->result();
     }
 
@@ -1091,7 +1091,7 @@ class Product_model extends Core_Model
     public function get_unused_license_key($product_id)
     {
         $sql = "SELECT * FROM product_license_keys WHERE product_id = ? AND is_used = 0 LIMIT 1";
-        $query = $this->db->query($sql, array(clean_number($product_id)));
+        $query = $this->db->query($sql, array($product_id));
         return $query->row();
     }
 
@@ -1099,7 +1099,7 @@ class Product_model extends Core_Model
     public function check_license_key($product_id, $license_key)
     {
         $sql = "SELECT * FROM product_license_keys WHERE product_id = ? AND license_key = ?";
-        $query = $this->db->query($sql, array(clean_number($product_id), $license_key));
+        $query = $this->db->query($sql, array($product_id, $license_key));
         return $query->row();
     }
 

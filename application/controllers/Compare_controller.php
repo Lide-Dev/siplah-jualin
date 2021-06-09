@@ -20,6 +20,7 @@ class Compare_controller extends Home_Core_Controller
 		$product_quantity = $this->session->userdata("compared_products_quantity");
 		$product_quantity = $product_quantity ? $product_quantity : 1;
 
+
 		// $this->session->unset_userdata("compared_products_id");
 
 		$data['products'] = $this->compare_model->get_compared_products_by_id($arr_product_id, $product_quantity);
@@ -72,7 +73,6 @@ class Compare_controller extends Home_Core_Controller
 	public function do_negotiation()
 	{
 		$compared_products_id = $this->session->userdata("compared_products_id");
-
 		$user_id = $this->session->userdata('modesy_sess_user_id');
 		$product_quantity = $this->session->userdata("compared_products_quantity");
 		$product_quantity = $product_quantity ? $product_quantity : 1;
@@ -80,6 +80,7 @@ class Compare_controller extends Home_Core_Controller
 		$this->compare_model->do_negotiation($compared_products_id, $product_quantity, $user_id);
 
 		$this->session->unset_userdata("compared_products_id");
+		$this->session->unset_userdata("temp_vendor");
 		redirect('negotiation');
 	}
 }
