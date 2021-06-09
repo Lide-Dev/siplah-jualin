@@ -112,7 +112,7 @@
                 </div>
             </div>
 
-            <div class="row">
+            <div class="container row">
                 <div class="form-group col-12">
                     <label class="control-label"><?php echo trans("description"); ?></label>
                     <!-- <div class="row">
