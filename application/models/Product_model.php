@@ -632,7 +632,7 @@ class Product_model extends Core_Model
             return $rows;
         }
         $category_ids_array = $this->category_model->get_category_tree_ids_array($category->parent_id);
-        
+
         if (!empty($category_ids_array)) {
             $sql = $this->query_string() . "AND products.category_id != ? AND products.id != ? AND products.category_id IN ? ORDER BY RAND() DESC LIMIT 8";
             $query = $this->db->query($sql, array(clean_number($product->category_id), clean_number($product->id), $category_ids_array));
@@ -817,7 +817,7 @@ class Product_model extends Core_Model
     public function get_available_product($id)
     {
         $sql = "SELECT products.*, couriers.name as courier_name, users.username as user_username, users.shop_name as shop_name, users.role as user_role, users.slug as user_slug FROM products
-                INNER JOIN couriers ON products.shipping_courier_id = couriers.id
+                LEFT JOIN couriers ON products.shipping_courier_id = couriers.id
                 INNER JOIN users ON products.user_id = users.id AND users.banned = 0
                 WHERE products.status = 1 AND products.visibility = 1 AND products.is_draft = 0 AND products.stock > 0 AND products.is_deleted = 0 AND products.id = ?";
         if ($this->general_settings->vendor_verification_system == 1) {
