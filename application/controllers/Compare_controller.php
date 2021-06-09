@@ -16,20 +16,20 @@ class Compare_controller extends Home_Core_Controller
 		$data['keywords'] = "compare-product" . "," . $this->app_name;
 		$data['arr_payment_source'] = array("Dana Bos");
 
-		$this->session->set_userdata('compared_products_id', ['00b1ac82-ffce-4c31-9161-6ed51c3b1de6']);
-
 		$arr_product_id = $this->session->userdata("compared_products_id");
 		$product_quantity = $this->session->userdata("compared_products_quantity");
 		$product_quantity = $product_quantity ? $product_quantity : 1;
 
-
-		// $this->session->unset_userdata("compared_products_id");
 
 		$data['compare_base_product'] = get_product($arr_product_id[0]);
 		$data['products'] = $this->compare_model->get_compared_products_by_id($arr_product_id, $product_quantity);
 		$data['product_quantity'] = $product_quantity;
 		$data['list_vendors'] = $this->compare_model->get_all_vendors_except($arr_product_id);
 		$data['temp_vendor'] = $this->session->userdata('temp_vendor');
+
+		if (empty($arr_product_id)) {
+			redirect();
+		}
 
 		$this->load->view('partials/_header', $data);
 		$this->load->view('compare/compare', $data);
@@ -80,27 +80,27 @@ class Compare_controller extends Home_Core_Controller
 		$product_quantity = $this->session->userdata("compared_products_quantity");
 		$product_quantity = $product_quantity ? $product_quantity : 1;
 		$base_product_price = get_product($compared_products_id[0])->price * $product_quantity;
-		$payment_source = $this->input->get('');
+		$payment_source = $this->input->get('ps');
 
 		$this->compare_model->do_negotiation($compared_products_id, $product_quantity, $user_id);
 
-		$this->session->unset_userdata("compared_products_id");
-		$this->session->unset_userdata("temp_vendor");
-
-		$payment_source = $this->session->userdata('compare_payment_source');
-
-		if (empty($payment_source)) {
-			$this->session->set_flashdata('payment_source_error', '<div class="alert alert-warning" role="alert">Pilih Sumber Dana terlebih dahulu</div>');
+		if (empty($payment_source) || $payment_source == "default") {
+			$this->session->set_flashdata('compared_error_msg', '<div class="alert alert-danger" role="alert">Pilih Sumber Dana terlebih dahulu</div>');
 			redirect('compare');
+		} else {
+			if (($base_product_price > 50000000 && $base_product_price < 200000000) && count($compared_products_id) < 3) {
+				$this->session->set_flashdata('compared_error_msg', '<div class="alert alert-danger" role="alert">Produk yang dibandingkan kurang, Minimal 3 Produk</div>');
+				redirect('compare');
+			} elseif ($base_product_price > 200000000 && count($compared_products_id) < 5) {
+				$this->session->set_flashdata('compared_error_msg', '<div class="alert alert-danger" role="alert">Produk yang dibandingkan kurang, Minimal 5 Produk</div>');
+				redirect('compare');
+			} else {
+				$this->session->unset_userdata("compared_products_id");
+				$this->session->unset_userdata("temp_vendor");
+				$this->session->unset_flashdata('compared_error_msg');
+
+				redirect('negotiation');
+			}
 		}
-		if (($base_product_price > 500000000 && $base_product_price < 200000000) && $compared_products_id < 3) {
-			$this->session->set_flashdata('total_compared_product', '<div class="alert alert-warning" role="alert">Produk yang dibandingkan kurang</div>');
-			redirect('compare');
-		} elseif ($base_product_price > 200000000 && $compared_products_id < 5) {
-			$this->session->set_flashdata('total_compared_product', '<div class="alert alert-warning" role="alert">Produk yang dibandingkan kurang</div>');
-			redirect('compare');
-		}
-
-		redirect('negotiation');
 	}
 }
