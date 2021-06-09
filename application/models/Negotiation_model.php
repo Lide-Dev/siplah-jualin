@@ -72,7 +72,7 @@ class Negotiation_model extends CI_Model
 
   public function get_seller_conversations($seller_id)
   {
-    $conversations = $this->db_get_negotiation_conversations_by_buyer_id($seller_id);
+    $conversations = $this->db_get_negotiation_conversations_by_seller_id($seller_id);
     $arr_conversation = array();
 
     foreach ($conversations as $conversation) {
@@ -130,7 +130,6 @@ class Negotiation_model extends CI_Model
         $product->shipping_cost,
         $quantity
       );
-
       $this->db_insert_active_negotiation($m_negotiation, $user_id);
     }
     return $conversation;
@@ -256,6 +255,13 @@ class Negotiation_model extends CI_Model
   {
     $sql = "SELECT * FROM conversations WHERE buyer_id = ? AND type = ?";
     $query = $this->db->query($sql, [$buyer_id, NEGOTIATION]);
+    return $query->result();
+  }
+
+  private function db_get_negotiation_conversations_by_seller_id($seller_id)
+  {
+    $sql = "SELECT * FROM conversations WHERE seller_id = ? AND type = ?";
+    $query = $this->db->query($sql, [$seller_id, NEGOTIATION]);
     return $query->result();
   }
 

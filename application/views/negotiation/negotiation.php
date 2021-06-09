@@ -66,7 +66,7 @@
 											</div>
 										</div>
 										<div class="row my-2 justify-content-end">
-											<a href="<?= base_url('negotiation' . "?conversation_id=" . $conversation->id) ?>" class="btn btn-sm btn-dark text-white h-100">Pilih produk</a>
+											<a href="<?= base_url('negotiation/change_selected' . '?conversation_id=' . $conversation->id) ?>" class="btn btn-sm btn-dark text-white h-100">Pilih produk</a>
 											<a class="btn btn-sm btn-success mx-1 text-white h-100" data-toggle="modal" data-target="#modal-negotiation-<?= $conversation->id ?>">Kirim Penawaran</a>
 										</div>
 										<?php if (!empty($negotiation)) : ?>
