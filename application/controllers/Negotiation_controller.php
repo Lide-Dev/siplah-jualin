@@ -17,7 +17,6 @@ class Negotiation_controller extends Home_Core_Controller
     $this->session->set_userdata('modesy_sess_user_role', 'member');
     $conversation_id = $this->session->flashdata('conversation_id');
 
-
     $user_role = $this->session->userdata("modesy_sess_user_role");
     if ($user_role == 'member') {
       $this->buyer_negotiation($conversation_id);
@@ -69,6 +68,7 @@ class Negotiation_controller extends Home_Core_Controller
   {
     $user_id = $this->session->userdata('modesy_sess_user_id');
 
+    // TODO : insert get method for product quantity
     $product_id = $this->input->get("product_id");
     $quantity = $this->input->get('product_quantity');
     $conversation = $this->negotiation_model->add_new_negotiation_conversation($user_id, $product_id, $quantity);
